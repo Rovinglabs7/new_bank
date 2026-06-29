@@ -6,6 +6,13 @@ const FRAMER_CDN =
 const nextConfig: NextConfig = {
   async rewrites() {
     return {
+      beforeFiles: [
+        {
+          source: "/favicon.ico",
+          destination:
+            "https://framerusercontent.com/images/FcrIXzrRYpAhh1hF1bPqjca57E.png",
+        },
+      ],
       // Local public/BOND_files wins first; missing Framer JS modules load from CDN
       afterFiles: [
         {
@@ -16,7 +23,8 @@ const nextConfig: NextConfig = {
       // Framer client-side routes all need the same HTML shell
       fallback: [
         {
-          source: "/:path*",
+          source:
+            "/:path((?!favicon\\.ico$|robots\\.txt$|sitemap\\.xml$).*)",
           destination: "/bond.html",
         },
       ],
