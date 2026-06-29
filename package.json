@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "node scripts/prepare-html.mjs && next dev",
     "build": "node scripts/prepare-html.mjs && opennextjs-cloudflare build",
+    "build:next": "next build",
     "start": "next start",
     "lint": "next lint",
     "prepare-html": "node scripts/prepare-html.mjs",
