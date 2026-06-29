@@ -1,0 +1,543 @@
+"use strict";var ProboCookieBanner=(()=>{var ct=class{constructor(){this._ready=!1;this._hasResponse=!1;this._snapshot={};this._readyListeners=[];this._changeListeners=[]}get ready(){return this._ready}get hasResponse(){return this._hasResponse}has(o){return!!this._snapshot[o]}getAll(){return this._snapshot}subscribe(o){let t=this.onReady(o),e=this.onChange(o);return()=>{t(),e()}}onReady(o){return this._ready?(o(this._snapshot),()=>{}):(this._readyListeners.push(o),()=>{let t=this._readyListeners.indexOf(o);t!==-1&&this._readyListeners.splice(t,1)})}onChange(o){return this._changeListeners.push(o),()=>{let t=this._changeListeners.indexOf(o);t!==-1&&this._changeListeners.splice(t,1)}}_setReady(o,t){this._snapshot={...o},this._hasResponse=t,this._ready=!0;for(let e of this._readyListeners.splice(0))e(this._snapshot);for(let e of this._changeListeners)e(this._snapshot)}_notify(o){this._snapshot={...o},this._hasResponse=!0;for(let t of this._changeListeners)t(this._snapshot)}},at="__proboConsentManager";function b(){let n=typeof globalThis<"u"?globalThis:window;return n[at]||(n[at]=new ct),n[at]}var oe='a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])',u=class extends HTMLElement{focusFirst(){requestAnimationFrame(()=>{this.querySelector(oe)?.focus({preventScroll:!0})})}findAncestor(o){let t=this.parentElement;for(;t;){if(t.tagName.toLowerCase()===o)return t;t=t.parentElement}return null}scheduleValidation(o){queueMicrotask(o)}warn(o){console.warn(`[probo] ${o}`)}emitValidation(o){this.dispatchEvent(new CustomEvent("probo-validation",{bubbles:!0,composed:!0,detail:{missing:o}}))}};var L=class extends u{constructor(){super(...arguments);this.root=null;this.onStateChange=t=>{let{state:e,prev:r}=t.detail;this.hidden=e!=="banner",e==="banner"&&r!=="loading"&&this.focusFirst()};this.onReady=t=>{let e=t.detail.config;this.validate(e)}}connectedCallback(){if(this.hidden=!0,this.root=this.findAncestor("probo-cookie-banner-root"),this.root){this.root.addEventListener("probo-state",this.onStateChange);try{this.validate(this.root.bannerConfig)}catch{this.root.addEventListener("probo-ready",this.onReady,{once:!0})}this.root.state==="banner"&&(this.hidden=!1)}}disconnectedCallback(){this.root&&(this.root.removeEventListener("probo-state",this.onStateChange),this.root.removeEventListener("probo-ready",this.onReady))}validate(t){let e=t.texts??{},r=["probo-accept-button"];e.button_reject_all&&r.push("probo-reject-button"),e.button_customize&&r.push("probo-customize-button");let i=[];for(let s of r)this.querySelector(s)||i.push(s);i.length>0&&(this.warn(`<probo-banner> is missing required children: ${i.join(", ")}`),this.emitValidation(i))}};var X=class extends u{constructor(){super(...arguments);this.root=null;this.handleClick=t=>{}}connectedCallback(){this.root=this.findAncestor("probo-cookie-banner-root"),this.addEventListener("click",this.handleClick)}disconnectedCallback(){this.removeEventListener("click",this.handleClick)}},Z=class extends X{constructor(){super(...arguments);this.textKey="";this.onReady=t=>{let e=t.detail.config;this.applyVisibility(e)}}connectedCallback(){if(super.connectedCallback(),this.root)try{this.applyVisibility(this.root.bannerConfig)}catch{this.root.addEventListener("probo-ready",this.onReady,{once:!0})}}disconnectedCallback(){super.disconnectedCallback(),this.root&&this.root.removeEventListener("probo-ready",this.onReady)}applyVisibility(t){(t.texts??{})[this.textKey]||(this.hidden=!0)}},T=class extends X{constructor(){super(...arguments);this.handleClick=()=>{this.root&&(this.root.client.acceptAll(),this.root.setState("hidden"),this.root.dispatchEvent(new CustomEvent("probo-consent",{bubbles:!0,composed:!0,detail:{action:"ACCEPT_ALL"}})))}}},O=class extends Z{constructor(){super(...arguments);this.textKey="button_reject_all";this.handleClick=()=>{this.root&&(this.root.client.rejectAll(),this.root.setState("hidden"),this.root.dispatchEvent(new CustomEvent("probo-consent",{bubbles:!0,composed:!0,detail:{action:"REJECT_ALL"}})))}}},P=class extends Z{constructor(){super(...arguments);this.textKey="button_customize";this.handleClick=()=>{this.root&&this.root.setState("panel")}}};var D=class extends u{get categoryName(){return this.getAttribute("name")??"Other"}get categorySlug(){return this.getAttribute("slug")??this.categoryName.toLowerCase()}get kind(){return this.getAttribute("kind")??"NORMAL"}get cookies(){try{return JSON.parse(this.getAttribute("cookies")??"[]")}catch{return[]}}};var I=class extends u{constructor(){super(...arguments);this.root=null;this.template=null;this.onReady=t=>{let{config:e}=t.detail;this.stamp(e.categories)}}connectedCallback(){if(this.template=this.querySelector("template"),!this.template){this.warn("<probo-category-list> requires a <template> child");return}if(this.root=this.findAncestor("probo-cookie-banner-root"),!!this.root){this.validateTemplate();try{let t=this.root.bannerConfig;this.stamp(t.categories)}catch{this.root.addEventListener("probo-ready",this.onReady,{once:!0})}}}disconnectedCallback(){this.root&&this.root.removeEventListener("probo-ready",this.onReady)}stamp(t){if(this.template)for(let e of t){let r=document.createElement("probo-category");r.setAttribute("name",e.name),r.setAttribute("slug",e.slug),r.setAttribute("kind",e.kind),r.setAttribute("description",e.description),r.setAttribute("cookies",JSON.stringify(e.cookies));let i=this.template.content.cloneNode(!0);this.fillSlots(i,{name:e.name,description:e.description}),e.cookies&&e.cookies.length>0||(i.querySelector("[data-action=toggle-cookies]")?.remove(),i.querySelector("probo-cookie-list")?.remove()),r.appendChild(i),this.appendChild(r)}}validateTemplate(){if(!this.template)return;let t=this.template.content,e=[];t.querySelector("probo-category-toggle")||e.push("probo-category-toggle"),t.querySelector("probo-cookie-list")||e.push("probo-cookie-list"),e.length>0&&(this.warn(`<probo-category-list> template is missing required elements: ${e.join(", ")}`),this.emitValidation(e))}fillSlots(t,e){for(let[r,i]of Object.entries(e)){let s=t.querySelectorAll(`[data-slot="${r}"]`);for(let a of s)a.textContent=i}}};var B=class extends u{constructor(){super(...arguments);this.root=null;this.category=null;this.checkbox=null;this.handleChange=()=>{!this.checkbox||!this.category||!this.root||this.root.updateDraft(this.category.categorySlug,this.checkbox.checked)}}connectedCallback(){this.root=this.findAncestor("probo-cookie-banner-root"),this.category=this.findAncestor("probo-category"),this.scheduleValidation(()=>this.setup())}disconnectedCallback(){this.checkbox&&this.checkbox.removeEventListener("change",this.handleChange)}setup(){if(this.checkbox=this.querySelector("input[type=checkbox]"),!this.checkbox){let s=document.createElement("input");s.type="checkbox",s.part.add("toggle"),this.appendChild(s),this.checkbox=s}if(!this.category||!this.root)return;let t=this.category.categoryName,e=this.category.categorySlug;if(this.checkbox.setAttribute("aria-label",t),this.category.kind==="NECESSARY"){this.checkbox.checked=!0,this.checkbox.disabled=!0;return}let i=this.root.consentDraft;this.checkbox.checked=!!i[e],this.checkbox.addEventListener("change",this.handleChange),this.root&&this.root.addEventListener("probo-state",s=>{let{state:a}=s.detail;a==="panel"&&this.checkbox&&this.category&&this.root&&(this.checkbox.checked=!!this.root.consentDraft[this.category.categorySlug])})}};function lt(n){return n.split("-")[0].toLowerCase()}function wt(n){if(n)return lt(n);if(typeof document<"u"&&document.documentElement){let o=document.documentElement.lang;if(o)return lt(o)}return typeof navigator<"u"&&navigator.language?lt(navigator.language):""}function S(n,o){return n.replace(/\{\{(\w+)\}\}/g,(t,e)=>o[e]??"")}var Et={en:{label_type:"Type: {{value}}",label_description:"Description: {{value}}",label_duration:"Duration: {{value}}"},de:{label_type:"Typ: {{value}}",label_description:"Beschreibung: {{value}}",label_duration:"Dauer: {{value}}"},es:{label_type:"Tipo: {{value}}",label_description:"Descripci\xF3n: {{value}}",label_duration:"Duraci\xF3n: {{value}}"},fr:{label_type:"Type : {{value}}",label_description:"Description : {{value}}",label_duration:"Dur\xE9e : {{value}}"},id:{label_type:"Tipe: {{value}}",label_description:"Deskripsi: {{value}}",label_duration:"Durasi: {{value}}"},it:{label_type:"Tipo: {{value}}",label_description:"Descrizione: {{value}}",label_duration:"Durata: {{value}}"},ja:{label_type:"\u30BF\u30A4\u30D7\uFF1A{{value}}",label_description:"\u8AAC\u660E\uFF1A{{value}}",label_duration:"\u671F\u9593\uFF1A{{value}}"},ko:{label_type:"\uC720\uD615: {{value}}",label_description:"\uC124\uBA85: {{value}}",label_duration:"\uAE30\uAC04: {{value}}"},pl:{label_type:"Typ: {{value}}",label_description:"Opis: {{value}}",label_duration:"Czas trwania: {{value}}"},pt:{label_type:"Tipo: {{value}}",label_description:"Descri\xE7\xE3o: {{value}}",label_duration:"Dura\xE7\xE3o: {{value}}"},tr:{label_type:"T\xFCr: {{value}}",label_description:"A\xE7\u0131klama: {{value}}",label_duration:"S\xFCre: {{value}}"},uk:{label_type:"\u0422\u0438\u043F: {{value}}",label_description:"\u041E\u043F\u0438\u0441: {{value}}",label_duration:"\u0422\u0440\u0438\u0432\u0430\u043B\u0456\u0441\u0442\u044C: {{value}}"},zh:{label_type:"\u7C7B\u578B\uFF1A{{value}}",label_description:"\u63CF\u8FF0\uFF1A{{value}}",label_duration:"\u65F6\u957F\uFF1A{{value}}"}};function Rt(n){return Et[n]??Et.en}var ne={COOKIE:"Cookie",LOCAL_STORAGE:"Local storage",SESSION_STORAGE:"Session storage",INDEXED_DB:"IndexedDB",CACHE_STORAGE:"Cache storage"};function At(n){return ne[n]??n}var St={en:"Opt-Out Preference Signal Honored",de:"Opt-Out-Pr\xE4ferenzsignal beachtet",es:"Se\xF1al de exclusi\xF3n respetada",fr:"Signal de pr\xE9f\xE9rence de d\xE9sinscription respect\xE9",id:"Sinyal Preferensi Opt-Out Dihormati",it:"Segnale di preferenza di rinuncia rispettato",ja:"\u30AA\u30D7\u30C8\u30A2\u30A6\u30C8\u8A2D\u5B9A\u30B7\u30B0\u30CA\u30EB\u304C\u6709\u52B9\u3067\u3059",ko:"\uC635\uD2B8\uC544\uC6C3 \uAE30\uBCF8 \uC124\uC815 \uC2E0\uD638\uAC00 \uC801\uC6A9\uB418\uC5C8\uC2B5\uB2C8\uB2E4",pl:"Sygna\u0142 preferencji rezygnacji uhonorowany",pt:"Sinal de prefer\xEAncia de exclus\xE3o respeitado",tr:"\xC7\u0131k\u0131\u015F Tercihi Sinyali Onurland\u0131r\u0131ld\u0131",uk:"\u0421\u0438\u0433\u043D\u0430\u043B \u043F\u0435\u0440\u0435\u0432\u0430\u0433\u0438 \u0432\u0456\u0434\u043C\u043E\u0432\u0438 \u0432\u0440\u0430\u0445\u043E\u0432\u0430\u043D\u043E",zh:"\u9000\u51FA\u504F\u597D\u4FE1\u53F7\u5DF2\u751F\u6548"};function Lt(n){return St[n]??St.en}var re=new Set(["LOCAL_STORAGE","INDEXED_DB","CACHE_STORAGE"]),dt={en:{duration_year_one:"{{count}} year",duration_year_other:"{{count}} years",duration_month_one:"{{count}} month",duration_month_other:"{{count}} months",duration_week_one:"{{count}} week",duration_week_other:"{{count}} weeks",duration_day_one:"{{count}} day",duration_day_other:"{{count}} days",duration_hour_one:"{{count}} hour",duration_hour_other:"{{count}} hours",duration_minute_one:"{{count}} minute",duration_minute_other:"{{count}} minutes",duration_second_one:"{{count}} second",duration_second_other:"{{count}} seconds",duration_session:"session",duration_persistent:"persistent"},fr:{duration_year_one:"{{count}} an",duration_year_other:"{{count}} ans",duration_month_one:"{{count}} mois",duration_month_other:"{{count}} mois",duration_week_one:"{{count}} semaine",duration_week_other:"{{count}} semaines",duration_day_one:"{{count}} jour",duration_day_other:"{{count}} jours",duration_hour_one:"{{count}} heure",duration_hour_other:"{{count}} heures",duration_minute_one:"{{count}} minute",duration_minute_other:"{{count}} minutes",duration_second_one:"{{count}} seconde",duration_second_other:"{{count}} secondes",duration_session:"session",duration_persistent:"persistant"},de:{duration_year_one:"{{count}} Jahr",duration_year_other:"{{count}} Jahre",duration_month_one:"{{count}} Monat",duration_month_other:"{{count}} Monate",duration_week_one:"{{count}} Woche",duration_week_other:"{{count}} Wochen",duration_day_one:"{{count}} Tag",duration_day_other:"{{count}} Tage",duration_hour_one:"{{count}} Stunde",duration_hour_other:"{{count}} Stunden",duration_minute_one:"{{count}} Minute",duration_minute_other:"{{count}} Minuten",duration_second_one:"{{count}} Sekunde",duration_second_other:"{{count}} Sekunden",duration_session:"Sitzung",duration_persistent:"dauerhaft"},es:{duration_year_one:"{{count}} a\xF1o",duration_year_other:"{{count}} a\xF1os",duration_month_one:"{{count}} mes",duration_month_other:"{{count}} meses",duration_week_one:"{{count}} semana",duration_week_other:"{{count}} semanas",duration_day_one:"{{count}} d\xEDa",duration_day_other:"{{count}} d\xEDas",duration_hour_one:"{{count}} hora",duration_hour_other:"{{count}} horas",duration_minute_one:"{{count}} minuto",duration_minute_other:"{{count}} minutos",duration_second_one:"{{count}} segundo",duration_second_other:"{{count}} segundos",duration_session:"sesi\xF3n",duration_persistent:"persistente"}};function ie(n){return n&&dt[n]?dt[n]:dt.en}var se=[[365*24*3600,"duration_year",504*3600],[720*3600,"duration_month",48*3600],[168*3600,"duration_week",12*3600],[24*3600,"duration_day",2*3600],[3600,"duration_hour",300],[60,"duration_minute",5],[1,"duration_second",0]];function pt(n,o,t){let e=ie(o);if(n<=0)return t&&re.has(t)?e.duration_persistent:e.duration_session;let r=n,i=[];for(let[s,a,l]of se)if(r>=s-l){let c=Math.floor(r/s),p=r-c*s;p>=s-l?(c++,r=0):p<=l?r=0:r=p;let d=c===1?`${a}_one`:`${a}_other`;i.push(S(e[d],{count:String(c)}))}return i.length>0?i.join(", "):e.duration_session}function Tt(n){let o=n.indexOf("=");return o===-1?n.trim():n.substring(0,o).trim()}function Ot(n){let o=n.split(";").map(t=>t.trim());for(let t of o)if(t.toLowerCase().startsWith("max-age=")){let r=parseInt(t.substring(8),10);return isNaN(r)||r<=0?null:r}for(let t of o)if(t.toLowerCase().startsWith("expires=")){let r=t.substring(8),i=new Date(r);if(isNaN(i.getTime()))return null;let s=Math.round((i.getTime()-Date.now())/1e3);return s<=0?null:s}return null}function Pt(n){let o=n.split(";").map(t=>t.trim().toLowerCase());for(let t of o){if(t.startsWith("max-age=")&&parseInt(t.substring(8),10)<=0)return!0;if(t.startsWith("expires=")){let e=t.substring(8),r=new Date(e);if(!isNaN(r.getTime())&&r.getTime()<=Date.now())return!0}}return!1}function ae(n){let o=n.split(".");if(o.length<=1)return[];let t=[];for(let e=0;e<o.length-1;e++)t.push("."+o.slice(e).join("."));return t}function Dt(n){let o=ae(location.hostname);for(let t of n){document.cookie=`${t}=; path=/; max-age=0`;for(let e of o)document.cookie=`${t}=; path=/; domain=${e}; max-age=0`}}var It='<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',Bt='<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>',Nt='<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="8" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="11" r="1" fill="currentColor"/><circle cx="10" cy="15" r="1" fill="currentColor"/><circle cx="13" cy="7" r="1" fill="currentColor"/></svg>',Mt='<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',ce='<svg xmlns="http://www.w3.org/2000/svg" fill="none" height="14" viewBox="0 0 90 24" aria-hidden="true"><g clip-path="url(#pc)"><rect width="24" height="24" x=".85" fill="currentColor" rx="5.14"/><path stroke="#fff" stroke-width="3.53" d="M20.57 6.17c2.96 4.47-6.43 13.97-20.32 5.66"/><path stroke="url(#pg)" stroke-width="3.53" d="M20.57 6.17c2.96 4.47-6.43 13.97-20.32 5.66"/><path fill="#fff" d="M19.07 7.1a1.77 1.77 0 0 0 3-1.86l-1.5.93-1.5.94ZM8.82 25.18l1.71-.41c-2.3-9.67.01-14.66 2.54-16.83A6.25 6.25 0 0 1 17 6.33c1.22-.01 1.87.44 2.08.78l1.5-.94 1.5-.93c-1.1-1.74-3.16-2.46-5.13-2.44-2.03.03-4.26.81-6.17 2.45-3.9 3.35-6.16 9.92-3.67 20.33l1.72-.41Z"/></g><path fill="currentColor" d="M66.87 0v7.32a4.84 4.84 0 0 1 1.48-.74 5.63 5.63 0 0 1 1.76-.28c1.63 0 3 .55 4.1 1.68a5.5 5.5 0 0 1 1.67 4.06c0 1.6-.56 2.93-1.69 4.06a5.49 5.49 0 0 1-4.08 1.69 5.8 5.8 0 0 1-4.06-1.56 5.48 5.48 0 0 1-1.71-4.27V0h2.53Zm3.24 8.72a3.2 3.2 0 0 0-3.24 3.32 3.18 3.18 0 0 0 3.24 3.32 3.2 3.2 0 0 0 3.24-3.32c0-1.9-1.43-3.32-3.24-3.32ZM52.75 7.98a5.53 5.53 0 0 1 4.08-1.68c1.61 0 2.93.55 4.06 1.68a5.51 5.51 0 0 1 1.69 4.06c0 1.58-.55 2.95-1.69 4.09a5.59 5.59 0 0 1-4.06 1.66 5.64 5.64 0 0 1-4.08-1.66 5.53 5.53 0 0 1-1.69-4.09c0-1.6.56-2.92 1.7-4.06Zm.84 4.06c0 .98.32 1.77.93 2.4.63.6 1.4.92 2.31.92.92 0 1.7-.31 2.3-.92.63-.64.94-1.42.94-2.4 0-.97-.31-1.76-.94-2.37a3.03 3.03 0 0 0-2.3-.95 3.22 3.22 0 0 0-3.24 3.32ZM79.32 7.98A5.53 5.53 0 0 1 83.4 6.3c1.6 0 2.93.55 4.06 1.68a5.51 5.51 0 0 1 1.69 4.06c0 1.58-.56 2.95-1.7 4.09a5.59 5.59 0 0 1-4.05 1.66 5.64 5.64 0 0 1-4.08-1.66 5.53 5.53 0 0 1-1.69-4.09c0-1.6.55-2.92 1.69-4.06Zm.84 4.06c0 .98.32 1.77.92 2.4.64.6 1.4.92 2.32.92.92 0 1.69-.31 2.3-.92.63-.64.94-1.42.94-2.4 0-.97-.31-1.76-.95-2.37a3.03 3.03 0 0 0-2.29-.95 3.22 3.22 0 0 0-3.24 3.32ZM34.24 16.76V24h-2.53V12.12c0-1.82.58-3.24 1.71-4.27a5.87 5.87 0 0 1 4.06-1.55c1.56 0 2.98.55 4.08 1.68a5.51 5.51 0 0 1 1.7 4.06 5.66 5.66 0 0 1-5.77 5.75 5.43 5.43 0 0 1-2.88-.77l-.36-.26Zm3.24-8.04a3.2 3.2 0 0 0-3.24 3.32c0 1.9 1.42 3.32 3.24 3.32a3.2 3.2 0 0 0 3.24-3.32 3.2 3.2 0 0 0-3.24-3.32ZM47.4 17.65h-2.5v-6.7c0-3.23 1.82-4.52 4.27-4.52h.6v2.42h-.47c-1.26 0-1.9.71-1.9 2.1v6.7Z"/><defs><linearGradient id="pg" x1="18.77" x2="1.2" y1="13.56" y2="13.56" gradientUnits="userSpaceOnUse"><stop stop-color="#101E1C" stop-opacity="0"/><stop offset="1" stop-color="#fff"/></linearGradient><clipPath id="pc"><rect width="24" height="24" x=".85" fill="#fff" rx="5.14"/></clipPath></defs></svg>',ut=`<div class="branding" data-branding><a href="https://www.probo.com" target="_blank" rel="noopener noreferrer">Privacy by ${ce}</a></div>`;var f="data-cookie-consent",N="data-src",ft="data-href",m="data-cookie-consent-activated",_="data-cookie-consent-placeholder",M="data-cookie-consent-hidden",le=new Set(["SCRIPT","IFRAME","IMG","VIDEO","AUDIO","EMBED","OBJECT","LINK"]),Ht=new Set(["IFRAME","IMG","VIDEO","AUDIO","EMBED","OBJECT"]),de=`
+[${M}] {
+  display: none !important;
+}
+[${_}] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  background: var(--probo-bg, #ffffff);
+  color: var(--probo-text-secondary, #555555);
+  border: 1px dashed var(--probo-border, #e0e0e0);
+  border-radius: var(--probo-radius, 12px);
+  font-family: var(--probo-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);
+  font-size: var(--probo-font-size, 14px);
+  line-height: 1.5;
+  text-align: center;
+  box-sizing: border-box;
+  min-height: 120px;
+}
+[${_}] .probo-ph-icon {
+  color: var(--probo-text-secondary, #555555);
+}
+[${_}] .probo-ph-text {
+  margin: 0;
+}
+[${_}] .probo-ph-text strong {
+  font-weight: 600;
+}
+[${_}] .probo-ph-link {
+  background: none;
+  border: none;
+  color: var(--probo-accent, #1a1a1a);
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+}
+[${_}] .probo-ph-link:hover {
+  opacity: 0.8;
+}
+`,qt=!1;function pe(){if(qt)return;qt=!0;let n=document.createElement("style");n.id="probo-placeholder-styles",n.textContent=de,document.head.appendChild(n)}function tt(n){let o=document.createElement("span");return o.textContent=n,o.innerHTML}function Ut(n,o,t,e){if(n.hasAttribute(M))return;pe();let r=t||o,i=document.createElement("div");i.setAttribute(_,o);let s=n;s.className&&(i.className=s.className);let a=n.getAttribute("width");a&&(i.style.width=/^\d+$/.test(a)?a+"px":a);let l=n.getAttribute("height");l&&(i.style.height=/^\d+$/.test(l)?l+"px":l);let c=["width","height","min-width","min-height","max-width","max-height","aspect-ratio","margin","margin-top","margin-right","margin-bottom","margin-left","padding","padding-top","padding-right","padding-bottom","padding-left","box-sizing","position","top","right","bottom","left","inset"];if(s.style)for(let h of c){let g=s.style.getPropertyValue(h);g&&i.style.setProperty(h,g)}if(!(i.style.height||i.style.minHeight)){let h=window.getComputedStyle(s);h.height&&h.height!=="auto"&&h.height!=="0px"&&(i.style.height=h.height)}let d;e?.placeholder_text?d=e.placeholder_text.split("{{category}}").map(g=>tt(g)).join(`<strong>${tt(r)}</strong>`):d=`This content requires <strong>${tt(r)}</strong> cookies.`;let y=e?.placeholder_button??"Manage cookie preferences";i.innerHTML=[`<span class="probo-ph-icon">${Mt}</span>`,`<p class="probo-ph-text">${d}</p>`,`<button type="button" class="probo-ph-link">${tt(y)}</button>`].join(""),i.querySelector(".probo-ph-link").addEventListener("click",()=>{document.dispatchEvent(new CustomEvent("probo-open-preferences"))}),n.setAttribute(M,""),n.parentNode.insertBefore(i,n.nextSibling)}function ue(n){if(!n.hasAttribute(M))return;let o=n.nextElementSibling;o?.hasAttribute(_)&&o.remove(),n.removeAttribute(M)}function he(n){let o=document.createElement("script"),t=n.getAttribute("data-type"),e=n.getAttribute(f);for(let r of n.attributes)if(!(r.name==="type"||r.name==="data-type"||r.name===f)){if(r.name===N){o.setAttribute("src",r.value);continue}o.setAttribute(r.name,r.value)}t&&o.setAttribute("type",t),o.setAttribute(m,e||""),n.textContent&&(o.textContent=n.textContent),n.parentNode.replaceChild(o,n)}function ge(n){ue(n);let o=n.getAttribute(f),t=n.getAttribute(N);t&&(n.setAttribute("src",t),n.removeAttribute(N));let e=n.getAttribute(ft);e&&(n.setAttribute("href",e),n.removeAttribute(ft)),n.removeAttribute(f),n.setAttribute(m,o||"")}function ht(n,o){if(n.hasAttribute(m)||!le.has(n.tagName))return;let t=n.getAttribute(f);!t||!o[t]||(n instanceof HTMLScriptElement?he(n):ge(n))}function fe(n){let o=n.getAttribute(m),t=n.getAttribute("type"),e=document.createElement("script");for(let i of n.attributes)i.name===m||i.name==="type"||i.name==="src"||e.setAttribute(i.name,i.value);let r=n.getAttribute("src");r&&e.setAttribute(N,r),t&&e.setAttribute("data-type",t),e.setAttribute("type","text/plain"),o&&e.setAttribute(f,o),n.textContent&&(e.textContent=n.textContent),n.parentNode.replaceChild(e,n)}function be(n,o,t){let e=n.getAttribute(m),r=n.getAttribute("src");r&&(n.setAttribute(N,r),n.removeAttribute("src"));let i=n.getAttribute("href");i&&(n.setAttribute(ft,i),n.removeAttribute("href")),e&&n.setAttribute(f,e),n.removeAttribute(m),e&&Ht.has(n.tagName)&&Ut(n,e,o,t)}function $t(n,o,t,e){let r=document.querySelectorAll(`[${m}]`),i=new Set;for(let s of r){let a=s.getAttribute(m);if(!a||n[a])continue;s instanceof HTMLScriptElement?fe(s):be(s,t[a],e);let l=o[a];if(l)for(let c of l)i.add(c)}i.size>0&&Dt([...i])}function gt(n,o,t,e){let r=n.getAttribute(f);!r||o[r]||Ht.has(n.tagName)&&Ut(n,r,t[r],e)}function bt(n,o,t){let e=document.querySelectorAll(`[${f}]`);for(let i of e)ht(i,n),gt(i,n,o,t);let r=new MutationObserver(i=>{for(let s of i)for(let a of s.addedNodes){if(!(a instanceof Element))continue;a.hasAttribute(f)&&(ht(a,n),gt(a,n,o,t));let l=a.querySelectorAll(`[${f}]`);for(let c of l)ht(c,n),gt(c,n,o,t)}});return r.observe(document.documentElement,{childList:!0,subtree:!0}),r}var v="probo_consent";function zt(){try{let n=`${v}=`,o=document.cookie.split("; ").find(t=>t.startsWith(n));return o?JSON.parse(decodeURIComponent(o.substring(n.length))):null}catch{return null}}function mt(n,o){let t=o*86400,e=encodeURIComponent(JSON.stringify(n));document.cookie=`${v}=${e}; path=/; max-age=${t}; SameSite=Lax`}var me=/(?:chrome|moz|safari-web)-extension:\/\//,ve=new Set(["chrome-extension:","moz-extension:","safari-web-extension:"]),ye=(()=>{if(typeof location<"u"&&ve.has(location.protocol))return!0;if(typeof document<"u"){let n=document.currentScript instanceof HTMLScriptElement?document.currentScript.src:null;if(n&&me.test(n))return!0}return!1})();function w(){return ye}var _e=/https?:\/\/[^\s)'"`]+/,xe=/:\d+(?::\d+)?$/;function jt(n){let o=n.replace(xe,"");try{let t=new URL(o);return t.protocol!=="http:"&&t.protocol!=="https:"?null:t.origin+t.pathname}catch{return null}}var ke=(()=>{let n=new Set;if(typeof document<"u"&&document.currentScript instanceof HTMLScriptElement&&document.currentScript.src){let t=jt(document.currentScript.src);t&&n.add(t)}let o=new Error().stack;if(o){let t=o.match(_e);if(t){let e=jt(t[0]);e&&n.add(e)}}return n})();function et(){return ke}var Ce=/(?:chrome|moz|safari-web)-extension:\/\//,Ft=/(?:https?|(?:chrome|moz|safari-web)-extension):\/\/[^\s)'"`]+/g,Ee=/:\d+(?::\d+)?$/,Wt=1024;function R(n){let o=new Error().stack;if(!o)return{url:null,fromExtension:!1};let t=!1,e=null,r=et();Ft.lastIndex=0;let i;for(;(i=Ft.exec(o))!==null;){let s=i[0];if(Ce.test(s)){t=!0;continue}if(e!==null)continue;let a=s.replace(Ee,""),l;try{l=new URL(a)}catch{continue}if(l.origin===n||l.origin===location.origin)continue;let c=l.origin+l.pathname;r.has(c)||(e=c.length>Wt?c.slice(0,Wt):c)}return{url:e,fromExtension:t}}var q=class{constructor(o,t,e){this.originalDescriptor=null;this.cookieStoreHandler=null;this.queue=o,this.apiOrigin=t,this.knownNames=e}start(){if(this.queue.onNotFound(()=>this.stop()),w())return;let o=Object.getOwnPropertyDescriptor(Document.prototype,"cookie")??Object.getOwnPropertyDescriptor(HTMLDocument.prototype,"cookie");if(!o?.set||!o?.get)return;this.originalDescriptor=o;let t=this,e=o.get,r=o.set;Object.defineProperty(document,"cookie",{configurable:!0,get(){return e.call(this)},set(i){r.call(this,i),t.onCookieSet(i)}}),this.scanExisting(),this.observeCookieStore()}stop(){this.cookieStoreHandler&&typeof cookieStore<"u"&&(cookieStore.removeEventListener("change",this.cookieStoreHandler),this.cookieStoreHandler=null),this.originalDescriptor&&(Object.defineProperty(document,"cookie",this.originalDescriptor),this.originalDescriptor=null)}onCookieSet(o){if(Pt(o))return;let t=Tt(o);if(!t||this.knownNames.has(t))return;let e=Ot(o),{url:r,fromExtension:i}=R(this.apiOrigin),s={name:t,max_age_seconds:e,source:i?"extension":"script"};r&&(s.initiator_url=r),this.queue.reportCookie(s)}scanExisting(){let o=document.cookie;if(o)for(let t of o.split(";")){let e=t.split("=")[0]?.trim();!e||this.knownNames.has(e)||this.queue.reportCookie({name:e,max_age_seconds:null,source:"pre-existing"})}}observeCookieStore(){typeof cookieStore>"u"||typeof cookieStore.addEventListener!="function"||(this.cookieStoreHandler=o=>{for(let t of o.changed){if(t.name===void 0||this.knownNames.has(t.name))continue;let e=t.expires?Math.round((t.expires-Date.now())/1e3):null;this.queue.reportCookie({name:t.name,max_age_seconds:e&&e>0?e:null,source:"http"})}},cookieStore.addEventListener("change",this.cookieStoreHandler))}};var Vt="probo_consent:",H=class{constructor(o,t){this.originalSetItem=null;this.originalIDBOpen=null;this.originalCachesOpen=null;this.queue=o,this.apiOrigin=t}start(){this.queue.onNotFound(()=>this.stop()),this.wrapStorage(),this.wrapIndexedDB(),this.wrapCacheStorage(),!w()&&(this.scanExisting(),this.scanCacheStorage())}stop(){this.originalSetItem&&(Storage.prototype.setItem=this.originalSetItem,this.originalSetItem=null),this.originalIDBOpen&&(IDBFactory.prototype.open=this.originalIDBOpen,this.originalIDBOpen=null),this.originalCachesOpen&&typeof caches<"u"&&(caches.open=this.originalCachesOpen,this.originalCachesOpen=null)}wrapStorage(){let o=Storage.prototype.setItem;this.originalSetItem=o;let t=this;Storage.prototype.setItem=function(e,r){o.call(this,e,r);let i=this===localStorage?"local_storage":"session_storage";t.onStorageWrite(e,r,i)}}wrapIndexedDB(){if(typeof indexedDB>"u")return;let o=IDBFactory.prototype.open;this.originalIDBOpen=o;let t=this;IDBFactory.prototype.open=function(e,r){let i=o.call(this,e,r);return t.onIndexedDBOpen(e),i}}wrapCacheStorage(){if(typeof caches>"u")return;let o=caches.open.bind(caches);this.originalCachesOpen=o;let t=this;caches.open=function(e){let{fromExtension:r}=R(t.apiOrigin);return t.onCacheStorageOpen(e,r?"extension":"script"),o(e)}}onStorageWrite(o,t,e){if(o.startsWith(Vt))return;let{url:r,fromExtension:i}=R(this.apiOrigin),s={key:o,storage_type:e,value_size:t.length*2,source:i?"extension":"script"};r&&(s.initiator_url=r),this.queue.reportStorage(s)}onIndexedDBOpen(o){let{fromExtension:t}=R(this.apiOrigin);this.queue.reportStorage({key:o,storage_type:"indexed_db",value_size:null,source:t?"extension":"script"})}onCacheStorageOpen(o,t){this.queue.reportStorage({key:o,storage_type:"cache_storage",value_size:null,source:t})}scanCacheStorage(){typeof caches>"u"||caches.keys().then(o=>{for(let t of o)this.onCacheStorageOpen(t,"pre-existing")}).catch(()=>{})}scanExisting(){this.scanStorage(localStorage,"local_storage"),this.scanStorage(sessionStorage,"session_storage")}scanStorage(o,t){for(let e=0;e<o.length;e++){let r=o.key(e);if(!r||r.startsWith(Vt))continue;let i=o.getItem(r);this.queue.reportStorage({key:r,storage_type:t,value_size:i?i.length*2:null,source:"pre-existing"})}}};function Se(n){switch(n){case"script":return"script";case"iframe":return"iframe";case"img":case"image":case"imageset":case"input":return"image";case"css":case"link":return"stylesheet";case"font":return"font";case"beacon":case"ping":return"beacon";case"fetch":case"xmlhttprequest":return"fetch";case"video":case"audio":case"track":case"embed":case"object":return"media";default:return null}}var U=class{constructor(o,t){this.observer=null;this.perfObserver=null;this.originalSWRegister=null;this.queue=o,this.pageOrigin=location.origin,this.apiOrigin=t}start(){this.queue.onNotFound(()=>this.stop()),this.observeMutations(),this.observePerformance(),this.wrapServiceWorker(),!w()&&(this.scanExisting(),this.scanServiceWorkers())}stop(){this.observer&&(this.observer.disconnect(),this.observer=null),this.perfObserver&&(this.perfObserver.disconnect(),this.perfObserver=null),this.originalSWRegister&&typeof navigator<"u"&&navigator.serviceWorker&&(navigator.serviceWorker.register=this.originalSWRegister,this.originalSWRegister=null)}scanExisting(){for(let o of document.querySelectorAll("script[src]"))this.processResource(o.src,"script");for(let o of document.querySelectorAll("iframe[src]"))this.processResource(o.src,"iframe")}observeMutations(){this.observer=new MutationObserver(o=>{for(let t of o)for(let e of t.addedNodes)if(e instanceof HTMLElement){e instanceof HTMLScriptElement&&e.src?this.processResource(e.src,"script"):e instanceof HTMLIFrameElement&&e.src&&this.processResource(e.src,"iframe");for(let r of e.querySelectorAll("script[src]"))this.processResource(r.src,"script");for(let r of e.querySelectorAll("iframe[src]"))this.processResource(r.src,"iframe")}}),this.observer.observe(document.documentElement,{childList:!0,subtree:!0})}observePerformance(){if(!(typeof PerformanceObserver>"u"))try{this.perfObserver=new PerformanceObserver(o=>{for(let t of o.getEntries()){let e=Se(t.initiatorType);e&&this.processResource(t.name,e)}}),this.perfObserver.observe({type:"resource",buffered:!0})}catch{this.perfObserver=null}}wrapServiceWorker(){if(typeof navigator>"u"||!navigator.serviceWorker)return;let o=navigator.serviceWorker,t=o.register.bind(o);this.originalSWRegister=t;let e=this;o.register=function(r,i){let s=typeof r=="string"?r:r.toString();return e.processResource(s,"service_worker"),t(r,i)}}scanServiceWorkers(){typeof navigator>"u"||!navigator.serviceWorker||navigator.serviceWorker.getRegistrations().then(o=>{for(let t of o){let e=t.active?.scriptURL??t.installing?.scriptURL??t.waiting?.scriptURL;e&&this.processResource(e,"service_worker")}}).catch(()=>{})}processResource(o,t){let e;try{e=new URL(o,location.href)}catch{return}if(e.protocol!=="http:"&&e.protocol!=="https:"||e.origin===this.apiOrigin||t!=="service_worker"&&e.origin===this.pageOrigin)return;let r=e.origin+e.pathname;et().has(r)||this.queue.reportResource({url:r,resource_type:t})}};var x=class extends Error{constructor(o,t,e){super(e),this.name="ApiError",this.status=o,this.code=t}},ot=class extends x{constructor(o){super(400,"bad_request",o),this.name="BadRequestError"}},k=class extends x{constructor(o){super(404,"not_found",o),this.name="NotFoundError"}},nt=class extends x{constructor(o){super(500,"internal_server_error",o),this.name="InternalServerError"}},C=class extends Error{constructor(o,t){super(o),this.name="NetworkError",this.cause=t}},$=class extends C{constructor(){super("request timed out"),this.name="TimeoutError"}};var we=5e3,Re=3,Ae=500;function Le(n){return n===429||n>=500}function Te(n){return new Promise(o=>setTimeout(o,n))}function Oe(n){let o=Ae*Math.pow(2,n);return o+Math.random()*o}function Pe(n,o){switch(n){case 400:throw new ot(o.message);case 404:throw new k(o.message);case 500:throw new nt(o.message);default:throw new x(n,o.error,o.message)}}async function De(n){try{return await n.json()}catch{return{error:"unknown",message:n.statusText||"unknown error"}}}async function Ie(n,o,t){let e=new AbortController,r=o.signal;if(r?.aborted)throw new C("request aborted",r.reason);let i=()=>e.abort(r.reason);r?.addEventListener("abort",i,{once:!0});let s=setTimeout(()=>e.abort("timeout"),t);try{return await fetch(n,{...o,signal:e.signal})}catch(a){throw e.signal.aborted&&e.signal.reason==="timeout"?new $:r?.aborted?new C("request aborted",a):new C("network request failed",a)}finally{clearTimeout(s),r?.removeEventListener("abort",i)}}async function E(n,o={}){let{method:t="GET",headers:e,body:r,timeout:i=we,signal:s}=o,a={method:t,mode:"cors",credentials:"omit",headers:{Accept:"application/json","X-SDK-Version":"0.10.0",...r!==void 0&&{"Content-Type":"application/json"},...e},...r!==void 0&&{body:JSON.stringify(r)},...s&&{signal:s}},l;for(let c=0;c<Re;c++){c>0&&await Te(Oe(c-1));let p;try{p=await Ie(n,a,i)}catch(d){if(s?.aborted)throw d;if(d instanceof $||d instanceof C){l=d;continue}throw d}if(p.ok)return p.status===204?void 0:await p.json();if(!Le(p.status)){let d=await De(p);Pe(p.status,d)}l=new x(p.status,"server_error",`server returned ${p.status}`)}throw l}var Be=2e3,Ne=100,z=class{constructor(o){this.pending=new Map;this.reported=new Set;this.notFoundListeners=new Set;this.timer=null;this.flushing=!1;this.stopped=!1;this.pageHideHandler=null;this.visibilityHandler=null;this.reportUrl=o,this.attachLifecycleListeners()}reportCookie(o){this.enqueue(`c:${o.name}`,{kind:"cookie",entry:o})}reportStorage(o){this.enqueue(`s:${o.storage_type}:${o.key}`,{kind:"storage",entry:o})}reportResource(o){this.enqueue(`r:${o.resource_type}:${o.url}`,{kind:"resource",entry:o})}onNotFound(o){this.notFoundListeners.add(o)}stop(){this.stopped||(this.stopped=!0,this.timer&&(clearTimeout(this.timer),this.timer=null),this.detachLifecycleListeners(),this.pending.size>0&&this.flushSync())}enqueue(o,t){this.stopped||this.reported.has(o)||(this.reported.add(o),this.pending.set(o,t),this.scheduleFlush())}scheduleFlush(){this.timer||this.flushing||this.stopped||(this.timer=setTimeout(()=>{this.timer=null,this.flush()},Be))}flush(){if(this.flushing||this.stopped||this.pending.size===0)return;let{keys:o,body:t}=this.takeBatch();this.flushing=!0,E(this.reportUrl,{method:"POST",body:t}).then(()=>{for(let e of o)this.pending.delete(e)}).catch(e=>{e instanceof k&&(this.pending.clear(),this.notifyNotFound())}).finally(()=>{this.flushing=!1,!this.stopped&&this.pending.size>0&&this.scheduleFlush()})}takeBatch(){let o=[],t=[],e=[],r=[];for(let[s,a]of this.pending){switch(o.push(s),a.kind){case"cookie":t.push(a.entry);break;case"storage":e.push(a.entry);break;case"resource":r.push(a.entry);break}if(o.length>=Ne)break}let i={};return t.length>0&&(i.cookies=t),e.length>0&&(i.storage=e),r.length>0&&(i.resources=r),{keys:o,body:i}}notifyNotFound(){for(let o of this.notFoundListeners)try{o()}catch{}}attachLifecycleListeners(){typeof window>"u"||(this.pageHideHandler=()=>this.flushSync(),window.addEventListener("pagehide",this.pageHideHandler,{capture:!0}),typeof document<"u"&&(this.visibilityHandler=()=>{document.visibilityState==="hidden"&&this.flushSync()},document.addEventListener("visibilitychange",this.visibilityHandler)))}detachLifecycleListeners(){this.pageHideHandler&&typeof window<"u"&&(window.removeEventListener("pagehide",this.pageHideHandler,{capture:!0}),this.pageHideHandler=null),this.visibilityHandler&&typeof document<"u"&&(document.removeEventListener("visibilitychange",this.visibilityHandler),this.visibilityHandler=null)}flushSync(){if(this.pending.size===0)return;let{keys:o,body:t}=this.takeBatch(),e=JSON.stringify(t);if(typeof navigator<"u"&&typeof navigator.sendBeacon=="function"){let r=new Blob([e],{type:"application/json"}),i=!1;try{i=navigator.sendBeacon(this.reportUrl.toString(),r)}catch{i=!1}if(i){for(let s of o)this.pending.delete(s);return}}if(!this.flushing&&typeof fetch=="function"){this.flushing=!0;try{fetch(this.reportUrl.toString(),{method:"POST",mode:"cors",credentials:"omit",keepalive:!0,headers:{"Content-Type":"application/json",Accept:"application/json","X-SDK-Version":"0.10.0"},body:e}).then(r=>{if(r.ok)for(let i of o)this.pending.delete(i)}).catch(()=>{}).finally(()=>{this.flushing=!1,!this.stopped&&this.pending.size>0&&this.scheduleFlush()})}catch{this.flushing=!1}}}};var j=class{hasMapping(o){return o.some(t=>t.gcm_consent_types&&t.gcm_consent_types.length>0)}getConsentFn(){let o=window;if(typeof o.gtag=="function")return o.gtag;Array.isArray(o.dataLayer)||(o.dataLayer=[]);let t=o.dataLayer;return function(){t.push(arguments)}}bootstrap(){this.getConsentFn()("consent","default",{ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied",analytics_storage:"denied",functionality_storage:"denied",personalization_storage:"denied",security_storage:"denied"})}setDefaults(o){if(!this.hasMapping(o))return;let t=this.getConsentFn(),e={};for(let r of o)if(r.gcm_consent_types)for(let i of r.gcm_consent_types)e[i]="denied";Object.keys(e).length>0&&t("consent","default",e)}update(o,t){if(!this.hasMapping(o))return;let e=this.getConsentFn(),r={};for(let i of o){if(!i.gcm_consent_types)continue;let s=!!t[i.slug];for(let a of i.gcm_consent_types)r[a]=s?"granted":"denied"}Object.keys(r).length>0&&e("consent","update",r)}};function Gt(){return[new j]}var Qt=10,Kt=720*60*60*1e3;function vt(n){return`${v}:${n}:queue`}function yt(n){try{let o=localStorage.getItem(vt(n));return o?JSON.parse(o):[]}catch{return[]}}function _t(n,o){try{o.length===0?localStorage.removeItem(vt(n)):localStorage.setItem(vt(n),JSON.stringify(o))}catch{}}function Yt(n,o,t){let e=yt(n);e.push({url:o,body:t,timestamp:Date.now()}),e.length>Qt&&e.splice(0,e.length-Qt),_t(n,e)}async function rt(n){let o=Date.now(),t=yt(n);if(t.length===0)return;if(t=t.filter(a=>o-a.timestamp<Kt),t.length===0){_t(n,[]);return}let e=[];for(let a of t)try{await E(a.url,{method:"POST",body:a.body}),e.push(a.timestamp)}catch{}let r=new Set(e),i=o-Kt,s=yt(n);_t(n,s.filter(a=>!r.has(a.timestamp)&&a.timestamp>i))}function xt(n){let o=`${v}:${n}:vid`;try{return localStorage.getItem(o)}catch{return null}}function Jt(n){let o=xt(n);if(o)return o;let t=`${v}:${n}:vid`,e=new Uint8Array(16);crypto.getRandomValues(e);let r=Array.from(e,i=>i.toString(16).padStart(2,"0")).join("");try{localStorage.setItem(t,r)}catch{}return r}var it=class{constructor(o){this.bannerConfig=null;this.consent=null;this.observer=null;this.detectors=[];this.reportQueue=null;this._gpcApplied=!1;let t=o.baseUrl;t.endsWith("/")||(t+="/"),this.baseUrl=new URL(t),this.bannerId=o.bannerId,this.visitorId=xt(o.bannerId),this.lang=wt(o.lang),this.integrations=Gt()}get loaded(){return this.bannerConfig!==null}async load(){for(let e of this.integrations)e.bootstrap();let o=new URL(`${this.bannerId}/config`,this.baseUrl);this.lang&&o.searchParams.set("lang",this.lang);let t;try{t=await E(o)}catch{this.startDetector(),this.observer&&this.observer.disconnect(),this.observer=bt({},{}),b()._setReady({},!1);return}this.bannerConfig=t;for(let e of this.integrations)e.setDefaults(t.categories);if(this.startDetector(t),this.visitorId){let e=zt();if(e&&e.bid===this.bannerId&&e.v===t.version&&e.vid===this.visitorId){this.consent={visitor_id:e.vid,version:e.v,action:e.action,consent_data:e.data,created_at:""},this._gpcApplied=e.action==="GPC",this.activate(e.data),b()._setReady(e.data,!0),rt(this.bannerId);return}let r=new URL(`${this.bannerId}/consents/${this.visitorId}`,this.baseUrl),i=await E(r).catch(s=>{if(s instanceof k)return null;throw s});i&&i.version===t.version?(this.consent=i,this._gpcApplied=i.action==="GPC",mt({bid:this.bannerId,v:i.version,vid:i.visitor_id,action:i.action,data:i.consent_data},t.consent_expiry_days),this.activate(i.consent_data),b()._setReady(i.consent_data,!0)):this.consent=null}if(!this.consent&&this.gpcDetected){let e={};for(let r of t.categories)e[r.slug]=r.kind==="NECESSARY";b()._setReady(e,!1),this.gpc(),this._gpcApplied=!0}else if(!this.consent){let e=this.buildDefaultConsentData();this.activate(e),b()._setReady(e,!1)}rt(this.bannerId)}get config(){if(!this.bannerConfig)throw new Error("CookieBannerClient not loaded: call load() first");return this.bannerConfig}get visitorConsent(){return this.consent}get hasConsent(){return this.consent!==null}get gpcDetected(){return typeof navigator<"u"&&navigator.globalPrivacyControl===!0}get gpcApplied(){return this._gpcApplied}get regulation(){return this.bannerConfig?.regulation??null}gpc(){let o=this.config,t={};for(let e of o.categories)t[e.slug]=e.kind==="NECESSARY";this.recordConsent("GPC",t)}acceptAll(){let o=this.config,t={};for(let e of o.categories)t[e.slug]=!0;this.recordConsent("ACCEPT_ALL",t)}rejectAll(){let o=this.config,t={};for(let e of o.categories)t[e.slug]=e.kind==="NECESSARY";this.recordConsent("REJECT_ALL",t)}customize(o){let t=this.config,e={};for(let r of t.categories)e[r.slug]=r.kind==="NECESSARY"||!!o[r.slug];this.recordConsent("CUSTOMIZE",e)}ensureVisitorId(){return this.visitorId||(this.visitorId=Jt(this.bannerId)),this.visitorId}recordConsent(o,t){this._gpcApplied=o==="GPC";let e=this.config,r=this.ensureVisitorId();this.consent={visitor_id:r,version:e.version,action:o,consent_data:t,created_at:""},mt({bid:this.bannerId,v:e.version,vid:r,action:o,data:t},e.consent_expiry_days),this.activate(t),b()._notify(t);let i=new URL(`${this.bannerId}/consents`,this.baseUrl),s={visitor_id:r,version:e.version,action:o,consent_data:t};E(i,{method:"POST",body:s}).then(()=>{rt(this.bannerId)}).catch(()=>Yt(this.bannerId,i.href,s))}buildDefaultConsentData(){let o=this.config,t={};for(let e of o.categories)t[e.slug]=o.consent_mode==="OPT_OUT"||e.kind==="NECESSARY";return t}activate(o){for(let i of this.integrations)i.update(this.config.categories,o);let t={},e={};for(let i of this.config.categories)t[i.slug]=i.cookies.map(s=>s.name),e[i.slug]=i.name;let r=this.config.texts;$t(o,t,e,r),this.observer&&this.observer.disconnect(),this.observer=bt(o,e,r)}startDetector(o){this.stopDetectors();let t=new Set;if(t.add(v),o)for(let i of o.categories)for(let s of i.cookies)t.add(s.name);let e=new URL(`${this.bannerId}/report`,this.baseUrl);this.reportQueue=new z(e);let r=this.baseUrl.origin;this.detectors=[new q(this.reportQueue,r,t),new H(this.reportQueue,r),new U(this.reportQueue,r)];for(let i of this.detectors)i.start()}stopDetectors(){for(let o of this.detectors)o.stop();this.detectors=[],this.reportQueue&&(this.reportQueue.stop(),this.reportQueue=null)}destroy(){this.stopDetectors(),this.observer&&(this.observer.disconnect(),this.observer=null)}};var F=class extends u{constructor(){super(...arguments);this._client=null;this._config=null;this._state="loading";this._draft={};this.onOpenPreferences=()=>{this.setState(this.reopenState)}}static get observedAttributes(){return["banner-id","base-url","reopen-widget","lang"]}get client(){if(!this._client)throw new Error("<probo-cookie-banner-root> not loaded yet");return this._client}get bannerConfig(){if(!this._config)throw new Error("<probo-cookie-banner-root> not loaded yet");return this._config}get reopenWidget(){return this.getAttribute("reopen-widget")??"floating"}get state(){return this._state}get consentDraft(){return this._draft}get gpcApplied(){return this._client?.gpcApplied??!1}get regulation(){return this._client?.regulation??null}get consentMode(){let t=this._config?.consent_mode;return t==="OPT_IN"||t==="OPT_OUT"?t:null}get reopenState(){return this.consentMode==="OPT_OUT"?"banner":"panel"}attributeChangedCallback(t,e,r){t==="reopen-widget"&&e!==r&&this.dispatchEvent(new CustomEvent("probo-reopen-widget",{bubbles:!0,composed:!0,detail:{value:r??"floating"}}))}connectedCallback(){document.addEventListener("probo-open-preferences",this.onOpenPreferences),this.initClient()}disconnectedCallback(){document.removeEventListener("probo-open-preferences",this.onOpenPreferences),this._client&&(this._client.destroy(),this._client=null)}setState(t){let e=this._state;this._state=t,this.dispatchEvent(new CustomEvent("probo-state",{bubbles:!0,composed:!0,detail:{state:t,prev:e}}))}updateDraft(t,e){this._draft[t]=e}resetDraft(){this._config&&(this._draft=this.buildDraft(this._config))}buildDraft(t){let e={},r=this._client?.visitorConsent?.consent_data;for(let i of t.categories)i.kind==="NECESSARY"?e[i.slug]=!0:r&&(i.slug in r||i.name in r)?e[i.slug]=r[i.slug]??r[i.name]:e[i.slug]=t.consent_mode==="OPT_OUT";return e}async initClient(){let t=this.getAttribute("banner-id"),e=this.getAttribute("base-url");if(!t||!e){this.warn("<probo-cookie-banner-root> requires banner-id and base-url attributes");return}let r=this.getAttribute("lang")??void 0;this._client=new it({bannerId:t,baseUrl:e,lang:r});try{await this._client.load()}catch(i){this.warn(`failed to load banner config: ${i}`);return}this._client&&this._client.loaded&&(this._config=this._client.config,this._draft=this.buildDraft(this._config),this.dispatchEvent(new CustomEvent("probo-ready",{bubbles:!0,composed:!0,detail:{config:this._config,gpcApplied:this.gpcApplied,regulation:this._client.regulation}})),this._client.hasConsent?this.setState("hidden"):this.setState("banner"))}};var W=class extends u{constructor(){super(...arguments);this.category=null;this.template=null}connectedCallback(){if(this.template=this.querySelector("template"),!this.template){this.warn("<probo-cookie-list> requires a <template> child");return}this.category=this.findAncestor("probo-category"),this.scheduleValidation(()=>this.stamp())}stamp(){if(!this.template||!this.category)return;let e=this.findAncestor("probo-cookie-banner-root")?.bannerConfig?.language??"en",r=Rt(e),i=this.category.cookies;for(let s of i)this.stampCookie(s,r,e)}stampCookie(t,e,r){if(!this.template)return;let i=t.max_age_seconds!=null?pt(t.max_age_seconds,r,t.tracker_type):pt(0,r,t.tracker_type),s=At(t.tracker_type),a=document.createElement("probo-cookie");a.setAttribute("name",t.name);let l=this.template.content.cloneNode(!0);this.fillSlots(l,{name:t.name,type:s,duration:i,description:t.description}),this.fillLabels(l,e,{type:s,description:t.description,duration:i});let c=l.querySelector(".cookie-type");c&&e.label_type&&c.setAttribute("aria-label",S(e.label_type,{value:s})),a.appendChild(l),this.appendChild(a)}fillSlots(t,e){for(let[r,i]of Object.entries(e)){let s=t.querySelectorAll(`[data-slot="${r}"]`);for(let a of s)a.textContent=i}}fillLabels(t,e,r){for(let i of t.querySelectorAll("[data-label]")){let s=i.getAttribute("data-label"),a=s.replace("label_",""),l=r[a]??"",c=e[s];if(c){let p=i.querySelector(`[data-slot="${a}"]`),d=c.split("{{value}}");i.textContent=d[0]??"",p&&(p.textContent=l,i.appendChild(p))}}}},V=class extends u{};var Me=["probo-category-list","probo-save-button"],G=class extends u{constructor(){super(...arguments);this.root=null;this.onStateChange=t=>{let{state:e}=t.detail;this.hidden=e!=="panel",e==="panel"&&(this.root.resetDraft(),this.focusFirst())}}connectedCallback(){this.hidden=!0,this.root=this.findAncestor("probo-cookie-banner-root"),this.root&&this.root.addEventListener("probo-state",this.onStateChange),this.scheduleValidation(()=>this.validate())}disconnectedCallback(){this.root&&this.root.removeEventListener("probo-state",this.onStateChange)}validate(){let t=[];for(let e of Me)this.querySelector(e)||t.push(e);t.length>0&&(this.warn(`<probo-preference-panel> is missing required children: ${t.join(", ")}`),this.emitValidation(t))}},Q=class extends u{constructor(){super(...arguments);this.root=null;this.handleClick=()=>{if(!this.root)return;let t={...this.root.consentDraft};this.root.client.customize(t),this.root.setState("hidden"),this.root.dispatchEvent(new CustomEvent("probo-consent",{bubbles:!0,composed:!0,detail:{action:"CUSTOMIZE",consent_data:t}}))}}connectedCallback(){this.root=this.findAncestor("probo-cookie-banner-root"),this.addEventListener("click",this.handleClick)}disconnectedCallback(){this.removeEventListener("click",this.handleClick)}};var K=class extends HTMLElement{constructor(){super();this.root=null;this.onStateChange=t=>{let{state:e}=t.detail;this.hidden=e!=="hidden"};this.onReopenWidgetChange=t=>{let{value:e}=t.detail;e==="custom"&&!this.root?.gpcApplied&&(this.hidden=!0,this.root?.removeEventListener("probo-state",this.onStateChange),this.root?.removeEventListener("probo-reopen-widget",this.onReopenWidgetChange))};this.handleClick=()=>{this.root&&this.root.setState(this.root.reopenState)};this.shadow=this.attachShadow({mode:"open"})}static get observedAttributes(){return["position","aria-settings-label","gpc-label"]}attributeChangedCallback(t,e,r){if(t==="aria-settings-label"){let i=this.shadow.querySelector("button");i&&r&&i.setAttribute("aria-label",r)}t==="gpc-label"&&this.updateGpcBadge(r)}get position(){return this.getAttribute("position")??"bottom-left"}connectedCallback(){let e=this.position==="bottom-right";if(this.shadow.innerHTML=`
+      <style>
+        :host {
+          position: fixed;
+          bottom: 16px;
+          ${e?"right":"left"}: var(--probo-settings-offset, 16px);
+          z-index: var(--probo-z-index, 2147483646);
+        }
+        :host([hidden]) { display: none; }
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          border: none;
+          border-radius: var(--probo-settings-radius, 9999px);
+          background: var(--probo-settings-bg, var(--probo-accent, #1a1a1a));
+          color: var(--probo-settings-color, var(--probo-accent-text, #ffffff));
+          padding: var(--probo-settings-padding, 10px);
+          cursor: pointer;
+          font-family: inherit;
+          font-size: var(--probo-settings-font-size, 14px);
+          box-shadow: var(--probo-settings-shadow, 0 2px 8px rgba(0, 0, 0, 0.15));
+          transition: opacity 0.2s;
+        }
+        button:hover { opacity: 0.85; }
+        .icon { display: flex; flex-shrink: 0; }
+        .gpc-badge {
+          display: none;
+          font-size: 11px;
+          line-height: 1;
+          font-weight: 600;
+          white-space: nowrap;
+        }
+        :host([gpc-label]) .gpc-badge { display: inline; }
+        ::slotted(*) { display: contents; }
+      </style>
+      <button part="button" aria-label="Cookie settings">
+        <span class="icon" part="icon" aria-hidden="true">${Nt}</span>
+        <span class="gpc-badge" part="gpc-badge"></span>
+        <slot></slot>
+      </button>
+    `,this.hidden=!0,this.root=this.findRoot(),this.root){if(this.root.reopenWidget==="custom"&&!this.root.gpcApplied)return;this.root.addEventListener("probo-state",this.onStateChange),this.root.addEventListener("probo-reopen-widget",this.onReopenWidgetChange),this.root.state==="hidden"&&(this.hidden=!1)}let r=this.shadow.querySelector("button");r?.addEventListener("click",this.handleClick);let i=this.getAttribute("aria-settings-label");i&&r&&r.setAttribute("aria-label",i)}disconnectedCallback(){this.root&&(this.root.removeEventListener("probo-state",this.onStateChange),this.root.removeEventListener("probo-reopen-widget",this.onReopenWidgetChange))}findRoot(){let t=this.parentElement;for(;t;){if(t.tagName.toLowerCase()==="probo-cookie-banner-root")return t;t=t.parentElement}return null}updateGpcBadge(t){let e=this.shadow.querySelector(".gpc-badge");e&&(e.textContent=t??"")}};var Y=class extends HTMLElement{constructor(){super(...arguments);this.root=null;this.onProboReady=t=>{let e=t.target;if(e?.tagName.toLowerCase()==="probo-cookie-banner-root"){this.attach(e);return}let r=this.findRoot();r&&this.attach(r)};this.handleClick=t=>{this.root&&(t.preventDefault(),this.root.setState(this.root.reopenState))}}connectedCallback(){this.root=this.findRoot(),this.root?this.attach(this.root):document.addEventListener("probo-ready",this.onProboReady,{once:!0}),this.addEventListener("click",this.handleClick)}disconnectedCallback(){this.removeEventListener("click",this.handleClick),document.removeEventListener("probo-ready",this.onProboReady),this.root=null}attach(t){this.root=t,t.setAttribute("reopen-widget","custom")}findRoot(){let t=document.querySelector("probo-cookie-banner-root");if(t)return t;let e=document.querySelector("probo-cookie-banner");return e?.shadowRoot?e.shadowRoot.querySelector("probo-cookie-banner-root"):null}};var qe=[["probo-cookie-banner-root",F],["probo-banner",L],["probo-accept-button",T],["probo-reject-button",O],["probo-customize-button",P],["probo-preference-panel",G],["probo-category-list",I],["probo-category",D],["probo-category-toggle",B],["probo-cookie-list",W],["probo-cookie",V],["probo-save-button",Q],["probo-settings-button",K],["probo-settings-link",Y]];function kt(){for(let[n,o]of qe)customElements.get(n)||customElements.define(n,o)}var Xt=`
+  :host {
+    --_font: var(--probo-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);
+    --_bg: var(--probo-bg, #ffffff);
+    --_text: var(--probo-text, #1a1a1a);
+    --_text-secondary: var(--probo-text-secondary, #555555);
+    --_border: var(--probo-border, #e0e0e0);
+    --_radius: var(--probo-radius, 12px);
+    --_shadow: var(--probo-shadow, 0 4px 24px rgba(0, 0, 0, 0.12));
+    --_accent: var(--probo-accent, #1a1a1a);
+    --_accent-text: var(--probo-accent-text, #ffffff);
+    --_z-index: var(--probo-z-index, 2147483646);
+    --_btn-radius: var(--probo-btn-radius, 8px);
+    --_font-size: var(--probo-font-size, 14px);
+
+    all: initial;
+    font-family: var(--_font);
+    color: var(--_text);
+    font-size: var(--_font-size);
+    line-height: 1.5;
+    box-sizing: border-box;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  .floating {
+    position: fixed;
+    z-index: var(--_z-index);
+    padding: 24px;
+    max-width: 100vw;
+    display: flex;
+    pointer-events: none;
+  }
+
+  .floating[data-position="bottom-left"] {
+    bottom: 0;
+    left: 0;
+  }
+
+  .floating[data-position="bottom-right"] {
+    bottom: 0;
+    right: 0;
+  }
+
+  .floating[data-position="bottom-center"] {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .floating[data-position="top-left"] {
+    top: 0;
+    left: 0;
+  }
+
+  .floating[data-position="top-right"] {
+    top: 0;
+    right: 0;
+  }
+
+  .floating[data-position="top-center"] {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .card {
+    background: var(--_bg);
+    border-radius: var(--_radius);
+    box-shadow: var(--_shadow);
+    width: 100%;
+    pointer-events: auto;
+  }
+
+  probo-banner .card {
+    max-width: 450px;
+    padding: 24px 24px 12px 24px;
+  }
+
+  probo-banner .buttons {
+    padding-bottom: 12px;
+  }
+
+  probo-preference-panel .card {
+    max-width: 520px;
+    max-height: 75vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  probo-preference-panel probo-category-list {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .title {
+    font-size: calc(var(--_font-size) + 2px);
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  .description {
+    color: var(--_text-secondary);
+    margin: 0 0 20px;
+  }
+
+  .description a {
+    color: var(--_accent);
+    text-decoration: underline;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 8px 10px;
+    border-radius: var(--_btn-radius);
+    border: 1px solid var(--_border);
+    background: color-mix(in srgb, var(--_text) 8%, var(--_bg));
+    color: var(--_text);
+    font-family: var(--_font);
+    font-size: var(--_font-size);
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn:hover {
+    opacity: 0.8;
+  }
+
+  .btn-link {
+    background: transparent;
+    border: none;
+    color: var(--_accent);
+    text-decoration: underline;
+    padding: 8px 0;
+  }
+
+  .btn-primary {
+    background: var(--_accent);
+    color: var(--_accent-text);
+    border-color: var(--_accent);
+  }
+
+  .panel-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--_border);
+  }
+
+  .panel-header .description {
+    margin: 0;
+  }
+
+  .panel-header-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 8px;
+  }
+
+  .panel-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: var(--_text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .panel-close:hover {
+    color: var(--_text);
+  }
+
+  probo-category-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  probo-preference-panel .footer {
+    border-top: 1px solid var(--_border);
+    padding: 10px 24px;
+  }
+
+  probo-preference-panel .buttons {
+    padding: 10px 0;
+  }
+
+  probo-category {
+    display: block;
+    border-bottom: 1px solid var(--_border);
+    padding: 12px 40px;
+    position: relative;
+  }
+
+  probo-category:last-child {
+    border-bottom: none;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .category-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .category-name {
+    font-weight: 500;
+  }
+
+  .category-description {
+    color: var(--_text-secondary);
+    font-size: calc(var(--_font-size) - 1px);
+    margin-top: 2px;
+  }
+
+  .toggle {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
+
+  .toggle-track {
+    position: absolute;
+    inset: 0;
+    background: var(--_border);
+    border-radius: 9px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .toggle-track::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .toggle input:checked + .toggle-track {
+    background: var(--_accent);
+  }
+
+  .toggle input:checked + .toggle-track::after {
+    transform: translateX(16px);
+  }
+
+  .toggle input:disabled + .toggle-track {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .cookie-toggle {
+    position: absolute;
+    left: 16px;
+    top: 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px;
+    margin: 0;
+    color: var(--_text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cookie-toggle:hover {
+    color: var(--_accent);
+  }
+
+  .cookie-toggle svg {
+    transition: transform 0.2s;
+    transform: rotate(-90deg);
+  }
+
+  .cookie-toggle.open svg {
+    transform: rotate(0deg);
+  }
+
+  probo-cookie-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    background: color-mix(in srgb, var(--_text) 4%, var(--_bg));
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .cookie-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 12px;
+    font-size: calc(var(--_font-size) - 2px);
+    border-bottom: 1px solid var(--_border);
+  }
+
+  .cookie-item:last-child {
+    border-bottom: none;
+  }
+
+  .cookie-name {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+    font-family: monospace;
+  }
+
+  .cookie-type {
+    font-size: calc(var(--_font-size) - 3px);
+  }
+
+  .cookie-detail {
+    color: var(--_text);
+    font-weight: 500;
+  }
+
+  .cookie-detail > span:last-child {
+    color: var(--_text-secondary);
+    font-weight: 400;
+  }
+
+  .branding {
+    text-align: center;
+  }
+
+  .branding a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: calc(var(--_font-size) - 2px);
+    font-weight: 400;
+    color: var(--_text-secondary);
+    text-decoration: none;
+  }
+
+  .branding a:hover {
+    color: var(--_text);
+  }
+
+  .branding svg {
+    flex-shrink: 0;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+`;var st=class extends HTMLElement{constructor(){super();this.scrollLocked=!1;this.savedScrollY=0;this.prevHtmlOverflow="";this.prevBodyPosition="";this.prevBodyTop="";this.prevBodyLeft="";this.prevBodyRight="";this.prevBodyWidth="";this.prevBodyOverflow="";this.prevBodyPaddingRight="";this.onScrollLockEvent=t=>{if(t.composedPath().includes(this)){t.stopImmediatePropagation();return}t.preventDefault(),t.stopImmediatePropagation()};this.shadow=this.attachShadow({mode:"open"})}static get observedAttributes(){return["banner-id","base-url","reopen-widget","lang"]}connectedCallback(){kt();let t=this.getAttribute("banner-id"),e=this.getAttribute("base-url");if(!t||!e){console.warn("[probo] <probo-cookie-banner> requires banner-id and base-url attributes");return}let r=this.getAttribute("position")??"bottom-left",i=this.getAttribute("reopen-widget"),s=i?` reopen-widget="${this.esc(i)}"`:"",a=this.getAttribute("lang"),l=a?` lang="${this.esc(a)}"`:"";this.shadow.innerHTML=`
+      <style>${Xt}</style>
+      <probo-cookie-banner-root banner-id="${this.esc(t)}" base-url="${this.esc(e)}"${s}${l}>
+        <probo-banner>
+          <div class="floating" data-position="${this.esc(r)}">
+            <div class="card" role="dialog" aria-modal="true" aria-labelledby="probo-banner-title" aria-describedby="probo-banner-desc">
+              <p class="title" id="probo-banner-title" data-text="banner_title"></p>
+              <p class="description" id="probo-banner-desc" data-text="banner_description"></p>
+              <div class="buttons">
+                <probo-accept-button><button class="btn btn-primary" data-text="button_accept_all"></button></probo-accept-button>
+                <probo-reject-button><button class="btn" data-text="button_reject_all"></button></probo-reject-button>
+                <probo-customize-button><button class="btn btn-link" data-text="button_customize"></button></probo-customize-button>
+              </div>
+              ${ut}
+            </div>
+          </div>
+        </probo-banner>
+
+        <probo-preference-panel>
+          <div class="floating" data-position="${this.esc(r)}">
+            <div class="card" role="dialog" aria-modal="true" aria-labelledby="probo-panel-title" aria-describedby="probo-panel-desc">
+              <div class="panel-header">
+                <div class="panel-header-title">
+                  <p class="title" id="probo-panel-title" style="margin:0" data-text="panel_title"></p>
+                  <button class="panel-close" data-action="back" data-aria-text="aria_close">
+                    ${It}
+                  </button>
+                </div>
+                <p class="description" id="probo-panel-desc" data-text="panel_description"></p>
+              </div>
+              <probo-category-list>
+                <template>
+                  <button class="cookie-toggle" data-action="toggle-cookies" aria-expanded="false" data-aria-text="aria_show_details">
+                    ${Bt}
+                  </button>
+                  <div class="category-header">
+                    <div class="category-info">
+                      <div class="category-name" data-slot="name"></div>
+                      <div class="category-description" data-slot="description"></div>
+                    </div>
+                    <probo-category-toggle>
+                      <label class="toggle">
+                        <input type="checkbox">
+                        <span class="toggle-track"></span>
+                      </label>
+                    </probo-category-toggle>
+                  </div>
+                  <probo-cookie-list hidden>
+                    <template>
+                      <div class="cookie-item">
+                        <span class="cookie-name" data-slot="name"></span>
+                        <span class="cookie-detail cookie-type" data-label="label_type"><span data-slot="type"></span></span>
+                        <span class="cookie-detail" data-label="label_description"><span data-slot="description"></span></span>
+                        <span class="cookie-detail" data-label="label_duration"><span data-slot="duration"></span></span>
+                      </div>
+                    </template>
+                  </probo-cookie-list>
+                </template>
+              </probo-category-list>
+              <div class="footer">
+                <div class="buttons">
+                  <probo-accept-button><button class="btn btn-primary" data-text="button_accept_all"></button></probo-accept-button>
+                  <probo-reject-button><button class="btn" data-text="button_reject_all"></button></probo-reject-button>
+                  <probo-save-button>
+                    <button class="btn btn-link" style="flex:1" data-text="button_save"></button>
+                  </probo-save-button>
+                </div>
+                ${ut}
+              </div>
+            </div>
+          </div>
+        </probo-preference-panel>
+
+        <probo-settings-button position="${this.esc(r)}"></probo-settings-button>
+      </probo-cookie-banner-root>
+    `;let c=this.shadow.querySelector("probo-cookie-banner-root");c.addEventListener("probo-ready",p=>{let d=p.detail,y=d.config;this.applyTexts(y),y.show_branding||this.shadow.querySelectorAll("[data-branding]").forEach(h=>{h.setAttribute("hidden","")}),d.gpcApplied&&this.shadow.querySelector("probo-settings-button")?.setAttribute("gpc-label",Lt(y.language))}),c.addEventListener("probo-consent",p=>{let{action:d}=p.detail;d!=="GPC"&&this.shadow.querySelector("probo-settings-button")?.removeAttribute("gpc-label")}),c.addEventListener("probo-state",p=>{let{state:d}=p.detail;this.setScrollLock(d==="panel")}),this.shadow.querySelector("[data-action=back]")?.addEventListener("click",()=>{c.setState(c.client.hasConsent?"hidden":"banner")}),this.shadow.addEventListener("click",p=>{let d=p.target.closest?.("[data-action=toggle-cookies]");if(!d)return;let h=d.closest("probo-category")?.querySelector("probo-cookie-list");if(!h)return;let g=h.hasAttribute("hidden");g?(h.removeAttribute("hidden"),d.classList.add("open")):(h.setAttribute("hidden",""),d.classList.remove("open")),d.setAttribute("aria-expanded",String(g));let J=c.bannerConfig?.texts,te=J?.aria_show_details??"Show cookie details",ee=J?.aria_hide_details??"Hide cookie details";d.setAttribute("aria-label",g?ee:te)})}disconnectedCallback(){this.setScrollLock(!1)}setScrollLock(t){if(t===this.scrollLocked)return;let e=document.documentElement,r=document.body;if(t){this.savedScrollY=window.scrollY;let i=window.innerWidth-e.clientWidth;this.prevHtmlOverflow=e.style.overflow,this.prevBodyPosition=r.style.position,this.prevBodyTop=r.style.top,this.prevBodyLeft=r.style.left,this.prevBodyRight=r.style.right,this.prevBodyWidth=r.style.width,this.prevBodyOverflow=r.style.overflow,this.prevBodyPaddingRight=r.style.paddingRight,e.style.overflow="hidden",r.style.position="fixed",r.style.top=`-${this.savedScrollY}px`,r.style.left="0",r.style.right="0",r.style.width="100%",r.style.overflow="hidden",i>0&&(r.style.paddingRight=`${i}px`),window.addEventListener("wheel",this.onScrollLockEvent,{capture:!0,passive:!1}),window.addEventListener("touchmove",this.onScrollLockEvent,{capture:!0,passive:!1})}else e.style.overflow=this.prevHtmlOverflow,r.style.position=this.prevBodyPosition,r.style.top=this.prevBodyTop,r.style.left=this.prevBodyLeft,r.style.right=this.prevBodyRight,r.style.width=this.prevBodyWidth,r.style.overflow=this.prevBodyOverflow,r.style.paddingRight=this.prevBodyPaddingRight,window.removeEventListener("wheel",this.onScrollLockEvent,{capture:!0}),window.removeEventListener("touchmove",this.onScrollLockEvent,{capture:!0}),window.scrollTo(0,this.savedScrollY);this.scrollLocked=t}applyTexts(t){let e=t.texts??{},i=t.categories.find(a=>a.kind==="NECESSARY")?.name??"Necessary";this.shadow.querySelectorAll("[data-text]").forEach(a=>{let l=a.getAttribute("data-text"),c=e[l]??"";if(c)if(l==="banner_description"){let p="";if(t.privacy_policy_url){let g=this.esc(e.privacy_policy_link_text??"Privacy Policy");p=`<a href="${this.esc(t.privacy_policy_url)}" target="_blank" rel="noopener noreferrer">${g}</a>`}let d="";if(t.cookie_policy_url){let g=this.esc(e.cookie_policy_link_text??"Cookie Policy");d=`<a href="${this.esc(t.cookie_policy_url)}" target="_blank" rel="noopener noreferrer">${g}</a>`}let h=c.split("{{cookie_policy_link}}").map(g=>g.split("{{privacy_policy_link}}").map(J=>this.esc(J)).join(p)).join(d);a.innerHTML=h}else l==="panel_description"?a.textContent=S(c,{necessary_category:i}):a.textContent=c}),this.shadow.querySelectorAll("[data-aria-text]").forEach(a=>{let l=a.getAttribute("data-aria-text"),c=e[l]??a.getAttribute("aria-label")??"";c&&a.setAttribute("aria-label",c)});let s=this.shadow.querySelector("probo-settings-button");if(s){let a=e.aria_cookie_settings;a&&s.setAttribute("aria-settings-label",a)}}esc(t){return t.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}};function Zt(){customElements.get("probo-cookie-banner")||customElements.define("probo-cookie-banner",st)}Zt();var Ct=window;Ct.Probo||(Ct.Probo={});Ct.Probo.consent=b();var A=document.currentScript;if(A){let n=A.getAttribute("data-banner-id"),o=A.getAttribute("data-base-url");if(n&&o){let t=()=>{let e=document.createElement("probo-cookie-banner");e.setAttribute("banner-id",n),e.setAttribute("base-url",o);let r=A.getAttribute("data-position");r&&e.setAttribute("position",r);let i=A.getAttribute("data-reopen-widget");i&&e.setAttribute("reopen-widget",i);let s=A.getAttribute("data-lang");s&&e.setAttribute("lang",s.split("-")[0].toLowerCase()),document.body.appendChild(e)};document.readyState==="loading"?document.addEventListener("DOMContentLoaded",t):t()}}})();
