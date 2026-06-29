@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/prepare-html.mjs && next dev",
-    "build": "node scripts/prepare-html.mjs && next build",
+    "build": "node scripts/prepare-html.mjs && opennextjs-cloudflare build",
     "start": "next start",
     "lint": "next lint",
-    "prepare-html": "node scripts/prepare-html.mjs"
+    "prepare-html": "node scripts/prepare-html.mjs",
+    "preview": "node scripts/prepare-html.mjs && opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "node scripts/prepare-html.mjs && opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
     "next": "^15.3.3",
@@ -15,12 +17,14 @@
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "^1.0.0",
     "@types/node": "^22.15.21",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
     "@eslint/eslintrc": "^3.3.1",
     "eslint": "^9.28.0",
     "eslint-config-next": "^15.3.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "wrangler": "^4.105.0"
   }
 }
