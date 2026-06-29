@@ -33,4 +33,5 @@ let html = readFileSync(sourceHtml, "utf-8");
 html = html.replace(/\.\/BOND_files\//g, "/BOND_files/");
 
 writeFileSync(outputHtml, html, "utf-8");
+writeFileSync(join(root, "public", "index.html"), html, "utf-8");
 console.log(`Prepared ${outputHtml} (${html.length} bytes)`);

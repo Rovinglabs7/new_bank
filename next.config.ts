@@ -22,10 +22,11 @@ const nextConfig: NextConfig = {
       ],
       // Framer client-side routes all need the same HTML shell
       fallback: [
+        { source: "/", destination: "/index.html" },
         {
           source:
-            "/:path((?!favicon\\.ico$|robots\\.txt$|sitemap\\.xml$).*)",
-          destination: "/bond.html",
+            "/:path((?!_next/|BOND_files/|favicon\\.ico$|index\\.html$|bond\\.html$).+)",
+          destination: "/index.html",
         },
       ],
     };
