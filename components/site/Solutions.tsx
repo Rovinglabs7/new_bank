@@ -7,6 +7,7 @@ type SolutionCard = {
   body: string;
   href: string;
   imagePlaceholderComment: string;
+  video?: string;
 };
 
 const cards: SolutionCard[] = [
@@ -16,6 +17,7 @@ const cards: SolutionCard[] = [
     body: "Collect your first recurring payments without a finance team — set up in minutes, no developer required.",
     href: "/solutions/startups",
     imagePlaceholderComment: "image placeholder — startup founder/operator",
+    video: "/videos/startups.mp4",
   },
   {
     id: "mid-size",
@@ -48,8 +50,19 @@ export function Solutions() {
               aria-label={`${card.heading} — Learn more`}
             >
               <article>
-                {/* {card.imagePlaceholderComment} */}
-                <div className={styles.imagePlaceholder} aria-hidden />
+                {card.video ? (
+                  <video
+                    className={styles.imagePlaceholder}
+                    src={card.video}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    aria-hidden
+                  />
+                ) : (
+                  <div className={styles.imagePlaceholder} aria-hidden />
+                )}
 
                 <h3 className={styles.cardHeading}>{card.heading}</h3>
                 <p className={styles.cardBody}>{card.body}</p>
