@@ -1,3 +1,4 @@
+import { AnnouncementBar } from "@/components/site/AnnouncementBar";
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import { ProductShowcase } from "@/components/site/ProductShowcase";
@@ -21,6 +22,7 @@ export default function HomePage() {
     <div className="site-shell">
       <RampStyles />
       <RampMotion />
+      <AnnouncementBar />
       <Header />
       <Hero />
       <ProductShowcase />

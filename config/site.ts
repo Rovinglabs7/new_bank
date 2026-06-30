@@ -8,6 +8,12 @@ export const site = {
   description:
     "Getting paid should be the easiest part of running your business.",
 
+  announcementBar: {
+    tag: "New",
+    message:
+      "Be among the first to experience Sprout. We're inviting a small group of businesses to help us build a better way to collect payments.",
+  },
+
   nav: [
     { label: "Products", href: "#products" },
     { label: "Resources", href: "#resources" },
