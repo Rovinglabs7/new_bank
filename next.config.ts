@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
       fallback: [
         {
           source:
-            "/:path((?!_next/|BOND_files/|favicon\\.ico$|index\\.html$|bond\\.html$|framer-body\\.html$|framer-styles\\.css$|custom/).+)",
+            "/:path((?!_next/|BOND_files/|ramp-files/|ramp-sections/|favicon\\.ico$|index\\.html$|bond\\.html$|framer-body\\.html$|framer-styles\\.css$|custom/).+)",
           destination: "/bond.html",
         },
       ],

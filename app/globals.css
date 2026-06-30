@@ -90,9 +90,23 @@ button {
   overflow-x: hidden;
 }
 
-/* Framer sections must stay visible (no hydration / scroll-hide) */
-.framer-static-body [data-framer-root] > div {
+/* Ramp sections — static HTML, always visible */
+.ramp-section,
+.ramp-home .ramp-section {
   opacity: 1 !important;
-  transform: none !important;
   visibility: visible !important;
+  transform: none !important;
+}
+
+.ramp-home {
+  background: #fff;
+  color: #1a1a1a;
+}
+
+.ramp-home .dotlottie-container {
+  position: relative;
+}
+
+.ramp-home .ramp-lottie-canvas {
+  display: block;
 }

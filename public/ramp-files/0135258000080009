@@ -1,0 +1,71 @@
+( function ( document ) {
+
+(function(){
+var elem = document.createElement("img"); 
+elem.src = "https://us.ck-ie.com/tz17712529524212.gif?gdpr=undefined&gdpr_consent=[GDPR_CONSENT]&puid=4279ec6cc8028000b4aba8350599";
+elem.alt = "";
+elem.height = 1;
+elem.width = 1;
+document.documentElement.appendChild(elem);    
+})();
+
+
+(function(){
+var elem = document.createElement("img"); 
+elem.src = "https://cs.playdigo.com/26930c0cb91bdcac9ca7e68d18f50682.gif?puid=4279ec6cc8028000b4aba8350599&gdpr=undefined&gdpr_consent=[GDPR_CONSENT]";
+elem.alt = "";
+elem.height = 1;
+elem.width = 1;
+document.documentElement.appendChild(elem);    
+})();
+
+
+(function(){
+var elem = document.createElement("img"); 
+elem.src = "https://eu-rtbstack-cm.admixer.net/cm?client=c4527281-5aa5-4c8e-bc53-a80bb3f99470&dsp=124&partnerUserID=4279ec6cc8028000b4aba8350599";
+elem.alt = "";
+elem.height = 1;
+elem.width = 1;
+document.documentElement.appendChild(elem);    
+})();
+
+
+(function(){
+var elem = document.createElement("img"); 
+elem.src = "https://csync.copper6.com/a6541175d0d1408eb1d7202c01a3e56f.gif?puid=4279ec6cc8028000b4aba8350599&gdpr=undefined&gdpr_consent=[GDPR_CONSENT]";
+elem.alt = "";
+elem.height = 1;
+elem.width = 1;
+document.documentElement.appendChild(elem);    
+})();
+
+
+(function(){
+var elem = document.createElement("img"); 
+elem.src = "https://s.ad.smaato.net/c/?dspInit=1518&dspCookie=4279ec6cc8028000b4aba8350599";
+elem.alt = "";
+elem.height = 1;
+elem.width = 1;
+document.documentElement.appendChild(elem);    
+})();
+
+
+(function(){
+var elem = document.createElement("img"); 
+elem.src = "https://image2.pubmatic.com/AdServer/Pug?vcode=bz0yJnR5cGU9MSZjb2RlPTQxOTImdGw9MTI5NjAw&piggybackCookie=4279ec6cc8028000b4aba8350599&gdpr=undefined&gdpr_consent=[GDPR_CONSENT]";
+elem.alt = "";
+elem.height = 1;
+elem.width = 1;
+document.documentElement.appendChild(elem);    
+})();
+
+
+(function(){
+var elem = document.createElement("img"); 
+elem.src = "https://sync.outbrain.com/cookie-sync?p=loudecho&uid=4279ec6cc8028000b4aba8350599&initiator=partner&gdpr=undefined&gdpr_consent=[GDPR_CONSENT]";
+elem.alt = "";
+elem.height = 1;
+elem.width = 1;
+document.documentElement.appendChild(elem);    
+})();
+} )( document );
