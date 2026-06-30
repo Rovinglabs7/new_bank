@@ -7,7 +7,7 @@
     var(--color-hero-bottom) 100%
   );
   color: var(--color-cream);
-  padding: 104px 0 96px;
+  padding: 140px 0 96px;
 }
 
 .inner {
@@ -86,7 +86,7 @@
 
 @media (max-width: 600px) {
   .hero {
-    padding: 88px 0 56px;
+    padding: 112px 0 56px;
   }
 
   .inner {

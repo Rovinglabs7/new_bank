@@ -7,7 +7,7 @@
     var(--color-hero-bottom) 100%
   );
   color: var(--color-cream);
-  padding: 104px 0 88px;
+  padding: 140px 0 88px;
 }
 
 .glow {
@@ -77,7 +77,7 @@
 
 @media (max-width: 600px) {
   .hero {
-    padding: 88px 0 64px;
+    padding: 112px 0 64px;
   }
 
   .inner {

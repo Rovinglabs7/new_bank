@@ -28,8 +28,7 @@ export const security = {
   },
 
   trustStrip: {
-    message:
-      "Built on regulated infrastructure from Modulr, TrueLayer, Sumsub, and ComplyAdvantage.",
+    message: "Built on regulated infrastructure",
     partners: [
       { name: "Modulr" },
       { name: "TrueLayer" },
