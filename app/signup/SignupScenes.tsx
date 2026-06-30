@@ -5,30 +5,19 @@ import { AnimatePresence, motion } from "framer-motion";
 import styles from "./signup.module.css";
 
 type Scene = {
-  label: string;
-  detail: string;
-  gradient: string;
+  src: string;
+  alt: string;
 };
 
 const SCENES: Scene[] = [
-  {
-    label: "Coffee Collective",
-    detail: "Walk-in & online orders, one tab",
-    gradient: "linear-gradient(135deg, #b45309, #d97706)",
-  },
-  {
-    label: "Studio Supply Co.",
-    detail: "Inventory synced with every sale",
-    gradient: "linear-gradient(135deg, #92400e, #ea9a3e)",
-  },
-  {
-    label: "Reyes Consulting",
-    detail: "Invoices that get paid on time",
-    gradient: "linear-gradient(135deg, #c2680a, #f0a93f)",
-  },
+  { src: "/hero/woman-phone.webp", alt: "Business owner taking a call beside her laptop" },
+  { src: "/hero/man-counter.png", alt: "Shop owner in an apron smiling at the counter" },
+  { src: "/hero/team-laptop.jpg", alt: "Small team reviewing a project together on a laptop" },
+  { src: "/hero/woman-tablet.png", alt: "Founder reviewing packaging swatches on a tablet" },
+  { src: "/hero/woman-box.jpg", alt: "Business owner holding a packed shipping box" },
 ];
 
-const INTERVAL_MS = 3200;
+const INTERVAL_MS = 4200;
 
 export function SignupScenes() {
   const [index, setIndex] = useState(0);
@@ -44,25 +33,25 @@ export function SignupScenes() {
 
   return (
     <div className={styles.scenes}>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={scene.label}
-          className={styles.sceneCard}
-          style={{ background: scene.gradient }}
-          initial={{ opacity: 0, scale: 1.03 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.98 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <span className={styles.sceneLabel}>{scene.label}</span>
-          <span className={styles.sceneDetail}>{scene.detail}</span>
-        </motion.div>
-      </AnimatePresence>
+      <div className={styles.sceneCard}>
+        <AnimatePresence>
+          <motion.img
+            key={scene.src}
+            src={scene.src}
+            alt={scene.alt}
+            className={styles.sceneImage}
+            initial={{ opacity: 0, scale: 1.04 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          />
+        </AnimatePresence>
+      </div>
 
       <div className={styles.sceneDots} aria-hidden>
         {SCENES.map((dotScene, dotIndex) => (
           <span
-            key={dotScene.label}
+            key={dotScene.src}
             className={`${styles.sceneDot} ${dotIndex === index ? styles.sceneDotActive : ""}`}
           />
         ))}
