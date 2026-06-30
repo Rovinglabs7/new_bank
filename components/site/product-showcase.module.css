@@ -78,6 +78,7 @@
 .cardTitle {
   margin: 0;
   max-width: 90%;
+  font-family: var(--font-season);
   font-size: clamp(1.5rem, 2.2vw, 2.125rem);
   font-weight: 500;
   line-height: 1.25;
