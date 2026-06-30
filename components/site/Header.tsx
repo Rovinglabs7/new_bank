@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { site } from "@/config/site";
+import { ProductsMenu } from "./ProductsMenu";
 import styles from "./header.module.css";
 
 export function Header() {
@@ -19,11 +20,15 @@ export function Header() {
         </Link>
 
         <nav className={styles.nav} aria-label="Main">
-          {site.nav.map((item) => (
-            <Link key={item.label} href={item.href} className={styles.navLink}>
-              {item.label}
-            </Link>
-          ))}
+          {site.nav.map((item) =>
+            item.label === "Products" ? (
+              <ProductsMenu key={item.label} />
+            ) : (
+              <Link key={item.label} href={item.href} className={styles.navLink}>
+                {item.label}
+              </Link>
+            )
+          )}
         </nav>
 
         <div className={styles.actions}>

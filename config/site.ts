@@ -14,6 +14,90 @@ export const site = {
     { label: "Pricing", href: "#pricing" },
   ],
 
+  productsMenu: {
+    columns: [
+      {
+        heading: "Collect",
+        items: [
+          {
+            title: "Recurring payments",
+            subtext: "Automatic direct debit collection, every cycle",
+            href: "/products/recurring-payments",
+          },
+          {
+            title: "One-off payments",
+            subtext: "Instant bank payments via open banking",
+            href: "/products/one-off-payments",
+          },
+          {
+            title: "Variable payments",
+            subtext: "Collect different amounts without re-authorisation",
+            href: "/products/variable-payments",
+          },
+          {
+            title: "Payment links and QR codes",
+            subtext: "Share a link or code, get paid in under a minute",
+            href: "/products/payment-links",
+          },
+          {
+            title: "International payments",
+            subtext: "Collect across 30+ countries, one dashboard",
+            href: "/products/international-payments",
+          },
+        ],
+      },
+      {
+        heading: "Automate",
+        items: [
+          {
+            title: "AI Concierge",
+            subtext: "Manage payments from your dashboard or WhatsApp",
+            href: "/products/ai-concierge",
+          },
+          {
+            title: "Failure prediction",
+            subtext: "Know which payments are at risk before they fail",
+            href: "/products/failure-prediction",
+          },
+          {
+            title: "Mandate management",
+            subtext: "Change dates, pause, or resume — no cancellations",
+            href: "/products/mandate-management",
+          },
+          {
+            title: "Compliance dashboard",
+            subtext: "Real-time visibility into every account review",
+            href: "/products/compliance-dashboard",
+          },
+        ],
+      },
+      {
+        heading: "Connect",
+        items: [
+          {
+            title: "Xero and QuickBooks",
+            subtext: "Every payment reconciled automatically",
+            href: "/products/accounting-integrations",
+          },
+          {
+            title: "Developer API",
+            subtext: "Build on our payment infrastructure",
+            href: "/products/api",
+          },
+          {
+            title: "Webhooks",
+            subtext: "Real-time events for every transaction",
+            href: "/products/webhooks",
+          },
+        ],
+      },
+    ],
+    switching: {
+      label: "Switching from another provider? See how migration works →",
+      href: "/switch",
+    },
+  },
+
   navActions: {
     login: { label: "Log in", href: "#login" },
     demo: { label: "Book a demo", href: "#demo" },
@@ -24,7 +108,7 @@ export const site = {
     headline:
       "Getting paid should be the easiest part of running your business.",
     subheadline:
-      "Sprout connects to your tools, learns how your company works, and helps you collect revenue with less friction.",
+      "Sprout connects to your business, automates payment operations, and makes getting paid simpler for you and your customers.",
     primaryCta: { label: "Get Sprout", href: "#demo" },
     secondaryCta: { label: "See pricing", href: "#pricing" },
   },
