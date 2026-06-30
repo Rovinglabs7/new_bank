@@ -105,8 +105,7 @@
   display: inline-block;
   width: 16px;
   height: 16px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.16);
+  color: #d6d3d1;
 }
 
 .divider {
@@ -282,52 +281,178 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* Section 3 — tagline + copyright */
+/* Section 3 — bottom legal + waitlist section */
 
-.builtWith {
-  margin: 24px 0 0;
+.bottomDivider {
+  height: 1px;
+  background: #292524;
+  margin-top: 16px;
+}
+
+.bottomSection {
+  display: flex;
+  justify-content: space-between;
+  gap: 48px;
+  padding: 48px 0 64px;
+}
+
+.bottomLeft {
+  width: 75%;
+}
+
+.bottomRight {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.legalLinkRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.legalLinkRow a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  text-decoration: underline;
+  color: #a8a29e;
+  transition: color 0.2s;
+}
+
+.legalLinkRow a:hover {
+  color: #d97706;
+}
+
+.privacyChoicesIcon {
+  display: inline-block;
+  width: 28px;
+  height: 16px;
+  border-radius: 4px;
+  background: #ffffff;
+}
+
+.bottomCopyright {
+  margin: 16px 0 0;
   font-size: 13px;
   color: #a8a29e;
 }
 
-.copyright {
-  margin: 8px 0 0;
-  font-size: 12px;
+.bottomSupport {
+  margin: 16px 0 0;
+  font-size: 13px;
+  color: #a8a29e;
+}
+
+.bottomLegalParagraphs {
+  max-width: 720px;
+  margin: 24px 0 0;
+}
+
+.bottomLegalParagraphs p {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.7;
   color: #78716c;
 }
 
-.copyright a {
-  color: #78716c;
-  transition: color 0.2s;
+.bottomLegalParagraphs p:last-child {
+  margin-bottom: 0;
 }
 
-.copyright a:hover {
+.bottomCta {
+  margin: 32px 0 0;
+  font-size: 16px;
+  color: var(--color-white);
+}
+
+.waitlistForm {
+  display: flex;
+  align-items: center;
+  max-width: 560px;
+  width: 100%;
+  margin-top: 16px;
+  border-radius: 9999px;
+  background: #292524;
+  border: 1px solid #44403c;
+  overflow: hidden;
+}
+
+.waitlistInput {
+  flex: 1;
+  min-width: 0;
+  height: 48px;
+  padding: 0 20px;
+  border: none;
+  background: transparent;
+  color: var(--color-white);
+  font-size: 14px;
+}
+
+.waitlistInput::placeholder {
+  color: #78716c;
+}
+
+.waitlistInput:focus {
+  outline: none;
+}
+
+.waitlistButton {
+  flex-shrink: 0;
+  height: 48px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 9999px;
+  background: #d97706;
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.waitlistButton:hover {
+  background: #b45309;
+}
+
+.addressBlock {
+  font-style: normal;
+  font-size: 14px;
+  line-height: 1.6;
   color: #d6d3d1;
 }
 
-.copyrightDot {
-  display: inline-block;
-  margin: 0 8px;
-  opacity: 0.4;
+.trustBadge {
+  width: 48px;
+  height: 48px;
+  margin-top: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid #44403c;
 }
 
-/* Section 4.5 — legal disclosure */
-
-.legalDisclosure {
-  max-width: var(--page-max);
+.bottomSocialList {
+  list-style: none;
   margin: 32px 0 0;
-  padding-bottom: 64px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.legalDisclosure p {
-  margin: 0 0 12px;
-  font-size: 11px;
-  line-height: 1.6;
-  color: #78716c;
+.bottomSocialList a {
+  font-size: 14px;
+  text-decoration: underline;
+  color: #a8a29e;
+  transition: color 0.2s;
 }
 
-.legalDisclosure p:last-child {
-  margin-bottom: 0;
+.bottomSocialList a:hover {
+  color: #d97706;
 }
 
 /* Section 5 — giant outlined wordmark */
@@ -417,6 +542,25 @@
   .countryButton {
     width: 100%;
     justify-content: space-between;
+  }
+
+  .bottomSection {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .bottomLeft,
+  .bottomRight {
+    width: 100%;
+  }
+
+  .bottomRight {
+    align-items: center;
+    text-align: center;
+  }
+
+  .waitlistForm {
+    max-width: 100%;
   }
 }
 

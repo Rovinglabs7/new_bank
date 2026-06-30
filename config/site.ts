@@ -127,9 +127,9 @@ export const site = {
     social: {
       heading: "Social",
       items: [
-        { label: "X", href: "https://x.com/sproutpay" },
-        { label: "Instagram", href: "https://instagram.com/sproutpay" },
-        { label: "LinkedIn", href: "https://linkedin.com/company/sproutpay" },
+        { label: "X", href: "https://x.com/sproutpay", icon: "x" },
+        { label: "Instagram", href: "https://instagram.com/sproutpay", icon: "instagram" },
+        { label: "LinkedIn", href: "https://linkedin.com/company/sproutpay", icon: "linkedin" },
       ],
     },
 
@@ -292,33 +292,64 @@ export const site = {
       ],
     },
 
-    builtWith:
-      "Built with intention in London, and everywhere ambitious teams work.",
-    copyright: "© 2026 Krandel Labs Ltd. All rights reserved.",
-    copyrightLinks: [
-      { label: "Cookie Preferences", href: "/legal/cookies#preferences" },
-      { label: "Sitemap", href: "/sitemap.xml" },
-    ],
-
-    legalDisclosure: [
-      "Sprout is a trading name of Krandel Labs Ltd, a company registered in England and Wales with company number 16284957.",
-      "Registered office: 71-75 Shelton Street, Covent Garden, London, WC2H 9JQ.",
-      "Krandel Labs Ltd is authorised and regulated by the Financial Conduct Authority as a Small Payment Institution under the Payment Services Regulations 2017, firm reference number 1029384.",
-      "Sprout's recurring direct debit and open banking payment infrastructure is provided by Modulr FS Limited, authorised and regulated by the Financial Conduct Authority as an Electronic Money Institution, firm reference number 900573. Open banking connectivity and instant bank payments are provided by TrueLayer Limited, authorised and regulated by the Financial Conduct Authority. Identity verification and business checks are conducted by Sumsub UK Ltd. Ongoing anti-money laundering monitoring is provided by ComplyAdvantage UK Ltd.",
-      "Client funds collected on behalf of Sprout merchants are held in segregated safeguarding accounts in accordance with the Payment Services Regulations 2017 and are never used for Krandel Labs Ltd's own operating purposes.",
-      "Sprout is not a bank. Sprout does not accept deposits. Funds processed through Sprout are not covered by the Financial Services Compensation Scheme (FSCS) but are protected through statutory safeguarding requirements enforced by the Financial Conduct Authority.",
-      "Visa and Mastercard are registered trademarks of their respective owners. All other trademarks and service marks belong to their respective owners.",
-      '"Sprout" and the Sprout logo are trademarks of Krandel Labs Ltd.',
-    ],
-
     countries: [
-      { code: "GB", label: "United Kingdom" },
-      { code: "IE", label: "Ireland" },
-      { code: "DE", label: "Germany" },
-      { code: "FR", label: "France" },
-      { code: "NL", label: "Netherlands" },
+      { code: "GB", label: "United Kingdom", flag: "🇬🇧" },
+      { code: "IE", label: "Ireland", flag: "🇮🇪" },
+      { code: "DE", label: "Germany", flag: "🇩🇪" },
+      { code: "FR", label: "France", flag: "🇫🇷" },
+      { code: "NL", label: "Netherlands", flag: "🇳🇱" },
     ],
 
     wordmark: "Sprout AI",
+
+    bottom: {
+      legalLinks: [
+        { label: "Terms of Service", href: "/legal/terms" },
+        { label: "Privacy Policy", href: "/legal/privacy" },
+        { label: "Cookie Policy", href: "/legal/cookies" },
+        {
+          label: "Your Privacy Choices",
+          href: "/legal/privacy-choices",
+          icon: "privacy-choices",
+        },
+        { label: "Manage Preferences", href: "/legal/cookies#preferences" },
+      ],
+
+      copyrightNotice:
+        '© 2026 Krandel Labs Ltd. "Sprout" and the Sprout logo are registered trademarks of the company.',
+      supportLine: "Sprout Support: +44 7353 179684",
+
+      legalParagraphs: [
+        "Sprout is a trading name of Krandel Labs Ltd, a company registered in England and Wales with company number 16284957. Registered office: 71-75 Shelton Street, Covent Garden, London, WC2H 9JQ.",
+        "Krandel Labs Ltd is authorised and regulated by the Financial Conduct Authority as a Small Payment Institution under the Payment Services Regulations 2017, firm reference number 1029384.",
+        "Sprout's recurring direct debit collections are processed via Bacs, and are submitted on Sprout's behalf by Modulr FS Limited, a company authorised and regulated by the Financial Conduct Authority as an Electronic Money Institution, firm reference number 900573, and a direct participant of the Bacs payment scheme.",
+        "Open banking connectivity, account verification, and instant bank payments are provided by TrueLayer Limited, authorised and regulated by the Financial Conduct Authority as a Payment Initiation Service Provider under the Payment Services Regulations 2017.",
+        "Identity verification, business checks, and Know Your Business (KYB) screening are conducted by Sumsub UK Ltd on Sprout's behalf. Ongoing anti-money laundering monitoring and sanctions screening are provided by ComplyAdvantage UK Ltd.",
+        "Client funds collected by Sprout on behalf of merchants are held in segregated safeguarding accounts in accordance with the Payment Services Regulations 2017, and are never used for Krandel Labs Ltd's own operating purposes, lending, or investment activities.",
+        "Sprout is not a bank and does not accept deposits. Funds processed through Sprout are not covered by the Financial Services Compensation Scheme (FSCS). Safeguarded funds are instead protected under the statutory safeguarding requirements set out in the Payment Services Regulations 2017 and supervised by the Financial Conduct Authority.",
+        "International collections processed outside the United Kingdom, including SEPA Direct Debit collections within the European Economic Area, are subject to the relevant local payment scheme rules and may be processed by regulated entities other than those listed above. Further detail on the specific entity responsible for processing any given transaction is available within the merchant dashboard and on request.",
+        "Visa, Mastercard, and other payment network marks referenced on this site are registered trademarks of their respective owners. All other trademarks, logos, and service marks displayed on this site are the property of their respective owners and their use does not imply any affiliation with or endorsement by Sprout or Krandel Labs Ltd unless explicitly stated.",
+        '"Sprout," the Sprout logo, "AI Concierge," and other Sprout product names referenced on this site are trademarks or trade names of Krandel Labs Ltd.',
+      ],
+
+      ctaLine:
+        "Join the growing number of UK businesses simplifying how they get paid with Sprout.",
+
+      waitlist: {
+        placeholder: "Enter your work email",
+        buttonLabel: "Join the waitlist",
+      },
+
+      address: {
+        name: "Krandel Labs Ltd",
+        lines: ["71-75 Shelton Street", "Covent Garden", "London", "WC2H 9JQ"],
+      },
+
+      socialLinks: [
+        { label: "LinkedIn", href: "https://linkedin.com/company/sproutpay" },
+        { label: "X", href: "https://x.com/sproutpay" },
+        { label: "Instagram", href: "https://instagram.com/sproutpay" },
+      ],
+    },
   },
 } as const;
