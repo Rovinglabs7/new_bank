@@ -323,7 +323,6 @@ export const site = {
 
       copyrightNotice:
         '© 2026 Krandel Labs Ltd. "Sprout" and the Sprout logo are registered trademarks of the company.',
-      supportLine: "Sprout Support: +44 7353 179684",
 
       legalParagraphs: [
         "Sprout is a trading name of Krandel Labs Ltd, a company registered in England and Wales with company number 16284957. Registered office: 71-75 Shelton Street, Covent Garden, London, WC2H 9JQ.",
@@ -350,12 +349,6 @@ export const site = {
         name: "Krandel Labs Ltd",
         lines: ["71-75 Shelton Street", "Covent Garden", "London", "WC2H 9JQ"],
       },
-
-      socialLinks: [
-        { label: "LinkedIn", href: "https://linkedin.com/company/sproutpay" },
-        { label: "X", href: "https://x.com/sproutpay" },
-        { label: "Instagram", href: "https://instagram.com/sproutpay" },
-      ],
     },
   },
 } as const;

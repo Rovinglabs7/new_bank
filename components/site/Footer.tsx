@@ -27,6 +27,72 @@ function SocialIcon({ icon }: { icon: string }) {
   );
 }
 
+function AskAiIcon({ id }: { id: string }) {
+  switch (id) {
+    case "chatgpt":
+      return (
+        <svg className={styles.askAiIcon} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+          <path d="M22.28 9.82a5.99 5.99 0 0 0-.51-4.91 6.05 6.05 0 0 0-6.5-2.9A6.07 6.07 0 0 0 10.8 0a6.05 6.05 0 0 0-5.77 4.2 5.99 5.99 0 0 0-4 2.9 6.05 6.05 0 0 0 .74 7.09 5.99 5.99 0 0 0 .51 4.91 6.05 6.05 0 0 0 6.5 2.9A6.07 6.07 0 0 0 13.2 24a6.05 6.05 0 0 0 5.77-4.2 5.99 5.99 0 0 0 4-2.9 6.05 6.05 0 0 0-.69-7.08zM13.2 22.43a4.52 4.52 0 0 1-2.9-1.05l.14-.08 4.81-2.78a.78.78 0 0 0 .4-.69v-6.78l2.03 1.18a.07.07 0 0 1 .04.06v5.61a4.54 4.54 0 0 1-4.52 4.53zM3.5 18.3a4.5 4.5 0 0 1-.54-3.03l.14.09 4.81 2.78a.78.78 0 0 0 .79 0l5.87-3.39v2.35a.08.08 0 0 1-.03.07l-4.87 2.81a4.54 4.54 0 0 1-6.17-1.68zM2.25 7.9a4.5 4.5 0 0 1 2.36-1.98v5.7a.77.77 0 0 0 .39.68l5.87 3.39-2.03 1.18a.08.08 0 0 1-.07 0L3.83 14.04A4.54 4.54 0 0 1 2.25 7.9zm16.7 3.88-5.87-3.4 2.03-1.17a.08.08 0 0 1 .07 0l4.94 2.86a4.53 4.53 0 0 1-.68 8.17v-5.7a.78.78 0 0 0-.4-.68zm2.02-3.04-.14-.09-4.81-2.78a.78.78 0 0 0-.79 0L9.36 9.26V6.91a.07.07 0 0 1 .03-.07l4.87-2.81a4.53 4.53 0 0 1 6.71 4.7zM8.31 12.86l-2.04-1.18a.07.07 0 0 1-.03-.06V5.99a4.53 4.53 0 0 1 7.42-3.48l-.14.08-4.81 2.78a.78.78 0 0 0-.4.69zm1.1-2.38L12 8.83l2.59 1.65v3.3L12 15.17l-2.59-1.65z" />
+        </svg>
+      );
+    case "claude":
+      return (
+        <svg
+          className={styles.askAiIcon}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          aria-hidden
+        >
+          <path d="M12 2v20M4.6 6l14.8 12M4.6 18 19.4 6M2 12h20" />
+        </svg>
+      );
+    case "perplexity":
+      return (
+        <svg className={styles.askAiIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden>
+          <path d="M12 2v7.5M12 2 5.5 7v9.5M12 2l6.5 5v9.5M5.5 16.5 12 22l6.5-5.5M5.5 7l6.5 4.5L18.5 7" strokeLinejoin="round" strokeLinecap="round" />
+        </svg>
+      );
+    case "gemini":
+      return (
+        <svg className={styles.askAiIcon} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+          <path d="M12 22c0-5.52-4.48-10-10-10 5.52 0 10-4.48 10-10 0 5.52 4.48 10 10 10-5.52 0-10 4.48-10 10z" />
+        </svg>
+      );
+    default:
+      return <span className={styles.askAiIcon} aria-hidden />;
+  }
+}
+
+function PrivacyChoicesIcon() {
+  return (
+    <svg
+      className={styles.privacyChoicesIcon}
+      viewBox="0 0 32 16"
+      aria-hidden
+    >
+      <rect x="0.5" y="0.5" width="31" height="15" rx="7.5" fill="#ffffff" stroke="#d4d4d4" />
+      <path
+        d="M6.2 8.1 8 9.9l3.4-3.8"
+        fill="none"
+        stroke="#0a5dc2"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M20.5 6.2 24 9.8M24 6.2l-3.5 3.6"
+        fill="none"
+        stroke="#1a1a1a"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export function Footer() {
   const { footer } = site;
   const [openCol, setOpenCol] = useState<string | null>(null);
@@ -128,8 +194,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {/* icon placeholder — {platform.label} logo */}
-                  <span className={styles.askAiIcon} aria-hidden />
+                  <AskAiIcon id={platform.id} />
                 </a>
               ))}
             </div>
@@ -186,10 +251,7 @@ export function Footer() {
               {footer.bottom.legalLinks.map((link) => (
                 <a key={link.label} href={link.href}>
                   {link.label}
-                  {"icon" in link && link.icon ? (
-                    // icon placeholder — standard "Privacy Choices" opt-out badge (blue checkmark / black X)
-                    <span className={styles.privacyChoicesIcon} aria-hidden />
-                  ) : null}
+                  {"icon" in link && link.icon ? <PrivacyChoicesIcon /> : null}
                 </a>
               ))}
             </div>
@@ -197,7 +259,6 @@ export function Footer() {
             <p className={styles.bottomCopyright}>
               {footer.bottom.copyrightNotice}
             </p>
-            <p className={styles.bottomSupport}>{footer.bottom.supportLine}</p>
 
             <div className={styles.bottomLegalParagraphs}>
               {footer.bottom.legalParagraphs.map((paragraph, i) => (
@@ -205,26 +266,28 @@ export function Footer() {
               ))}
             </div>
 
-            <p className={styles.bottomCta}>{footer.bottom.ctaLine}</p>
+            <div className={styles.waitlistBlock}>
+              <p className={styles.bottomCta}>{footer.bottom.ctaLine}</p>
 
-            <form
-              className={styles.waitlistForm}
-              onSubmit={(e) => {
-                e.preventDefault();
-                // TODO: wire up waitlist submission endpoint
-              }}
-            >
-              <input
-                type="email"
-                required
-                placeholder={footer.bottom.waitlist.placeholder}
-                className={styles.waitlistInput}
-                aria-label={footer.bottom.waitlist.placeholder}
-              />
-              <button type="submit" className={styles.waitlistButton}>
-                {footer.bottom.waitlist.buttonLabel}
-              </button>
-            </form>
+              <form
+                className={styles.waitlistForm}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  // TODO: wire up waitlist submission endpoint
+                }}
+              >
+                <input
+                  type="email"
+                  required
+                  placeholder={footer.bottom.waitlist.placeholder}
+                  className={styles.waitlistInput}
+                  aria-label={footer.bottom.waitlist.placeholder}
+                />
+                <button type="submit" className={styles.waitlistButton}>
+                  {footer.bottom.waitlist.buttonLabel}
+                </button>
+              </form>
+            </div>
           </div>
 
           <div className={styles.bottomRight}>
@@ -238,17 +301,6 @@ export function Footer() {
                 </span>
               ))}
             </address>
-
-            {/* badge placeholder — FCA registration or trust seal, TBC once SPI approved */}
-            <div className={styles.trustBadge} aria-hidden />
-
-            <ul className={styles.bottomSocialList}>
-              {footer.bottom.socialLinks.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href}>{link.label}</a>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </div>

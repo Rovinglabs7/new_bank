@@ -212,8 +212,12 @@
   display: inline-block;
   width: 18px;
   height: 18px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.2);
+  color: #d6d3d1;
+  transition: color 0.2s;
+}
+
+.askAiIconButton:hover .askAiIcon {
+  color: #d97706;
 }
 
 .countrySelector {
@@ -235,11 +239,11 @@
 }
 
 .flagIcon {
-  display: inline-block;
-  width: 18px;
-  height: 13px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
 }
 
 .chevron {
@@ -332,17 +336,9 @@
   display: inline-block;
   width: 28px;
   height: 16px;
-  border-radius: 4px;
-  background: #ffffff;
 }
 
 .bottomCopyright {
-  margin: 16px 0 0;
-  font-size: 13px;
-  color: #a8a29e;
-}
-
-.bottomSupport {
   margin: 16px 0 0;
   font-size: 13px;
   color: #a8a29e;
@@ -358,35 +354,51 @@
   font-size: 13px;
   line-height: 1.7;
   color: #78716c;
+  text-align: justify;
 }
 
 .bottomLegalParagraphs p:last-child {
   margin-bottom: 0;
 }
 
+.waitlistBlock {
+  margin: 40px 0 0;
+  padding: 32px;
+  border-radius: 20px;
+  background: linear-gradient(160deg, #292524 0%, #1c1917 100%);
+  border: 1px solid #3f3a35;
+}
+
 .bottomCta {
-  margin: 32px 0 0;
-  font-size: 16px;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--color-white);
 }
 
 .waitlistForm {
   display: flex;
   align-items: center;
-  max-width: 560px;
+  max-width: 480px;
   width: 100%;
-  margin-top: 16px;
+  margin-top: 20px;
   border-radius: 9999px;
-  background: #292524;
+  background: #1c1917;
   border: 1px solid #44403c;
   overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.waitlistForm:focus-within {
+  border-color: #d97706;
 }
 
 .waitlistInput {
   flex: 1;
   min-width: 0;
-  height: 48px;
-  padding: 0 20px;
+  height: 52px;
+  padding: 0 22px;
   border: none;
   background: transparent;
   color: var(--color-white);
@@ -403,7 +415,8 @@
 
 .waitlistButton {
   flex-shrink: 0;
-  height: 48px;
+  height: 40px;
+  margin-right: 6px;
   padding: 0 22px;
   border: none;
   border-radius: 9999px;
@@ -412,11 +425,12 @@
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s;
 }
 
 .waitlistButton:hover {
   background: #b45309;
+  transform: translateY(-1px);
 }
 
 .addressBlock {
@@ -424,35 +438,6 @@
   font-size: 14px;
   line-height: 1.6;
   color: #d6d3d1;
-}
-
-.trustBadge {
-  width: 48px;
-  height: 48px;
-  margin-top: 32px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid #44403c;
-}
-
-.bottomSocialList {
-  list-style: none;
-  margin: 32px 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.bottomSocialList a {
-  font-size: 14px;
-  text-decoration: underline;
-  color: #a8a29e;
-  transition: color 0.2s;
-}
-
-.bottomSocialList a:hover {
-  color: #d97706;
 }
 
 /* Section 5 — giant outlined wordmark */
