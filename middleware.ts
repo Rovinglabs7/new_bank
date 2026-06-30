@@ -1,19 +1,39 @@
-import { auth } from "@/auth";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { jwtVerify } from "jose";
+import { SESSION_COOKIE } from "@/lib/auth/session";
 
-export default auth((req) => {
-  const isLoggedIn = !!req.auth;
-  const { pathname } = req.nextUrl;
+async function isAuthenticated(request: NextRequest): Promise<boolean> {
+  const token = request.cookies.get(SESSION_COOKIE)?.value;
+  if (!token) return false;
 
-  if (!isLoggedIn && pathname.startsWith("/dashboard")) {
-    const signInUrl = new URL("/signin", req.nextUrl.origin);
+  const secret = process.env.JWT_SECRET;
+  if (!secret) return false;
+
+  try {
+    await jwtVerify(token, new TextEncoder().encode(secret));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function middleware(request: NextRequest) {
+  const loggedIn = await isAuthenticated(request);
+  const { pathname } = request.nextUrl;
+
+  if (!loggedIn && pathname.startsWith("/dashboard")) {
+    const signInUrl = new URL("/signin", request.url);
     signInUrl.searchParams.set("callbackUrl", pathname);
-    return Response.redirect(signInUrl);
+    return NextResponse.redirect(signInUrl);
   }
 
-  if (isLoggedIn && (pathname === "/signin" || pathname === "/signup")) {
-    return Response.redirect(new URL("/dashboard", req.nextUrl.origin));
+  if (loggedIn && (pathname === "/signin" || pathname === "/signup")) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
-});
+
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: ["/dashboard/:path*", "/signin", "/signup"],

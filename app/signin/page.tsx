@@ -13,12 +13,6 @@ type SignInPageProps = {
 
 export default async function SignInPage({ searchParams }: SignInPageProps) {
   const { callbackUrl } = await searchParams;
-  const showGoogle = Boolean(
-    process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET,
-  );
-  const showMicrosoft = Boolean(
-    process.env.MICROSOFT_CLIENT_ID && process.env.MICROSOFT_CLIENT_SECRET,
-  );
 
   return (
     <main className={styles.page}>
@@ -29,13 +23,9 @@ export default async function SignInPage({ searchParams }: SignInPageProps) {
 
         <div className={styles.formBlock}>
           <h1 className={styles.heading}>Sign in</h1>
-          <p className={styles.subheading}>Or choose another way to sign in.</p>
+          <p className={styles.subheading}>Welcome back to {site.brand}.</p>
 
-          <SignInForm
-            callbackUrl={callbackUrl}
-            showGoogle={showGoogle}
-            showMicrosoft={showMicrosoft}
-          />
+          <SignInForm callbackUrl={callbackUrl} />
 
           <p className={styles.legal}>
             By continuing, you&apos;re agreeing to our{" "}
