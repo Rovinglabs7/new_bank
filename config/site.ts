@@ -28,7 +28,7 @@ export const site = {
           {
             title: "Recurring payments",
             subtext: "Automatic direct debit collection, every cycle",
-            href: "/products/recurring-payments",
+            href: "/products/subscription-payments",
           },
           {
             title: "One-off payments",
@@ -268,7 +268,7 @@ export const site = {
       {
         title: "Products",
         links: [
-          { label: "Recurring payments", href: "/products/recurring-payments" },
+          { label: "Recurring payments", href: "/products/subscription-payments" },
           { label: "One-off payments", href: "/products/instant-bank-pay" },
           { label: "Variable payments", href: "/products/variable-payments" },
           { label: "Instalments", href: "/products/instalments" },

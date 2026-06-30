@@ -1,0 +1,150 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    var(--color-hero-top) 0%,
+    var(--color-hero-bottom) 100%
+  );
+  color: var(--color-cream);
+  padding: 140px 0 96px;
+}
+
+.inner {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.copy {
+  max-width: 560px;
+}
+
+.eyebrow {
+  margin: 0 0 16px;
+  font-family: var(--font-inter);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-season);
+  font-size: clamp(2.1rem, 4.2vw, 3.2rem);
+  font-weight: 420;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.subtext {
+  margin: 18px 0 0;
+  max-width: 520px;
+  font-size: clamp(0.95rem, 1.8vw, 1.0625rem);
+  line-height: 1.6;
+  color: rgba(250, 248, 246, 0.78);
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.primaryCta,
+.secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: 999px;
+  font-family: var(--font-inter);
+  font-size: 15px;
+  font-weight: 500;
+  transition: transform 0.2s, background 0.2s, border-color 0.2s;
+  text-decoration: none;
+}
+
+.primaryCta {
+  background: var(--color-white);
+  color: var(--color-ink);
+}
+
+.primaryCta:hover {
+  transform: translateY(-1px);
+}
+
+.secondaryCta {
+  background: transparent;
+  color: var(--color-cream);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.secondaryCta:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.visual {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imagePlaceholder {
+  width: 420px;
+  height: 280px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 900px) {
+  .inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .copy {
+    max-width: 100%;
+  }
+
+  .subtext {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ctas {
+    justify-content: center;
+  }
+
+  .imagePlaceholder {
+    width: 100%;
+    max-width: 420px;
+    height: 220px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 112px 0 56px;
+  }
+
+  .inner {
+    padding: 0 20px;
+  }
+
+  .ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
