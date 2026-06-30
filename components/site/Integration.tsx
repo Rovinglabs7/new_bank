@@ -11,37 +11,48 @@ const BG_SHAPE = `${FRAMER}/ok0YH14sotPO5zXPf4nG0HIuzbQ.svg`;
 const BADGE_ICON = `${FRAMER}/9DPQJlLNx2fc3Xz4SFEvbFa7KbE.svg`;
 const CLIENT_LOGOS = `${FRAMER}/VdVYqkZlkUU6uQ32KYbaXXWVM.webp`;
 
-const INTEGRATION_ICONS = [
-  "gk0KIU4Vl9h4U8BNCOsHa9TQRxM",
-  "x47Hnha01tCwN5smxcTb01ve04",
-  "Ur3npOHTI7IizwC8oh6vkrmZxA",
-  "aNlIHEsXotZNsyXIfJvfJkooXo",
-  "UKV9mSiDW8NdzEUjRBSIXCc4XQ",
-  "62raDsW2GQ24SgzAJGKnlknj7hQ",
-] as const;
+/**
+ * 5 + 6 + 5 honeycomb from Framer Integration section.
+ * null = empty hex (shadow tile only).
+ */
+const HEX_LAYOUT: (string | null)[][] = [
+  [
+    "gk0KIU4Vl9h4U8BNCOsHa9TQRxM",
+    null,
+    "Ur3npOHTI7IizwC8oh6vkrmZxA",
+    null,
+    "x47Hnha01tCwN5smxcTb01ve04",
+  ],
+  [
+    "UKV9mSiDW8NdzEUjRBSIXCc4XQ",
+    null,
+    "gk0KIU4Vl9h4U8BNCOsHa9TQRxM",
+    null,
+    "62raDsW2GQ24SgzAJGKnlknj7hQ",
+    null,
+  ],
+  [
+    null,
+    "aNlIHEsXotZNsyXIfJvfJkooXo",
+    null,
+    "UKV9mSiDW8NdzEUjRBSIXCc4XQ",
+    null,
+  ],
+];
 
-/** Honeycomb rows: 5 + 6 + 5 hexagons (matches Framer Integration section). */
-const HEX_ROWS = [
-  { count: 5, offset: false, startIndex: 0, emptySlots: [1, 3] },
-  { count: 6, offset: true, startIndex: 5, emptySlots: [0, 2, 4] },
-  { count: 5, offset: false, startIndex: 11, emptySlots: [1, 4] },
-] as const;
-
-function HexCard({ iconId, empty }: { iconId?: string; empty?: boolean }) {
+function HexCard({ iconId }: { iconId: string | null }) {
   return (
     <div className={styles.hexCard}>
-      <div className={styles.hexSurface}>
-        <img src={HEX_BG} alt="" className={styles.hexBg} loading="lazy" decoding="async" />
-        {!empty && iconId ? (
-          <img
-            src={`${FRAMER}/${iconId}.svg`}
-            alt=""
-            className={styles.hexIcon}
-            loading="lazy"
-            decoding="async"
-          />
-        ) : null}
-      </div>
+      <img src={HEX_BG} alt="" className={styles.hexBg} loading="lazy" decoding="async" />
+      {iconId ? (
+        <img
+          src={`${FRAMER}/${iconId}.svg`}
+          alt=""
+          className={styles.hexIcon}
+          loading="lazy"
+          decoding="async"
+        />
+      ) : null}
     </div>
   );
 }
@@ -55,7 +66,8 @@ export function Integration() {
     offset: ["start end", "end start"],
   });
 
-  const hexGap = useTransform(scrollYProgress, [0, 0.45, 0.55, 1], [48, 6, 6, 48]);
+  // Spread apart when away; tight cluster when section is centered (contracted).
+  const hexGap = useTransform(scrollYProgress, [0, 0.42, 0.58, 1], [78, 4, 4, 78]);
   const hexGapPx = useTransform(hexGap, (v) => `${v}px`);
 
   return (
@@ -107,27 +119,18 @@ export function Integration() {
           className={styles.hexGrid}
           style={
             reduceMotion
-              ? ({ "--hex-gap": "12px" } as React.CSSProperties)
+              ? ({ "--hex-gap": "8px" } as React.CSSProperties)
               : ({ "--hex-gap": hexGapPx } as React.CSSProperties)
           }
         >
-          {HEX_ROWS.map((row) => (
+          {HEX_LAYOUT.map((row, rowIndex) => (
             <div
-              key={row.startIndex}
-              className={`${styles.hexRow} ${row.offset ? styles.hexRowOffset : ""}`}
+              key={rowIndex}
+              className={`${styles.hexRow} ${rowIndex === 1 ? styles.hexRowOffset : ""}`}
             >
-              {Array.from({ length: row.count }, (_, i) => {
-                const empty = row.emptySlots.includes(i as never);
-                const iconId =
-                  INTEGRATION_ICONS[(row.startIndex + i) % INTEGRATION_ICONS.length];
-                return (
-                  <HexCard
-                    key={`${row.startIndex}-${i}`}
-                    iconId={iconId}
-                    empty={empty}
-                  />
-                );
-              })}
+              {row.map((iconId, cellIndex) => (
+                <HexCard key={`${rowIndex}-${cellIndex}`} iconId={iconId} />
+              ))}
             </div>
           ))}
         </motion.div>
