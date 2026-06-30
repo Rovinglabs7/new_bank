@@ -1,0 +1,478 @@
+<div id="sprout-footer">
+<style>
+#sprout-footer {
+  background-color: #174501;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  font-family: "Inter", "Inter Placeholder", sans-serif;
+}
+
+/* Subtle radial glow behind upper area */
+#sprout-footer::before {
+  content: '';
+  position: absolute;
+  top: -160px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 500px;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.045) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#sprout-footer .sf-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ── Newsletter ── */
+#sprout-footer .sf-newsletter {
+  padding: 80px 0 72px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+#sprout-footer .sf-newsletter-copy h3 {
+  font-family: "Season Mix Regular", sans-serif;
+  font-size: 22px;
+  font-weight: 420;
+  color: #ffffff;
+  margin: 0 0 10px;
+  letter-spacing: -0.01em;
+}
+
+#sprout-footer .sf-newsletter-copy p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.6);
+  margin: 0;
+  max-width: 360px;
+}
+
+#sprout-footer .sf-newsletter-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+#sprout-footer .sf-newsletter-form input {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  height: 42px;
+  outline: none;
+  padding: 0 16px;
+  width: 260px;
+  transition: border-color 0.2s;
+}
+
+#sprout-footer .sf-newsletter-form input::placeholder {
+  color: rgba(255,255,255,0.35);
+}
+
+#sprout-footer .sf-newsletter-form input:focus {
+  border-color: rgba(255,255,255,0.28);
+}
+
+#sprout-footer .sf-newsletter-form button {
+  background-color: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 42px;
+  padding: 0 20px;
+  transition: background-color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+#sprout-footer .sf-newsletter-form button:hover {
+  background-color: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.28);
+}
+
+/* ── Navigation grid ── */
+#sprout-footer .sf-nav {
+  padding: 72px 0 64px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 32px;
+}
+
+#sprout-footer .sf-col-heading {
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 20px;
+}
+
+#sprout-footer .sf-col-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#sprout-footer .sf-col-links a {
+  color: rgba(255,255,255,0.65);
+  font-size: 14px;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: color 0.18s;
+  display: inline-block;
+}
+
+#sprout-footer .sf-col-links a:hover {
+  color: #ffffff;
+}
+
+/* ── Bottom bar ── */
+#sprout-footer .sf-bottom {
+  padding: 32px 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+#sprout-footer .sf-bottom-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#sprout-footer .sf-tagline {
+  color: rgba(255,255,255,0.45);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+#sprout-footer .sf-copyright {
+  color: rgba(255,255,255,0.45);
+  font-size: 13px;
+  margin: 0;
+}
+
+#sprout-footer .sf-bottom-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+#sprout-footer .sf-legal-links {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+#sprout-footer .sf-legal-links a {
+  color: rgba(255,255,255,0.45);
+  font-size: 12px;
+  text-decoration: none;
+  padding: 0 12px;
+  border-right: 1px solid rgba(255,255,255,0.15);
+  transition: color 0.18s;
+  white-space: nowrap;
+}
+
+#sprout-footer .sf-legal-links a:first-child {
+  padding-left: 0;
+}
+
+#sprout-footer .sf-legal-links a:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+#sprout-footer .sf-legal-links a:hover {
+  color: rgba(255,255,255,0.8);
+}
+
+#sprout-footer .sf-social-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+#sprout-footer .sf-social-links a {
+  color: rgba(255,255,255,0.45);
+  text-decoration: none;
+  transition: color 0.18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  transition: color 0.18s, border-color 0.18s;
+}
+
+#sprout-footer .sf-social-links a:hover {
+  color: rgba(255,255,255,0.9);
+  border-color: rgba(255,255,255,0.28);
+}
+
+#sprout-footer .sf-social-links svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+/* ── Logo row ── */
+#sprout-footer .sf-logo-row {
+  padding: 64px 0 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding-bottom: 48px;
+  display: flex;
+  align-items: center;
+}
+
+#sprout-footer .sf-logo {
+  font-family: "Season Mix Regular", sans-serif;
+  font-size: 28px;
+  font-weight: 420;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1039px) {
+  #sprout-footer .sf-newsletter {
+    flex-direction: column;
+    gap: 32px;
+    padding: 60px 0 56px;
+  }
+  #sprout-footer .sf-newsletter-form {
+    width: 100%;
+  }
+  #sprout-footer .sf-newsletter-form input {
+    flex: 1;
+    width: auto;
+  }
+  #sprout-footer .sf-nav {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 32px;
+    padding: 56px 0 48px;
+  }
+}
+
+@media (max-width: 809px) {
+  #sprout-footer .sf-inner {
+    padding: 0 24px;
+  }
+  #sprout-footer .sf-nav {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 24px;
+    padding: 48px 0 40px;
+  }
+  #sprout-footer .sf-nav-col {
+    border-bottom: none;
+  }
+  /* Accordion on mobile */
+  #sprout-footer .sf-col-heading {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;
+    padding-bottom: 16px;
+  }
+  #sprout-footer .sf-col-heading::after {
+    content: '+';
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.45);
+    transition: transform 0.2s;
+  }
+  #sprout-footer .sf-nav-col.open .sf-col-heading::after {
+    transform: rotate(45deg);
+  }
+  #sprout-footer .sf-col-links {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, margin-top 0.2s;
+    margin-top: 0;
+  }
+  #sprout-footer .sf-nav-col.open .sf-col-links {
+    max-height: 300px;
+    margin-top: 14px;
+  }
+  #sprout-footer .sf-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    padding: 28px 0 40px;
+  }
+  #sprout-footer .sf-bottom-right {
+    align-items: flex-start;
+  }
+  #sprout-footer .sf-legal-links {
+    flex-wrap: wrap;
+  }
+  #sprout-footer .sf-legal-links a {
+    padding: 4px 10px 4px 0;
+    border-right: none;
+  }
+}
+</style>
+
+  <div class="sf-inner">
+
+    <!-- Logo -->
+    <div class="sf-logo-row">
+      <span class="sf-logo">Sprout</span>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="sf-newsletter">
+      <div class="sf-newsletter-copy">
+        <h3>Stay up to date</h3>
+        <p>Get product updates, payment insights and practical guides delivered to your inbox.</p>
+      </div>
+      <form class="sf-newsletter-form" onsubmit="return false;">
+        <input type="email" placeholder="Your email address" aria-label="Email address" />
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+
+    <!-- Navigation columns -->
+    <nav class="sf-nav" aria-label="Footer navigation">
+
+      <div class="sf-nav-col">
+        <p class="sf-col-heading">Payments</p>
+        <ul class="sf-col-links">
+          <li><a href="#">Recurring Payments</a></li>
+          <li><a href="#">Instant Bank Pay</a></li>
+          <li><a href="#">Payment Links</a></li>
+          <li><a href="#">International Payments</a></li>
+          <li><a href="#">Pricing</a></li>
+        </ul>
+      </div>
+
+      <div class="sf-nav-col">
+        <p class="sf-col-heading">Platform</p>
+        <ul class="sf-col-links">
+          <li><a href="#">Customer Management</a></li>
+          <li><a href="#">Mandates</a></li>
+          <li><a href="#">Integrations</a></li>
+          <li><a href="#">Analytics</a></li>
+          <li><a href="#">Reporting</a></li>
+        </ul>
+      </div>
+
+      <div class="sf-nav-col">
+        <p class="sf-col-heading">Developers</p>
+        <ul class="sf-col-links">
+          <li><a href="#">API</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">SDKs</a></li>
+          <li><a href="#">Webhooks</a></li>
+          <li><a href="#">Status</a></li>
+        </ul>
+      </div>
+
+      <div class="sf-nav-col">
+        <p class="sf-col-heading">Solutions</p>
+        <ul class="sf-col-links">
+          <li><a href="#">Small Business</a></li>
+          <li><a href="#">SaaS</a></li>
+          <li><a href="#">Memberships</a></li>
+          <li><a href="#">Professional Services</a></li>
+          <li><a href="#">Charities</a></li>
+        </ul>
+      </div>
+
+      <div class="sf-nav-col">
+        <p class="sf-col-heading">Resources</p>
+        <ul class="sf-col-links">
+          <li><a href="#">Help Centre</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Customer Stories</a></li>
+          <li><a href="#">Guides</a></li>
+        </ul>
+      </div>
+
+      <div class="sf-nav-col">
+        <p class="sf-col-heading">Company</p>
+        <ul class="sf-col-links">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Partners</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Legal</a></li>
+        </ul>
+      </div>
+
+    </nav>
+
+    <!-- Bottom bar -->
+    <div class="sf-bottom">
+      <div class="sf-bottom-left">
+        <p class="sf-tagline">Built with ♥ from London, San Francisco,<br>and everywhere ambitious teams work.</p>
+        <p class="sf-copyright">© 2026 Krandel Labs Ltd.</p>
+      </div>
+      <div class="sf-bottom-right">
+        <div class="sf-social-links">
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="#" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L2.25 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+        </div>
+        <nav class="sf-legal-links" aria-label="Legal navigation">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookies</a>
+          <a href="#">Security</a>
+          <a href="#">Cookie Preferences</a>
+          <a href="#">Sitemap</a>
+        </nav>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+  (function() {
+    var cols = document.querySelectorAll('#sprout-footer .sf-nav-col');
+    function isMobile() { return window.innerWidth <= 809; }
+    cols.forEach(function(col) {
+      col.querySelector('.sf-col-heading').addEventListener('click', function() {
+        if (!isMobile()) return;
+        col.classList.toggle('open');
+      });
+    });
+  })();
+  </script>
+
+</div>

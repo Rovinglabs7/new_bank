@@ -1,0 +1,11 @@
+/* Edit this file for style changes — applies in <head>, survives Framer hydration */
+
+/* Hero: original BOND dark brown gradient */
+.framer-7FUfC[data-framer-name="scroll element"] {
+  background: linear-gradient(180deg, #52402f 0%, #281e15 100%) !important;
+}
+
+#sprout-footer {
+  position: relative;
+  z-index: 10;
+}

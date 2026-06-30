@@ -9,16 +9,14 @@ const sourceHtml = join(root, "BOND.html");
 const outputHtml = join(root, "public", "bond.html");
 const sourceAssets = join(root, "BOND_files");
 const publicAssets = join(root, "public", "BOND_files");
+const customDir = join(root, "custom");
+const publicCustomDir = join(root, "public", "custom");
 
-const MAIN_OPEN = /<div id="main"[^>]*>/;
 const MAIN_CLOSE = "</div><!--/$--></div>";
-const SPROUT_DIV_START = /<div id="sprout-footer">/;
-const FRAMER_HYDRATION_SCRIPT =
-  /<script type="module"[^>]*data-framer-bundle="main"[^>]*><\/script>/;
 
-const OVERRIDE_TAGS = `
-<link rel="stylesheet" href="/site-overrides.css" />
-<script src="/site-overrides.js"></script>
+const CUSTOM_TAGS = `
+<link rel="stylesheet" href="/custom/overrides.css" />
+<script src="/custom/overrides.js"></script>
 `;
 
 if (!existsSync(sourceHtml)) {
@@ -38,31 +36,45 @@ if (!existsSync(publicAssets)) {
   }
 }
 
-let html = readFileSync(sourceHtml, "utf-8");
-
-html = html.replace(/\.\/BOND_files\//g, "/BOND_files/");
-
-// Framer hydration replaces #main with the original CDN design — disable it so
-// BOND.html edits (hero, footer, copy) stay visible.
-html = html.replace(FRAMER_HYDRATION_SCRIPT, "");
-html = html.replace(/\s*data-framer-hydrate-v2="[^"]*"/, "");
-html = html.replace(/\s*data-framer-generated-page=""/, "");
-
-// Move Sprout footer block outside #main
-const sproutStart = html.search(SPROUT_DIV_START);
-const mainCloseIndex =
-  sproutStart !== -1 ? html.indexOf(MAIN_CLOSE, sproutStart) : -1;
-
-if (sproutStart !== -1 && mainCloseIndex !== -1) {
-  const sproutBlock = html.slice(sproutStart, mainCloseIndex);
-  html = html.slice(0, sproutStart) + html.slice(mainCloseIndex);
-  const insertAt = html.indexOf(MAIN_CLOSE) + MAIN_CLOSE.length;
-  html = html.slice(0, insertAt) + sproutBlock + html.slice(insertAt);
-  console.log("Moved sprout-footer outside #main");
+// Copy custom/ assets to public/custom/ (edit files in custom/ for future changes)
+if (existsSync(customDir)) {
+  mkdirSync(publicCustomDir, { recursive: true });
+  for (const file of ["overrides.css", "overrides.js"]) {
+    const src = join(customDir, file);
+    if (existsSync(src)) {
+      cpSync(src, join(publicCustomDir, file));
+    }
+  }
 }
 
-if (!html.includes("/site-overrides.css")) {
-  html = html.replace("</head>", `${OVERRIDE_TAGS}</head>`);
+let html = readFileSync(sourceHtml, "utf-8");
+html = html.replace(/\.\/BOND_files\//g, "/BOND_files/");
+
+// Remove embedded footer from BOND.html — injected from custom/footer.html instead
+const sproutStart = html.indexOf('<div id="sprout-footer">');
+if (sproutStart !== -1) {
+  const overlayStart = html.indexOf('<div id="overlay">', sproutStart);
+  if (overlayStart !== -1) {
+    html = html.slice(0, sproutStart) + html.slice(overlayStart);
+    console.log("Stripped embedded sprout-footer from BOND.html");
+  }
+}
+
+// Inject custom footer after the outer #main (last MAIN_CLOSE marker)
+const footerPath = join(customDir, "footer.html");
+const footerHtml = existsSync(footerPath)
+  ? readFileSync(footerPath, "utf-8")
+  : "";
+
+const lastMainClose = html.lastIndexOf(MAIN_CLOSE);
+if (lastMainClose !== -1 && footerHtml) {
+  const afterMain = lastMainClose + MAIN_CLOSE.length;
+  html = html.slice(0, afterMain) + footerHtml + html.slice(afterMain);
+  console.log("Injected custom/footer.html after #main");
+}
+
+if (!html.includes("/custom/overrides.css")) {
+  html = html.replace("</head>", `${CUSTOM_TAGS}</head>`);
 }
 
 writeFileSync(outputHtml, html, "utf-8");
