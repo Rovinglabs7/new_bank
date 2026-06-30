@@ -220,5 +220,5 @@ if (!html.includes("/custom/overrides.css")) {
 }
 
 writeFileSync(outputHtml, html, "utf-8");
-writeFileSync(join(root, "public", "index.html"), html, "utf-8");
 console.log(`Prepared ${outputHtml} (${html.length} bytes)`);
+console.log("Note: public/index.html is NOT generated — / is served by the Next.js app.");
