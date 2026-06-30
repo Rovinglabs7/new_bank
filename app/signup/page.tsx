@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { site } from "@/config/site";
 import { CountrySelect } from "./CountrySelect";
+import { SignupScenes } from "./SignupScenes";
 import styles from "./signup.module.css";
 
 export const metadata = {
@@ -11,12 +12,16 @@ export default function SignUpPage() {
   return (
     <main className={styles.page}>
       <div className={styles.brandPanel}>
-        <Link href="/" className={styles.brandLogo}>
-          {site.brand}
-        </Link>
-        <p className={styles.brandTagline}>
-          Getting paid should be the easiest part of running your business.
-        </p>
+        <div className={styles.brandIntro}>
+          <Link href="/" className={styles.brandLogo}>
+            {site.brand}
+          </Link>
+          <p className={styles.brandTagline}>
+            Getting paid should be the easiest part of running your business.
+          </p>
+        </div>
+
+        <SignupScenes />
       </div>
 
       <div className={styles.formPanel}>

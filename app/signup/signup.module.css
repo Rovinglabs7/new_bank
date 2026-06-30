@@ -7,9 +7,12 @@
   flex: 0 0 45%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   padding: 64px 72px;
   background: var(--color-hero-bottom);
+}
+
+.brandIntro {
+  flex: none;
 }
 
 .brandLogo {
@@ -28,6 +31,71 @@
   line-height: 1.25;
   letter-spacing: -0.01em;
   color: var(--color-white);
+}
+
+.scenes {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 48px;
+}
+
+.sceneCard {
+  position: relative;
+  border-radius: 20px;
+  padding: 32px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
+}
+
+.sceneCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 120% at 100% 0%,
+    rgba(255, 255, 255, 0.22),
+    transparent 60%
+  );
+}
+
+.sceneLabel {
+  position: relative;
+  font-family: var(--font-season);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-white);
+}
+
+.sceneDetail {
+  position: relative;
+  margin-top: 6px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.sceneDots {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.sceneDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.3);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.sceneDotActive {
+  background: var(--color-white);
+  transform: scale(1.3);
 }
 
 .formPanel {
@@ -254,6 +322,14 @@
   .brandPanel {
     flex: none;
     padding: 40px 32px;
+  }
+
+  .scenes {
+    margin-top: 28px;
+  }
+
+  .sceneCard {
+    min-height: 160px;
   }
 
   .formPanel {
