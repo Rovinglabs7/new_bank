@@ -20,13 +20,12 @@ const nextConfig: NextConfig = {
           destination: `${FRAMER_CDN}/:path*`,
         },
       ],
-      // Framer client-side routes all need the same HTML shell
+      // Framer client-side routes (not yet migrated) still use legacy HTML
       fallback: [
-        { source: "/", destination: "/index.html" },
         {
           source:
-            "/:path((?!_next/|BOND_files/|favicon\\.ico$|index\\.html$|bond\\.html$).+)",
-          destination: "/index.html",
+            "/:path((?!_next/|BOND_files/|favicon\\.ico$|index\\.html$|bond\\.html$|framer-body\\.html$|framer-styles\\.css$|custom/).+)",
+          destination: "/bond.html",
         },
       ],
     };
@@ -39,6 +38,10 @@ const nextConfig: NextConfig = {
       { source: "/BOND_files/:path*.js.gz", headers: [js] },
       { source: "/BOND_files/:path*.js.download", headers: [js] },
       { source: "/BOND_files/script", headers: [js] },
+      {
+        source: "/:path(framer-styles.css|framer-body.html)",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
       {
         source: "/:path(index.html|bond.html)",
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],

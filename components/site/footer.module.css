@@ -1,0 +1,255 @@
+.footer {
+  background-color: var(--color-sprout);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  color: var(--color-white);
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  top: -160px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 500px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.045) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.logoRow {
+  padding-top: 48px;
+}
+
+.logo {
+  font-family: var(--font-season);
+  font-size: 28px;
+  font-weight: 420;
+  letter-spacing: -0.02em;
+}
+
+.newsletter {
+  padding: 48px 0 72px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.newsletterCopy h3 {
+  font-family: var(--font-season);
+  font-size: 22px;
+  font-weight: 420;
+  margin: 0 0 10px;
+  letter-spacing: -0.01em;
+}
+
+.newsletterCopy p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  max-width: 360px;
+}
+
+.newsletterForm {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.newsletterForm input {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: var(--color-white);
+  font-size: 14px;
+  height: 42px;
+  outline: none;
+  padding: 0 16px;
+  width: 260px;
+}
+
+.newsletterForm input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.newsletterForm button {
+  background: var(--color-white);
+  color: var(--color-sprout);
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  height: 42px;
+  padding: 0 20px;
+  cursor: pointer;
+}
+
+.nav {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 24px;
+  padding: 56px 0 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.colHeading {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 0 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  text-align: left;
+  width: 100%;
+  cursor: default;
+}
+
+.colLinks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.colLinks a {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.72);
+  transition: color 0.2s;
+}
+
+.colLinks a:hover {
+  color: var(--color-white);
+}
+
+.bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 32px 0 48px;
+}
+
+.tagline {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 8px;
+  max-width: 360px;
+}
+
+.copyright {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0;
+}
+
+.legalLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.legalLinks a {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  padding: 0 12px;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.legalLinks a:last-child {
+  border-right: none;
+}
+
+.legalLinks a:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 1024px) {
+  .nav {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 809px) {
+  .newsletter {
+    flex-direction: column;
+  }
+
+  .newsletterForm {
+    width: 100%;
+  }
+
+  .newsletterForm input {
+    flex: 1;
+    width: auto;
+  }
+
+  .nav {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .colHeading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .colHeading::after {
+    content: "+";
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .open .colHeading::after {
+    transform: rotate(45deg);
+  }
+
+  .colLinks {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .open .colLinks {
+    max-height: 300px;
+    padding-bottom: 16px;
+  }
+
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .inner {
+    padding: 0 20px;
+  }
+}

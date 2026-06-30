@@ -2,6 +2,85 @@ import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
+function stripContainerByClass(html, partialClass) {
+  let result = html;
+  let searchFrom = 0;
+  while (searchFrom < result.length) {
+    const classIdx = result.indexOf(partialClass, searchFrom);
+    if (classIdx === -1) break;
+    const start = result.lastIndexOf("<div", classIdx);
+    if (start === -1) break;
+    let depth = 0;
+    let i = start;
+    let end = -1;
+    while (i < result.length) {
+      if (result.startsWith("<div", i)) depth++;
+      else if (result.startsWith("</div>", i)) {
+        depth--;
+        if (depth === 0) {
+          end = i + 6;
+          break;
+        }
+      }
+      i++;
+    }
+    if (end === -1) break;
+    result = result.slice(0, start) + result.slice(end);
+    searchFrom = start;
+  }
+  return result;
+}
+
+function stripElementByFramerName(html, framerName) {
+  const needle = `data-framer-name="${framerName}"`;
+  let result = html;
+  let searchFrom = 0;
+  while (searchFrom < result.length) {
+    const nameIdx = result.indexOf(needle, searchFrom);
+    if (nameIdx === -1) break;
+    const start = result.lastIndexOf("<div", nameIdx);
+    if (start === -1) break;
+    let depth = 0;
+    let i = start;
+    let end = -1;
+    while (i < result.length) {
+      if (result.startsWith("<div", i)) depth++;
+      else if (result.startsWith("</div>", i)) {
+        depth--;
+        if (depth === 0) {
+          end = i + 6;
+          break;
+        }
+      }
+      i++;
+    }
+    if (end === -1) break;
+    result = result.slice(0, start) + result.slice(end);
+    searchFrom = start;
+  }
+  return result;
+}
+
+function stripReactReplacedSections(html) {
+  const containers = [
+    "framer-16bgs19-container", // scroll / demo hero
+    "framer-623ofv-container", // fixed nav
+    "framer-14hkwql-container", // footer
+  ];
+  let out = html;
+  for (const cls of containers) {
+    const before = out.length;
+    out = stripContainerByClass(out, cls);
+    if (before !== out.length) console.log(`  stripped ${cls} (${before - out.length} bytes)`);
+  }
+  for (const name of ["hero-s"]) {
+    const before = out.length;
+    out = stripElementByFramerName(out, name);
+    if (before !== out.length) console.log(`  stripped [${name}] (${before - out.length} bytes)`);
+  }
+  return out;
+}
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
 
@@ -19,12 +98,36 @@ const CUSTOM_TAGS = `
 <script src="/custom/overrides.js"></script>
 `;
 
+function extractFramerCss(html) {
+  const parts = [];
+  const patterns = [
+    /<style data-framer-font-css="">([\s\S]*?)<\/style>/,
+    /<style data-framer-css-ssr-minified=""[^>]*>([\s\S]*?)<\/style>/,
+    /<style data-framer-html-style="">([\s\S]*?)<\/style>/,
+  ];
+  for (const pattern of patterns) {
+    const match = html.match(pattern);
+    if (match) parts.push(match[1]);
+  }
+  return parts.join("\n\n");
+}
+
+function extractMainInner(html) {
+  const mainStart = html.indexOf('<div id="main"');
+  if (mainStart === -1) return "";
+  const mainOpenEnd = html.indexOf(">", mainStart) + 1;
+  const lastClose = html.lastIndexOf(MAIN_CLOSE);
+  if (lastClose === -1) return "";
+  return html.slice(mainOpenEnd, lastClose);
+}
+
 if (!existsSync(sourceHtml)) {
   console.error("BOND.html not found at project root");
   process.exit(1);
 }
 
 mkdirSync(join(root, "public"), { recursive: true });
+mkdirSync(join(root, "styles"), { recursive: true });
 
 if (!existsSync(publicAssets)) {
   if (existsSync(sourceAssets)) {
@@ -36,7 +139,6 @@ if (!existsSync(publicAssets)) {
   }
 }
 
-// Copy custom/ assets to public/custom/ (edit files in custom/ for future changes)
 if (existsSync(customDir)) {
   mkdirSync(publicCustomDir, { recursive: true });
   for (const file of ["overrides.css", "overrides.js"]) {
@@ -50,7 +152,6 @@ if (existsSync(customDir)) {
 let html = readFileSync(sourceHtml, "utf-8");
 html = html.replace(/\.\/BOND_files\//g, "/BOND_files/");
 
-// Remove embedded footer from BOND.html — injected from custom/footer.html instead
 const sproutStart = html.indexOf('<div id="sprout-footer">');
 if (sproutStart !== -1) {
   const overlayStart = html.indexOf('<div id="overlay">', sproutStart);
@@ -60,7 +161,18 @@ if (sproutStart !== -1) {
   }
 }
 
-// Inject custom footer after the outer #main (last MAIN_CLOSE marker)
+// React app: middle sections only (hero/nav/footer stripped — React components own those)
+const framerCss = extractFramerCss(html);
+let framerBody = extractMainInner(html);
+console.log("Stripping React-replaced Framer sections from body:");
+framerBody = stripReactReplacedSections(framerBody);
+writeFileSync(join(root, "public", "framer-styles.css"), framerCss, "utf-8");
+writeFileSync(join(root, "styles", "framer-legacy.css"), framerCss, "utf-8");
+writeFileSync(join(root, "public", "framer-body.html"), framerBody, "utf-8");
+console.log(
+  `Extracted framer-styles.css (${framerCss.length} bytes) and framer-body.html (${framerBody.length} bytes)`
+);
+
 const footerPath = join(customDir, "footer.html");
 const footerHtml = existsSync(footerPath)
   ? readFileSync(footerPath, "utf-8")
@@ -70,7 +182,7 @@ const lastMainClose = html.lastIndexOf(MAIN_CLOSE);
 if (lastMainClose !== -1 && footerHtml) {
   const afterMain = lastMainClose + MAIN_CLOSE.length;
   html = html.slice(0, afterMain) + footerHtml + html.slice(afterMain);
-  console.log("Injected custom/footer.html after #main");
+  console.log("Injected custom/footer.html after #main (legacy bond.html only)");
 }
 
 if (!html.includes("/custom/overrides.css")) {

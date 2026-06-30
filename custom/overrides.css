@@ -9,3 +9,8 @@
   position: relative;
   z-index: 10;
 }
+
+/* Hide duplicate Framer BOND footer (Sprout footer is in custom/footer.html) */
+#main .framer-14hkwql-container {
+  display: none !important;
+}

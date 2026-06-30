@@ -1,0 +1,91 @@
+@import "../styles/framer-legacy.css";
+
+:root {
+  --color-cream: #faf8f6;
+  --color-ink: #281e15;
+  --color-ink-muted: rgba(40, 30, 21, 0.72);
+  --color-hero-top: #52402f;
+  --color-hero-bottom: #281e15;
+  --color-sprout: #174501;
+  --color-white: #ffffff;
+  --font-season: "Season Mix Regular", Georgia, serif;
+  --font-inter: "Inter", system-ui, sans-serif;
+  --page-max: 1200px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+@font-face {
+  font-family: "Season Mix Regular";
+  src: url("https://framerusercontent.com/assets/5vPmuTaz05DTFtdH6Gr2FBBIxuw.woff2")
+    format("woff2");
+  font-style: normal;
+  font-weight: 420;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("https://framerusercontent.com/assets/GrgcKwrN6d3Uz8EwcLHZxwEfC4.woff2")
+    format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("https://framerusercontent.com/assets/5A3Ce6C9YYmCjpQx9M4inSaKU.woff2")
+    format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("https://framerusercontent.com/assets/Dp8WX5V2LhtgpdocTlFgC2jLtBP8.woff2")
+    format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* Safety net: hero, nav, footer live in React — never show Framer copies */
+.framer-static-body .framer-16bgs19-container,
+.framer-static-body .framer-623ofv-container,
+.framer-static-body .framer-14hkwql-container,
+.framer-static-body [data-framer-name="scroll element"],
+.framer-static-body [data-framer-name="hero-s"],
+.framer-static-body [data-framer-name="nav-w"] {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+.site-shell {
+  overflow-x: hidden;
+}

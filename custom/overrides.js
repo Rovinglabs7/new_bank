@@ -57,6 +57,27 @@
     });
   }
 
+  function hideFramerFooter() {
+    var main = document.getElementById("main");
+    if (!main) return;
+
+    main.querySelectorAll(".framer-14hkwql-container").forEach(function (el) {
+      el.style.setProperty("display", "none", "important");
+    });
+
+    // Fallback if Framer re-exports with different class names
+    main.querySelectorAll('[data-framer-name="inner"]').forEach(function (el) {
+      var text = el.textContent || "";
+      if (/ALL RIGHTS RESERVED/i.test(text) && /NAVIGATION/i.test(text)) {
+        var block =
+          el.closest(".framer-14hkwql-container") ||
+          el.closest("[class*='framer-8AwnG']") ||
+          el.parentElement;
+        if (block) block.style.setProperty("display", "none", "important");
+      }
+    });
+  }
+
   function ensureFooter() {
     var footer = document.getElementById("sprout-footer");
     if (!footer) return;
@@ -70,6 +91,7 @@
   function apply() {
     applyHero();
     hideBadges();
+    hideFramerFooter();
     applyTextReplacements();
     ensureFooter();
   }
