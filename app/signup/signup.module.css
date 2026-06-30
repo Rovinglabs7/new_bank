@@ -4,7 +4,7 @@
 }
 
 .brandPanel {
-  flex: 0 0 45%;
+  flex: 0 0 56%;
   display: flex;
   flex-direction: column;
   padding: 64px 72px;
@@ -44,21 +44,20 @@
 .sceneCard {
   position: relative;
   border-radius: 20px;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 11;
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.22);
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.04);
 }
 
 .sceneImage {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .sceneQuote {
-  margin: 24px 0 0;
+  margin: 36px 0 0;
   padding: 0;
 }
 
@@ -96,7 +95,7 @@
   display: flex;
   flex-direction: column;
   background: #ffffff;
-  padding: 32px 64px 64px;
+  padding: 32px 48px 64px;
 }
 
 .formInner {
@@ -338,6 +337,10 @@
 
   .sceneCard {
     aspect-ratio: 4 / 3;
+  }
+
+  .sceneQuote {
+    margin-top: 24px;
   }
 
   .formPanel {
