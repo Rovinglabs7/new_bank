@@ -30,11 +30,6 @@ export type Faq = {
   answer: string;
 };
 
-export type ContentCard = {
-  title: string;
-  href: string;
-};
-
 const heroImages: CareerImage[] = [
   { src: "/pexels-a-darmel-9040539.jpg", alt: "Colleagues collaborating around a laptop in a bright office" },
   { src: "/pexels-diva-plavalaguna-6150366.jpg", alt: "Team members reviewing a project together at a desk" },
@@ -238,18 +233,8 @@ export const careers = {
     heading: "Join our team",
     subtext:
       "We don't currently have open roles listed, but reach out anyway if you think you'd be a great fit.",
+    cardIntro: "Pick the team you'd like to join to get started.",
     submitLabel: "Submit application",
-  },
-
-  contentCards: {
-    heading: "What we've been up to",
-    items: [
-      { title: "The £400 your business loses on every failed payment nobody chases.", href: "#" },
-      { title: "Why we built compliance you can actually see.", href: "#" },
-      { title: "Sprout vs GoCardless", href: "#" },
-      { title: "Sprout vs a payment bureau", href: "#" },
-    ] satisfies ContentCard[],
-    discoverMore: { label: "Discover more", href: "#" },
   },
 
   faqs: {
@@ -279,9 +264,9 @@ export const careers = {
   },
 
   closing: {
-    heading: "Start collecting. Let Sprout handle the rest.",
+    heading: "Ready to build something worth building?",
     body:
-      "A growing number of businesses have already handed off the admin behind getting paid. No setup fee, nothing charged until a payment actually collects.",
-    cta: { label: "Book a demo", href: "/demo" },
+      "We're a small team with a lot left to build. If that sounds like your kind of problem, we'd like to hear from you.",
+    cta: { label: "See open roles", href: "#open-roles" },
   },
 };

@@ -12,7 +12,6 @@ import { CareersDepartments } from "@/components/careers/CareersDepartments";
 import { CareersPerks } from "@/components/careers/CareersPerks";
 import { CareersHowWeHire } from "@/components/careers/CareersHowWeHire";
 import { CareersApplicationForm } from "@/components/careers/CareersApplicationForm";
-import { CareersContentCards } from "@/components/careers/CareersContentCards";
 import { CareersFAQ } from "@/components/careers/CareersFAQ";
 import { CareersClosingCTA } from "@/components/careers/CareersClosingCTA";
 import { site } from "@/config/site";
@@ -40,7 +39,6 @@ export default function CareersPage() {
         <CareersPerks />
         <CareersHowWeHire />
         <CareersApplicationForm />
-        <CareersContentCards />
         <CareersFAQ />
         <CareersClosingCTA />
       </main>
