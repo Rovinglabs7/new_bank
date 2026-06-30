@@ -1,0 +1,17 @@
+.banner {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  z-index: 9999;
+  transform: translateX(-50%);
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: #1c1917;
+  color: #fafaf9;
+  font-family: var(--font-inter, system-ui, sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+}

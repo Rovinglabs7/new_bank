@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { isMockMode } from "@/config/mock";
 import { ApiError, apiFetch } from "@/lib/api/client";
 import { SESSION_COOKIE } from "@/lib/auth/session";
 
@@ -41,6 +42,10 @@ export async function registerUser(
   _prev: AuthActionState,
   formData: FormData,
 ): Promise<AuthActionState> {
+  if (isMockMode()) {
+    redirect("/dashboard");
+  }
+
   const parsed = registerSchema.safeParse({
     businessName: formData.get("businessName"),
     email: formData.get("email"),
@@ -73,9 +78,18 @@ export async function signInWithCredentials(
   _prev: AuthActionState,
   formData: FormData,
 ): Promise<AuthActionState> {
+  const callbackUrl = formData.get("callbackUrl");
+
+  if (isMockMode()) {
+    const destination =
+      typeof callbackUrl === "string" && callbackUrl.startsWith("/")
+        ? callbackUrl
+        : "/dashboard";
+    redirect(destination);
+  }
+
   const email = formData.get("email");
   const password = formData.get("password");
-  const callbackUrl = formData.get("callbackUrl");
 
   if (typeof email !== "string" || typeof password !== "string") {
     return { error: "Email and password are required" };
@@ -104,7 +118,9 @@ export async function signInWithCredentials(
 }
 
 export async function signOut() {
-  const cookieStore = await cookies();
-  cookieStore.delete(SESSION_COOKIE);
+  if (!isMockMode()) {
+    const cookieStore = await cookies();
+    cookieStore.delete(SESSION_COOKIE);
+  }
   redirect("/");
 }

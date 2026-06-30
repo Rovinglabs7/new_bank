@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { site } from "@/config/site";
 import { AmbientMusicToggle } from "@/components/site/AmbientMusicToggle";
+import { MockModeBanner } from "@/components/site/MockModeBanner";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body>
         {children}
         <AmbientMusicToggle />
+        <MockModeBanner />
       </body>
     </html>
   );
