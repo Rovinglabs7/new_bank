@@ -139,7 +139,7 @@
 }
 
 .hexRow + .hexRow {
-  margin-top: calc(var(--hex-width) * -0.255 + var(--hex-gap, 32px) * -0.12);
+  margin-top: calc(var(--hex-width) * -0.255 + var(--hex-gap, 32px) * -0.12 + 12px);
 }
 
 .hexRowOffset {
@@ -151,7 +151,7 @@
   width: var(--hex-width);
   aspect-ratio: 181 / 204;
   flex: none;
-  margin: 0 calc(var(--hex-gap, 32px) * 0.5);
+  margin: 0 calc(max(var(--hex-gap, 32px), var(--hex-gap-floor, 0px)) * 0.5);
 }
 
 /* Shadow is baked into the Framer hex SVG */
@@ -192,17 +192,14 @@
   }
 
   .hexGrid {
-    --hex-width: clamp(80px, 24vw, 120px);
+    --hex-width: clamp(72px, 17vw, 108px);
+    --hex-gap-floor: 18px;
     max-width: 100%;
+    padding: 24px 8px 40px;
   }
 
-  .hexRow {
-    flex-wrap: wrap;
-    max-width: 360px;
-  }
-
-  .hexRowOffset {
-    margin-left: 0;
+  .hexRow + .hexRow {
+    margin-top: calc(var(--hex-width) * -0.2 + max(var(--hex-gap, 32px), var(--hex-gap-floor)) * -0.06 + 22px);
   }
 }
 

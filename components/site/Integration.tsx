@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import styles from "./integration.module.css";
 
@@ -60,15 +60,31 @@ function HexCard({ iconId }: { iconId: string | null }) {
 export function Integration() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
+  const [isNarrow, setIsNarrow] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsNarrow(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
 
-  // Spread apart when away; tight cluster when section is centered (contracted).
-  const hexGap = useTransform(scrollYProgress, [0, 0.42, 0.58, 1], [78, 4, 4, 78]);
+  // Spread apart when away; tight cluster when centered — keep more gap on small screens.
+  const gapSpread = isNarrow ? 52 : 78;
+  const gapTight = isNarrow ? 20 : 4;
+  const hexGap = useTransform(
+    scrollYProgress,
+    [0, 0.42, 0.58, 1],
+    [gapSpread, gapTight, gapTight, gapSpread]
+  );
   const hexGapPx = useTransform(hexGap, (v) => `${v}px`);
+  const restingGap = isNarrow ? "20px" : "8px";
 
   return (
     <section
@@ -112,7 +128,7 @@ export function Integration() {
           className={styles.hexGrid}
           style={
             reduceMotion
-              ? ({ "--hex-gap": "8px" } as React.CSSProperties)
+              ? ({ "--hex-gap": restingGap } as React.CSSProperties)
               : ({ "--hex-gap": hexGapPx } as React.CSSProperties)
           }
         >

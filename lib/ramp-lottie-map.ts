@@ -1,27 +1,33 @@
 /**
- * Maps dotLottie instance IDs from the static HTML export to real animation URLs.
+ * Maps dotLottie instance IDs from the static HTML export to animation files.
  * data-name UUIDs are player instance IDs, not CDN asset IDs.
- * Sources extracted from Ramp KbLotties (public/ramp-files/0ng.340zy-m9-.js.download).
- *
- * External Ramp CDN URLs are proxied via Next rewrites (see next.config.ts) so the
- * browser fetches same-origin paths and avoids CORS failures on localhost.
+ * Files are self-hosted in public/ramp-lottie/ (see scripts/download-ramp-lotties.mjs).
  */
-const RAMP_LOTTIE_REMOTE_BY_INSTANCE_ID: Record<string, string> = {
-  // Platform — Cards, Procure-to-pay, Accounting automation
-  "3e105fd2-91e0-4ed7-9f90-5a6a3cd3ef9b":
-    "https://assets.ramp.com/nextjs/lottie/home/refresh/homepage-card-expenses-mobile-0413.lottie",
-  "90d8b5b4-5f02-4057-b689-c426c8ad69b5":
-    "https://assets.ramp.com/nextjs/lottie/home/refresh/homepage-procure-to-pay-0423-mobile.lottie",
-  "3eea5c57-6163-49a2-ab5e-c9e0e909abc4":
-    "https://cdn.air.inc/d121e557-9dbe-427b-bb5b-b7f607d6e5c2",
-  // Systems — old way / new way scroll section
-  "e4db6a82-366f-4a97-8ae5-f8f9fca3e87c":
-    "https://assets.ramp.com/nextjs/lottie/home/refresh/home_old_way.lottie?v=2",
-  "35d072d7-de4b-418c-adcb-bdbda015e518":
-    "https://assets.ramp.com/nextjs/lottie/home/refresh/home_new_way.lottie?v=3",
+export const RAMP_LOTTIE_BY_INSTANCE_ID: Record<string, string> = {
+  "3e105fd2-91e0-4ed7-9f90-5a6a3cd3ef9b": "/ramp-lottie/homepage-card-expenses.lottie",
+  "90d8b5b4-5f02-4057-b689-c426c8ad69b5": "/ramp-lottie/homepage-procure-to-pay.lottie",
+  "3eea5c57-6163-49a2-ab5e-c9e0e909abc4": "/ramp-lottie/homepage-accounting-automation.lottie",
+  "e4db6a82-366f-4a97-8ae5-f8f9fca3e87c": "/ramp-lottie/home-old-way.lottie",
+  "35d072d7-de4b-418c-adcb-bdbda015e518": "/ramp-lottie/home-new-way.lottie",
 };
 
+/** Remote URLs in exported HTML → local self-hosted paths */
+export const RAMP_LOTTIE_REMOTE_ALIASES: Record<string, string> = {
+  "https://cdn.air.inc/e754352b-9997-49c5-a5fa-bca8f3d3e646":
+    "/ramp-lottie/finance-policy-agent.lottie",
+  "https://cdn.air.inc/d121e557-9dbe-427b-bb5b-b7f607d6e5c2":
+    "/ramp-lottie/homepage-accounting-automation.lottie",
+};
+
+export function resolveRampLottieSrc(instanceId: string): string | null {
+  return RAMP_LOTTIE_BY_INSTANCE_ID[instanceId] ?? null;
+}
+
 export function proxyRampLottieUrl(url: string): string {
+  const local = RAMP_LOTTIE_REMOTE_ALIASES[url.replace(/&amp;/g, "&")];
+  if (local) return local;
+  if (url.startsWith("/ramp-lottie/")) return url;
+  // Fallback proxy for any remaining remote URLs
   if (url.startsWith("https://cdn.air.inc/")) {
     return `/api/ramp-lottie?url=${encodeURIComponent(url)}`;
   }
@@ -29,9 +35,4 @@ export function proxyRampLottieUrl(url: string): string {
     return url.replace("https://assets.ramp.com/", "/ramp-lottie/assets/");
   }
   return url;
-}
-
-export function resolveRampLottieSrc(instanceId: string): string | null {
-  const remote = RAMP_LOTTIE_REMOTE_BY_INSTANCE_ID[instanceId];
-  return remote ? proxyRampLottieUrl(remote) : null;
 }
