@@ -3,14 +3,12 @@ import styles from "./who-sprout-works-for.module.css";
 
 type Industry = {
   title: string;
-  body: string;
   icon: ReactElement;
 };
 
 const INDUSTRIES: Industry[] = [
   {
     title: "Agencies & Studios",
-    body: "Get paid for project milestones and retainers without chasing invoices.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
         <rect x="3.5" y="6.5" width="17" height="13" rx="2" />
@@ -20,7 +18,6 @@ const INDUSTRIES: Industry[] = [
   },
   {
     title: "Professional Services",
-    body: "Bill clients and manage recurring fees with a single, reliable system.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
         <circle cx="12" cy="8" r="3.5" />
@@ -30,7 +27,6 @@ const INDUSTRIES: Industry[] = [
   },
   {
     title: "Healthcare Providers",
-    body: "Take patient payments securely without disrupting clinical workflows.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
         <path d="M3 12h4l2-5 4 10 2-5h6" strokeLinecap="round" strokeLinejoin="round" />
@@ -39,7 +35,6 @@ const INDUSTRIES: Industry[] = [
   },
   {
     title: "Fitness & Wellness",
-    body: "Collect memberships and class payments without manual follow-up.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
         <path d="M6.5 7v10M17.5 7v10M3.5 10v4M20.5 10v4M6.5 12h11" strokeLinecap="round" />
@@ -48,7 +43,6 @@ const INDUSTRIES: Industry[] = [
   },
   {
     title: "Education & Training",
-    body: "Handle course fees and tuition payments with less administration.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
         <path d="M12 4 2 9l10 5 10-5-10-5z" strokeLinejoin="round" />
@@ -58,7 +52,6 @@ const INDUSTRIES: Industry[] = [
   },
   {
     title: "Property & Real Estate",
-    body: "Collect rent, deposits, and fees on time, every time.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
         <path d="M4 11 12 4l8 7" strokeLinecap="round" strokeLinejoin="round" />
@@ -68,7 +61,6 @@ const INDUSTRIES: Industry[] = [
   },
   {
     title: "Retail & E-commerce",
-    body: "Accept payments in-store and online from a single dashboard.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
         <path d="M6 8h12l-1 11H7L6 8z" strokeLinejoin="round" />
@@ -78,7 +70,6 @@ const INDUSTRIES: Industry[] = [
   },
   {
     title: "Hospitality",
-    body: "Take bookings deposits and on-site payments without the friction.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
         <path d="M3 19V8a2 2 0 0 1 2-2h3v13M8 19h13v-6a3 3 0 0 0-3-3H11" strokeLinejoin="round" />
@@ -87,7 +78,6 @@ const INDUSTRIES: Industry[] = [
   },
   {
     title: "Nonprofits & Charities",
-    body: "Collect donations and grants with full transparency for your team.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
         <path d="M12 20.5s-7.5-4.5-7.5-10A4.5 4.5 0 0 1 12 7.5a4.5 4.5 0 0 1 7.5 3c0 5.5-7.5 10-7.5 10z" strokeLinejoin="round" />
@@ -96,7 +86,6 @@ const INDUSTRIES: Industry[] = [
   },
   {
     title: "Growing Teams",
-    body: "Scale your payment operations as your headcount and revenue grow.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
         <circle cx="9" cy="8" r="3" />
@@ -112,22 +101,26 @@ export function WhoSproutWorksFor() {
   return (
     <section className={styles.section} aria-labelledby="who-sprout-heading">
       <div className={styles.inner}>
-        <p className={styles.eyebrow}>Who Sprout works for</p>
-        <h2 id="who-sprout-heading" className={styles.heading}>
-          Built for businesses of every size.
-        </h2>
-        <p className={styles.supporting}>
-          From solo founders to growing teams, Sprout adapts to how your business gets paid.
-        </p>
+        <div className={styles.card}>
+          <div className={styles.textCol}>
+            <p className={styles.eyebrow}>Who Sprout works for</p>
+            <h2 id="who-sprout-heading" className={styles.heading}>
+              Built for businesses of every size.
+            </h2>
+            <p className={styles.supporting}>
+              From solo founders to growing teams, Sprout adapts to how your
+              business gets paid.
+            </p>
+          </div>
 
-        <div className={styles.grid}>
-          {INDUSTRIES.map((industry) => (
-            <div className={styles.card} key={industry.title}>
-              <span className={styles.icon}>{industry.icon}</span>
-              <p className={styles.cardTitle}>{industry.title}</p>
-              <p className={styles.cardBody}>{industry.body}</p>
-            </div>
-          ))}
+          <div className={styles.pillGrid}>
+            {INDUSTRIES.map((industry) => (
+              <span className={styles.pill} key={industry.title}>
+                <span className={styles.pillIcon}>{industry.icon}</span>
+                {industry.title}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>
