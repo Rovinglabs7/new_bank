@@ -99,7 +99,7 @@ export const site = {
   },
 
   navActions: {
-    login: { label: "Log in", href: "#login" },
+    login: { label: "Sign in", href: "#login" },
     demo: { label: "Book a demo", href: "#demo" },
   },
 
