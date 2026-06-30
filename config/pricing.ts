@@ -180,6 +180,8 @@ export const pricing = {
             "Custom implementation and migration support",
             "API and webhook integration support",
             "Custom user roles, permissions and audit log",
+            "Fully customised package",
+            "Volume-based discounts",
           ],
         },
       ],

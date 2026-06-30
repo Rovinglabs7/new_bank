@@ -323,7 +323,8 @@
 }
 
 .bottomRight {
-  width: 25%;
+  width: fit-content;
+  max-width: 40%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
