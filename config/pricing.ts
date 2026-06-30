@@ -40,6 +40,12 @@ export type FeeRow = {
   standard: string;
   growth: string;
   enterprise: string;
+  tooltip?: string;
+};
+
+export type FeeGroup = {
+  category: string;
+  rows: FeeRow[];
 };
 
 export type Addon = {
@@ -60,6 +66,44 @@ export type Faq = {
   answer: string;
 };
 
+export type Currency = "GBP" | "EUR" | "USD";
+
+export type CurrencyMeta = {
+  symbol: string;
+  label: string;
+};
+
+export const currencies: Record<Currency, CurrencyMeta> = {
+  GBP: { symbol: "£", label: "GBP" },
+  EUR: { symbol: "€", label: "EUR" },
+  USD: { symbol: "$", label: "USD" },
+};
+
+/** Regional plan prices — not exchange-rate conversion, these are set rates */
+export type PlanPrices = {
+  standard: string;
+  growth: string;
+  pro: string;
+};
+
+export const regionalPrices: Record<Currency, PlanPrices> = {
+  GBP: {
+    standard: "1.00% + 20p",
+    growth: "1.25% + 20p",
+    pro: "1.40% + 20p",
+  },
+  EUR: {
+    standard: "1.10% + €0.25",
+    growth: "1.35% + €0.25",
+    pro: "1.50% + €0.25",
+  },
+  USD: {
+    standard: "1.20% + $0.30",
+    growth: "1.45% + $0.30",
+    pro: "1.60% + $0.30",
+  },
+};
+
 export const pricing = {
   hero: {
     eyebrow: "Pricing",
@@ -76,7 +120,7 @@ export const pricing = {
       eyebrow: "Bank-native",
       name: "Standard",
       tagline: "For businesses ready to collect their first recurring or one-off payments",
-      price: "1.1% + 20p",
+      price: "1.00% + 20p",
       priceUnit: "per transaction",
       priceNote: "Excl. VAT",
       cta: { label: "Get started", href: "/signup" },
@@ -114,7 +158,7 @@ export const pricing = {
       eyebrow: "AI-powered",
       name: "Growth",
       tagline: "For businesses ready to stop losing revenue to failed payments",
-      price: "1.3% + 20p",
+      price: "1.25% + 20p",
       priceUnit: "per transaction",
       priceNote: "Excl. VAT, ask about annual billing discounts",
       cta: { label: "Get started", href: "/signup" },
@@ -310,61 +354,79 @@ export const pricing = {
   },
 
   fees: {
-    heading: "Transaction fees, full detail",
-    subheading: "Every fee, in one place.",
+    heading: "Transaction Fees",
+    subheading: "Everything you pay, in one place.",
     columns: ["Standard", "Growth", "Enterprise"],
-    rows: [
+    groups: [
       {
-        label: "Domestic UK Direct Debit",
-        standard: "1.1% + 20p, capped at £4.30",
-        growth: "1.3% + 20p, capped at £5.20",
-        enterprise: "Custom",
+        category: "Collections",
+        rows: [
+          {
+            label: "UK Direct Debit",
+            standard: "1.00% + 20p, capped at £4.30",
+            growth: "1.25% + 20p, capped at £5.20",
+            enterprise: "Custom",
+          },
+          {
+            label: "International Collections",
+            standard: "2% + 20p",
+            growth: "2.2% + 20p",
+            enterprise: "Custom",
+          },
+          {
+            label: "Instant Bank Payment",
+            standard: "1% + 20p",
+            growth: "1% + 20p",
+            enterprise: "Custom",
+          },
+          {
+            label: "Large Direct Debit",
+            standard: "+0.3%",
+            growth: "+0.3%",
+            enterprise: "Custom",
+            tooltip: "(£2,000+)",
+          },
+        ],
       },
       {
-        label: "International collections",
-        standard: "2% + 20p",
-        growth: "2.2% + 20p",
-        enterprise: "Custom",
+        category: "Account Management",
+        rows: [
+          {
+            label: "Failed Collection",
+            standard: "5p",
+            growth: "5p",
+            enterprise: "Custom",
+            tooltip: "Charged when a Direct Debit or Instant Bank Payment cannot be collected.",
+          },
+          {
+            label: "Refunds",
+            standard: "Free, deducted from next payout",
+            growth: "Free, deducted from next payout",
+            enterprise: "Free, deducted from next payout",
+            tooltip: "Charged when a payment is returned to your customer at your request.",
+          },
+          {
+            label: "Chargebacks & Disputes",
+            standard: "£5 (only if over 15/month)",
+            growth: "£5 (only if over 15/month)",
+            enterprise: "Custom",
+            tooltip: "Charged when a customer disputes a payment through their bank.",
+          },
+        ],
       },
       {
-        label: "Transaction over £2,000 (Direct Debit only)",
-        standard: "+0.3%",
-        growth: "+0.3%",
-        enterprise: "Custom",
+        category: "Cash Flow",
+        rows: [
+          {
+            label: "Instant Settlement",
+            standard: "Not available",
+            growth: "0.6% of advanced amount",
+            enterprise: "Custom",
+          },
+        ],
       },
-      {
-        label: "Open Banking one-off payment",
-        standard: "1% + 20p",
-        growth: "1% + 20p",
-        enterprise: "Custom",
-      },
-      {
-        label: "Failed payment fee",
-        standard: "5p",
-        growth: "5p",
-        enterprise: "Custom",
-      },
-      {
-        label: "Refund processing",
-        standard: "Free, deducted from next payout",
-        growth: "Free, deducted from next payout",
-        enterprise: "Free, deducted from next payout",
-      },
-      {
-        label: "Instant settlement advance",
-        standard: "Not available",
-        growth: "0.6% of advanced amount",
-        enterprise: "Custom",
-      },
-      {
-        label: "Chargeback fee",
-        standard: "£5 (only if over 15/month)",
-        growth: "£5 (only if over 15/month)",
-        enterprise: "Custom",
-      },
-    ] satisfies FeeRow[],
-    note:
-      "Prices exclude VAT. Krandel Labs Ltd is VAT-registered and provides a VATable service under HMRC rules, so VAT applies to transaction fees regardless of your own VAT status.",
+    ] satisfies FeeGroup[],
+    note: "All prices exclude VAT. VAT is charged in accordance with UK tax regulations where applicable.",
   },
 
   addons: {
@@ -375,41 +437,60 @@ export const pricing = {
         name: "Your name on bank statements",
         price: "£22/month",
         description:
-          "Show your business name on every customer's bank statement instead of \"Sprout Ltd\". Helps reduce confusion, support queries and accidental disputes.",
+          "Display your business name on your customers' bank statements instead of Sprout. Reduce confusion, increase recognition and minimise payment queries.",
       },
       {
         name: "Extended checkout template library",
         price: "£20/month",
         description:
-          "Beyond the 2 free templates included on every plan, unlock the full design library and fully restyle every customer-facing payment page and notification email.",
+          "Unlock our complete library of professionally designed checkout pages and customer notifications. Customise every payment experience to match your brand.",
       },
       {
         name: "Additional team seats",
         price: "£8/user/month",
-        description: "Beyond the 3 included free on every plan.",
+        description:
+          "Invite more colleagues to manage payments, customers and reporting together. Three team members are included on every plan.",
       },
       {
-        name: "API access for platforms",
+        name: "Embedded Platform API",
         price: "£199/month",
-        description: "Build Sprout directly into your own product. Full REST API, sandbox environment and webhook events.",
+        description:
+          "Embed Sprout directly into your own product with platform-grade APIs, webhooks, sandbox environments and partner onboarding tools.",
       },
       {
         name: "White-label payment pages",
         price: "£299/month",
         description:
-          "Remove all Sprout branding entirely from every customer-facing touchpoint, fully your domain, fully your brand.",
+          "Replace every Sprout touchpoint with your own brand, domain and styling for a completely white-labelled payment experience.",
       },
       {
-        name: "International SEPA collections",
-        price: "1.5% + 20p",
+        name: "International SEPA Collections",
+        price: "Contact us",
         description:
-          "Collect across the EU at rates closer to domestic than international, without separate bank accounts in each country.",
+          "Enable SEPA Direct Debit collections across Europe with region-specific pricing. Contact us for a full rate card.",
       },
       {
         name: "Dedicated compliance contact",
         price: "£99/month",
         description:
-          "Available as a standalone add-on on Standard or Growth, included free on Enterprise. A named person assigned to your account for any compliance review.",
+          "Work directly with a named compliance specialist for onboarding, reviews and ongoing regulatory support. Included on Enterprise.",
+      },
+      {
+        name: "Priority Support",
+        price: "£49/month",
+        description: "Faster response times with priority handling from the Sprout Support team.",
+      },
+      {
+        name: "Sprout Intelligence",
+        price: "£59/month",
+        description:
+          "Your AI-powered payment operations assistant. Recover revenue, automate routine tasks, forecast cash flow and keep your business moving with intelligent workflows and proactive insights.",
+      },
+      {
+        name: "Custom Domain",
+        price: "£15/month",
+        description:
+          "Use your own domain for every customer-facing payment page. Host payment links on pay.yourcompany.com or another custom subdomain for a seamless branded experience.",
       },
     ] satisfies Addon[],
   },

@@ -79,6 +79,64 @@
   background: var(--color-white);
 }
 
+.groupRow {
+  background: rgba(40, 30, 21, 0.04);
+}
+
+.groupLabel {
+  padding: 10px 16px;
+  font-family: var(--font-inter);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-ink-muted);
+  text-align: left;
+}
+
+.feeLabelInner {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.feeNote {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--color-ink-muted);
+  margin-left: 4px;
+}
+
+.tooltipWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: default;
+}
+
+.tooltipText {
+  display: none;
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  transform: translateX(-50%);
+  width: 220px;
+  background: var(--color-ink);
+  color: var(--color-white);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 8px 10px;
+  border-radius: 8px;
+  white-space: normal;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.tooltipWrapper:hover .tooltipText {
+  display: block;
+}
+
 .note {
   margin: 24px auto 0;
   max-width: 640px;

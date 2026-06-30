@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { pricing } from "@/config/pricing";
+import { pricing, currencies } from "@/config/pricing";
+import { useCurrency } from "@/context/CurrencyContext";
 import styles from "./pricing-calculator.module.css";
 
 const PLAN_OPTIONS = [
@@ -14,6 +15,8 @@ type PlanId = (typeof PLAN_OPTIONS)[number]["id"];
 
 export function PricingCalculator() {
   const { calculator } = pricing;
+  const { currency } = useCurrency();
+  const currencySymbol = currencies[currency].symbol;
   const [selectedPlan, setSelectedPlan] = useState<PlanId>("growth");
   const [transactionCount, setTransactionCount] = useState(500);
   const [averageValue, setAverageValue] = useState(45);
@@ -76,7 +79,7 @@ export function PricingCalculator() {
             </label>
 
             <label className={styles.field}>
-              <span className={styles.fieldLabel}>Average transaction value (£)</span>
+              <span className={styles.fieldLabel}>Average transaction value ({currencySymbol})</span>
               <input
                 type="number"
                 min={0}
@@ -91,7 +94,7 @@ export function PricingCalculator() {
             <div className={styles.result}>
               <span className={styles.resultLabel}>Estimated monthly cost</span>
               <span className={styles.resultValue}>
-                £{results.estimatedMonthlyCost.toFixed(2)}
+                {currencySymbol}{results.estimatedMonthlyCost.toFixed(2)}
               </span>
             </div>
 
@@ -99,7 +102,7 @@ export function PricingCalculator() {
               <div className={styles.result}>
                 <span className={styles.resultLabel}>Estimated revenue protected</span>
                 <span className={styles.resultValue}>
-                  £{results.estimatedRevenueProtected.toFixed(2)}
+                  {currencySymbol}{results.estimatedRevenueProtected.toFixed(2)}
                 </span>
               </div>
             ) : null}

@@ -10,6 +10,7 @@ import { PricingAddons } from "@/components/pricing/PricingAddons";
 import { PricingGlance } from "@/components/pricing/PricingGlance";
 import { PricingFAQ } from "@/components/pricing/PricingFAQ";
 import { PricingClosingCTA } from "@/components/pricing/PricingClosingCTA";
+import { CurrencyProvider } from "@/context/CurrencyContext";
 import { site } from "@/config/site";
 
 export const metadata = {
@@ -25,11 +26,13 @@ export default function PricingPage() {
       <Header />
       <main>
         <PricingHero />
-        <PricingPlans />
-        <PricingCalculator />
-        <PricingComparison />
-        <PricingFees />
-        <PricingAddons />
+        <CurrencyProvider>
+          <PricingPlans />
+          <PricingCalculator />
+          <PricingComparison />
+          <PricingFees />
+          <PricingAddons />
+        </CurrencyProvider>
         <PricingGlance />
         <PricingFAQ />
         <PricingClosingCTA />
