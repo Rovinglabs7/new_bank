@@ -68,6 +68,32 @@
   color: var(--color-ink);
 }
 
+.subtext {
+  margin: 0;
+  max-width: 640px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-ink-muted);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #d97706;
+}
+
+.ctaArrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.cta:hover .ctaArrow {
+  transform: translateX(4px);
+}
+
 .trust {
   display: flex;
   flex-wrap: wrap;
