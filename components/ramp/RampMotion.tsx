@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import { proxyRampLottieUrl, resolveRampLottieSrc } from "@/lib/ramp-lottie-map";
+import {
+  proxyRampLottieUrl,
+  RAMP_PLATFORM_CARD_LOTTIES,
+  resolveRampLottieSrc,
+} from "@/lib/ramp-lottie-map";
 
 function initTickers(root: HTMLElement) {
   root.querySelectorAll<HTMLUListElement>("ul[role='group']").forEach((ul) => {
@@ -25,6 +29,16 @@ function initTickers(root: HTMLElement) {
     ul.addEventListener("ramp-ticker-destroy", () => cancelAnimationFrame(raf), {
       once: true,
     });
+  });
+}
+
+function fixBrokenImages(root: HTMLElement) {
+  root.querySelectorAll<HTMLImageElement>("img[srcset]").forEach((img) => {
+    const srcset = img.getAttribute("srcset") ?? "";
+    if (!srcset.includes("ramp.comhttps")) return;
+    const src = img.getAttribute("src");
+    if (src) img.setAttribute("srcset", src);
+    else img.removeAttribute("srcset");
   });
 }
 
@@ -93,8 +107,8 @@ async function initLotties(root: HTMLElement) {
 
     if (!canvas) {
       canvas = document.createElement("canvas");
-      canvas.className = "ramp-lottie-canvas pointer-events-none absolute inset-0 size-full";
-      container.style.position = container.style.position || "relative";
+      canvas.className =
+        "ramp-lottie-canvas pointer-events-none absolute inset-0 size-full";
       container.appendChild(canvas);
     } else {
       canvas.classList.add("ramp-lottie-canvas");
@@ -110,16 +124,18 @@ async function initLotties(root: HTMLElement) {
       renderConfig: { autoResize: true },
     });
 
+    const showFallback = () => {
+      if (fallback) fallback.style.removeProperty("display");
+    };
+
     player.addEventListener("load", () => {
+      player.play();
       if (fallback) fallback.style.display = "none";
     });
 
     player.addEventListener("loadError", () => {
       delete container.dataset.rampLottieInit;
-      if (canvas.classList.contains("ramp-lottie-canvas") && canvas.parentElement === container) {
-        canvas.remove();
-      }
-      if (fallback) fallback.style.removeProperty("display");
+      showFallback();
     });
 
     players.push(player);
@@ -148,6 +164,20 @@ async function initLotties(root: HTMLElement) {
     mount(container, src, fallback);
   });
 
+  const platformSection = root.querySelector<HTMLElement>(
+    '[data-ramp-section="platform-back-office"]'
+  );
+  if (platformSection) {
+    for (const [slug, lottieSrc] of Object.entries(RAMP_PLATFORM_CARD_LOTTIES)) {
+      const link = platformSection.querySelector<HTMLElement>(`a[href*="${slug}"]`);
+      const container =
+        link?.querySelector<HTMLElement>('div[style*="mask-image"]') ??
+        link?.querySelector("canvas")?.parentElement;
+      if (!(container instanceof HTMLElement)) continue;
+      mount(container, lottieSrc);
+    }
+  }
+
   return () => players.forEach((p) => p.destroy());
 }
 
@@ -160,22 +190,38 @@ export function RampMotion() {
     let cancelled = false;
     let destroyLotties: (() => void) | undefined;
 
-    const boot = () => {
-      initTickers(root);
-      initSystemsScroll(root);
+    const startLotties = () => {
       initLotties(root).then((destroy) => {
         if (cancelled) {
           destroy();
           return;
         }
+        destroyLotties?.();
         destroyLotties = destroy;
       });
     };
 
-    requestAnimationFrame(boot);
+    const boot = () => {
+      fixBrokenImages(root);
+      initTickers(root);
+      initSystemsScroll(root);
+      startLotties();
+    };
+
+    boot();
+    // Remount lotties after Ramp CSS layout (absolute containers need final dimensions)
+    const layoutTimer = window.setTimeout(() => {
+      destroyLotties?.();
+      root.querySelectorAll<HTMLElement>("[data-ramp-lottie-init]").forEach((el) => {
+        delete el.dataset.rampLottieInit;
+        el.querySelector<HTMLElement>(".animation")?.style.removeProperty("display");
+      });
+      startLotties();
+    }, 200);
 
     return () => {
       cancelled = true;
+      window.clearTimeout(layoutTimer);
       destroyLotties?.();
       root.querySelectorAll<HTMLUListElement>("ul[data-ramp-ticker-init]").forEach((ul) => {
         ul.dispatchEvent(new Event("ramp-ticker-destroy"));

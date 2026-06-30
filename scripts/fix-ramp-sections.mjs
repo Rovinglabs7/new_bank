@@ -37,7 +37,9 @@ function resolveMediaPath(mediaPath) {
 }
 
 function repairDoubleCdn(html) {
-  return html.replace(/https:\/\/ramp\.com(?:https:\/\/ramp\.com)+/g, RAMP_CDN);
+  return html
+    .replace(/https:\/\/ramp\.com(?:https:\/\/ramp\.com)+/g, RAMP_CDN)
+    .replace(/https:\/\/ramp\.com(https?:\/\/)/g, "$1");
 }
 
 function decodeNextImageUrl(nextImageUrl) {
@@ -112,6 +114,21 @@ function rewriteHtml(html) {
   out = out.replace(
     /(<li class="ticker-item"[^>]*style="[^"]*)transform:\s*translateX\([^)]+\);?/g,
     "$1"
+  );
+
+  out = out.replace(
+    /srcset="https:\/\/ramp\.com(https?:\/\/[^"]+)"/g,
+    'srcset="$1"'
+  );
+
+  out = out.replace(
+    /<img([^>]*?)\ssrc="(\/ramp-files\/[^"]+)"([^>]*?)\ssrcset="[^"]*"([^>]*)>/g,
+    '<img$1 src="$2"$3$4>'
+  );
+
+  out = out.replace(
+    /<img([^>]*?)\ssrc="(https?:\/\/[^"]+)"([^>]*?)\ssrcset="[^"]*"([^>]*)>/g,
+    '<img$1 src="$2"$3 srcset="$2"$4>'
   );
 
   return repairDoubleCdn(out);

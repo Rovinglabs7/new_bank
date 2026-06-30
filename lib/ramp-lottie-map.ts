@@ -19,6 +19,11 @@ export const RAMP_LOTTIE_REMOTE_ALIASES: Record<string, string> = {
     "/ramp-lottie/homepage-accounting-automation.lottie",
 };
 
+export const RAMP_PLATFORM_CARD_LOTTIES: Record<string, string> = {
+  integrations: "/ramp-lottie/home-integrations.lottie",
+  "business-banking": "/ramp-lottie/treasury-platform.lottie",
+};
+
 export function resolveRampLottieSrc(instanceId: string): string | null {
   return RAMP_LOTTIE_BY_INSTANCE_ID[instanceId] ?? null;
 }
