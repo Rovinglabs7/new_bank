@@ -7,7 +7,7 @@ export function CustomerStory() {
         <div className={styles.imageCol}>
           <img
             src="/customer-story/sarah-thompson.jpg"
-            alt="Two Life Vanguard Care team members standing together, smiling"
+            alt="Emma and Ben, owners of Bean There Coffee, standing together, smiling"
             className={styles.image}
             loading="lazy"
             decoding="async"
@@ -24,8 +24,8 @@ export function CustomerStory() {
               care.&rdquo;
             </p>
           </blockquote>
-          <p className={styles.name}>Sarah Thompson</p>
-          <p className={styles.role}>Operations Director, Life Vanguard Care</p>
+          <p className={styles.name}>Emma & Ben</p>
+          <p className={styles.role}>Owners of Bean There Coffee</p>
           <a href="#" className={styles.cta}>
             Read the full customer story
             <span className={styles.ctaArrow} aria-hidden>
