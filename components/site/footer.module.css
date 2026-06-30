@@ -30,83 +30,97 @@
   padding: 0 40px;
 }
 
-.logoRow {
-  padding-top: 48px;
-}
+/* Section 1 — Brand + Contact + Social */
 
-.logo {
-  font-family: var(--font-season);
-  font-size: 28px;
-  font-weight: 420;
-  letter-spacing: -0.02em;
-}
-
-.newsletter {
-  padding: 48px 0 72px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+.brandRow {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 48px;
+  padding: 64px 0 48px;
+  flex-wrap: wrap;
 }
 
-.newsletterCopy h3 {
+.brandBlock {
+  max-width: 420px;
+}
+
+.brandWordmark {
+  display: block;
   font-family: var(--font-season);
-  font-size: 22px;
+  font-size: clamp(40px, 5vw, 64px);
   font-weight: 420;
-  margin: 0 0 10px;
-  letter-spacing: -0.01em;
-}
-
-.newsletterCopy p {
-  font-size: 14px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.6);
-  margin: 0;
-  max-width: 360px;
-}
-
-.newsletterForm {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.newsletterForm input {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
+  letter-spacing: -0.02em;
   color: var(--color-white);
-  font-size: 14px;
-  height: 42px;
-  outline: none;
-  padding: 0 16px;
-  width: 260px;
 }
 
-.newsletterForm input::placeholder {
-  color: rgba(255, 255, 255, 0.4);
+.brandTagline {
+  margin: 8px 0 0;
+  font-size: 18px;
+  color: #a8a29e;
 }
 
-.newsletterForm button {
-  background: var(--color-white);
-  color: var(--color-sprout);
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
+.contactSocialRow {
+  display: flex;
+  gap: 64px;
+}
+
+.infoCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.infoHeading {
+  font-size: 11px;
   font-weight: 600;
-  height: 42px;
-  padding: 0 20px;
-  cursor: pointer;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #78716c;
+  margin: 0 0 16px;
 }
 
-.nav {
+.infoList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.infoList a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #d6d3d1;
+  transition: color 0.2s;
+}
+
+.infoList a:hover {
+  color: #d97706;
+}
+
+.socialIcon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.divider {
+  height: 1px;
+  background: #292524;
+}
+
+/* Section 2 — 7-column link grid */
+
+.linkGrid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 24px;
-  padding: 56px 0 48px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  grid-template-columns: repeat(7, 1fr);
+  gap: 32px;
+  padding: 48px 0;
 }
 
 .colHeading {
@@ -114,11 +128,11 @@
   border: none;
   padding: 0;
   margin: 0 0 16px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  color: #78716c;
   text-align: left;
   width: 100%;
   cursor: default;
@@ -130,85 +144,234 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .colLinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.72);
+  color: #d6d3d1;
   transition: color 0.2s;
 }
 
 .colLinks a:hover {
-  color: var(--color-white);
+  color: #d97706;
 }
 
-.bottom {
+.badge {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #a8a29e;
+  white-space: nowrap;
+}
+
+/* Section 3 — Ask AI + country selector */
+
+.askAiRow {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 32px;
-  padding: 32px 0 48px;
+  padding: 32px 0 0;
+  border-top: 1px solid #292524;
+  flex-wrap: wrap;
 }
 
-.tagline {
+.askAiBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.askAiIcons {
+  display: flex;
+  gap: 12px;
+}
+
+.askAiIconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid #44403c;
+  background: #1c1917;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.askAiIconButton:hover {
+  border-color: #d97706;
+  background: #292524;
+}
+
+.askAiIcon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.countrySelector {
+  position: relative;
+}
+
+.countryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 9999px;
+  border: 1px solid #44403c;
+  background: #292524;
+  color: var(--color-white);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.flagIcon {
+  display: inline-block;
+  width: 18px;
+  height: 13px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.chevron {
+  font-size: 11px;
+  color: #a8a29e;
+}
+
+.countryList {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid #44403c;
+  background: #1c1917;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.countryOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  background: none;
+  border-radius: 8px;
+  color: var(--color-white);
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.countryOption:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Section 3 — tagline + copyright */
+
+.builtWith {
+  margin: 24px 0 0;
   font-size: 13px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0 0 8px;
-  max-width: 360px;
+  color: #a8a29e;
 }
 
 .copyright {
+  margin: 8px 0 0;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.35);
-  margin: 0;
+  color: #78716c;
 }
 
-.legalLinks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0;
+.copyright a {
+  color: #78716c;
+  transition: color 0.2s;
 }
 
-.legalLinks a {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.45);
-  padding: 0 12px;
-  border-right: 1px solid rgba(255, 255, 255, 0.12);
+.copyright a:hover {
+  color: #d6d3d1;
 }
 
-.legalLinks a:last-child {
-  border-right: none;
+.copyrightDot {
+  display: inline-block;
+  margin: 0 8px;
+  opacity: 0.4;
 }
 
-.legalLinks a:hover {
-  color: rgba(255, 255, 255, 0.8);
+/* Section 4.5 — legal disclosure */
+
+.legalDisclosure {
+  max-width: var(--page-max);
+  margin: 32px 0 0;
+  padding-bottom: 64px;
+}
+
+.legalDisclosure p {
+  margin: 0 0 12px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #78716c;
+}
+
+.legalDisclosure p:last-child {
+  margin-bottom: 0;
+}
+
+/* Section 5 — giant outlined wordmark */
+
+.wordmarkWrap {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  padding-bottom: 24px;
+}
+
+.wordmark {
+  display: block;
+  text-align: center;
+  font-family: var(--font-season);
+  font-size: clamp(80px, 16vw, 220px);
+  font-weight: 420;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.09);
+  white-space: nowrap;
 }
 
 @media (max-width: 1024px) {
-  .nav {
-    grid-template-columns: repeat(3, 1fr);
+  .linkGrid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
 @media (max-width: 809px) {
-  .newsletter {
+  .brandRow {
     flex-direction: column;
   }
 
-  .newsletterForm {
-    width: 100%;
+  .contactSocialRow {
+    gap: 48px;
   }
 
-  .newsletterForm input {
-    flex: 1;
-    width: auto;
-  }
-
-  .nav {
+  .linkGrid {
     grid-template-columns: 1fr;
     gap: 0;
+    padding: 32px 0;
   }
 
   .colHeading {
@@ -238,18 +401,32 @@
   }
 
   .open .colLinks {
-    max-height: 300px;
+    max-height: 400px;
     padding-bottom: 16px;
   }
 
-  .bottom {
+  .askAiRow {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .countrySelector {
+    align-self: stretch;
+  }
+
+  .countryButton {
+    width: 100%;
+    justify-content: space-between;
   }
 }
 
 @media (max-width: 600px) {
   .inner {
     padding: 0 20px;
+  }
+
+  .contactSocialRow {
+    flex-direction: column;
+    gap: 32px;
   }
 }
