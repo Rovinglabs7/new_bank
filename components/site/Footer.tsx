@@ -266,7 +266,7 @@ export function Footer() {
               ))}
             </div>
 
-            <div className={styles.waitlistBlock}>
+            <div className={styles.waitlistBlock} id="waitlist">
               <p className={styles.bottomCta}>{footer.bottom.ctaLine}</p>
 
               <form

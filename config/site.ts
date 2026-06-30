@@ -67,7 +67,7 @@ export const site = {
           },
           {
             title: "Mandate management",
-            subtext: "Change dates, pause, or resume — no cancellations",
+            subtext: "Change dates, pause, or resume, no cancellations",
             href: "/products/mandate-management",
           },
           {
