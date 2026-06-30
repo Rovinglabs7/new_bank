@@ -88,8 +88,8 @@ export type PlanPrices = {
 
 export const regionalPrices: Record<Currency, PlanPrices> = {
   GBP: {
-    standard: "1.00% + 20p",
-    growth: "1.25% + 20p",
+    standard: "1.1% + 20p",
+    growth: "1.3% + 20p",
     pro: "1.40% + 20p",
   },
   EUR: {
@@ -117,10 +117,10 @@ export const pricing = {
   plans: [
     {
       id: "standard",
-      eyebrow: "Bank-native",
+      eyebrow: "Built to get started",
       name: "Standard",
-      tagline: "For businesses ready to collect their first recurring or one-off payments",
-      price: "1.00% + 20p",
+      tagline: "For businesses collecting their first recurring or one-off payments.",
+      price: "1.1% + 20p",
       priceUnit: "per transaction",
       priceNote: "Excl. VAT",
       cta: { label: "Get started", href: "/signup" },
@@ -129,38 +129,38 @@ export const pricing = {
           category: "Collections",
           items: [
             "Recurring Direct Debit, one-off payments and instalments",
-            "Online, phone, paper and QR code mandate setup",
+            "Set up mandates online, over the phone, on paper or with QR codes",
             "Payment links you can share anywhere",
           ],
         },
         {
           category: "Compliance",
           items: [
-            "Real-time compliance dashboard, see exactly what's happening with your account, always",
-            "FCA-regulated infrastructure with segregated client funds",
+            "Real-time compliance dashboard with live onboarding and verification status",
+            "FCA-regulated payment infrastructure with safeguarded client funds",
           ],
         },
         {
           category: "Automation",
           items: [
-            "AI Concierge in your dashboard, ask questions, take action, in plain English",
-            "Native Xero and QuickBooks reconciliation",
+            "AI Concierge built into your dashboard to answer questions and automate routine tasks",
+            "Native reconciliation with Xero and QuickBooks",
           ],
         },
         {
           category: "Support",
-          items: ["24/7 chat support", "Full help centre, switching guide and onboarding checklist"],
+          items: ["24/7 chat support", "Help Centre, switching guide and onboarding checklist"],
         },
       ],
     },
     {
       id: "growth",
-      eyebrow: "AI-powered",
+      eyebrow: "Most popular",
       name: "Growth",
-      tagline: "For businesses ready to stop losing revenue to failed payments",
-      price: "1.25% + 20p",
+      tagline: "For businesses ready to recover more revenue and automate payment operations.",
+      price: "1.3% + 20p",
       priceUnit: "per transaction",
-      priceNote: "Excl. VAT, ask about annual billing discounts",
+      priceNote: "Excl. VAT. Annual billing discounts available.",
       cta: { label: "Get started", href: "/signup" },
       featurePrefix: "Everything in Standard, plus:",
       recommended: true,
@@ -168,34 +168,34 @@ export const pricing = {
         {
           category: "Collections",
           items: [
-            "Failure prediction, flagged up to 3 days before a payment is due to fail",
-            "Intelligent recovery, retries timed to when a customer is actually likely to have funds",
-            "Instant settlement, get your money the same day, for a small advance fee",
-            "Verified mandates, bank details checked at the point of setup, not after",
+            "Predict failed payments before they happen",
+            "Automatically retry collections when customers are most likely to have funds available",
+            "Instant settlement available for eligible payments",
+            "Verify bank details during mandate setup to reduce failed collections",
           ],
         },
         {
           category: "Automation",
           items: [
-            "AI Concierge available in WhatsApp, Slack and Microsoft Teams",
-            "Multi-entity support for businesses managing more than one trading name",
+            "AI Concierge in your dashboard, Slack, Microsoft Teams and WhatsApp",
+            "Multi-entity support for businesses managing multiple trading names",
           ],
         },
         {
           category: "Reporting",
-          items: ["Custom report builder", "Revenue and churn forecasting"],
+          items: ["Custom report builder", "Revenue, cash flow and churn forecasting"],
         },
         {
           category: "Support",
-          items: ["Priority support, real person, under 20 minutes"],
+          items: ["Priority support with responses in under 20 minutes"],
         },
       ],
     },
     {
       id: "enterprise",
-      eyebrow: "AI-tailored",
+      eyebrow: "Built for scale",
       name: "Enterprise",
-      tagline: "For businesses with complex, high-volume or multi-market needs",
+      tagline: "For high-volume, multi-entity and international businesses.",
       price: "Custom pricing",
       priceNote: "Annual billing",
       cta: { label: "Talk to our team", href: "/contact-sales" },
@@ -212,18 +212,18 @@ export const pricing = {
         {
           category: "Compliance",
           items: [
-            "Named compliance contact for your account",
+            "Named compliance specialist",
             "Advanced fraud protection",
-            "Dispute and chargeback resolution support",
+            "Payment dispute and chargeback support",
           ],
         },
         {
-          category: "Account management",
+          category: "Enterprise Management",
           items: [
             "Dedicated account manager",
-            "Custom implementation and migration support",
+            "Custom implementation and migration",
             "API and webhook integration support",
-            "Custom user roles, permissions and audit log",
+            "Advanced user roles, permissions and audit logs",
             "Fully customised package",
             "Volume-based discounts",
           ],
@@ -233,8 +233,9 @@ export const pricing = {
   ] satisfies PricingPlan[],
 
   calculator: {
-    heading: "Calculate what you'd actually pay",
-    subheading: "Enter your typical monthly volume and see exactly what you'd pay.",
+    heading: "Will Sprout pay for itself?",
+    subheading:
+      "Enter your monthly collections and average payment to see your estimated cost, recovered revenue and time saved.",
   },
 
   comparison: {
@@ -251,16 +252,16 @@ export const pricing = {
             enterprise: true,
           },
           {
-            label: "Online, phone, paper and QR code mandate setup",
+            label: "Set up mandates online, over the phone, on paper or with QR codes",
             standard: true,
             growth: true,
             enterprise: true,
           },
           { label: "Payment links you can share anywhere", standard: true, growth: true, enterprise: true },
-          { label: "Failure prediction, up to 3 days ahead", standard: false, growth: true, enterprise: true },
-          { label: "Intelligent recovery retries", standard: false, growth: true, enterprise: true },
-          { label: "Instant settlement", standard: false, growth: true, enterprise: true },
-          { label: "Verified mandates via Open Banking", standard: false, growth: true, enterprise: true },
+          { label: "Predict failed payments before they happen", standard: false, growth: true, enterprise: true },
+          { label: "Automatically retry collections when customers are most likely to have funds available", standard: false, growth: true, enterprise: true },
+          { label: "Instant settlement available for eligible payments", standard: false, growth: true, enterprise: true },
+          { label: "Verify bank details during mandate setup to reduce failed collections", standard: false, growth: true, enterprise: true },
           {
             label: "SEPA and international collections at near-domestic rates",
             standard: false,
@@ -268,23 +269,23 @@ export const pricing = {
             enterprise: true,
           },
           { label: "Multi-currency settlement", standard: false, growth: false, enterprise: true },
-          { label: "Local payment scheme support", standard: false, growth: false, enterprise: true },
+          { label: "Local payment scheme support across supported markets", standard: false, growth: false, enterprise: true },
         ],
       },
       {
-        category: "Compliance & trust",
+        category: "Compliance and trust",
         rows: [
-          { label: "Real-time compliance dashboard", standard: true, growth: true, enterprise: true },
+          { label: "Real-time compliance dashboard with live onboarding and verification status", standard: true, growth: true, enterprise: true },
           {
-            label: "FCA-regulated infrastructure with segregated client funds",
+            label: "FCA-regulated payment infrastructure with safeguarded client funds",
             standard: true,
             growth: true,
             enterprise: true,
           },
-          { label: "Named compliance contact", standard: false, growth: false, enterprise: true },
+          { label: "Named compliance specialist", standard: false, growth: false, enterprise: true },
           { label: "Advanced fraud protection", standard: false, growth: false, enterprise: true },
           {
-            label: "Dispute and chargeback resolution support",
+            label: "Payment dispute and chargeback support",
             standard: false,
             growth: false,
             enterprise: true,
@@ -294,16 +295,16 @@ export const pricing = {
       {
         category: "Automation",
         rows: [
-          { label: "AI Concierge in your dashboard", standard: true, growth: true, enterprise: true },
-          { label: "Native Xero and QuickBooks reconciliation", standard: true, growth: true, enterprise: true },
+          { label: "AI Concierge built into your dashboard to answer questions and automate routine tasks", standard: true, growth: true, enterprise: true },
+          { label: "Native reconciliation with Xero and QuickBooks", standard: true, growth: true, enterprise: true },
           {
-            label: "AI Concierge in WhatsApp, Slack and Microsoft Teams",
+            label: "AI Concierge in your dashboard, Slack, Microsoft Teams and WhatsApp",
             standard: false,
             growth: true,
             enterprise: true,
           },
           {
-            label: "Multi-entity support for multiple trading names",
+            label: "Multi-entity support for businesses managing multiple trading names",
             standard: false,
             growth: true,
             enterprise: true,
@@ -315,22 +316,22 @@ export const pricing = {
         rows: [
           { label: "Standard dashboard reporting", standard: true, growth: true, enterprise: true },
           { label: "Custom report builder", standard: false, growth: true, enterprise: true },
-          { label: "Revenue and churn forecasting", standard: false, growth: true, enterprise: true },
+          { label: "Revenue, cash flow and churn forecasting", standard: false, growth: true, enterprise: true },
         ],
       },
       {
-        category: "Account management",
+        category: "Enterprise Management",
         rows: [
           { label: "Dedicated account manager", standard: false, growth: false, enterprise: true },
           {
-            label: "Custom implementation and migration support",
+            label: "Custom implementation and migration",
             standard: false,
             growth: false,
             enterprise: true,
           },
           { label: "API and webhook integration support", standard: false, growth: false, enterprise: true },
           {
-            label: "Custom user roles, permissions and audit log",
+            label: "Advanced user roles, permissions and audit logs",
             standard: false,
             growth: false,
             enterprise: true,
@@ -342,12 +343,12 @@ export const pricing = {
         rows: [
           { label: "24/7 chat support", standard: true, growth: true, enterprise: true },
           {
-            label: "Full help centre, switching guide and onboarding checklist",
+            label: "Help Centre, switching guide and onboarding checklist",
             standard: true,
             growth: true,
             enterprise: true,
           },
-          { label: "Priority support, under 20 minutes", standard: false, growth: true, enterprise: true },
+          { label: "Priority support with responses in under 20 minutes", standard: false, growth: true, enterprise: true },
         ],
       },
     ] satisfies ComparisonCategory[],
@@ -363,8 +364,8 @@ export const pricing = {
         rows: [
           {
             label: "UK Direct Debit",
-            standard: "1.00% + 20p, capped at £4.30",
-            growth: "1.25% + 20p, capped at £5.20",
+            standard: "1.1% + 20p, capped at £4.30",
+            growth: "1.3% + 20p, capped at £5.20",
             enterprise: "Custom",
           },
           {
@@ -406,7 +407,7 @@ export const pricing = {
             tooltip: "Charged when a payment is returned to your customer at your request.",
           },
           {
-            label: "Chargebacks & Disputes",
+            label: "Chargebacks and Disputes",
             standard: "£5 (only if over 15/month)",
             growth: "£5 (only if over 15/month)",
             enterprise: "Custom",
@@ -500,28 +501,28 @@ export const pricing = {
     columns: ["Standard", "Growth", "Enterprise"],
     rows: [
       {
-        label: "Best suited to",
-        standard: "New and small businesses",
-        growth: "Growing businesses losing revenue to failed payments",
-        enterprise: "Multi-entity, multi-market or high-volume businesses",
+        label: "Best for",
+        standard: "New and growing businesses",
+        growth: "Businesses ready to automate and recover more revenue",
+        enterprise: "High-growth and enterprise businesses",
       },
       {
-        label: "Typical monthly volume",
-        standard: "Under £10,000",
+        label: "Typical monthly payment volume",
+        standard: "Up to £10,000",
         growth: "£10,000 to £100,000",
         enterprise: "£100,000+",
       },
       {
-        label: "Decision usually made by",
-        standard: "Founder or owner",
-        growth: "Founder, ops lead or finance manager",
-        enterprise: "Finance director or CFO",
+        label: "Typically chosen by",
+        standard: "Founders and small business owners",
+        growth: "Operations, finance and growing teams",
+        enterprise: "Finance leaders and enterprise teams",
       },
       {
-        label: "Time to value",
-        standard: "Live same day",
-        growth: "Live same day, recovery visible within first failed payment",
-        enterprise: "Live within agreed implementation window",
+        label: "Time to get started",
+        standard: "Start collecting payments the same day",
+        growth: "Start collecting the same day, with AI recovery from your first failed payment",
+        enterprise: "Tailored onboarding with a dedicated implementation team",
       },
     ] satisfies GlanceRow[],
   },
@@ -574,14 +575,14 @@ export const pricing = {
         answer: "Yes, eligible registered charities and nonprofits receive 20% off standard transaction fees across every plan.",
       },
       {
-        question: "What does \"instant settlement\" actually mean, and is it safe?",
+        question: "What does instant settlement actually mean, and is it safe?",
         answer:
-          "Normally, money collected via Direct Debit takes 3 to 5 working days to clear through the banking system before it reaches your account. Instant settlement means we advance you that money the same day it's collected, for a small fee, the underlying settlement still happens in the background exactly as normal, you simply don't have to wait for it.",
+          "Normally, money collected via Direct Debit takes 3 to 5 working days to clear through the banking system before it reaches your account. Instant settlement means we advance you that money the same day it's collected, for a small fee. The underlying settlement still happens in the background exactly as normal, you simply don't have to wait for it.",
       },
       {
         question: "What happens if my account is ever flagged for a compliance review?",
         answer:
-          "You'll see it the moment it happens, directly in your compliance dashboard, what triggered the review, what (if anything) we need from you, and a clear estimated timeline for resolution. We don't believe in silent holds or generic \"your account is under review\" emails with no further detail.",
+          "You'll see it the moment it happens, directly in your compliance dashboard, what triggered the review, what (if anything) we need from you, and a clear estimated timeline for resolution. We don't believe in silent holds or generic your account is under review emails with no further detail.",
       },
       {
         question: "How fast is support, really?",
