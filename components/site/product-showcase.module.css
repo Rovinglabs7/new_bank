@@ -1,13 +1,12 @@
 .showcase {
   background: var(--color-cream);
-  padding: 120px 0;
+  padding: 80px 0 120px;
 }
 
 .inner {
   max-width: var(--page-max);
   margin: 0 auto;
   padding: 0 40px;
-  text-align: center;
 }
 
 .eyebrow {
@@ -19,87 +18,135 @@
   color: var(--color-ink-muted);
 }
 
-.placeholder {
-  border-radius: 32px;
-  background: var(--color-white);
-  border: 1px solid rgba(40, 30, 21, 0.08);
-  box-shadow: 0 24px 64px rgba(40, 30, 21, 0.08);
-  padding: 56px;
+.row1 {
+  display: grid;
+  grid-template-columns: 38fr 62fr;
+  gap: 24px;
+}
+
+.row2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.card {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 32px;
-}
-
-.skeletonRow {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-}
-
-.skeletonBlock {
-  flex: 2;
-  height: 180px;
-  border-radius: 20px;
-  background: linear-gradient(
-    180deg,
-    rgba(40, 30, 21, 0.06) 0%,
-    rgba(40, 30, 21, 0.03) 100%
-  );
-}
-
-.skeletonBlockSmall {
-  flex: 1;
-  height: 180px;
-  border-radius: 20px;
-  background: rgba(23, 69, 1, 0.06);
-}
-
-.skeletonLine {
-  flex: 2;
-  height: 14px;
-  border-radius: 999px;
-  background: rgba(40, 30, 21, 0.08);
-}
-
-.skeletonLineShort {
-  flex: 1;
-  height: 14px;
-  border-radius: 999px;
-  background: rgba(40, 30, 21, 0.06);
-}
-
-.skeletonCard {
-  flex: 1;
-  height: 96px;
+  background: #f5f4f2;
+  border: 1px solid #e7e5e4;
   border-radius: 16px;
-  background: rgba(40, 30, 21, 0.04);
-  border: 1px solid rgba(40, 30, 21, 0.06);
+  padding: 40px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  border-color: #d97706;
+  transform: translateY(-2px);
+}
+
+.row1-narrow,
+.row1-wide {
+  min-height: 480px;
+}
+
+.row2 .card {
+  min-height: 320px;
+}
+
+.expandIcon {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--color-white);
+  color: var(--color-ink-muted);
+  transition: color 0.2s ease;
+}
+
+.card:hover .expandIcon {
+  color: #d97706;
+}
+
+.cardTitle {
+  margin: 0;
+  max-width: 90%;
+  font-family: var(--font-season);
+  font-size: clamp(1.5rem, 2.2vw, 2.125rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+
+.muted {
+  color: var(--color-ink-muted);
+  font-weight: 400;
+}
+
+.animPlaceholder {
+  flex: 1;
+  margin-top: 24px;
+  border: 1px dashed #d6d3d1;
+  border-radius: 12px;
+  background: rgba(40, 30, 21, 0.02);
+}
+
+.row1-narrow .animPlaceholder,
+.row1-wide .animPlaceholder {
+  min-height: 280px;
+}
+
+.row2 .animPlaceholder {
+  min-height: 140px;
 }
 
 @media (max-width: 900px) {
-  .placeholder {
-    padding: 32px;
-    border-radius: 24px;
-    gap: 24px;
+  .row1 {
+    grid-template-columns: 1fr;
   }
 
-  .skeletonRow {
-    flex-direction: column;
-    align-items: stretch;
+  .row2 {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .skeletonBlock,
-  .skeletonBlockSmall {
-    height: 140px;
+  .row2 .card:last-child {
+    grid-column: 1 / -1;
   }
 }
 
 @media (max-width: 600px) {
   .showcase {
-    padding: 80px 0;
+    padding: 56px 0 80px;
   }
 
   .inner {
     padding: 0 20px;
+  }
+
+  .row1,
+  .row2 {
+    grid-template-columns: 1fr;
+  }
+
+  .row2 .card:last-child {
+    grid-column: auto;
+  }
+
+  .card {
+    padding: 28px;
+  }
+
+  .row1-narrow,
+  .row1-wide,
+  .row2 .card {
+    min-height: auto;
   }
 }

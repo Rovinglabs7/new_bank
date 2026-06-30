@@ -32,7 +32,7 @@
   box-shadow: 0 16px 32px rgba(28, 25, 23, 0.12);
   border-radius: 12px;
   z-index: 100;
-  font-family: var(--font-sans, "Inter", sans-serif);
+  font-family: var(--font-inter);
 }
 
 .inner {

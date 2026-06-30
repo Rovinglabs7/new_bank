@@ -1,5 +1,7 @@
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
+import { ProductShowcase } from "@/components/site/ProductShowcase";
+import { Solutions } from "@/components/site/Solutions";
 import { Footer } from "@/components/site/Footer";
 import { RampStyles } from "@/components/ramp/RampStyles";
 import { RampMotion } from "@/components/ramp/RampMotion";
@@ -20,6 +22,8 @@ export default function HomePage() {
       <RampMotion />
       <Header />
       <Hero />
+      <ProductShowcase />
+      <Solutions />
       <main className="ramp-home">
         <RampLogosMarquee />
         <RampPlatformBackOffice />

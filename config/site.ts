@@ -99,75 +99,186 @@ export const site = {
   },
 
   navActions: {
-    login: { label: "Log in", href: "#login" },
+    login: { label: "Sign in", href: "#login" },
     demo: { label: "Book a demo", href: "#demo" },
   },
 
   hero: {
-    eyebrow: "Payments platform",
     headline:
       "Getting paid should be the easiest part of running your business.",
     subheadline:
       "Sprout connects to your business, automates payment operations, and makes getting paid simpler for you and your customers.",
-    primaryCta: { label: "Get Sprout", href: "#demo" },
-    secondaryCta: { label: "See pricing", href: "#pricing" },
+    primaryCta: { label: "Get started for free", href: "#demo" },
   },
 
   footer: {
-    newsletter: {
-      title: "Stay up to date",
-      description:
-        "Get product updates, payment insights and practical guides delivered to your inbox.",
-      placeholder: "Your email address",
-      button: "Subscribe",
+    brand: "sprout.",
+    tagline: "Recurring payments that run themselves.",
+
+    contact: {
+      heading: "Contact",
+      items: [
+        { label: "hello@sprout.com", href: "mailto:hello@sprout.com" },
+        { label: "support@sprout.com", href: "mailto:support@sprout.com" },
+        { label: "+44 7353 179684", href: "tel:+447353179684" },
+      ],
     },
-    tagline:
-      "Built with ♥ from London, San Francisco, and everywhere ambitious teams work.",
-    copyright: "© 2026 Krandel Labs Ltd.",
+
+    social: {
+      heading: "Social",
+      items: [
+        { label: "X", href: "https://x.com/sproutpay" },
+        { label: "Instagram", href: "https://instagram.com/sproutpay" },
+        { label: "LinkedIn", href: "https://linkedin.com/company/sproutpay" },
+      ],
+    },
+
     columns: [
       {
-        title: "Payments",
+        title: "Features",
         links: [
-          "Recurring Payments",
-          "Instant Bank Pay",
-          "Payment Links",
-          "International Payments",
-          "Pricing",
+          { label: "Microsoft Teams", href: "/features/microsoft-teams" },
+          { label: "WhatsApp", href: "/features/whatsapp" },
+          { label: "Slack", href: "/features/slack" },
         ],
       },
       {
-        title: "Platform",
+        title: "Product",
         links: [
-          "Customer Management",
-          "Mandates",
-          "Integrations",
-          "Analytics",
-          "Reporting",
+          { label: "Features", href: "/product/features" },
+          { label: "How it works", href: "/product/how-it-works" },
+          { label: "Integrations", href: "/product/integrations" },
+          { label: "Pricing", href: "/pricing" },
+          { label: "Security", href: "/product/security" },
+          { label: "Book a demo", href: "#demo" },
+          { label: "Join the waitlist", href: "/waitlist" },
+          { label: "Enterprise", href: "/solutions/enterprise" },
+          { label: "API", href: "/product/api", badge: "Coming soon" },
         ],
       },
       {
-        title: "Developers",
-        links: ["API", "Documentation", "SDKs", "Webhooks", "Status"],
-      },
-      {
-        title: "Solutions",
+        title: "Tools",
         links: [
-          "Small Business",
-          "SaaS",
-          "Memberships",
-          "Professional Services",
-          "Charities",
+          {
+            label: "Failed payment cost calculator",
+            href: "/tools/failed-payment-cost-calculator",
+          },
+          {
+            label: "Settlement time calculator",
+            href: "/tools/settlement-time-calculator",
+          },
+          {
+            label: "Switching cost calculator",
+            href: "/tools/switching-cost-calculator",
+          },
         ],
       },
       {
         title: "Resources",
-        links: ["Help Centre", "Blog", "Customer Stories", "Guides"],
+        links: [
+          { label: "Blog", href: "/blog" },
+          { label: "Engineering", href: "/engineering" },
+          { label: "Customer stories", href: "/customers" },
+          { label: "Glossary", href: "/glossary" },
+          { label: "Ambassador Programme", href: "/ambassadors" },
+        ],
+      },
+      {
+        title: "Compare",
+        links: [
+          { label: "vs GoCardless", href: "/compare/gocardless" },
+          { label: "vs Stripe", href: "/compare/stripe" },
+          { label: "vs a payment bureau", href: "/compare/payment-bureau" },
+          {
+            label: "vs manual bank transfers",
+            href: "/compare/manual-bank-transfers",
+          },
+          { label: "vs PayPal", href: "/compare/paypal" },
+        ],
       },
       {
         title: "Company",
-        links: ["About", "Careers", "Partners", "Contact", "Legal"],
+        links: [
+          { label: "About", href: "/about" },
+          { label: "Careers", href: "/careers" },
+          { label: "Partners", href: "/partners" },
+          { label: "Press", href: "/press" },
+          { label: "Contact", href: "/contact" },
+          { label: "Krandel Labs", href: "/krandel-labs" },
+        ],
+      },
+      {
+        title: "Legal & Trust",
+        links: [
+          { label: "Privacy Policy", href: "/legal/privacy" },
+          { label: "Terms of Service", href: "/legal/terms" },
+          { label: "Cookie Policy", href: "/legal/cookies" },
+          { label: "Acceptable Use Policy", href: "/legal/acceptable-use" },
+          { label: "Complaints Policy", href: "/legal/complaints" },
+          { label: "Safeguarding Policy", href: "/legal/safeguarding" },
+          { label: "Responsible AI", href: "/legal/responsible-ai" },
+          { label: "Accessibility Statement", href: "/legal/accessibility" },
+          {
+            label: "Modern Slavery Statement",
+            href: "/legal/modern-slavery",
+          },
+        ],
       },
     ],
-    legal: ["Privacy", "Terms", "Cookies", "Security", "Cookie Preferences", "Sitemap"],
+
+    askAi: {
+      heading: "Ask AI about Sprout",
+      platforms: [
+        {
+          id: "chatgpt",
+          label: "ChatGPT",
+          href: "https://chat.openai.com/?q=What+is+Sprout%2C+the+payments+platform%3F",
+        },
+        {
+          id: "claude",
+          label: "Claude",
+          href: "https://claude.ai/new?q=What+is+Sprout%2C+the+payments+platform%3F",
+        },
+        {
+          id: "perplexity",
+          label: "Perplexity",
+          href: "https://www.perplexity.ai/search?q=What+is+Sprout%2C+the+payments+platform%3F",
+        },
+        {
+          id: "gemini",
+          label: "Gemini",
+          href: "https://gemini.google.com/app?q=What+is+Sprout%2C+the+payments+platform%3F",
+        },
+      ],
+    },
+
+    builtWith:
+      "Built with intention in London, and everywhere ambitious teams work.",
+    copyright: "© 2026 Krandel Labs Ltd. All rights reserved.",
+    copyrightLinks: [
+      { label: "Cookie Preferences", href: "/legal/cookies#preferences" },
+      { label: "Sitemap", href: "/sitemap.xml" },
+    ],
+
+    legalDisclosure: [
+      "Sprout is a trading name of Krandel Labs Ltd, a company registered in England and Wales with company number 16284957.",
+      "Registered office: 71-75 Shelton Street, Covent Garden, London, WC2H 9JQ.",
+      "Krandel Labs Ltd is authorised and regulated by the Financial Conduct Authority as a Small Payment Institution under the Payment Services Regulations 2017, firm reference number 1029384.",
+      "Sprout's recurring direct debit and open banking payment infrastructure is provided by Modulr FS Limited, authorised and regulated by the Financial Conduct Authority as an Electronic Money Institution, firm reference number 900573. Open banking connectivity and instant bank payments are provided by TrueLayer Limited, authorised and regulated by the Financial Conduct Authority. Identity verification and business checks are conducted by Sumsub UK Ltd. Ongoing anti-money laundering monitoring is provided by ComplyAdvantage UK Ltd.",
+      "Client funds collected on behalf of Sprout merchants are held in segregated safeguarding accounts in accordance with the Payment Services Regulations 2017 and are never used for Krandel Labs Ltd's own operating purposes.",
+      "Sprout is not a bank. Sprout does not accept deposits. Funds processed through Sprout are not covered by the Financial Services Compensation Scheme (FSCS) but are protected through statutory safeguarding requirements enforced by the Financial Conduct Authority.",
+      "Visa and Mastercard are registered trademarks of their respective owners. All other trademarks and service marks belong to their respective owners.",
+      '"Sprout" and the Sprout logo are trademarks of Krandel Labs Ltd.',
+    ],
+
+    countries: [
+      { code: "GB", label: "United Kingdom" },
+      { code: "IE", label: "Ireland" },
+      { code: "DE", label: "Germany" },
+      { code: "FR", label: "France" },
+      { code: "NL", label: "Netherlands" },
+    ],
+
+    wordmark: "Sprout AI",
   },
 } as const;
