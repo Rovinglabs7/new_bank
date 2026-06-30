@@ -6,6 +6,7 @@ import { Solutions } from "@/components/site/Solutions";
 import { Integration } from "@/components/site/Integration";
 import { CustomerStory } from "@/components/site/CustomerStory";
 import { WhoSproutWorksFor } from "@/components/site/WhoSproutWorksFor";
+import { WhoSproutMarquee } from "@/components/site/WhoSproutMarquee";
 import { Footer } from "@/components/site/Footer";
 import { RampStyles } from "@/components/ramp/RampStyles";
 import { RampMotion } from "@/components/ramp/RampMotion";
@@ -41,6 +42,7 @@ export default function HomePage() {
         <RampTestimonials />
       </main>
       <WhoSproutWorksFor />
+      <WhoSproutMarquee />
       <Footer />
     </div>
   );
