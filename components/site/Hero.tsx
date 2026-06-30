@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { site } from "@/config/site";
+import { HeroCollage } from "./HeroCollage";
 import styles from "./hero.module.css";
 
 const fadeUp = {
@@ -58,6 +59,8 @@ export function Hero() {
           </Link>
         </motion.div>
       </div>
+
+      <HeroCollage />
     </section>
   );
 }
