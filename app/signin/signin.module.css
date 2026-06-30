@@ -169,7 +169,8 @@
 
 .signupLine {
   margin: 32px 0 0;
-  font-size: 14px;
+  font-family: var(--font-season);
+  font-size: 16px;
   color: var(--color-ink-muted);
   text-align: center;
 }

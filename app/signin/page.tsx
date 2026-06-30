@@ -15,7 +15,7 @@ export default function SignInPage() {
         </Link>
 
         <div className={styles.formBlock}>
-          <h1 className={styles.heading}>Sign in to {site.brand}</h1>
+          <h1 className={styles.heading}>Sign in</h1>
           <p className={styles.subheading}>Or choose another way to sign in.</p>
 
           <form className={styles.form}>
@@ -24,7 +24,7 @@ export default function SignInPage() {
               <input
                 type="email"
                 name="email"
-                placeholder="name@work-email.com"
+                placeholder="name@email.com"
                 className={styles.input}
                 required
               />
