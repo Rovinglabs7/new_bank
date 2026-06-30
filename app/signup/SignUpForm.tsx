@@ -37,7 +37,7 @@ export function SignUpForm() {
         </label>
 
         <label className={styles.field}>
-          <span className={styles.label}>Work email</span>
+          <span className={styles.label}>Email</span>
           <input
             type="email"
             name="email"
