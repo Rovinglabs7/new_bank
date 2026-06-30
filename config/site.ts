@@ -104,13 +104,11 @@ export const site = {
   },
 
   hero: {
-    eyebrow: "Payments platform",
     headline:
       "Getting paid should be the easiest part of running your business.",
     subheadline:
       "Sprout connects to your business, automates payment operations, and makes getting paid simpler for you and your customers.",
-    primaryCta: { label: "Get Sprout", href: "#demo" },
-    secondaryCta: { label: "See pricing", href: "#pricing" },
+    primaryCta: { label: "Get started for free", href: "#demo" },
   },
 
   footer: {

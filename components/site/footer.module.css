@@ -1,5 +1,5 @@
 .footer {
-  background-color: #4b3621;
+  background-color: var(--color-ink);
   width: 100%;
   position: relative;
   overflow: hidden;

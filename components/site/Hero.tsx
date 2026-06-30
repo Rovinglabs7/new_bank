@@ -26,22 +26,12 @@ export function Hero() {
       <div className={styles.glow} aria-hidden />
 
       <div className={styles.inner}>
-        <motion.p
-          className={styles.eyebrow}
-          variants={fadeUp}
-          initial={false}
-          animate="visible"
-          custom={0}
-        >
-          {hero.eyebrow}
-        </motion.p>
-
         <motion.h1
           className={styles.headline}
           variants={fadeUp}
           initial={false}
           animate="visible"
-          custom={1}
+          custom={0}
         >
           {hero.headline}
         </motion.h1>
@@ -51,7 +41,7 @@ export function Hero() {
           variants={fadeUp}
           initial={false}
           animate="visible"
-          custom={2}
+          custom={1}
         >
           {hero.subheadline}
         </motion.p>
@@ -61,13 +51,10 @@ export function Hero() {
           variants={fadeUp}
           initial={false}
           animate="visible"
-          custom={3}
+          custom={2}
         >
           <Link href={hero.primaryCta.href} className={styles.primaryCta}>
             {hero.primaryCta.label}
-          </Link>
-          <Link href={hero.secondaryCta.href} className={styles.secondaryCta}>
-            {hero.secondaryCta.label}
           </Link>
         </motion.div>
       </div>
