@@ -1,0 +1,15 @@
+globalThis._env_ = {
+  ASSET_PATH: "/static/prod/app",
+  BASE_PATH: "/app",
+  REACT_APP_REVERSE_PROXY: "https://fire.chilipiper.com",
+  REACT_APP_EXTENSION_ID_RESOURCE: "chngjgginikejcpaejphfoglpppmjfne",
+  REACT_APP_SENTRY_ENVIRONMENT: "production",
+  REACT_APP_ROLLOUT_KEY: "1c4789b5-cf89-4869-9ef3-77f5fda9f5d3",
+  REACT_APP_CHAMELEON_KEY: "SlXwZFuKm5VB4VGCx1XSBNlKEkSJH9THBT4cXd7QTG2MyF-1ODylu-DVDJfASfDCCl2cml",
+  NODE_ENV: "production",
+  DEPLOY_ENV: "production",
+  REACT_APP_SNOWPLOW_ENDPOINT: "https://apps.chilipiper.com/snowplow",
+  REACT_APP_FIRE_RESOURCE: "https://fire.chilipiper.com",
+  REACT_APP_FIRE_ADMIN_PATH: "/fire/admin",
+  GTM_ID: "GTM-NPVNB88",
+}
