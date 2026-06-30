@@ -9,6 +9,7 @@ export function FramerStaticBody({ html }: Props) {
   return (
     <div
       className="framer-static-body"
+      suppressHydrationWarning
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

@@ -1,10 +1,5 @@
-import { readFileSync } from "fs";
-import { join } from "path";
+import { FRAMER_BODY_HTML } from "./framer-body.generated";
 
 export function getFramerBodyHtml(): string {
-  try {
-    return readFileSync(join(process.cwd(), "public", "framer-body.html"), "utf-8");
-  } catch {
-    return "";
-  }
+  return FRAMER_BODY_HTML;
 }

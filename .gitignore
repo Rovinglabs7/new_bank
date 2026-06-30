@@ -29,6 +29,7 @@
 /public/framer-body.html
 /public/framer-styles.css
 /styles/framer-legacy.css
+/lib/framer-body.generated.ts
 /content/
 
 # debug
