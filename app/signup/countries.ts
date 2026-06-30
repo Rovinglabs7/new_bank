@@ -1,0 +1,26 @@
+export type Country = { code: string; label: string; flag: string };
+
+export const countries: Country[] = [
+  { code: "GB", label: "United Kingdom", flag: "🇬🇧" },
+  { code: "IE", label: "Ireland", flag: "🇮🇪" },
+  { code: "US", label: "United States", flag: "🇺🇸" },
+  { code: "CA", label: "Canada", flag: "🇨🇦" },
+  { code: "AU", label: "Australia", flag: "🇦🇺" },
+  { code: "DE", label: "Germany", flag: "🇩🇪" },
+  { code: "FR", label: "France", flag: "🇫🇷" },
+  { code: "NL", label: "Netherlands", flag: "🇳🇱" },
+  { code: "ES", label: "Spain", flag: "🇪🇸" },
+  { code: "IT", label: "Italy", flag: "🇮🇹" },
+  { code: "PT", label: "Portugal", flag: "🇵🇹" },
+  { code: "BE", label: "Belgium", flag: "🇧🇪" },
+  { code: "AT", label: "Austria", flag: "🇦🇹" },
+  { code: "CH", label: "Switzerland", flag: "🇨🇭" },
+  { code: "SE", label: "Sweden", flag: "🇸🇪" },
+  { code: "NO", label: "Norway", flag: "🇳🇴" },
+  { code: "DK", label: "Denmark", flag: "🇩🇰" },
+  { code: "FI", label: "Finland", flag: "🇫🇮" },
+  { code: "PL", label: "Poland", flag: "🇵🇱" },
+  { code: "LU", label: "Luxembourg", flag: "🇱🇺" },
+  { code: "NZ", label: "New Zealand", flag: "🇳🇿" },
+  { code: "SG", label: "Singapore", flag: "🇸🇬" },
+];

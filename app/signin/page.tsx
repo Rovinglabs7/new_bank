@@ -89,7 +89,7 @@ export default function SignInPage() {
 
           <p className={styles.signupLine}>
             Looking to get started with {site.brand} for your business?{" "}
-            <Link href="#demo" className={styles.signupLink}>
+            <Link href="/signup" className={styles.signupLink}>
               Sign up
             </Link>
           </p>
