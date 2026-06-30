@@ -19,12 +19,20 @@ const nextConfig: NextConfig = {
           source: "/BOND_files/:path*",
           destination: `${FRAMER_CDN}/:path*`,
         },
+        {
+          source: "/ramp-lottie/assets/:path*",
+          destination: "https://assets.ramp.com/:path*",
+        },
+        {
+          source: "/ramp-lottie/air/:id",
+          destination: "https://cdn.air.inc/:id",
+        },
       ],
       // Framer client-side routes (not yet migrated) still use legacy HTML
       fallback: [
         {
           source:
-            "/:path((?!_next/|BOND_files/|ramp-files/|ramp-sections/|favicon\\.ico$|index\\.html$|bond\\.html$|framer-body\\.html$|framer-styles\\.css$|custom/).+)",
+            "/:path((?!_next/|BOND_files/|ramp-files/|ramp-sections/|ramp-lottie/|favicon\\.ico$|index\\.html$|bond\\.html$|framer-body\\.html$|framer-styles\\.css$|custom/).+)",
           destination: "/bond.html",
         },
       ],
