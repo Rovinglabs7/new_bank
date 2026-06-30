@@ -22,11 +22,11 @@ const RAMP_LOTTIE_REMOTE_BY_INSTANCE_ID: Record<string, string> = {
 };
 
 export function proxyRampLottieUrl(url: string): string {
+  if (url.startsWith("https://cdn.air.inc/")) {
+    return `/api/ramp-lottie?url=${encodeURIComponent(url)}`;
+  }
   if (url.startsWith("https://assets.ramp.com/")) {
     return url.replace("https://assets.ramp.com/", "/ramp-lottie/assets/");
-  }
-  if (url.startsWith("https://cdn.air.inc/")) {
-    return url.replace("https://cdn.air.inc/", "/ramp-lottie/air/");
   }
   return url;
 }

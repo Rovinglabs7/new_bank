@@ -23,10 +23,6 @@ const nextConfig: NextConfig = {
           source: "/ramp-lottie/assets/:path*",
           destination: "https://assets.ramp.com/:path*",
         },
-        {
-          source: "/ramp-lottie/air/:id",
-          destination: "https://cdn.air.inc/:id",
-        },
       ],
       // Framer client-side routes (not yet migrated) still use legacy HTML
       fallback: [
