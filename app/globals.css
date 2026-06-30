@@ -1,7 +1,7 @@
 @import "../styles/framer-legacy.css";
 
 :root {
-  --color-cream: #faf8f6;
+  --color-cream: #ffffff;
   --color-ink: #281e15;
   --color-ink-muted: rgba(40, 30, 21, 0.72);
   --color-hero-top: #52402f;
