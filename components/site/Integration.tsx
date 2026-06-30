@@ -90,13 +90,6 @@ export function Integration() {
           <h2 className={styles.heading}>
             Powerful on its own. Even better with the tools you already use.
           </h2>
-          <p className={styles.subtext}>
-            Manage payments from the Sprout dashboard or connect with over 35
-            business tools including Slack, Microsoft Teams, WhatsApp, Xero,
-            QuickBooks, Zapier, and more. Get payment alerts where your team
-            already works and automate your workflows without changing how
-            you do business.
-          </p>
           <a href="#integrations" className={styles.cta}>
             Explore 35+ integrations
             <span className={styles.ctaArrow} aria-hidden>

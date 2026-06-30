@@ -105,7 +105,7 @@ export const site = {
   },
 
   navActions: {
-    login: { label: "Sign in", href: "#login" },
+    login: { label: "Sign in", href: "/signin" },
     demo: { label: "Book a demo", href: "#demo" },
   },
 
