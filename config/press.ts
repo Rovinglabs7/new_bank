@@ -16,6 +16,7 @@ export type FactItem = {
 
 export const press = {
   hero: {
+    eyebrow: "Newsroom",
     heading: "Press",
     subtext: "News, announcements, and resources for journalists covering Sprout.",
   },

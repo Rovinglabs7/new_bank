@@ -1,6 +1,6 @@
 .section {
   background: var(--color-cream);
-  padding: 64px 0;
+  padding: 96px 0 0;
 }
 
 .inner {
@@ -11,9 +11,10 @@
 }
 
 .body {
-  margin: 0 0 16px;
-  font-size: 16px;
-  line-height: 1.7;
+  margin: 0 0 20px;
+  font-size: clamp(1.0625rem, 2vw, 1.3125rem);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
   color: var(--color-ink);
 }
 
@@ -31,7 +32,7 @@
 
 @media (max-width: 600px) {
   .section {
-    padding: 48px 0;
+    padding: 64px 0 0;
   }
 
   .inner {
