@@ -54,3 +54,4 @@ backend/dev.db
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+public/videos/partners/*.mp4

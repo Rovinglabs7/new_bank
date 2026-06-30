@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { partners } from "@/config/partners";
-import { PartnersLazyVideo } from "./PartnersLazyVideo";
 import styles from "./partners-partner-first.module.css";
 
 export function PartnersPartnerFirst() {
@@ -34,12 +33,10 @@ export function PartnersPartnerFirst() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <PartnersLazyVideo
-            src={partnerFirst.videoSrc}
-            wrapperClassName={styles.videoWrap}
-            videoClassName={styles.video}
-            ariaLabel={partnerFirst.videoCaption}
-          />
+          {/* TODO: replace with <PartnersLazyVideo> once partner-network-2.mp4 is
+              hosted on an external CDN (e.g. Cloudflare R2 or Stream) — file is
+              too large for Cloudflare Workers asset deployment */}
+          <div className={`${styles.videoWrap} ${styles.video}`} role="img" aria-label={partnerFirst.videoCaption} />
           <div className={styles.videoOverlay} aria-hidden />
           <p className={styles.videoCaption}>{partnerFirst.videoCaption}</p>
         </motion.div>

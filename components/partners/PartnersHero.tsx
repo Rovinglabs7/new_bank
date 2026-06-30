@@ -38,15 +38,10 @@ export function PartnersHero() {
           animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
         >
-          <video
-            className={styles.video}
-            src={hero.videoSrc}
-            autoPlay
-            muted
-            loop
-            playsInline
-            aria-hidden
-          />
+          {/* TODO: replace with <video> element once partner-network-1.mp4 is hosted
+              on an external CDN (e.g. Cloudflare R2 or Stream) — file is too large
+              for Cloudflare Workers asset deployment */}
+          <div className={styles.video} role="img" aria-label={hero.videoCaption} />
           <div className={styles.videoOverlay} aria-hidden />
           <p className={styles.videoCaption}>{hero.videoCaption}</p>
         </motion.div>
