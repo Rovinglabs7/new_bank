@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { resolveRampLottieSrc } from "@/lib/ramp-lottie-map";
+import { proxyRampLottieUrl, resolveRampLottieSrc } from "@/lib/ramp-lottie-map";
 
 function initTickers(root: HTMLElement) {
   root.querySelectorAll<HTMLUListElement>("ul[role='group']").forEach((ul) => {
@@ -67,7 +67,7 @@ async function initLotties(root: HTMLElement) {
       const src = container.getAttribute("data-asset-src");
       const canvas = container.querySelector<HTMLCanvasElement>("canvas");
       if (!src || !canvas) return;
-      mount(container, src, canvas);
+      mount(container, proxyRampLottieUrl(src), canvas);
     }
   );
 

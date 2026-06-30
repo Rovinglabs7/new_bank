@@ -2,8 +2,11 @@
  * Maps dotLottie instance IDs from the static HTML export to real animation URLs.
  * data-name UUIDs are player instance IDs, not CDN asset IDs.
  * Sources extracted from Ramp KbLotties (public/ramp-files/0ng.340zy-m9-.js.download).
+ *
+ * External Ramp CDN URLs are proxied via Next rewrites (see next.config.ts) so the
+ * browser fetches same-origin paths and avoids CORS failures on localhost.
  */
-export const RAMP_LOTTIE_BY_INSTANCE_ID: Record<string, string> = {
+const RAMP_LOTTIE_REMOTE_BY_INSTANCE_ID: Record<string, string> = {
   // Platform — Cards, Procure-to-pay, Accounting automation
   "3e105fd2-91e0-4ed7-9f90-5a6a3cd3ef9b":
     "https://assets.ramp.com/nextjs/lottie/home/refresh/homepage-card-expenses-mobile-0413.lottie",
@@ -18,6 +21,17 @@ export const RAMP_LOTTIE_BY_INSTANCE_ID: Record<string, string> = {
     "https://assets.ramp.com/nextjs/lottie/home/refresh/home_new_way.lottie?v=3",
 };
 
+export function proxyRampLottieUrl(url: string): string {
+  if (url.startsWith("https://assets.ramp.com/")) {
+    return url.replace("https://assets.ramp.com/", "/ramp-lottie/assets/");
+  }
+  if (url.startsWith("https://cdn.air.inc/")) {
+    return url.replace("https://cdn.air.inc/", "/ramp-lottie/air/");
+  }
+  return url;
+}
+
 export function resolveRampLottieSrc(instanceId: string): string | null {
-  return RAMP_LOTTIE_BY_INSTANCE_ID[instanceId] ?? null;
+  const remote = RAMP_LOTTIE_REMOTE_BY_INSTANCE_ID[instanceId];
+  return remote ? proxyRampLottieUrl(remote) : null;
 }
