@@ -10,7 +10,6 @@ const HEX_BG = `${FRAMER}/TAhmjfzDHkkF0rQ56ovSVL98N0.svg`;
 const BG_SHAPE = `${FRAMER}/ok0YH14sotPO5zXPf4nG0HIuzbQ.svg`;
 const BADGE_ICON = `${FRAMER}/9DPQJlLNx2fc3Xz4SFEvbFa7KbE.svg`;
 const CLIENT_LOGOS = `${FRAMER}/VdVYqkZlkUU6uQ32KYbaXXWVM.webp`;
-const STAR = `${FRAMER}/NYNzlwZG9GyLk7DGYxXAX0aGwc.svg`;
 
 /**
  * 5 + 6 + 5 honeycomb from Framer Integration section.
@@ -89,22 +88,31 @@ export function Integration() {
             Integration
           </div>
           <h2 className={styles.heading}>
-            A modern digital bank built to simplify the way you manage money
+            Powerful on its own. Even better with the tools you already use.
           </h2>
+          <p className={styles.subtext}>
+            Manage payments from the Sprout dashboard or connect with over 35
+            business tools including Slack, Microsoft Teams, WhatsApp, Xero,
+            QuickBooks, Zapier, and more. Get payment alerts where your team
+            already works and automate your workflows without changing how
+            you do business.
+          </p>
+          <a href="#integrations" className={styles.cta}>
+            Explore 35+ integrations
+            <span className={styles.ctaArrow} aria-hidden>
+              →
+            </span>
+          </a>
         </header>
 
         <div className={styles.trust}>
           <img
             src={CLIENT_LOGOS}
-            alt="Trusted by leading companies"
+            alt=""
             className={styles.clientLogos}
             loading="lazy"
             decoding="async"
           />
-          <div className={styles.users}>
-            <img src={STAR} alt="" className={styles.star} aria-hidden />
-            <span>4000+ users trust us</span>
-          </div>
         </div>
 
         <motion.div

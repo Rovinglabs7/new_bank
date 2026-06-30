@@ -291,6 +291,9 @@ export function Footer() {
           </div>
 
           <div className={styles.bottomRight}>
+            <span className={styles.infoHeading}>
+              {footer.bottom.address.label}
+            </span>
             <address className={styles.addressBlock}>
               {footer.bottom.address.name}
               <br />

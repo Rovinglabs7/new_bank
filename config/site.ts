@@ -346,6 +346,7 @@ export const site = {
       },
 
       address: {
+        label: "London Office",
         name: "Krandel Labs Ltd",
         lines: ["71-75 Shelton Street", "Covent Garden", "London", "WC2H 9JQ"],
       },
