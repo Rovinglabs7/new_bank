@@ -26,6 +26,7 @@
 # generated from BOND.html
 /public/bond.html
 /public/index.html
+/content/
 
 # debug
 npm-debug.log*

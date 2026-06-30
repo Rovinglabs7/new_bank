@@ -40,6 +40,10 @@ const nextConfig: NextConfig = {
       { source: "/BOND_files/:path*.js.download", headers: [js] },
       { source: "/BOND_files/script", headers: [js] },
       {
+        source: "/:path(index.html|bond.html)",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
         source: "/BOND_files/:path*",
         headers: [
           {
@@ -53,9 +57,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-
-if (process.env.NODE_ENV === "development") {
-  void import("@opennextjs/cloudflare").then(({ initOpenNextCloudflareForDev }) => {
-    initOpenNextCloudflareForDev();
-  });
-}
