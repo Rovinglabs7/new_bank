@@ -11,6 +11,13 @@
   --font-season: "Season Mix Regular", Georgia, serif;
   --font-inter: "Inter", system-ui, sans-serif;
   --page-max: 1200px;
+  --announcement-height: 44px;
+}
+
+@media (max-width: 700px) {
+  :root {
+    --announcement-height: 64px;
+  }
 }
 
 *,
