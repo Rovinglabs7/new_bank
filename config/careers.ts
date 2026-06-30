@@ -7,6 +7,7 @@
 export type CareerImage = {
   src: string;
   alt: string;
+  type?: "image" | "video";
 };
 
 export type CoreValue = {
@@ -41,17 +42,11 @@ const heroImages: CareerImage[] = [
 
 const operationsImages: CareerImage[] = [
   { src: "/pexels-rdne-7414009.jpg", alt: "Operations team reviewing dashboards together" },
-  { src: "/pexels-mikhail-nilov-7886850.jpg", alt: "Employees working together at a shared table" },
-  { src: "/pexels-a-darmel-9040539.jpg", alt: "Colleagues collaborating around a laptop in a bright office" },
+  { src: "/hero/team-laptop.jpg", alt: "Small team reviewing a project together on a laptop" },
+  { src: "/videos/product-walkthrough.mp4", alt: "Walkthrough of the Sprout product in action", type: "video" },
 ];
 
 export const careers = {
-  promoBanner: {
-    message:
-      "The Sprout Pilot Programme is now live. We're onboarding a small group of businesses to help shape the future of recurring payments.",
-    cta: { label: "Book a demo", href: "/demo" },
-  },
-
   hero: {
     heading: "Come help every business on the planet get paid on time.",
     subtext:
@@ -73,6 +68,7 @@ export const careers = {
       { label: "Address", value: "71-75 Shelton Street, Covent Garden, London, WC2H 9JQ, United Kingdom" },
       { label: "Phone", value: "+44 7353 179684" },
       { label: "Email", value: "hello@sprout.com" },
+      { label: "Email", value: "Careers@sprout.com" },
     ],
   },
 

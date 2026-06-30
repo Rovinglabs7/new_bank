@@ -1,7 +1,6 @@
 import { AnnouncementBar } from "@/components/site/AnnouncementBar";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { CareersPromoBanner } from "@/components/careers/CareersPromoBanner";
 import { CareersHero } from "@/components/careers/CareersHero";
 import { CareersAbout } from "@/components/careers/CareersAbout";
 import { CareersContact } from "@/components/careers/CareersContact";
@@ -25,7 +24,6 @@ export const metadata = {
 export default function CareersPage() {
   return (
     <div className="site-shell">
-      <CareersPromoBanner />
       <AnnouncementBar />
       <Header />
       <main>

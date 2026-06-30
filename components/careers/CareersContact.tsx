@@ -9,8 +9,8 @@ export function CareersContact() {
       <div className={styles.inner}>
         <h2 className={styles.heading}>{contact.heading}</h2>
         <div className={styles.grid}>
-          {contact.items.map((item) => (
-            <div className={styles.item} key={item.label}>
+          {contact.items.map((item, index) => (
+            <div className={styles.item} key={item.label + index}>
               <span className={styles.label}>{item.label}</span>
               <span className={styles.value}>{item.value}</span>
             </div>
