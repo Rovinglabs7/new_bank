@@ -8,7 +8,6 @@ import { CustomerStory } from "@/components/site/CustomerStory";
 import { WhoSproutWorksFor } from "@/components/site/WhoSproutWorksFor";
 import { WhoSproutMarquee } from "@/components/site/WhoSproutMarquee";
 import { Footer } from "@/components/site/Footer";
-import { RampStyles } from "@/components/ramp/RampStyles";
 import { RampMotion } from "@/components/ramp/RampMotion";
 import {
   RampLogosMarquee,
@@ -23,7 +22,6 @@ import {
 export default function HomePage() {
   return (
     <div className="site-shell">
-      <RampStyles />
       <RampMotion />
       <AnnouncementBar />
       <Header />

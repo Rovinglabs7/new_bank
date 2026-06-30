@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
+import { isMockMode } from "@/config/mock";
 import { SESSION_COOKIE } from "@/lib/auth/session";
 
 async function isAuthenticated(request: NextRequest): Promise<boolean> {
@@ -19,6 +20,10 @@ async function isAuthenticated(request: NextRequest): Promise<boolean> {
 }
 
 export async function middleware(request: NextRequest) {
+  if (isMockMode()) {
+    return NextResponse.next();
+  }
+
   const loggedIn = await isAuthenticated(request);
   const { pathname } = request.nextUrl;
 

@@ -1,5 +1,6 @@
 import { jwtVerify } from "jose";
 import { cookies } from "next/headers";
+import { isMockMode, mockUser } from "@/config/mock";
 
 export const SESSION_COOKIE = "sprout_session";
 
@@ -18,6 +19,10 @@ function getJwtSecret() {
 }
 
 export async function getSession(): Promise<SessionUser | null> {
+  if (isMockMode()) {
+    return mockUser;
+  }
+
   const token = (await cookies()).get(SESSION_COOKIE)?.value;
   if (!token) return null;
 
