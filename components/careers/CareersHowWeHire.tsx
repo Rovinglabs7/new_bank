@@ -2,16 +2,24 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import { careers } from "@/config/careers";
 import styles from "./careers-how-we-hire.module.css";
 
 export function CareersHowWeHire() {
   const { howWeHire } = careers;
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const reduceMotion = useReducedMotion();
 
   return (
     <section className={styles.section} aria-label={howWeHire.heading}>
-      <div className={styles.inner}>
+      <motion.div
+        className={styles.inner}
+        initial={reduceMotion ? undefined : { opacity: 0, y: 24 }}
+        whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <h2 className={styles.heading}>{howWeHire.heading}</h2>
         <p className={styles.body}>{howWeHire.body}</p>
 
@@ -69,7 +77,7 @@ export function CareersHowWeHire() {
             {howWeHire.callout.cta.label}
           </Link>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { careers } from "@/config/careers";
 import styles from "./careers-application-form.module.css";
 
@@ -24,6 +25,7 @@ export function CareersApplicationForm() {
   const { applicationForm, departments } = careers;
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
   const titleId = useId();
+  const reduceMotion = useReducedMotion();
 
   const isOpen = selectedDepartment !== null;
 
@@ -42,7 +44,13 @@ export function CareersApplicationForm() {
 
   return (
     <section className={styles.section} id="open-roles" aria-label={applicationForm.heading}>
-      <div className={styles.inner}>
+      <motion.div
+        className={styles.inner}
+        initial={reduceMotion ? undefined : { opacity: 0, y: 24 }}
+        whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <h2 className={styles.heading}>{applicationForm.heading}</h2>
         <p className={styles.subtext}>{applicationForm.subtext}</p>
         {applicationForm.cardIntro ? (
@@ -64,7 +72,7 @@ export function CareersApplicationForm() {
             </button>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {isOpen ? (
         <div

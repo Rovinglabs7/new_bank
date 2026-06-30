@@ -1,16 +1,24 @@
 "use client";
 
 import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { careers } from "@/config/careers";
 import styles from "./careers-faq.module.css";
 
 export function CareersFAQ() {
   const { faqs } = careers;
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const reduceMotion = useReducedMotion();
 
   return (
     <section className={styles.section} aria-label="Careers frequently asked questions">
-      <div className={styles.inner}>
+      <motion.div
+        className={styles.inner}
+        initial={reduceMotion ? undefined : { opacity: 0, y: 24 }}
+        whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <h2 className={styles.heading}>{faqs.heading}</h2>
 
         <div className={styles.list}>
@@ -44,7 +52,7 @@ export function CareersFAQ() {
             );
           })}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

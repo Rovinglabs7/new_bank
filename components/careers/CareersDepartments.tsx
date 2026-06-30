@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { careers } from "@/config/careers";
 import styles from "./careers-departments.module.css";
@@ -14,41 +14,27 @@ export function CareersDepartments() {
       <div className={styles.inner}>
         <h2 className={styles.heading}>{departments.heading}</h2>
         <p className={styles.body}>{departments.body}</p>
+      </div>
 
-        <div className={styles.grid}>
-          {departments.items.map((item, index) => (
-            <motion.div
-              className={styles.card}
-              key={item.name}
-              initial={reduceMotion ? undefined : { opacity: 0, y: 24 }}
-              whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ delay: index * 0.06, duration: 0.5, ease: "easeOut" }}
-              whileHover={
-                reduceMotion
-                  ? undefined
-                  : { y: -6, scale: 1.015, transition: { duration: 0.25, ease: "easeOut" } }
-              }
-            >
-              <div className={styles.cardGlow} aria-hidden />
-              <h3 className={styles.cardTitle}>{item.name}</h3>
-              <p className={styles.cardDescription}>{item.description}</p>
-              <Link href={departments.cta.href} className={styles.cardLink}>
-                <span>{departments.cta.label}</span>
-                <svg
-                  className={styles.cardLinkIcon}
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  aria-hidden
-                >
-                  <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
+      <div className={styles.gallery}>
+        {departments.images.map((image, index) => (
+          <motion.div
+            className={styles.galleryItem}
+            key={image.src}
+            initial={reduceMotion ? undefined : { opacity: 0, y: 32 }}
+            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ delay: index * 0.1, duration: 0.6, ease: "easeOut" }}
+          >
+            <Image
+              src={image.src}
+              alt={image.alt}
+              fill
+              sizes="(max-width: 700px) 100vw, 50vw"
+              className={styles.galleryImage}
+            />
+          </motion.div>
+        ))}
       </div>
     </section>
   );

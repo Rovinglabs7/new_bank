@@ -46,6 +46,13 @@ const operationsImages: CareerImage[] = [
   { src: "/videos/product-walkthrough.mp4", alt: "Walkthrough of the Sprout product in action", type: "video" },
 ];
 
+const departmentImages: CareerImage[] = [
+  { src: "/hero/woman-tablet.png", alt: "Team member reviewing data on a tablet" },
+  { src: "/hero/woman-box.jpg", alt: "Team member carrying a box through a workspace" },
+  { src: "/hero/woman-phone.webp", alt: "Team member on a phone call at a desk" },
+  { src: "/hero/man-counter.png", alt: "Team member working at a counter workstation" },
+];
+
 export const careers = {
   hero: {
     heading: "Come help every business on the planet get paid on time.",
@@ -132,6 +139,7 @@ export const careers = {
     body:
       "Our currency is collaboration. Our work, a blend of ideas and efforts. The result, a stronger bond and a world class product. We compound these by investing in the best people.",
     cta: { label: "See open roles", href: "#open-roles" },
+    images: departmentImages,
     items: [
       {
         name: "Engineering",

@@ -1,3 +1,6 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
 import { careers } from "@/config/careers";
 import styles from "./careers-perks.module.css";
 
@@ -16,10 +19,17 @@ function SparkleIcon() {
 
 export function CareersPerks() {
   const { perks } = careers;
+  const reduceMotion = useReducedMotion();
 
   return (
     <section className={styles.section} aria-label={perks.heading}>
-      <div className={styles.inner}>
+      <motion.div
+        className={styles.inner}
+        initial={reduceMotion ? undefined : { opacity: 0, y: 24 }}
+        whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <h2 className={styles.heading}>{perks.heading}</h2>
 
         <div className={styles.featured}>
@@ -35,7 +45,7 @@ export function CareersPerks() {
             </li>
           ))}
         </ul>
-      </div>
+      </motion.div>
     </section>
   );
 }
