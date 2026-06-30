@@ -93,7 +93,7 @@
 
 .input:focus {
   outline: none;
-  border-color: var(--color-sprout);
+  border-color: #d97706;
 }
 
 .submit {
@@ -102,7 +102,7 @@
   padding: 14px;
   border: none;
   border-radius: 8px;
-  background: var(--color-sprout);
+  background: #d97706;
   color: #ffffff;
   font-family: var(--font-inter);
   font-size: 15px;
@@ -175,7 +175,7 @@
 }
 
 .signupLink {
-  color: var(--color-sprout);
+  color: #d97706;
   font-weight: 500;
 }
 
