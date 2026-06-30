@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { site } from "@/config/site";
 import { AmbientMusicToggle } from "@/components/site/AmbientMusicToggle";
 import { MockModeBanner } from "@/components/site/MockModeBanner";
+import { RAMP_STYLESHEETS } from "@/lib/ramp-sections.manifest";
 import "./globals.css";
 
 export const metadata: Metadata = {
