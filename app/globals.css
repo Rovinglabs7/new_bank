@@ -103,12 +103,55 @@ button {
 .ramp-home .ramp-section {
   opacity: 1 !important;
   visibility: visible !important;
-  transform: none !important;
 }
 
 .ramp-home {
+  --text-primary: #0c0a08;
+  --text-hushed: rgba(12, 10, 8, 0.55);
+  --color-black-100: rgba(0, 0, 0, 0.1);
   background: #fff;
-  color: #1a1a1a;
+  color: var(--text-primary);
+  position: relative;
+  isolation: isolate;
+}
+
+/* Stats ticker — keep in document flow (scraped markup used position:fixed) */
+.ramp-home .ramp-stats-ticker {
+  min-height: 38px;
+}
+
+.ramp-home .ramp-stats-ticker > div[style*="position: fixed"],
+.ramp-home .ramp-stats-ticker > div[style*="position:fixed"] {
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  z-index: 1 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Platform card icons use Material Icons Outlined ligatures */
+.ramp-home .font-icon {
+  font-family: "Material Icons Outlined", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  font-feature-settings: "liga";
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+.ramp-home .PlatformCard-module__MXf3fW__root {
+  display: flex;
+  min-height: 400px;
+}
+
+.ramp-home .PlatformCard-module__MXf3fW__root h3 {
+  color: var(--text-primary);
 }
 
 /* Canvas players — keep Ramp absolute layout; only size the canvas layer */

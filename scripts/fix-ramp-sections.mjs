@@ -49,9 +49,23 @@ function decodeNextImageUrl(nextImageUrl) {
   return resolveMediaPath(decodeURIComponent(match[1]));
 }
 
+/** Ramp.com pins the live stats bar to the viewport; embed it in our page flow instead. */
+function unfixStatsTicker(html) {
+  return html
+    .replace(
+      /<div class="relative mb-8" style="height: 38px;">/g,
+      '<div class="relative mb-8 ramp-stats-ticker">'
+    )
+    .replace(
+      /position:\s*fixed;\s*bottom:\s*0px;\s*left:\s*0px;\s*right:\s*0px;\s*z-index:\s*50;\s*background-color:\s*white;\s*border-top-width:\s*1px;\s*border-top-style:\s*solid;\s*border-color:\s*var\(--color-black-100,\s*rgba\(0,0,0,0\.1\)\);\s*padding-left:\s*[\d.]+px;\s*padding-right:\s*[\d.]+px;/g,
+      "position: relative; z-index: 1; background-color: white; border-top: 1px solid var(--color-black-100, rgba(0,0,0,0.1));"
+    );
+}
+
 function rewriteHtml(html) {
   let out = html.replace(/&quot;/g, '"');
   out = repairDoubleCdn(out);
+  out = unfixStatsTicker(out);
 
   out = out.replace(
     /url\(["']?(\/_next\/static\/media\/[^"')]+)["']?\)/g,

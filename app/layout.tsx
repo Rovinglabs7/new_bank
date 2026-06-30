@@ -16,6 +16,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {RAMP_STYLESHEETS.map((href) => (
+          <link key={href} rel="stylesheet" href={href} />
+        ))}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+        />
+      </head>
       <body>
         {children}
         <AmbientMusicToggle />
