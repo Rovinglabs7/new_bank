@@ -3,17 +3,14 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { site } from "@/config/site";
-import { useAnimationReady } from "@/hooks/use-animation-ready";
 import styles from "./header.module.css";
 
 export function Header() {
-  const ready = useAnimationReady();
-
   return (
     <motion.header
       className={styles.header}
-      initial={{ opacity: 0, y: -12 }}
-      animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
+      initial={false}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className={styles.inner}>

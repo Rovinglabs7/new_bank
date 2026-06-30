@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { site } from "@/config/site";
-import { useAnimationReady } from "@/hooks/use-animation-ready";
 import styles from "./hero.module.css";
 
 const fadeUp = {
@@ -21,7 +20,6 @@ const fadeUp = {
 
 export function Hero() {
   const { hero } = site;
-  const ready = useAnimationReady();
 
   return (
     <section className={styles.hero}>
@@ -31,8 +29,8 @@ export function Hero() {
         <motion.p
           className={styles.eyebrow}
           variants={fadeUp}
-          initial="hidden"
-          animate={ready ? "visible" : "hidden"}
+          initial={false}
+          animate="visible"
           custom={0}
         >
           {hero.eyebrow}
@@ -41,8 +39,8 @@ export function Hero() {
         <motion.h1
           className={styles.headline}
           variants={fadeUp}
-          initial="hidden"
-          animate={ready ? "visible" : "hidden"}
+          initial={false}
+          animate="visible"
           custom={1}
         >
           {hero.headline}
@@ -51,8 +49,8 @@ export function Hero() {
         <motion.p
           className={styles.subheadline}
           variants={fadeUp}
-          initial="hidden"
-          animate={ready ? "visible" : "hidden"}
+          initial={false}
+          animate="visible"
           custom={2}
         >
           {hero.subheadline}
@@ -61,8 +59,8 @@ export function Hero() {
         <motion.div
           className={styles.ctas}
           variants={fadeUp}
-          initial="hidden"
-          animate={ready ? "visible" : "hidden"}
+          initial={false}
+          animate="visible"
           custom={3}
         >
           <Link href={hero.primaryCta.href} className={styles.primaryCta}>

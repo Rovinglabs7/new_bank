@@ -89,3 +89,10 @@ button {
 .site-shell {
   overflow-x: hidden;
 }
+
+/* Framer sections must stay visible (no hydration / scroll-hide) */
+.framer-static-body [data-framer-root] > div {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+}
