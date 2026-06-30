@@ -1,0 +1,40 @@
+.section {
+  background: var(--color-cream);
+  padding: 64px 0;
+}
+
+.inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 40px;
+  text-align: center;
+}
+
+.body {
+  margin: 0 0 16px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-ink);
+}
+
+.contactLine {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-ink-muted);
+}
+
+.contactLink {
+  color: #d97706;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: 48px 0;
+  }
+
+  .inner {
+    padding: 0 20px;
+  }
+}
