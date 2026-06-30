@@ -5,6 +5,7 @@ import { ProductShowcase } from "@/components/site/ProductShowcase";
 import { Solutions } from "@/components/site/Solutions";
 import { Integration } from "@/components/site/Integration";
 import { CustomerStory } from "@/components/site/CustomerStory";
+import { WhoSproutWorksFor } from "@/components/site/WhoSproutWorksFor";
 import { Footer } from "@/components/site/Footer";
 import { RampStyles } from "@/components/ramp/RampStyles";
 import { RampMotion } from "@/components/ramp/RampMotion";
@@ -39,6 +40,7 @@ export default function HomePage() {
         <RampTeamScale />
         <RampTestimonials />
       </main>
+      <WhoSproutWorksFor />
       <Footer />
     </div>
   );
