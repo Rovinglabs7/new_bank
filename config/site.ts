@@ -33,7 +33,7 @@ export const site = {
           {
             title: "One-off payments",
             subtext: "Instant bank payments via open banking",
-            href: "/products/one-off-payments",
+            href: "/products/instant-bank-pay",
           },
           {
             title: "Variable payments",
@@ -269,7 +269,7 @@ export const site = {
         title: "Products",
         links: [
           { label: "Recurring payments", href: "/products/recurring-payments" },
-          { label: "One-off payments", href: "/products/one-off-payments" },
+          { label: "One-off payments", href: "/products/instant-bank-pay" },
           { label: "Variable payments", href: "/products/variable-payments" },
           { label: "Instalments", href: "/products/instalments" },
           {

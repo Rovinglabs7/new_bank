@@ -1,0 +1,129 @@
+.section {
+  background: var(--color-cream);
+  padding: 96px 0;
+}
+
+.inner {
+  max-width: var(--page-max, 1280px);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.heading {
+  margin: 0 0 64px;
+  text-align: center;
+  font-family: var(--font-season);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 420;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.stepReverse {
+  direction: rtl;
+}
+
+.stepReverse > * {
+  direction: ltr;
+}
+
+.stepText {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stepNumber {
+  font-family: var(--font-season);
+  font-size: 3rem;
+  font-weight: 420;
+  color: rgba(40, 30, 21, 0.12);
+  line-height: 1;
+}
+
+.stepHeading {
+  margin: 0;
+  font-family: var(--font-season);
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: 420;
+  line-height: 1.25;
+  color: var(--color-ink);
+}
+
+.stepBody {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--color-ink-muted);
+}
+
+.demoLink {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-sprout, #174501);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s;
+  align-self: flex-start;
+}
+
+.demoLink:hover {
+  opacity: 0.75;
+}
+
+.stepImage {
+  aspect-ratio: 4 / 3;
+  background: #F5F4F2;
+  border: 1px solid rgba(40, 30, 21, 0.1);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: rgba(40, 30, 21, 0.3);
+}
+
+.imagePlaceholderLabel {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+  max-width: 200px;
+  color: rgba(40, 30, 21, 0.3);
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 64px 0;
+  }
+
+  .inner {
+    padding: 0 20px;
+  }
+
+  .step,
+  .stepReverse {
+    grid-template-columns: 1fr;
+    direction: ltr;
+    gap: 32px;
+  }
+
+  .steps {
+    gap: 56px;
+  }
+}
