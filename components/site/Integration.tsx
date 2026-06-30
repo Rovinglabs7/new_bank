@@ -9,7 +9,6 @@ const FRAMER = "https://framerusercontent.com/images";
 const HEX_BG = `${FRAMER}/TAhmjfzDHkkF0rQ56ovSVL98N0.svg`;
 const BG_SHAPE = `${FRAMER}/ok0YH14sotPO5zXPf4nG0HIuzbQ.svg`;
 const BADGE_ICON = `${FRAMER}/9DPQJlLNx2fc3Xz4SFEvbFa7KbE.svg`;
-const CLIENT_LOGOS = `${FRAMER}/VdVYqkZlkUU6uQ32KYbaXXWVM.webp`;
 
 /**
  * 5 + 6 + 5 honeycomb from Framer Integration section.
@@ -97,16 +96,6 @@ export function Integration() {
             </span>
           </a>
         </header>
-
-        <div className={styles.trust}>
-          <img
-            src={CLIENT_LOGOS}
-            alt=""
-            className={styles.clientLogos}
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
 
         <motion.div
           className={styles.hexGrid}

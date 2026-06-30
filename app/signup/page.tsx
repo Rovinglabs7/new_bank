@@ -20,15 +20,6 @@ export default function SignUpPage() {
       </div>
 
       <div className={styles.formPanel}>
-        <div className={styles.topRow}>
-          <span className={styles.topRowText}>
-            Already have a {site.brand} account?{" "}
-            <Link href="/signin" className={styles.topRowLink}>
-              Sign in
-            </Link>
-          </span>
-        </div>
-
         <div className={styles.formInner}>
           <h1 className={styles.heading}>Create your {site.brand} account</h1>
           <p className={styles.subheading}>It only takes a minute.</p>
@@ -79,6 +70,13 @@ export default function SignUpPage() {
               Sign up
             </button>
           </form>
+
+          <p className={styles.signinLine}>
+            Already have a {site.brand} account?{" "}
+            <Link href="/signin" className={styles.signinLink}>
+              Sign in
+            </Link>
+          </p>
 
           <p className={styles.legal}>
             By continuing, you&apos;re agreeing to our{" "}
