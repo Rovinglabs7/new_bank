@@ -4,15 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/prepare-html.mjs && node scripts/prepare-ramp.mjs && node scripts/fix-ramp-sections.mjs && node scripts/download-ramp-lotties.mjs && next dev",
-    "build": "node scripts/prepare-html.mjs && node scripts/prepare-ramp.mjs && node scripts/fix-ramp-sections.mjs && node scripts/download-ramp-lotties.mjs && opennextjs-cloudflare build",
+    "build:cloud": "node scripts/prepare-html.mjs && node scripts/prepare-ramp.mjs && node scripts/fix-ramp-sections.mjs && node scripts/download-ramp-lotties.mjs && next build",
+    "build": "opennextjs-cloudflare build",
     "build:next": "next build",
     "start": "next start",
     "lint": "next lint",
     "prepare-html": "node scripts/prepare-html.mjs",
     "prepare-ramp": "node scripts/prepare-ramp.mjs",
     "download-ramp-lotties": "node scripts/download-ramp-lotties.mjs",
-    "preview": "node scripts/prepare-html.mjs && opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "node scripts/prepare-html.mjs && opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "preview": "npm run build && opennextjs-cloudflare preview",
+    "deploy": "npm run build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
     "@lottiefiles/dotlottie-web": "^0.75.0",
