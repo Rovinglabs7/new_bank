@@ -6,6 +6,7 @@ import {
   RAMP_PLATFORM_CARD_LOTTIES,
   resolveRampLottieSrc,
 } from "@/lib/ramp-lottie-map";
+import { mountIntegrationsGlobe } from "@/lib/integrations-globe";
 
 function initTickers(root: HTMLElement) {
   root.querySelectorAll<HTMLUListElement>("ul[role='group']").forEach((ul) => {
@@ -87,6 +88,16 @@ function initSystemsScroll(root: HTMLElement) {
     },
     { once: true }
   );
+}
+
+function initIntegrationsGlobe(root: HTMLElement) {
+  const section = root.querySelector<HTMLElement>(
+    '[data-ramp-section="platform-back-office"]'
+  );
+  const link = section?.querySelector<HTMLElement>('a[href*="integrations"]');
+  const mask = link?.querySelector<HTMLElement>('div[style*="mask-image"]');
+  if (!(mask instanceof HTMLElement)) return () => {};
+  return mountIntegrationsGlobe(mask);
 }
 
 async function initLotties(root: HTMLElement) {
@@ -189,6 +200,7 @@ export function RampMotion() {
 
     let cancelled = false;
     let destroyLotties: (() => void) | undefined;
+    let destroyIntegrationsGlobe: (() => void) | undefined;
 
     const startLotties = () => {
       initLotties(root).then((destroy) => {
@@ -205,6 +217,8 @@ export function RampMotion() {
       fixBrokenImages(root);
       initTickers(root);
       initSystemsScroll(root);
+      destroyIntegrationsGlobe?.();
+      destroyIntegrationsGlobe = initIntegrationsGlobe(root);
       startLotties();
     };
 
@@ -216,6 +230,8 @@ export function RampMotion() {
         delete el.dataset.rampLottieInit;
         el.querySelector<HTMLElement>(".animation")?.style.removeProperty("display");
       });
+      destroyIntegrationsGlobe?.();
+      destroyIntegrationsGlobe = initIntegrationsGlobe(root);
       startLotties();
     }, 200);
 
@@ -223,6 +239,7 @@ export function RampMotion() {
       cancelled = true;
       window.clearTimeout(layoutTimer);
       destroyLotties?.();
+      destroyIntegrationsGlobe?.();
       root.querySelectorAll<HTMLUListElement>("ul[data-ramp-ticker-init]").forEach((ul) => {
         ul.dispatchEvent(new Event("ramp-ticker-destroy"));
         delete ul.dataset.rampTickerInit;
