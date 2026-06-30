@@ -75,16 +75,16 @@ export function Integration() {
     offset: ["start end", "end start"],
   });
 
-  // Spread apart when away; tight cluster when centered — keep more gap on small screens.
-  const gapSpread = isNarrow ? 52 : 78;
-  const gapTight = isNarrow ? 20 : 4;
+  // Spread apart when away; tight cluster when centered — keep minimum gap so hexes never touch.
+  const gapSpread = isNarrow ? 38 : 72;
+  const gapTight = isNarrow ? 14 : 16;
   const hexGap = useTransform(
     scrollYProgress,
     [0, 0.42, 0.58, 1],
     [gapSpread, gapTight, gapTight, gapSpread]
   );
   const hexGapPx = useTransform(hexGap, (v) => `${v}px`);
-  const restingGap = isNarrow ? "20px" : "8px";
+  const restingGap = isNarrow ? "14px" : "16px";
 
   return (
     <section
