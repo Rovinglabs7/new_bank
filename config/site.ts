@@ -177,7 +177,7 @@ export const site = {
           {
             title: "Security",
             subtext: "How we protect your business and customers.",
-            href: "/product/security",
+            href: "/security",
           },
           {
             title: "Partners",
@@ -291,7 +291,7 @@ export const site = {
           },
           { label: "API", href: "/product/api", badge: "Coming soon" },
           { label: "Webhooks", href: "/products/webhooks" },
-          { label: "Security", href: "/product/security" },
+          { label: "Security", href: "/security" },
           { label: "Mobile app", href: "/products/mobile-app" },
         ],
       },
