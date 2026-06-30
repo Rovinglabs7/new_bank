@@ -1,25 +1,13 @@
 .section {
   background: var(--color-cream);
   padding: 96px 0 120px;
+  overflow: hidden;
 }
 
 .inner {
   max-width: var(--page-max);
-  margin: 0 auto;
+  margin: 0 auto 56px;
   padding: 0 40px;
-}
-
-.card {
-  display: flex;
-  align-items: center;
-  gap: 56px;
-  background: var(--color-ink);
-  border-radius: 24px;
-  padding: 56px;
-}
-
-.textCol {
-  flex: 0 0 320px;
 }
 
 .eyebrow {
@@ -29,94 +17,96 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--color-ink-muted);
+  text-align: center;
 }
 
 .heading {
-  margin: 0 0 16px;
+  margin: 0 auto 16px;
+  max-width: 640px;
   font-family: var(--font-season);
-  font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 500;
   line-height: 1.15;
   letter-spacing: -0.02em;
-  color: var(--color-white);
+  color: var(--color-ink);
+  text-align: center;
 }
 
 .supporting {
-  margin: 0;
+  margin: 0 auto;
+  max-width: 560px;
   font-family: var(--font-inter);
-  font-size: 15px;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--color-ink-muted);
+  text-align: center;
 }
 
-.pillGrid {
-  flex: 1;
+.marqueeViewport {
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 64px,
+    black calc(100% - 64px),
+    transparent 100%
+  );
+}
+
+.marqueeTrack {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  align-items: center;
+  gap: 20px;
+  width: max-content;
+  animation: marquee-scroll 48s linear infinite;
 }
 
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px 10px 10px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  font-family: var(--font-inter);
-  font-size: 14px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.92);
-  white-space: nowrap;
-}
-
-.pillIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--color-white);
+.mediaTile {
   flex: none;
+  width: 220px;
+  aspect-ratio: 9 / 16;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--color-ink);
+  box-shadow: 0 16px 32px rgba(40, 30, 21, 0.14);
 }
 
-.pillIcon svg {
-  width: 13px;
-  height: 13px;
+.mediaImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: var(--color-ink);
 }
 
-@media (max-width: 900px) {
-  .card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 32px;
-    padding: 40px;
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
   }
-
-  .textCol {
-    flex: none;
+  to {
+    transform: translateX(-50%);
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .section {
     padding: 64px 0 80px;
   }
 
   .inner {
     padding: 0 20px;
+    margin-bottom: 40px;
   }
 
-  .card {
-    padding: 28px;
-    border-radius: 20px;
+  .mediaTile {
+    width: 160px;
   }
+}
 
-  .pill {
-    white-space: normal;
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack {
+    animation: none;
   }
 }
