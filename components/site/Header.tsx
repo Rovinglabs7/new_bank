@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { site } from "@/config/site";
 import { ProductsMenu } from "./ProductsMenu";
+import { ResourcesMenu } from "./ResourcesMenu";
 import styles from "./header.module.css";
 
 export function Header() {
@@ -23,6 +24,8 @@ export function Header() {
           {site.nav.map((item) =>
             item.label === "Products" ? (
               <ProductsMenu key={item.label} />
+            ) : item.label === "Resources" ? (
+              <ResourcesMenu key={item.label} />
             ) : (
               <Link key={item.label} href={item.href} className={styles.navLink}>
                 {item.label}

@@ -104,6 +104,107 @@ export const site = {
     },
   },
 
+  resourcesMenu: {
+    columns: [
+      {
+        heading: "Explore",
+        items: [
+          {
+            title: "Customer Stories",
+            subtext: "See how businesses grow with Sprout.",
+            href: "/customers",
+          },
+          {
+            title: "Blog",
+            subtext: "Product updates, insights and company news.",
+            href: "/blog",
+          },
+          {
+            title: "Payment Guides",
+            subtext: "Practical guides to collecting payments more efficiently.",
+            href: "/guides/payment-timing",
+          },
+          {
+            title: "Integrations",
+            subtext: "Discover the tools Sprout works with.",
+            href: "/integrations",
+          },
+          {
+            title: "What's New",
+            subtext: "See the latest product releases and improvements.",
+            href: "/releases",
+          },
+        ],
+      },
+      {
+        heading: "Help & Developers",
+        items: [
+          {
+            title: "Help Centre",
+            subtext: "Find answers to common questions.",
+            href: "/help",
+          },
+          {
+            title: "Developer Docs",
+            subtext: "Build with the Sprout API.",
+            href: "/developers/docs",
+          },
+          {
+            title: "API Reference",
+            subtext: "Authentication, endpoints and examples.",
+            href: "/developers/api-reference",
+          },
+          {
+            title: "System Status",
+            subtext: "View live platform availability.",
+            href: "/status",
+          },
+          {
+            title: "Changelog",
+            subtext: "See what's changed in every release.",
+            href: "/changelog",
+          },
+        ],
+      },
+      {
+        heading: "Company",
+        items: [
+          {
+            title: "About Sprout",
+            subtext: "Learn about our mission and team.",
+            href: "/about",
+          },
+          {
+            title: "Security",
+            subtext: "How we protect your business and customers.",
+            href: "/product/security",
+          },
+          {
+            title: "Partners",
+            subtext: "Become a partner or integration partner.",
+            href: "/partners",
+          },
+          {
+            title: "Contact Sales",
+            subtext: "Talk to our team.",
+            href: "/contact/sales",
+          },
+          {
+            title: "Contact Support",
+            subtext: "Get technical help when you need it.",
+            href: "/contact/support",
+          },
+        ],
+      },
+    ],
+    featured: {
+      heading: "Getting Started",
+      body: "Launch your first payment in under 10 minutes.",
+      ctaLabel: "View Quick Start Guide",
+      href: "/developers/docs",
+    },
+  },
+
   navActions: {
     login: { label: "Sign in", href: "/signin" },
     demo: { label: "Book a demo", href: "/demo" },
