@@ -1,28 +1,45 @@
 /**
- * Edit copy here — this is the single source of truth for the Pricing page.
+ * Edit copy here, this is the single source of truth for the Pricing page.
  * Every heading, paragraph, feature and plan can be replaced here without
  * touching any component or layout code.
  */
 
+export type PlanFeatureGroup = {
+  category: string;
+  items: string[];
+};
+
 export type PricingPlan = {
   id: string;
+  eyebrow: string;
   name: string;
   tagline: string;
   price: string;
   priceUnit?: string;
   priceNote?: string;
-  features: string[];
   cta: { label: string; href: string };
-  secondaryCta?: { label: string; href: string };
+  featurePrefix?: string;
+  featureGroups: PlanFeatureGroup[];
   recommended?: boolean;
 };
 
-export type FeatureRow = {
+export type ComparisonRow = {
   label: string;
-  description?: string;
   standard: boolean | string;
   growth: boolean | string;
-  pro: boolean | string;
+  enterprise: boolean | string;
+};
+
+export type ComparisonCategory = {
+  category: string;
+  rows: ComparisonRow[];
+};
+
+export type FeeRow = {
+  label: string;
+  standard: string;
+  growth: string;
+  enterprise: string;
 };
 
 export type Addon = {
@@ -31,11 +48,11 @@ export type Addon = {
   description: string;
 };
 
-export type FeeRow = {
+export type GlanceRow = {
   label: string;
   standard: string;
   growth: string;
-  pro: string;
+  enterprise: string;
 };
 
 export type Faq = {
@@ -46,9 +63,9 @@ export type Faq = {
 export const pricing = {
   hero: {
     eyebrow: "Pricing",
-    heading: "Simple, honest pricing that scales with you.",
+    heading: "Pricing built for how you actually get paid.",
     subheading:
-      "One transparent rate per transaction. No setup fees, no hidden charges, no surprises — just the tools you need to get paid reliably.",
+      "No setup costs. No long-term contracts. No charge unless a payment actually collects. Choose a plan that matches how your business runs today, and change it the moment that changes.",
     primaryCta: { label: "Get started", href: "/signup" },
     secondaryCta: { label: "Talk to sales", href: "/contact-sales" },
   },
@@ -56,325 +73,464 @@ export const pricing = {
   plans: [
     {
       id: "standard",
+      eyebrow: "Bank-native",
       name: "Standard",
-      tagline: "For businesses that want to collect one-off or recurring payments",
+      tagline: "For businesses ready to collect their first recurring or one-off payments",
       price: "1.1% + 20p",
       priceUnit: "per transaction",
       priceNote: "Excl. VAT",
-      features: [
-        "Collect one-off, recurring and instalment payments",
-        "International payments in 30+ countries",
-        "Xero and QuickBooks reconciliation",
-        "AI Concierge across dashboard, WhatsApp, Slack and Teams",
-        "2 checkout templates included",
-        "Real-time compliance dashboard",
-      ],
       cta: { label: "Get started", href: "/signup" },
-      secondaryCta: { label: "See all fees", href: "#fees" },
+      featureGroups: [
+        {
+          category: "Collections",
+          items: [
+            "Recurring Direct Debit, one-off payments and instalments",
+            "Online, phone, paper and QR code mandate setup",
+            "Payment links you can share anywhere",
+          ],
+        },
+        {
+          category: "Compliance",
+          items: [
+            "Real-time compliance dashboard, see exactly what's happening with your account, always",
+            "FCA-regulated infrastructure with segregated client funds",
+          ],
+        },
+        {
+          category: "Automation",
+          items: [
+            "AI Concierge in your dashboard, ask questions, take action, in plain English",
+            "Native Xero and QuickBooks reconciliation",
+          ],
+        },
+        {
+          category: "Support",
+          items: ["24/7 chat support", "Full help centre, switching guide and onboarding checklist"],
+        },
+      ],
     },
     {
       id: "growth",
+      eyebrow: "AI-powered",
       name: "Growth",
-      tagline: "For businesses that want failure recovery and faster settlement",
+      tagline: "For businesses ready to stop losing revenue to failed payments",
       price: "1.3% + 20p",
       priceUnit: "per transaction",
-      priceNote: "Excl. VAT",
-      features: [
-        "Everything in Standard",
-        "AI failure prediction, 3 days ahead",
-        "Intelligent payment retry and recovery",
-        "Instant same-day settlement",
-        "Open Banking verified mandates",
-      ],
+      priceNote: "Excl. VAT, ask about annual billing discounts",
       cta: { label: "Get started", href: "/signup" },
-      secondaryCta: { label: "See all fees", href: "#fees" },
+      featurePrefix: "Everything in Standard, plus:",
       recommended: true,
+      featureGroups: [
+        {
+          category: "Collections",
+          items: [
+            "Failure prediction, flagged up to 3 days before a payment is due to fail",
+            "Intelligent recovery, retries timed to when a customer is actually likely to have funds",
+            "Instant settlement, get your money the same day, for a small advance fee",
+            "Verified mandates, bank details checked at the point of setup, not after",
+          ],
+        },
+        {
+          category: "Automation",
+          items: [
+            "AI Concierge available in WhatsApp, Slack and Microsoft Teams",
+            "Multi-entity support for businesses managing more than one trading name",
+          ],
+        },
+        {
+          category: "Reporting",
+          items: ["Custom report builder", "Revenue and churn forecasting"],
+        },
+        {
+          category: "Support",
+          items: ["Priority support, real person, under 20 minutes"],
+        },
+      ],
     },
     {
-      id: "pro",
-      name: "Pro",
-      tagline: "For businesses that want full fraud protection and compliance visibility",
-      price: "1.45% + 20p",
-      priceUnit: "per transaction",
-      priceNote: "Excl. VAT",
-      features: [
-        "Everything in Growth",
-        "Advanced fraud and bank-detail-change protection",
-        "Automated dispute evidence and chargeback handling",
-        "Dedicated compliance contact",
+      id: "enterprise",
+      eyebrow: "AI-tailored",
+      name: "Enterprise",
+      tagline: "For businesses with complex, high-volume or multi-market needs",
+      price: "Custom pricing",
+      priceNote: "Annual billing",
+      cta: { label: "Talk to our team", href: "/contact-sales" },
+      featurePrefix: "Everything in Growth, plus:",
+      featureGroups: [
+        {
+          category: "Global",
+          items: [
+            "SEPA and international collections at near-domestic rates",
+            "Multi-currency settlement",
+            "Local payment scheme support across supported markets",
+          ],
+        },
+        {
+          category: "Compliance",
+          items: [
+            "Named compliance contact for your account",
+            "Advanced fraud protection",
+            "Dispute and chargeback resolution support",
+          ],
+        },
+        {
+          category: "Account management",
+          items: [
+            "Dedicated account manager",
+            "Custom implementation and migration support",
+            "API and webhook integration support",
+            "Custom user roles, permissions and audit log",
+          ],
+        },
       ],
-      cta: { label: "Get started", href: "/signup" },
-      secondaryCta: { label: "See all fees", href: "#fees" },
-    },
-    {
-      id: "custom",
-      name: "Custom",
-      tagline: "For businesses with £1m+ annual revenue or bespoke needs",
-      price: "Custom",
-      features: [
-        "Fully customised package",
-        "Volume-based discounts",
-        "Dedicated account manager",
-      ],
-      cta: { label: "Contact sales", href: "/contact-sales" },
     },
   ] satisfies PricingPlan[],
 
-  comparison: {
-    heading: "Compare plans",
-    subheading: "Every plan includes the essentials. Growth and Pro add more protection as you scale.",
-    rows: [
-      {
-        label: "Collect payments",
-        description: "One-off, subscription, membership and instalment payments",
-        standard: true,
-        growth: true,
-        pro: true,
-      },
-      {
-        label: "International payments",
-        description: "Collect from 30+ countries at the real mid-market rate",
-        standard: true,
-        growth: true,
-        pro: true,
-      },
-      {
-        label: "Native accounting integrations",
-        description: "Xero and QuickBooks reconciliation built in",
-        standard: true,
-        growth: true,
-        pro: true,
-      },
-      {
-        label: "AI Concierge",
-        description: "Manage payments from your dashboard, WhatsApp, Slack or Teams",
-        standard: true,
-        growth: true,
-        pro: true,
-      },
-      {
-        label: "Compliance dashboard",
-        description: "Real-time visibility into any account review",
-        standard: true,
-        growth: true,
-        pro: true,
-      },
-      {
-        label: "Priority support",
-        description: "Urgent issues reach a human within 20 minutes",
-        standard: true,
-        growth: true,
-        pro: true,
-      },
-      {
-        label: "Failure prediction",
-        description: "AI flags at-risk payments 3 days before collection",
-        standard: false,
-        growth: true,
-        pro: true,
-      },
-      {
-        label: "Intelligent recovery",
-        description: "Retries timed to each customer's real account behaviour",
-        standard: false,
-        growth: true,
-        pro: true,
-      },
-      {
-        label: "Instant settlement",
-        description: "Same-day funds for a small advance fee",
-        standard: false,
-        growth: true,
-        pro: true,
-      },
-      {
-        label: "Verified mandates",
-        description: "Bank details verified at checkout via Open Banking",
-        standard: false,
-        growth: true,
-        pro: true,
-      },
-      {
-        label: "Advanced fraud protection",
-        description: "Detects suspicious payers and bank-detail-change fraud",
-        standard: false,
-        growth: false,
-        pro: true,
-      },
-      {
-        label: "Dispute resolution",
-        description: "Evidence compiled automatically to challenge chargebacks",
-        standard: false,
-        growth: false,
-        pro: true,
-      },
-      {
-        label: "Dedicated compliance contact",
-        description: "A named contact for any account review",
-        standard: false,
-        growth: false,
-        pro: true,
-      },
-    ] satisfies FeatureRow[],
+  calculator: {
+    heading: "Calculate what you'd actually pay",
+    subheading: "Enter your typical monthly volume and see exactly what you'd pay.",
   },
 
-  addons: {
-    heading: "Add-ons",
-    subheading: "Extend any plan with the extras that matter to your business.",
-    items: [
+  comparison: {
+    heading: "The complete feature comparison",
+    subheading: "Every feature, organised by category, across every plan.",
+    categories: [
       {
-        name: "Your name on bank statements",
-        price: "£22/month",
-        description:
-          "Show your business name on customer statements instead of \"Sprout Ltd\".",
+        category: "Collections",
+        rows: [
+          {
+            label: "Recurring Direct Debit, one-off payments and instalments",
+            standard: true,
+            growth: true,
+            enterprise: true,
+          },
+          {
+            label: "Online, phone, paper and QR code mandate setup",
+            standard: true,
+            growth: true,
+            enterprise: true,
+          },
+          { label: "Payment links you can share anywhere", standard: true, growth: true, enterprise: true },
+          { label: "Failure prediction, up to 3 days ahead", standard: false, growth: true, enterprise: true },
+          { label: "Intelligent recovery retries", standard: false, growth: true, enterprise: true },
+          { label: "Instant settlement", standard: false, growth: true, enterprise: true },
+          { label: "Verified mandates via Open Banking", standard: false, growth: true, enterprise: true },
+          {
+            label: "SEPA and international collections at near-domestic rates",
+            standard: false,
+            growth: false,
+            enterprise: true,
+          },
+          { label: "Multi-currency settlement", standard: false, growth: false, enterprise: true },
+          { label: "Local payment scheme support", standard: false, growth: false, enterprise: true },
+        ],
       },
       {
-        name: "Beyond 2 checkout templates",
-        price: "£20/month",
-        description:
-          "Unlock the full template library and restyle every payment page and notification.",
+        category: "Compliance & trust",
+        rows: [
+          { label: "Real-time compliance dashboard", standard: true, growth: true, enterprise: true },
+          {
+            label: "FCA-regulated infrastructure with segregated client funds",
+            standard: true,
+            growth: true,
+            enterprise: true,
+          },
+          { label: "Named compliance contact", standard: false, growth: false, enterprise: true },
+          { label: "Advanced fraud protection", standard: false, growth: false, enterprise: true },
+          {
+            label: "Dispute and chargeback resolution support",
+            standard: false,
+            growth: false,
+            enterprise: true,
+          },
+        ],
       },
       {
-        name: "API access for platforms",
-        price: "£199/month",
-        description: "Build Sprout directly into your own product — full REST API, sandbox and webhooks.",
+        category: "Automation",
+        rows: [
+          { label: "AI Concierge in your dashboard", standard: true, growth: true, enterprise: true },
+          { label: "Native Xero and QuickBooks reconciliation", standard: true, growth: true, enterprise: true },
+          {
+            label: "AI Concierge in WhatsApp, Slack and Microsoft Teams",
+            standard: false,
+            growth: true,
+            enterprise: true,
+          },
+          {
+            label: "Multi-entity support for multiple trading names",
+            standard: false,
+            growth: true,
+            enterprise: true,
+          },
+        ],
       },
       {
-        name: "White-label payment pages",
-        price: "£299/month",
-        description: "Remove all Sprout branding from every customer-facing touchpoint.",
+        category: "Reporting",
+        rows: [
+          { label: "Standard dashboard reporting", standard: true, growth: true, enterprise: true },
+          { label: "Custom report builder", standard: false, growth: true, enterprise: true },
+          { label: "Revenue and churn forecasting", standard: false, growth: true, enterprise: true },
+        ],
       },
       {
-        name: "Multi-user team access",
-        price: "£19/month",
-        description: "Add seats beyond the 3 included on every plan.",
+        category: "Account management",
+        rows: [
+          { label: "Dedicated account manager", standard: false, growth: false, enterprise: true },
+          {
+            label: "Custom implementation and migration support",
+            standard: false,
+            growth: false,
+            enterprise: true,
+          },
+          { label: "API and webhook integration support", standard: false, growth: false, enterprise: true },
+          {
+            label: "Custom user roles, permissions and audit log",
+            standard: false,
+            growth: false,
+            enterprise: true,
+          },
+        ],
       },
       {
-        name: "International SEPA collections",
-        price: "1.5% + 20p",
-        description: "Collect across the EU at near-domestic rates.",
+        category: "Support",
+        rows: [
+          { label: "24/7 chat support", standard: true, growth: true, enterprise: true },
+          {
+            label: "Full help centre, switching guide and onboarding checklist",
+            standard: true,
+            growth: true,
+            enterprise: true,
+          },
+          { label: "Priority support, under 20 minutes", standard: false, growth: true, enterprise: true },
+        ],
       },
-    ] satisfies Addon[],
+    ] satisfies ComparisonCategory[],
   },
 
   fees: {
-    heading: "Transaction fees",
+    heading: "Transaction fees, full detail",
     subheading: "Every fee, in one place.",
-    columns: ["Standard", "Growth", "Pro"],
+    columns: ["Standard", "Growth", "Enterprise"],
     rows: [
       {
-        label: "Domestic UK",
+        label: "Domestic UK Direct Debit",
         standard: "1.1% + 20p, capped at £4.30",
         growth: "1.3% + 20p, capped at £5.20",
-        pro: "1.45% + 20p, capped at £5.80",
+        enterprise: "Custom",
       },
       {
-        label: "International",
+        label: "International collections",
         standard: "2% + 20p",
         growth: "2.2% + 20p",
-        pro: "2.35% + 20p",
+        enterprise: "Custom",
       },
       {
-        label: "Over £2,000 (Direct Debit)",
+        label: "Transaction over £2,000 (Direct Debit only)",
         standard: "+0.3%",
         growth: "+0.3%",
-        pro: "+0.3%",
+        enterprise: "Custom",
+      },
+      {
+        label: "Open Banking one-off payment",
+        standard: "1% + 20p",
+        growth: "1% + 20p",
+        enterprise: "Custom",
       },
       {
         label: "Failed payment fee",
         standard: "5p",
         growth: "5p",
-        pro: "5p",
+        enterprise: "Custom",
       },
       {
-        label: "Statement name",
-        standard: "£22/month add-on",
-        growth: "£22/month add-on",
-        pro: "£22/month add-on",
+        label: "Refund processing",
+        standard: "Free, deducted from next payout",
+        growth: "Free, deducted from next payout",
+        enterprise: "Free, deducted from next payout",
       },
       {
-        label: "Checkout templates",
-        standard: "2 included free",
-        growth: "2 included free",
-        pro: "2 included free",
+        label: "Instant settlement advance",
+        standard: "Not available",
+        growth: "0.6% of advanced amount",
+        enterprise: "Custom",
+      },
+      {
+        label: "Chargeback fee",
+        standard: "£5 (only if over 15/month)",
+        growth: "£5 (only if over 15/month)",
+        enterprise: "Custom",
       },
     ] satisfies FeeRow[],
     note:
       "Prices exclude VAT. Krandel Labs Ltd is VAT-registered and provides a VATable service under HMRC rules, so VAT applies to transaction fees regardless of your own VAT status.",
   },
 
-  enterprise: {
-    eyebrow: "Custom",
-    heading: "Built for larger businesses.",
-    body: "If you're processing £1m or more a year, or need something a standard plan can't cover, we'll build a package around how your business actually runs — with volume-based pricing and a dedicated account manager.",
-    points: [
-      "Fully customised package",
-      "Volume-based discounts",
-      "Dedicated account manager",
-      "Custom onboarding and migration support",
-    ],
-    cta: { label: "Contact sales", href: "/contact-sales" },
+  addons: {
+    heading: "Add-ons, available on any plan",
+    subheading: "Extend any plan with the extras that matter to your business.",
+    items: [
+      {
+        name: "Your name on bank statements",
+        price: "£22/month",
+        description:
+          "Show your business name on every customer's bank statement instead of \"Sprout Ltd\". Helps reduce confusion, support queries and accidental disputes.",
+      },
+      {
+        name: "Extended checkout template library",
+        price: "£20/month",
+        description:
+          "Beyond the 2 free templates included on every plan, unlock the full design library and fully restyle every customer-facing payment page and notification email.",
+      },
+      {
+        name: "Additional team seats",
+        price: "£8/user/month",
+        description: "Beyond the 3 included free on every plan.",
+      },
+      {
+        name: "API access for platforms",
+        price: "£199/month",
+        description: "Build Sprout directly into your own product. Full REST API, sandbox environment and webhook events.",
+      },
+      {
+        name: "White-label payment pages",
+        price: "£299/month",
+        description:
+          "Remove all Sprout branding entirely from every customer-facing touchpoint, fully your domain, fully your brand.",
+      },
+      {
+        name: "International SEPA collections",
+        price: "1.5% + 20p",
+        description:
+          "Collect across the EU at rates closer to domestic than international, without separate bank accounts in each country.",
+      },
+      {
+        name: "Dedicated compliance contact",
+        price: "£99/month",
+        description:
+          "Available as a standalone add-on on Standard or Growth, included free on Enterprise. A named person assigned to your account for any compliance review.",
+      },
+    ] satisfies Addon[],
   },
 
-  security: {
-    heading: "Security & compliance",
-    subheading: "Built on the same standards regulated financial institutions rely on.",
-    items: [
-      { title: "FCA regulated", description: "Authorised and supervised under UK financial services law" },
-      { title: "Segregated client funds", description: "Your customers' money is never co-mingled with operating funds" },
-      { title: "Bank-grade encryption", description: "Data encrypted in transit and at rest" },
-      { title: "Open Banking verified mandates", description: "Bank details verified at the point of checkout" },
-    ],
+  glance: {
+    heading: "Extra benefits by plan, at a glance",
+    columns: ["Standard", "Growth", "Enterprise"],
+    rows: [
+      {
+        label: "Best suited to",
+        standard: "New and small businesses",
+        growth: "Growing businesses losing revenue to failed payments",
+        enterprise: "Multi-entity, multi-market or high-volume businesses",
+      },
+      {
+        label: "Typical monthly volume",
+        standard: "Under £10,000",
+        growth: "£10,000 to £100,000",
+        enterprise: "£100,000+",
+      },
+      {
+        label: "Decision usually made by",
+        standard: "Founder or owner",
+        growth: "Founder, ops lead or finance manager",
+        enterprise: "Finance director or CFO",
+      },
+      {
+        label: "Time to value",
+        standard: "Live same day",
+        growth: "Live same day, recovery visible within first failed payment",
+        enterprise: "Live within agreed implementation window",
+      },
+    ] satisfies GlanceRow[],
   },
 
   faqs: {
-    heading: "Frequently asked questions",
+    heading: "FAQ, full and thorough",
     items: [
       {
-        question: "How does Sprout collect fees from me?",
+        question: "Is there a free plan?",
         answer:
-          "Fees are deducted automatically from your collections. If a payment fails, you're charged a flat 5p — never the full percentage fee. If you're on a Custom plan, you'll be invoiced monthly instead.",
+          "There's no free tier, but Standard has no monthly platform fee and no setup cost. You only ever pay a small percentage on payments that actually collect, if nothing is collected in a given month, you pay nothing.",
       },
       {
-        question: "Can I change my plan or cancel any time?",
+        question: "What happens if I outgrow Standard?",
         answer:
-          "Yes. Every plan is a monthly rolling contract. Upgrade or downgrade any time from your dashboard or by asking your AI Concierge.",
+          "You can upgrade to Growth at any point directly from your dashboard, or by simply asking your AI Concierge. The change takes effect from your next billing cycle, with no penalty and no need to re-set up a single mandate.",
+      },
+      {
+        question: "Can I downgrade or cancel at any time?",
+        answer:
+          "Yes. Every plan is a monthly rolling agreement, there's no lock-in contract on Standard or Growth. You can downgrade or close your account whenever you choose, and you'll only be charged fees that applied while your account was active.",
+      },
+      {
+        question: "How does Sprout charge me, is it deducted automatically?",
+        answer:
+          "Yes. Fees are deducted directly from your collected payments before they're paid out to you, so there's nothing separate to pay each month and nothing you need to remember to settle. Enterprise plans are invoiced monthly instead, by agreement.",
       },
       {
         question: "Why does Sprout charge VAT on its fees?",
         answer:
-          "It's the VAT status of the supplier, not the customer, that determines this. Krandel Labs Ltd is VAT-registered and provides a VATable service under HMRC rules, so VAT applies to transaction fees regardless of your own VAT status. We recommend speaking to a tax professional about whether this is reclaimable for your business.",
+          "It's the VAT status of the supplier, not the customer, that determines this under UK law. Krandel Labs Ltd is a VAT-registered business providing a VATable service, so VAT applies to transaction fees regardless of your own business's VAT status. We'd always recommend speaking to a qualified accountant or tax adviser about whether this is reclaimable for your specific situation, we're not able to give tax advice ourselves.",
       },
       {
-        question: "Why isn't my name on bank statements included for free?",
+        question: "Why is there a fee on failed payments, even a small one?",
         answer:
-          "It's a genuine cost to provision per merchant, so we price it honestly at £22/month rather than bundling the cost into every transaction.",
+          "Every payment we submit, successful or not, has a real processing cost attached to it through the underlying banking rails. Most providers either charge you the full transaction fee on a failed payment (which can feel punitive) or absorb the cost in a way that isn't sustainable long-term. We charge a flat 5p instead, enough to cover the real cost, never more.",
       },
       {
-        question: "Can I move my existing customers from another provider to Sprout?",
+        question: "Do I need a separate bank account to collect international payments?",
         answer:
-          "Yes. Our migration tool carries mandates across without requiring every customer to re-authorise. Most businesses move their full customer base in under a day.",
+          "No. You can collect from 30+ countries directly into your existing UK business account. Currency conversion is handled at the real mid-market exchange rate, with the cost built into the international transaction fee shown above, never a hidden markup on top.",
       },
       {
-        question: "Is there a discount for charities?",
-        answer: "Yes — 20% off transaction fees for eligible registered charities and nonprofits.",
-      },
-      {
-        question: "What happens if my account is ever flagged for review?",
+        question: "Can I move my existing customers over from another provider?",
         answer:
-          "You see it immediately. The compliance dashboard shows what triggered it, what's needed, who's handling it, and when it'll be resolved.",
+          "Yes. We've built a dedicated migration process specifically for this. In most cases, your existing customer mandates can be carried across without requiring every individual customer to re-authorise a new payment from scratch, which is typically the most painful part of switching providers.",
       },
       {
-        question: "What if I need support urgently?",
-        answer: "Anything flagged urgent reaches a real person within 20 minutes, not a queue.",
+        question: "Is there a discount for charities or nonprofits?",
+        answer: "Yes, eligible registered charities and nonprofits receive 20% off standard transaction fees across every plan.",
+      },
+      {
+        question: "What does \"instant settlement\" actually mean, and is it safe?",
+        answer:
+          "Normally, money collected via Direct Debit takes 3 to 5 working days to clear through the banking system before it reaches your account. Instant settlement means we advance you that money the same day it's collected, for a small fee, the underlying settlement still happens in the background exactly as normal, you simply don't have to wait for it.",
+      },
+      {
+        question: "What happens if my account is ever flagged for a compliance review?",
+        answer:
+          "You'll see it the moment it happens, directly in your compliance dashboard, what triggered the review, what (if anything) we need from you, and a clear estimated timeline for resolution. We don't believe in silent holds or generic \"your account is under review\" emails with no further detail.",
+      },
+      {
+        question: "How fast is support, really?",
+        answer:
+          "Standard plan customers get 24/7 chat support with typical response times under a few hours. Growth plan customers get priority support, with urgent issues reaching a real person in under 20 minutes. Enterprise customers have a named, dedicated account manager.",
+      },
+      {
+        question: "Do you support multiple entities or trading names under one account?",
+        answer:
+          "Yes, from Growth upward. If you operate more than one legal entity or trading name, for example a group of gyms, or a holding company with several subsidiaries, you can manage them from a single Sprout account with separated reporting for each.",
+      },
+      {
+        question: "What integrations are available?",
+        answer:
+          "Native, two-way reconciliation with Xero and QuickBooks is included on every plan. Additional accounting and business software integrations are available via our open API on Growth and Enterprise plans.",
+      },
+      {
+        question: "Is my customers' bank data secure?",
+        answer:
+          "Yes. All bank connections happen via regulated Open Banking infrastructure, we never see or store your customers' online banking login details. All data is encrypted in transit and at rest, and Krandel Labs Ltd operates under the FCA's Payment Services Regulations 2017, with client funds held in fully segregated safeguarding accounts.",
+      },
+      {
+        question: "Can I try Sprout before committing?",
+        answer:
+          "There's no separate trial, because Standard has no monthly fee and no setup cost, you can start using it immediately and only pay when a payment actually collects. If it's not right for your business, you can close your account at any time with nothing further owed.",
       },
     ] satisfies Faq[],
   },
 
   closing: {
-    heading: "Run your own numbers.",
-    body: "See exactly what you'd pay on Sprout based on your real transaction volume — no calls, no sales pitch required.",
+    heading: "Run the numbers for your own business.",
+    body: "Enter your typical monthly volume above and see exactly what you'd pay, what you'd likely recover in failed payments, and what you'd get back in time. No sales call required to find out.",
     primaryCta: { label: "Get started", href: "/signup" },
-    secondaryCta: { label: "Talk to sales", href: "/contact-sales" },
   },
 };

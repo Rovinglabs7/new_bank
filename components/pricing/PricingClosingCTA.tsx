@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { pricing } from "@/config/pricing";
 import styles from "./pricing-closing-cta.module.css";
@@ -11,14 +13,17 @@ export function PricingClosingCTA() {
         <h2 className={styles.heading}>{closing.heading}</h2>
         <p className={styles.body}>{closing.body}</p>
 
-        <div className={styles.ctas}>
+        <form className={styles.form} onSubmit={(event) => event.preventDefault()}>
+          <input
+            type="email"
+            placeholder="you@business.com"
+            className={styles.emailInput}
+            aria-label="Work email"
+          />
           <Link href={closing.primaryCta.href} className={styles.primaryCta}>
             {closing.primaryCta.label}
           </Link>
-          <Link href={closing.secondaryCta.href} className={styles.secondaryCta}>
-            {closing.secondaryCta.label}
-          </Link>
-        </div>
+        </form>
       </div>
     </section>
   );

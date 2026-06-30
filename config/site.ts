@@ -1,10 +1,10 @@
 /**
- * Edit copy here — this is the single source of truth for the Sprout site.
+ * Edit copy here, this is the single source of truth for the Sprout site.
  * No Framer hydration will overwrite these values.
  */
 export const site = {
   brand: "Sprout",
-  title: "Sprout — Payments for ambitious teams",
+  title: "Sprout, Payments for ambitious teams",
   description:
     "Getting paid should be the easiest part of running your business.",
 
@@ -17,7 +17,7 @@ export const site = {
   nav: [
     { label: "Products", href: "#products" },
     { label: "Resources", href: "#resources" },
-    { label: "Pricing", href: "#pricing" },
+    { label: "Pricing", href: "/pricing" },
   ],
 
   productsMenu: {

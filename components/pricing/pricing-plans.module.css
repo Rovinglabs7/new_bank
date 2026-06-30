@@ -11,7 +11,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   margin-top: -56px;
   position: relative;
@@ -46,6 +46,16 @@
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.02em;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #d97706;
 }
 
 .name {
@@ -91,14 +101,45 @@
   color: var(--color-ink-muted);
 }
 
+.featurePrefix {
+  margin: 24px 0 0;
+  font-family: var(--font-inter);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.featureGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 16px;
+  flex: 1;
+}
+
+.featureGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.featureCategory {
+  margin: 0;
+  font-family: var(--font-inter);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
 .features {
   list-style: none;
-  margin: 24px 0 0;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  flex: 1;
+  gap: 10px;
 }
 
 .feature {
@@ -123,7 +164,17 @@
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  margin-top: 28px;
+  margin-top: 24px;
+}
+
+.compareLink {
+  display: inline-block;
+  margin-top: 20px;
+  font-family: var(--font-inter);
+  font-size: 13px;
+  font-weight: 500;
+  color: #d97706;
+  text-align: center;
 }
 
 .primaryCta,
@@ -168,9 +219,9 @@
   color: #d97706;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
   .grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     margin-top: 0;
   }
 }

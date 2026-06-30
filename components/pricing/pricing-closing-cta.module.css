@@ -28,7 +28,7 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-.ctas {
+.form {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -36,8 +36,29 @@
   margin-top: 28px;
 }
 
-.primaryCta,
-.secondaryCta {
+.emailInput {
+  flex: 1;
+  min-width: 220px;
+  min-height: 46px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: transparent;
+  color: var(--color-white);
+  font-family: var(--font-inter);
+  font-size: 14px;
+}
+
+.emailInput::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.emailInput:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.primaryCta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -48,25 +69,11 @@
   font-size: 15px;
   font-weight: 420;
   transition: transform 0.2s;
-}
-
-.primaryCta {
   background: var(--color-white);
   color: var(--color-ink);
 }
 
 .primaryCta:hover {
-  transform: translateY(-1px);
-}
-
-.secondaryCta {
-  background: transparent;
-  color: var(--color-white);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-}
-
-.secondaryCta:hover {
-  border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-1px);
 }
 
@@ -76,7 +83,7 @@
     border-radius: 20px;
   }
 
-  .ctas {
+  .form {
     flex-direction: column;
     align-items: stretch;
   }

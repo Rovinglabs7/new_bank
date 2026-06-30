@@ -33,6 +33,7 @@ export function PricingPlans() {
                 <span className={styles.badge}>Most popular</span>
               ) : null}
 
+              <p className={styles.eyebrow}>{plan.eyebrow}</p>
               <h3 className={styles.name}>{plan.name}</h3>
               <p className={styles.tagline}>{plan.tagline}</p>
 
@@ -46,30 +47,35 @@ export function PricingPlans() {
                 <p className={styles.priceNote}>{plan.priceNote}</p>
               ) : null}
 
-              <ul className={styles.features}>
-                {plan.features.map((feature) => (
-                  <li key={feature} className={styles.feature}>
-                    <CheckIcon />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
               <div className={styles.actions}>
-                <Link
-                  href={plan.cta.href}
-                  className={
-                    plan.recommended ? styles.primaryCta : styles.secondaryCtaButton
-                  }
-                >
+                <Link href={plan.cta.href} className={styles.primaryCta}>
                   {plan.cta.label}
                 </Link>
-                {plan.secondaryCta ? (
-                  <Link href={plan.secondaryCta.href} className={styles.linkCta}>
-                    {plan.secondaryCta.label}
-                  </Link>
-                ) : null}
               </div>
+
+              {plan.featurePrefix ? (
+                <p className={styles.featurePrefix}>{plan.featurePrefix}</p>
+              ) : null}
+
+              <div className={styles.featureGroups}>
+                {plan.featureGroups.map((group) => (
+                  <div className={styles.featureGroup} key={group.category}>
+                    <p className={styles.featureCategory}>{group.category}</p>
+                    <ul className={styles.features}>
+                      {group.items.map((item) => (
+                        <li key={item} className={styles.feature}>
+                          <CheckIcon />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+
+              <a href="#compare" className={styles.compareLink}>
+                View full feature list ↓
+              </a>
             </div>
           ))}
         </div>

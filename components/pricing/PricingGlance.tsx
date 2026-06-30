@@ -1,21 +1,20 @@
 import { pricing } from "@/config/pricing";
-import styles from "./pricing-fees.module.css";
+import styles from "./pricing-glance.module.css";
 
-export function PricingFees() {
-  const { fees } = pricing;
+export function PricingGlance() {
+  const { glance } = pricing;
 
   return (
-    <section className={styles.section} id="fees" aria-label="Transaction fees">
+    <section className={styles.section} aria-label="Plans at a glance">
       <div className={styles.inner}>
-        <h2 className={styles.heading}>{fees.heading}</h2>
-        <p className={styles.subheading}>{fees.subheading}</p>
+        <h2 className={styles.heading}>{glance.heading}</h2>
 
         <div className={styles.tableWrap}>
           <table className={styles.table}>
             <thead>
               <tr>
-                <th className={styles.feeHead} scope="col" />
-                {fees.columns.map((col) => (
+                <th className={styles.labelHead} scope="col" />
+                {glance.columns.map((col) => (
                   <th key={col} scope="col">
                     {col}
                   </th>
@@ -23,9 +22,9 @@ export function PricingFees() {
               </tr>
             </thead>
             <tbody>
-              {fees.rows.map((row) => (
+              {glance.rows.map((row) => (
                 <tr key={row.label}>
-                  <th className={styles.feeCell} scope="row">
+                  <th className={styles.labelCell} scope="row">
                     {row.label}
                   </th>
                   <td>{row.standard}</td>
@@ -36,8 +35,6 @@ export function PricingFees() {
             </tbody>
           </table>
         </div>
-
-        <p className={styles.note}>{fees.note}</p>
       </div>
     </section>
   );

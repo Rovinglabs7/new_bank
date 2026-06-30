@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { pricing } from "@/config/pricing";
 import styles from "./pricing-comparison.module.css";
 
@@ -6,7 +7,7 @@ function Cell({ value }: { value: boolean | string }) {
     return <span className={styles.cellText}>{value}</span>;
   }
   if (!value) {
-    return <span className={styles.dash} aria-hidden>—</span>;
+    return <span className={styles.dash} aria-hidden>-</span>;
   }
   return (
     <svg
@@ -40,30 +41,34 @@ export function PricingComparison() {
                 </th>
                 <th scope="col">Standard</th>
                 <th scope="col">Growth</th>
-                <th scope="col">Pro</th>
+                <th scope="col">Enterprise</th>
               </tr>
             </thead>
             <tbody>
-              {comparison.rows.map((row) => (
-                <tr key={row.label}>
-                  <th className={styles.featureCell} scope="row">
-                    <span className={styles.featureLabel}>{row.label}</span>
-                    {row.description ? (
-                      <span className={styles.featureDescription}>
-                        {row.description}
-                      </span>
-                    ) : null}
-                  </th>
-                  <td>
-                    <Cell value={row.standard} />
-                  </td>
-                  <td>
-                    <Cell value={row.growth} />
-                  </td>
-                  <td>
-                    <Cell value={row.pro} />
-                  </td>
-                </tr>
+              {comparison.categories.map((category) => (
+                <Fragment key={category.category}>
+                  <tr className={styles.categoryRow}>
+                    <th className={styles.categoryCell} colSpan={4} scope="colgroup">
+                      {category.category}
+                    </th>
+                  </tr>
+                  {category.rows.map((row) => (
+                    <tr key={row.label}>
+                      <th className={styles.featureCell} scope="row">
+                        <span className={styles.featureLabel}>{row.label}</span>
+                      </th>
+                      <td>
+                        <Cell value={row.standard} />
+                      </td>
+                      <td>
+                        <Cell value={row.growth} />
+                      </td>
+                      <td>
+                        <Cell value={row.enterprise} />
+                      </td>
+                    </tr>
+                  ))}
+                </Fragment>
               ))}
             </tbody>
           </table>

@@ -3,17 +3,17 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { PricingHero } from "@/components/pricing/PricingHero";
 import { PricingPlans } from "@/components/pricing/PricingPlans";
+import { PricingCalculator } from "@/components/pricing/PricingCalculator";
 import { PricingComparison } from "@/components/pricing/PricingComparison";
-import { PricingAddons } from "@/components/pricing/PricingAddons";
 import { PricingFees } from "@/components/pricing/PricingFees";
-import { PricingEnterprise } from "@/components/pricing/PricingEnterprise";
-import { PricingSecurity } from "@/components/pricing/PricingSecurity";
+import { PricingAddons } from "@/components/pricing/PricingAddons";
+import { PricingGlance } from "@/components/pricing/PricingGlance";
 import { PricingFAQ } from "@/components/pricing/PricingFAQ";
 import { PricingClosingCTA } from "@/components/pricing/PricingClosingCTA";
 import { site } from "@/config/site";
 
 export const metadata = {
-  title: `Pricing — ${site.brand}`,
+  title: `Pricing | ${site.brand}`,
   description:
     "Simple, transparent pricing for collecting payments. No setup fees, no hidden charges.",
 };
@@ -26,11 +26,11 @@ export default function PricingPage() {
       <main>
         <PricingHero />
         <PricingPlans />
+        <PricingCalculator />
         <PricingComparison />
-        <PricingAddons />
         <PricingFees />
-        <PricingEnterprise />
-        <PricingSecurity />
+        <PricingAddons />
+        <PricingGlance />
         <PricingFAQ />
         <PricingClosingCTA />
       </main>
