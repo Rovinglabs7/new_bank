@@ -25,6 +25,7 @@ const cards: SolutionCard[] = [
     body: "Predictable collections at scale. AI catches failed payments before they cost you revenue, and every transaction reconciles itself.",
     href: "/solutions/mid-size",
     imagePlaceholderComment: "image placeholder — mid-size company operator",
+    video: "/videos/mid-size.mp4",
   },
   {
     id: "enterprise",
@@ -32,6 +33,7 @@ const cards: SolutionCard[] = [
     body: "Multi-entity, multi-currency collections built for finance teams who need full control without the manual work.",
     href: "/solutions/enterprise",
     imagePlaceholderComment: "image placeholder — enterprise finance team",
+    video: "/videos/enterprise.mp4",
   },
 ];
 
