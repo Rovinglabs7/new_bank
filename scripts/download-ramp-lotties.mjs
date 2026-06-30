@@ -28,6 +28,14 @@ const FILES = [
     name: "finance-policy-agent.lottie",
     url: "https://cdn.air.inc/e754352b-9997-49c5-a5fa-bca8f3d3e646",
   },
+  {
+    name: "home-integrations.lottie",
+    url: "https://assets.ramp.com/nextjs/lottie/home/home-integrations.lottie",
+  },
+  {
+    name: "treasury-platform.lottie",
+    url: "https://assets.ramp.com/nextjs/lottie/treasury/treasury-platform-2.lottie",
+  },
 ];
 
 mkdirSync(OUT, { recursive: true });
