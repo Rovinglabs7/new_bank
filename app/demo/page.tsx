@@ -38,9 +38,9 @@ export default function DemoPage() {
                 <input
                   type="email"
                   required
-                  placeholder="What's your work email?"
+                  placeholder="What's your email?"
                   className={styles.emailInput}
-                  aria-label="Work email"
+                  aria-label="Email"
                 />
                 <button type="submit" className={styles.demoButton}>
                   Schedule a demo
@@ -143,6 +143,14 @@ export default function DemoPage() {
             <span className={styles.eyebrow}>Five product walkthroughs</span>
 
             <div className={styles.videoMockup} aria-hidden>
+              <video
+                className={styles.videoEl}
+                src="/videos/product-walkthrough.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
               <span className={styles.playButton}>
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M8 5v14l11-7z" />
