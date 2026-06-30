@@ -119,13 +119,22 @@ export function Footer() {
               <span className={styles.infoHeading}>
                 {footer.contact.heading}
               </span>
-              <ul className={styles.infoList}>
-                {footer.contact.items.map((item) => (
-                  <li key={item.label}>
-                    <a href={item.href}>{item.label}</a>
-                  </li>
+              <div className={styles.contactGroups}>
+                {footer.contact.groups.map((group) => (
+                  <div className={styles.contactGroup} key={group.label}>
+                    <span className={styles.contactGroupLabel}>
+                      {group.label}
+                    </span>
+                    <ul className={styles.infoList}>
+                      {group.items.map((item) => (
+                        <li key={item.label}>
+                          <a href={item.href}>{item.label}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
 
             <div className={styles.infoCol}>

@@ -79,6 +79,24 @@
   margin: 0 0 16px;
 }
 
+.contactGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contactGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.contactGroupLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #d6d3d1;
+  margin: 0 0 8px;
+}
+
 .infoList {
   list-style: none;
   margin: 0;
@@ -367,8 +385,9 @@
 
 .bottomCta {
   margin: 0;
-  max-width: 360px;
-  font-size: 14px;
+  max-width: none;
+  white-space: nowrap;
+  font-size: 12px;
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: -0.005em;
@@ -545,6 +564,10 @@
 
   .waitlistForm {
     max-width: 100%;
+  }
+
+  .bottomCta {
+    white-space: normal;
   }
 }
 

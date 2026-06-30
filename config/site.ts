@@ -223,11 +223,22 @@ export const site = {
     tagline: "Recurring payments that run themselves.",
 
     contact: {
-      heading: "Contact",
-      items: [
-        { label: "hello@sprout.com", href: "mailto:hello@sprout.com" },
-        { label: "support@sprout.com", href: "mailto:support@sprout.com" },
-        { label: "+44 7353 179684", href: "tel:+447353179684" },
+      heading: "Contact us",
+      groups: [
+        {
+          label: "Sales",
+          items: [
+            { label: "Book a demo", href: "/demo" },
+            { label: "+44 7353 179684", href: "tel:+447353179684" },
+          ],
+        },
+        {
+          label: "Support",
+          items: [
+            { label: "Request support", href: "/support" },
+            { label: "support@sprout.com", href: "mailto:support@sprout.com" },
+          ],
+        },
       ],
     },
 
