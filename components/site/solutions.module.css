@@ -73,6 +73,7 @@
   align-items: center;
   gap: 4px;
   margin-top: 16px;
+  font-family: var(--font-season);
   font-size: 15px;
   font-weight: 500;
   color: #d97706;

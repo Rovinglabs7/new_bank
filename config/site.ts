@@ -67,7 +67,7 @@ export const site = {
           },
           {
             title: "Mandate management",
-            subtext: "Change dates, pause, or resume — no cancellations",
+            subtext: "Change dates, pause, or resume, no cancellations",
             href: "/products/mandate-management",
           },
           {
@@ -106,7 +106,7 @@ export const site = {
 
   navActions: {
     login: { label: "Sign in", href: "/signin" },
-    demo: { label: "Book a demo", href: "#demo" },
+    demo: { label: "Book a demo", href: "/demo" },
   },
 
   hero: {
@@ -114,7 +114,7 @@ export const site = {
       "Getting paid should be the easiest part of running your business.",
     subheadline:
       "Sprout connects to your business, automates payment operations, and makes getting paid simpler for you and your customers.",
-    primaryCta: { label: "Get started for free", href: "#demo" },
+    primaryCta: { label: "Get started for free", href: "/demo" },
   },
 
   footer: {

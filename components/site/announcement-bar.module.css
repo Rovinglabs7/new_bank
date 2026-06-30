@@ -42,12 +42,53 @@
   color: rgba(250, 248, 246, 0.88);
 }
 
+.cta {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #d97706;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cta:hover {
+  color: #f59e0b;
+}
+
+.close {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-left: 4px;
+  border: none;
+  border-radius: 999px;
+  background: none;
+  color: rgba(250, 248, 246, 0.6);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.close:hover {
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.08);
+}
+
 @media (max-width: 700px) {
   .inner {
     padding: 8px 20px;
+    flex-wrap: wrap;
   }
 
   .message {
+    font-size: 12px;
+  }
+
+  .cta {
     font-size: 12px;
   }
 }
