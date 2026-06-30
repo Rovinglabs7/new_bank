@@ -135,30 +135,99 @@ export const site = {
 
     columns: [
       {
-        title: "Features",
+        title: "About us",
         links: [
-          { label: "Microsoft Teams", href: "/features/microsoft-teams" },
-          { label: "WhatsApp", href: "/features/whatsapp" },
-          { label: "Slack", href: "/features/slack" },
+          { label: "Careers", href: "/careers" },
+          { label: "Customers", href: "/customers" },
+          { label: "Help centre", href: "/help" },
+          { label: "Product releases", href: "/releases" },
+          { label: "Press", href: "/press" },
+          { label: "API documentation", href: "/developers/docs" },
+          { label: "Versus", href: "/versus" },
+          { label: "Krandel Labs", href: "/krandel-labs" },
         ],
       },
       {
-        title: "Product",
+        title: "Products",
         links: [
-          { label: "Features", href: "/product/features" },
-          { label: "How it works", href: "/product/how-it-works" },
-          { label: "Integrations", href: "/product/integrations" },
-          { label: "Pricing", href: "/pricing" },
-          { label: "Security", href: "/product/security" },
-          { label: "Book a demo", href: "#demo" },
-          { label: "Join the waitlist", href: "/waitlist" },
-          { label: "Enterprise", href: "/solutions/enterprise" },
+          { label: "Recurring payments", href: "/products/recurring-payments" },
+          { label: "One-off payments", href: "/products/one-off-payments" },
+          { label: "Variable payments", href: "/products/variable-payments" },
+          { label: "Instalments", href: "/products/instalments" },
+          {
+            label: "International payments",
+            href: "/products/international-payments",
+          },
+          {
+            label: "Payment links and QR codes",
+            href: "/products/payment-links",
+          },
+          {
+            label: "Mandate management",
+            href: "/products/mandate-management",
+          },
+          { label: "Refunds and disputes", href: "/products/refunds-and-disputes" },
+          {
+            label: "Reporting and analytics",
+            href: "/products/reporting-and-analytics",
+          },
           { label: "API", href: "/product/api", badge: "Coming soon" },
+          { label: "Webhooks", href: "/products/webhooks" },
+          { label: "Security", href: "/product/security" },
+          { label: "Mobile app", href: "/products/mobile-app" },
         ],
       },
       {
-        title: "Tools",
+        title: "Platform",
         links: [
+          { label: "Platform overview", href: "/platform" },
+          { label: "AI Concierge", href: "/products/ai-concierge" },
+          { label: "Failure prediction", href: "/products/failure-prediction" },
+          {
+            label: "Compliance dashboard",
+            href: "/products/compliance-dashboard",
+          },
+          { label: "Instant settlement", href: "/platform/instant-settlement" },
+          { label: "Reconciliation", href: "/platform/reconciliation" },
+          { label: "Bank connections", href: "/platform/bank-connections" },
+          { label: "Open banking", href: "/platform/open-banking" },
+          { label: "Multi-entity", href: "/platform/multi-entity" },
+          { label: "Trust", href: "/trust" },
+        ],
+      },
+      {
+        title: "Partners",
+        links: [
+          { label: "Accounting firms", href: "/partners/accounting-firms" },
+          {
+            label: "Banking infrastructure partners",
+            href: "/partners/banking-infrastructure",
+          },
+          {
+            label: "Open banking partners",
+            href: "/partners/open-banking",
+          },
+          { label: "Compliance partners", href: "/partners/compliance" },
+          { label: "Reseller partners", href: "/partners/reseller" },
+          { label: "API partners", href: "/partners/api" },
+          { label: "Technology partners", href: "/partners/technology" },
+        ],
+      },
+      {
+        title: "Solutions",
+        links: [
+          { label: "Startups", href: "/solutions/startups" },
+          { label: "Mid-size companies", href: "/solutions/mid-size" },
+          { label: "Enterprises", href: "/solutions/enterprise" },
+        ],
+      },
+      {
+        title: "Free tools and resources",
+        links: [
+          {
+            label: "Direct debit calculator",
+            href: "/tools/direct-debit-calculator",
+          },
           {
             label: "Failed payment cost calculator",
             href: "/tools/failed-payment-cost-calculator",
@@ -171,40 +240,11 @@ export const site = {
             label: "Switching cost calculator",
             href: "/tools/switching-cost-calculator",
           },
-        ],
-      },
-      {
-        title: "Resources",
-        links: [
-          { label: "Blog", href: "/blog" },
-          { label: "Engineering", href: "/engineering" },
-          { label: "Customer stories", href: "/customers" },
+          { label: "Find an integration", href: "/integrations" },
+          { label: "Payment timing guide", href: "/guides/payment-timing" },
           { label: "Glossary", href: "/glossary" },
-          { label: "Ambassador Programme", href: "/ambassadors" },
-        ],
-      },
-      {
-        title: "Compare",
-        links: [
-          { label: "vs GoCardless", href: "/compare/gocardless" },
-          { label: "vs Stripe", href: "/compare/stripe" },
-          { label: "vs a payment bureau", href: "/compare/payment-bureau" },
-          {
-            label: "vs manual bank transfers",
-            href: "/compare/manual-bank-transfers",
-          },
-          { label: "vs PayPal", href: "/compare/paypal" },
-        ],
-      },
-      {
-        title: "Company",
-        links: [
-          { label: "About", href: "/about" },
-          { label: "Careers", href: "/careers" },
-          { label: "Partners", href: "/partners" },
-          { label: "Press", href: "/press" },
-          { label: "Contact", href: "/contact" },
-          { label: "Krandel Labs", href: "/krandel-labs" },
+          { label: "Switching guide", href: "/guides/switching" },
+          { label: "Answers Hub", href: "/answers" },
         ],
       },
       {
