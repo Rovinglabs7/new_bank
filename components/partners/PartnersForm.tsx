@@ -1,15 +1,25 @@
 "use client";
 
+import { motion, useReducedMotion } from "framer-motion";
 import { partners } from "@/config/partners";
 import styles from "./partners-form.module.css";
 
 export function PartnersForm() {
   const { form } = partners;
+  const reduceMotion = useReducedMotion();
 
   return (
     <section className={styles.section} id="form" aria-label={form.heading}>
       <div className={styles.inner}>
-        <h2 className={styles.heading}>{form.heading}</h2>
+        <motion.h2
+          className={styles.heading}
+          initial={reduceMotion ? undefined : { opacity: 0, y: 16 }}
+          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          {form.heading}
+        </motion.h2>
         <p className={styles.body}>{form.body}</p>
 
         <form

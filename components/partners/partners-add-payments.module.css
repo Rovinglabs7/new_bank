@@ -1,6 +1,6 @@
 .section {
   background: #f5f4f2;
-  padding: 80px 0;
+  padding: 96px 0;
 }
 
 .inner {
@@ -13,16 +13,16 @@
   margin: 0 0 16px;
   max-width: 680px;
   font-family: var(--font-season);
-  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
   font-weight: 500;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   color: var(--color-ink);
 }
 
 .body {
-  margin: 0 0 48px;
+  margin: 0 0 56px;
   max-width: 620px;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.7;
   color: var(--color-ink-muted);
 }
@@ -34,14 +34,15 @@
 }
 
 .group {
-  padding: 28px;
-  border-radius: 16px;
+  padding: 36px 32px;
+  border-radius: 24px;
   background: var(--color-cream);
+  border: 1px solid rgba(40, 30, 21, 0.06);
 }
 
 .groupHeading {
-  margin: 0 0 16px;
-  font-size: 15px;
+  margin: 0 0 20px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--color-ink);
 }
@@ -52,13 +53,28 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   font-size: 14px;
   color: #d97706;
   font-weight: 600;
+}
+
+.linkIcon {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  transition: transform 0.25s ease;
+}
+
+.link:hover .linkIcon {
+  transform: translateX(4px);
 }
 
 @media (max-width: 900px) {
@@ -74,5 +90,9 @@
 
   .inner {
     padding: 0 20px;
+  }
+
+  .group {
+    padding: 28px 24px;
   }
 }

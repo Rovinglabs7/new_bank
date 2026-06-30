@@ -39,17 +39,39 @@ export type GettingStartedCard = {
   cta?: CtaLink;
 };
 
+export type ValueStat = {
+  value: string;
+  label: string;
+};
+
 export const partners = {
   hero: {
+    eyebrow: "Sprout for Partners",
     heading: "Become a partner",
     subtext:
       "Let your users collect bank payments directly from your platform, and earn revenue from every transaction.",
     primaryCta: { label: "Partner with us", href: "#form" },
     secondaryCta: { label: "Developer Docs", href: "/developers" },
+    videoSrc: "/videos/partners/partner-network-1.mp4",
+    videoCaption: "Built for platforms moving real money for real businesses.",
   },
 
   ecosystem: {
     heading: "Building the next generation of recurring payment partnerships.",
+    stats: [
+      {
+        value: "Revenue share",
+        label: "Earn on every successful transaction processed through your integration.",
+      },
+      {
+        value: "Weeks, not months",
+        label: "Most integrations are ready to collect bank payments within weeks.",
+      },
+      {
+        value: "Full compliance cover",
+        label: "We handle merchant verification and regulatory burden, so you don't have to.",
+      },
+    ] satisfies ValueStat[],
   },
 
   addPayments: {
@@ -84,6 +106,7 @@ export const partners = {
 
   whyPartner: {
     heading: "Why partner with Sprout?",
+    body: "We're building a partner programme around the things that actually matter to the platforms we work with.",
     items: [
       {
         number: "01",
@@ -148,6 +171,9 @@ export const partners = {
     heading: "We're a partner-first organisation",
     body:
       "We're building Sprout's partner programme from day one with the same principles that matter to every business we work with: clear revenue share, real compliance support, and a team that actually responds.",
+    videoSrc: "/videos/partners/partner-network-2.mp4",
+    videoCaption: "Every integration is backed by a real partner team, not a support queue.",
+    note: "Partner case studies will appear here once our first integrations go live.",
   },
 
   gettingStarted: {

@@ -1,6 +1,6 @@
 .section {
   background: #f5f4f2;
-  padding: 80px 0;
+  padding: 96px 0;
 }
 
 .inner {
@@ -12,9 +12,9 @@
 .heading {
   margin: 0 0 48px;
   font-family: var(--font-season);
-  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
   font-weight: 500;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   color: var(--color-ink);
 }
 
@@ -65,7 +65,7 @@
 
 @media (max-width: 600px) {
   .section {
-    padding: 56px 0;
+    padding: 56px 0 56px;
   }
 
   .inner {
