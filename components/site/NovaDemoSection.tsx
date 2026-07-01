@@ -231,12 +231,18 @@ function SlackMockup() {
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const started = useRef(false);
 
+  const scrollToBottom = useCallback(() => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = scrollRef.current;
+        if (el) el.scrollTop = el.scrollHeight;
+      });
+    });
+  }, []);
+
   const show = useCallback((id: string, delay: number) => {
     const t = setTimeout(() => {
       setVis((p) => ({ ...p, [id]: true }));
-      requestAnimationFrame(() => {
-        if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-      });
     }, delay);
     timers.current.push(t);
   }, []);
@@ -292,6 +298,12 @@ function SlackMockup() {
     timers.current.push(tReset);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show, hide]);
+
+  useEffect(() => {
+    scrollToBottom();
+    const t = setTimeout(scrollToBottom, 360);
+    return () => clearTimeout(t);
+  }, [vis, btnClicked, scrollToBottom]);
 
   useEffect(() => {
     const el = scrollRef.current;
