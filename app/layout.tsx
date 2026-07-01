@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { site } from "@/config/site";
 import { AmbientMusicToggle } from "@/components/site/AmbientMusicToggle";
 import { MockModeBanner } from "@/components/site/MockModeBanner";
+import { CookieBanner } from "@/components/site/CookieBanner";
 import { RAMP_STYLESHEETS } from "@/lib/ramp-sections.manifest";
 import "./globals.css";
 
@@ -30,6 +31,7 @@ export default function RootLayout({
         {children}
         <AmbientMusicToggle />
         <MockModeBanner />
+        <CookieBanner />
       </body>
     </html>
   );

@@ -1,0 +1,424 @@
+/* ─── Banner ─────────────────────────────────────────────────────────────────*/
+
+.banner {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9000;
+  width: 420px;
+  max-width: calc(100vw - 56px);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border: 1px solid rgba(40, 30, 21, 0.1);
+  border-radius: 20px;
+  box-shadow:
+    0 4px 6px rgba(40, 30, 21, 0.04),
+    0 12px 32px rgba(40, 30, 21, 0.1),
+    0 32px 64px rgba(40, 30, 21, 0.06);
+}
+
+.bannerInner {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ─── Banner text ────────────────────────────────────────────────────────────*/
+
+.bannerText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bannerTitle {
+  margin: 0;
+  font-family: var(--font-season);
+  font-size: 18px;
+  font-weight: 420;
+  letter-spacing: -0.015em;
+  color: var(--color-ink);
+  line-height: 1.2;
+}
+
+.bannerBody {
+  margin: 0;
+  font-family: var(--font-inter);
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--color-ink-muted);
+}
+
+.bannerPolicyLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(40, 30, 21, 0.45);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.bannerPolicyLink:hover {
+  color: var(--color-ink);
+}
+
+/* ─── Banner actions ─────────────────────────────────────────────────────────*/
+
+.bannerActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ─── Buttons (shared) ───────────────────────────────────────────────────────*/
+
+.btnPrimary {
+  width: 100%;
+  height: 42px;
+  border: none;
+  border-radius: 10px;
+  background: var(--color-ink);
+  color: #ffffff;
+  font-family: var(--font-inter);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.18s ease;
+}
+
+.btnPrimary:hover {
+  opacity: 0.88;
+}
+
+.btnPrimary:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+.btnSecondary {
+  width: 100%;
+  height: 42px;
+  border: 1px solid rgba(40, 30, 21, 0.16);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-ink);
+  font-family: var(--font-inter);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s ease, border-color 0.18s ease;
+}
+
+.btnSecondary:hover {
+  background: rgba(40, 30, 21, 0.04);
+  border-color: rgba(40, 30, 21, 0.28);
+}
+
+.btnSecondary:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+.btnText {
+  width: 100%;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: rgba(40, 30, 21, 0.45);
+  font-family: var(--font-inter);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+.btnText:hover {
+  color: var(--color-ink);
+}
+
+.btnText:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ─── Modal overlay ──────────────────────────────────────────────────────────*/
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9100;
+  background: rgba(40, 30, 21, 0.36);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* ─── Modal ──────────────────────────────────────────────────────────────────*/
+
+.modal {
+  width: 100%;
+  max-width: 500px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid rgba(40, 30, 21, 0.08);
+  border-radius: 20px;
+  box-shadow:
+    0 8px 16px rgba(40, 30, 21, 0.06),
+    0 24px 64px rgba(40, 30, 21, 0.12);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 28px 0;
+}
+
+.modalTitle {
+  margin: 0;
+  font-family: var(--font-season);
+  font-size: 22px;
+  font-weight: 420;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  line-height: 1.2;
+}
+
+.closeButton {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(40, 30, 21, 0.12);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.closeButton:hover {
+  background: rgba(40, 30, 21, 0.05);
+  color: var(--color-ink);
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+.modalIntro {
+  margin: 14px 0 0;
+  padding: 0 28px;
+  font-family: var(--font-inter);
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--color-ink-muted);
+}
+
+/* ─── Cookie groups ──────────────────────────────────────────────────────────*/
+
+.cookieGroups {
+  padding: 20px 28px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cookieGroup {
+  padding: 18px 0;
+}
+
+.cookieGroupHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.cookieGroupTitle {
+  margin: 0 0 6px;
+  font-family: var(--font-inter);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.cookieGroupDesc {
+  margin: 0;
+  font-family: var(--font-inter);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--color-ink-muted);
+  max-width: 340px;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(40, 30, 21, 0.07);
+}
+
+/* ─── Toggle ─────────────────────────────────────────────────────────────────*/
+
+.toggle {
+  flex-shrink: 0;
+  width: 40px;
+  height: 24px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(40, 30, 21, 0.14);
+  cursor: pointer;
+  position: relative;
+  transition: background 0.22s ease;
+  margin-top: 2px;
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+.toggleOn {
+  background: var(--color-ink);
+}
+
+.toggleDisabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toggleOn .toggleThumb {
+  transform: translateX(16px);
+}
+
+/* ─── Modal footer ───────────────────────────────────────────────────────────*/
+
+.modalFooter {
+  padding: 20px 28px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-top: 1px solid rgba(40, 30, 21, 0.07);
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.modalPolicy {
+  margin: 0;
+  font-family: var(--font-inter);
+  font-size: 12px;
+  color: rgba(40, 30, 21, 0.4);
+}
+
+.policyLink {
+  color: var(--color-ink-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease;
+}
+
+.policyLink:hover {
+  color: var(--color-ink);
+}
+
+.modalActions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.modalActions .btnPrimary,
+.modalActions .btnSecondary {
+  width: auto;
+  padding: 0 20px;
+  font-size: 13px;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────*/
+
+@media (max-width: 560px) {
+  .banner {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    box-shadow:
+      0 -4px 12px rgba(40, 30, 21, 0.06),
+      0 -24px 48px rgba(40, 30, 21, 0.08);
+  }
+
+  .bannerInner {
+    padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal {
+    max-height: 88vh;
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
+  }
+
+  .modalHeader {
+    padding: 24px 20px 0;
+  }
+
+  .modalIntro,
+  .cookieGroups {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .modalFooter {
+    padding: 16px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modalActions {
+    flex-direction: column-reverse;
+  }
+
+  .modalActions .btnPrimary,
+  .modalActions .btnSecondary {
+    width: 100%;
+    height: 42px;
+  }
+}
