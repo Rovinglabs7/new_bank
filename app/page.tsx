@@ -3,6 +3,7 @@ import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import { ProductShowcase } from "@/components/site/ProductShowcase";
 import { Solutions } from "@/components/site/Solutions";
+import { BrandStory } from "@/components/site/BrandStory";
 import { Integration } from "@/components/site/Integration";
 import { CustomerStory } from "@/components/site/CustomerStory";
 import { WhoPraevorWorksFor } from "@/components/site/WhoSproutWorksFor";
@@ -28,6 +29,7 @@ export default function HomePage() {
       <Hero />
       <ProductShowcase />
       <Solutions />
+      <BrandStory />
       <Integration />
       <CustomerStory />
       <main className="ramp-home">
