@@ -102,16 +102,51 @@ EOF
 }
 
 reload_nginx() {
-  if command -v nginx >/dev/null 2>&1; then
-    if nginx -t 2>/dev/null; then
-      systemctl reload nginx 2>/dev/null || service nginx reload 2>/dev/null || nginx -s reload 2>/dev/null || true
-      echo "Nginx reloaded."
-    else
-      echo "WARN: nginx -t failed — reload skipped. Fix config and run: sudo nginx -t && sudo systemctl reload nginx"
-    fi
-  else
-    echo "nginx not found on PATH — upstream file updated; reload nginx manually on the host."
+  local nginx_test="${NGINX_TEST_CMD:-sudo nginx -t}"
+  local nginx_reload="${NGINX_RELOAD_CMD:-sudo systemctl reload nginx}"
+
+  if ! command -v nginx >/dev/null 2>&1 && ! command -v sudo >/dev/null 2>&1; then
+    echo "ERROR: nginx not found on PATH."
+    return 1
   fi
+
+  local test_output
+  if test_output=$(eval "$nginx_test" 2>&1); then
+    :
+  else
+    echo "ERROR: nginx -t failed:"
+    echo "$test_output"
+    echo "Fix host nginx config, then: sudo nginx -t && sudo systemctl reload nginx"
+    return 1
+  fi
+
+  if eval "$nginx_reload"; then
+    echo "Nginx reloaded."
+    return 0
+  fi
+
+  echo "ERROR: nginx reload failed. Active slot left running."
+  return 1
+}
+
+cutover_upstream() {
+  local web_port="$1" api_port="$2"
+  local previous_upstream=""
+
+  if [ -f "$HOST_UPSTREAM" ]; then
+    previous_upstream=$(cat "$HOST_UPSTREAM")
+  fi
+
+  write_host_upstream "$web_port" "$api_port"
+  if reload_nginx; then
+    return 0
+  fi
+
+  if [ -n "$previous_upstream" ]; then
+    echo "Restoring previous upstream config..."
+    printf '%s\n' "$previous_upstream" >"$HOST_UPSTREAM"
+  fi
+  return 1
 }
 
 wait_healthy() {
@@ -363,8 +398,14 @@ deploy_web_slot() {
 
   local active_web
   active_web=$(read_state WEB blue)
-  write_host_upstream "$port" "$(api_port_for_slot "$(read_state API blue)")"
-  reload_nginx
+  local api_port
+  api_port=$(api_port_for_slot "$(read_state API blue)")
+
+  if ! cutover_upstream "$port" "$api_port"; then
+    stop_slot_on_failure "web" "$target_slot"
+    echo "ERROR: nginx cutover failed — keeping active web slot (${active_web})."
+    return 1
+  fi
 
   if [ "$active_web" != "$target_slot" ] && docker ps -a --format '{{.Names}}' | grep -qx "$(container_name web "$active_web")"; then
     echo "Stopping old web slot: web-${active_web}"
@@ -396,8 +437,14 @@ deploy_api_slot() {
 
   local active_api
   active_api=$(read_state API blue)
-  write_host_upstream "$(web_port_for_slot "$(read_state WEB blue)")" "$port"
-  reload_nginx
+  local web_port
+  web_port=$(web_port_for_slot "$(read_state WEB blue)")
+
+  if ! cutover_upstream "$web_port" "$port"; then
+    stop_slot_on_failure "api" "$target_slot"
+    echo "ERROR: nginx cutover failed — keeping active api slot (${active_api})."
+    return 1
+  fi
 
   if [ "$active_api" != "$target_slot" ] && docker ps -a --format '{{.Names}}' | grep -qx "$(container_name api "$active_api")"; then
     echo "Stopping old api slot: api-${active_api}"
@@ -428,8 +475,10 @@ cmd_init() {
   wait_for_api_ready "$API_BLUE_PORT" "api-blue"
 
   write_state "blue" "blue"
-  write_host_upstream "$WEB_BLUE_PORT" "$API_BLUE_PORT"
-  reload_nginx
+  if ! cutover_upstream "$WEB_BLUE_PORT" "$API_BLUE_PORT"; then
+    echo "ERROR: nginx cutover failed during init."
+    exit 1
+  fi
   verify_public_health
 
   git rev-parse HEAD >"$REVISION_FILE"
@@ -508,7 +557,10 @@ cmd_fix() {
   wait_healthy "$(container_name api "$api_slot")" 90 || true
 
   write_host_upstream "$(web_port_for_slot "$web_slot")" "$(api_port_for_slot "$api_slot")"
-  reload_nginx
+  if ! reload_nginx; then
+    echo "ERROR: nginx reload failed in fix mode."
+    exit 1
+  fi
   echo "Fix complete."
 }
 

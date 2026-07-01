@@ -104,9 +104,109 @@ function JamesInitial({ className }: { className?: string }) {
   );
 }
 
+// ─── Slack UI icons ───────────────────────────────────────────────────────────
+
+function SlackChevronDown() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden>
+      <path d="M12 15l-4.243-4.243 1.415-1.414L12 12.172l2.828-2.829 1.415 1.414z" />
+    </svg>
+  );
+}
+
+function SlackComposeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden>
+      <path d="M6.414 16L16.556 5.858l-1.414-1.414L5 14.586V16h1.414zm.829 2H3v-4.243L14.435 2.322a1 1 0 011.414 0l2.829 2.829a1 1 0 010 1.414L7.243 18zM3 20h18v2H3v-2z" />
+    </svg>
+  );
+}
+
+function SlackThreadsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden>
+      <path d="M12 2C17.523 2 22 6.477 22 12s-4.477 10-10 10c-1.702 0-3.305-.425-4.708-1.175L2 22l1.176-5.29C2.426 15.306 2 13.703 2 12 2 6.477 6.477 2 12 2zm0 2a8 8 0 100 16 8 8 0 000-16zm-3.5 6a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm7 0a1.5 1.5 0 110 3 1.5 1.5 0 010-3z" />
+    </svg>
+  );
+}
+
+function SlackDraftsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden>
+      <path d="M21 3a1 1 0 011 1v14a1 1 0 01-1 1H6.455L2 22.5V4a1 1 0 011-1h18zm-1 2H4v13.385L5.763 17H20V5zm-7 2v2h4v2h-6V7h2z" />
+    </svg>
+  );
+}
+
+function SlackMoreIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden>
+      <path d="M5 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm14 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+    </svg>
+  );
+}
+
+function SlackChannelsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" aria-hidden>
+      <path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.462-6 5.5-6C9.36 3 11.072 3.802 12 5.022 12.928 3.802 14.64 3 16.5 3z" />
+    </svg>
+  );
+}
+
+function SlackMembersIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" aria-hidden>
+      <path d="M10 3h4a8 8 0 110 16v3.5c-5-2-12-5-12-11.5a8 8 0 018-8z" />
+    </svg>
+  );
+}
+
+function SlackSearchIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden>
+      <path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0111 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 01-1.969 5.617zm-2.006-.742A6.977 6.977 0 0018 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 004.875-1.975l.15-.15z" />
+    </svg>
+  );
+}
+
+function SlackSendIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden>
+      <path d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z" />
+    </svg>
+  );
+}
+
+function NovaAppLogo() {
+  return (
+    <svg width="11" height="6" viewBox="0 0 11 6" fill="none" preserveAspectRatio="none" aria-hidden>
+      <path d="M10.709 1.55808C10.515 1.17565 10.2587 0.867954 9.94047 0.639053C9.62194 0.410153 9.26111 0.244472 8.85736 0.14606C8.45361 0.0513859 8.04231 0 7.62315 0H3.38078C2.96132 0 2.55001 0.0513859 2.14627 0.149798C1.73889 0.248521 1.37776 0.414201 1.05953 0.643102C0.741312 0.871691 0.488969 1.17938 0.291024 1.56213C0.0970077 1.94861 0 2.42199 0 2.9863C0 3.5503 0.0970083 3.9645 0.287096 4.34724C0.481112 4.72563 0.733454 5.04142 1.04775 5.28589C1.36234 5.53036 1.71562 5.71193 2.11151 5.82622C2.5074 5.94457 2.90722 6 3.31067 6H7.68903C8.09671 6 8.49652 5.94083 8.88848 5.82622C9.28045 5.71193 9.63765 5.53036 9.95195 5.28589C10.2665 5.04142 10.5186 4.72563 10.709 4.34724C10.8991 3.9645 11 3.51074 11 2.9863C11 2.46154 10.903 1.94488 10.705 1.56213L10.709 1.55808ZM9.35811 3.82249C9.24569 4.05139 9.10184 4.2289 8.92354 4.36282C8.74494 4.49704 8.53521 4.59545 8.29858 4.65462C8.06165 4.7138 7.81717 4.74151 7.56089 4.74151H6.88577C6.88577 4.73747 4.12602 4.73747 4.12602 4.73747C4.12602 4.74151 3.45059 4.74151 3.45059 4.74151C3.19432 4.74151 2.94983 4.71006 2.7129 4.65462C2.47628 4.59545 2.26655 4.49704 2.08824 4.36282C1.90964 4.2289 1.76216 4.04734 1.65337 3.82249C1.54458 3.59763 1.49048 3.31766 1.49048 2.9863C1.49048 2.65494 1.54458 2.36686 1.65337 2.14201C1.76216 1.92121 1.90571 1.74369 2.08824 1.60947C2.26655 1.47929 2.47628 1.38057 2.70535 1.32544C2.93442 1.26627 3.17498 1.23855 3.41553 1.23855H7.59202C7.84044 1.23855 8.07344 1.26627 8.30613 1.32544C8.53914 1.38057 8.74101 1.47524 8.92354 1.60947C9.10184 1.74369 9.24932 1.92121 9.35811 2.14201C9.46691 2.36686 9.5213 2.64684 9.5213 2.9863C9.5213 3.32544 9.46691 3.60168 9.35811 3.82249Z" fill="#FFFFFF" />
+    </svg>
+  );
+}
+
+function NovaAppAvatar({ className }: { className?: string }) {
+  return (
+    <div className={`${styles.slackNovaAppAvatar} ${className ?? ""}`}>
+      <NovaAppLogo />
+    </div>
+  );
+}
+
 // ─── Typing indicator ─────────────────────────────────────────────────────────
 
 function TypingIndicator({ platform }: { platform?: "slack" | "teams" }) {
+  if (platform === "slack") {
+    return (
+      <div className={styles.slackThinkingRow}>
+        <span className={styles.slackThinkingText}>
+          <strong>Nova</strong> is thinking...
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div className={`${styles.typingRow} ${platform === "teams" ? styles.typingRowTeams : ""}`}>
       <NovaAvatarImg className={styles.typingAvatar} />
@@ -216,36 +316,94 @@ function SlackMockup() {
 
   return (
     <div className={styles.slackWindow}>
+      <div className={styles.slackWindowInset} aria-hidden />
+
       {/* Sidebar */}
       <div className={styles.slackSidebar}>
         <div className={styles.slackWorkspace}>
-          <span className={styles.slackWorkspaceName}>Praevor HQ</span>
-          <span className={styles.slackWorkspaceChevron}>&#x25BE;</span>
+          <div className={styles.slackWorkspaceLeft}>
+            <span className={styles.slackWorkspaceName}>Praevor HQ</span>
+            <span className={styles.slackWorkspaceChevron}><SlackChevronDown /></span>
+          </div>
+          <div className={styles.slackComposeBtn}>
+            <SlackComposeIcon />
+          </div>
         </div>
-        <div className={styles.slackSidebarSection}>
-          <div className={styles.slackSidebarLabel}>Channels</div>
-          <div className={styles.slackChannel}># general</div>
-          <div className={`${styles.slackChannel} ${styles.slackChannelActive}`}># payments-ops</div>
-          <div className={styles.slackChannel}># finance</div>
-          <div className={styles.slackChannel}># ops</div>
+
+        <div className={styles.slackNavItems}>
+          <div className={styles.slackNavItem}>
+            <SlackThreadsIcon />
+            <span>Threads</span>
+          </div>
+          <div className={styles.slackNavItem}>
+            <SlackDraftsIcon />
+            <span>Drafts &amp; Sent</span>
+          </div>
+          <div className={styles.slackNavItem}>
+            <SlackMoreIcon />
+            <span>More</span>
+          </div>
         </div>
+
+        <div className={styles.slackDivider} />
+
         <div className={styles.slackSidebarSection}>
-          <div className={styles.slackSidebarLabel}>Members</div>
-          <div className={styles.slackMember}>
-            <span className={styles.slackPresenceDot} />
-            Nova
+          <div className={styles.slackSidebarLabel}>
+            <SlackChannelsIcon />
+            <span>Channels</span>
+          </div>
+          <div className={styles.slackChannel}>
+            <span className={styles.slackChannelHash}>#</span>
+            <span>general</span>
+          </div>
+          <div className={`${styles.slackChannel} ${styles.slackChannelActive}`}>
+            <span className={styles.slackChannelHash}>#</span>
+            <span>payments-ops</span>
+          </div>
+          <div className={styles.slackChannel}>
+            <span className={styles.slackChannelHash}>#</span>
+            <span>finance</span>
+          </div>
+          <div className={styles.slackChannel}>
+            <span className={styles.slackChannelHash}>#</span>
+            <span>ops</span>
+          </div>
+        </div>
+
+        <div className={styles.slackDivider} />
+
+        <div className={styles.slackSidebarSection}>
+          <div className={styles.slackSidebarLabel}>
+            <SlackMembersIcon />
+            <span>Members</span>
           </div>
           <div className={styles.slackMember}>
-            <span className={styles.slackPresenceDot} />
-            Daniel
+            <div className={styles.slackMemberAvatarWrap}>
+              <NovaAppAvatar className={styles.slackMemberAppAvatar} />
+              <span className={styles.slackPresenceDot} />
+            </div>
+            <span>Nova</span>
           </div>
           <div className={styles.slackMember}>
-            <span className={styles.slackPresenceDot} />
-            Emma
+            <div className={styles.slackMemberAvatarWrap}>
+              <DanielInitial className={styles.slackMemberInitial} />
+              <span className={styles.slackPresenceDot} />
+            </div>
+            <span>Daniel</span>
           </div>
           <div className={styles.slackMember}>
-            <span className={`${styles.slackPresenceDot} ${styles.slackPresenceAway}`} />
-            James
+            <div className={styles.slackMemberAvatarWrap}>
+              <EmmaInitial className={styles.slackMemberInitial} />
+              <span className={styles.slackPresenceDot} />
+            </div>
+            <span>Emma</span>
+          </div>
+          <div className={styles.slackMember}>
+            <div className={styles.slackMemberAvatarWrap}>
+              <JamesInitial className={styles.slackMemberInitial} />
+              <span className={`${styles.slackPresenceDot} ${styles.slackPresenceAway}`} />
+            </div>
+            <span>James</span>
           </div>
         </div>
       </div>
@@ -253,11 +411,24 @@ function SlackMockup() {
       {/* Main area */}
       <div className={styles.slackMain}>
         <div className={styles.slackHeader}>
-          <span className={styles.slackHeaderChannel}># payments-ops</span>
-          <span className={styles.slackHeaderMembers}>Nova, Emma, Daniel, James +2</span>
+          <div className={styles.slackHeaderLeft}>
+            <span className={styles.slackHeaderHash}>#</span>
+            <span className={styles.slackHeaderChannel}>payments-ops</span>
+          </div>
+          <div className={styles.slackHeaderRight}>
+            <span className={styles.slackHeaderMembers}>Nova, Emma, Daniel, James +2</span>
+            <div className={styles.slackHeaderSearch}>
+              <SlackSearchIcon />
+            </div>
+          </div>
         </div>
 
         <div className={styles.slackFeed} ref={scrollRef}>
+          <div className={styles.slackDateDivider}>
+            <div className={styles.slackDateLine} />
+            <span className={styles.slackDateLabel}>Today</span>
+            <div className={styles.slackDateLine} />
+          </div>
 
           {/* Daniel — first message group */}
           <div className={`${styles.slackMsgGroup} ${vis["d1"] ? styles.msgVisible : ""}`}>
@@ -276,10 +447,11 @@ function SlackMockup() {
 
           {/* Nova — reply */}
           <div className={`${styles.slackMsgGroup} ${vis["n1"] ? styles.msgVisible : ""}`}>
-            <NovaAvatarImg className={styles.msgAvatar} />
+            <NovaAppAvatar className={styles.msgAvatar} />
             <div className={styles.msgContent}>
               <div className={styles.msgMeta}>
-                <span className={`${styles.msgName} ${styles.msgNameNova}`}>Nova</span>
+                <span className={styles.msgName}>Nova</span>
+                <span className={styles.msgAppBadge}>App</span>
                 <span className={styles.msgTime}>10:14 AM</span>
               </div>
               <p className={styles.msgText}>Happy to. What&apos;s the monthly amount, and when should the first collection go out?</p>
@@ -302,15 +474,15 @@ function SlackMockup() {
 
           {/* Nova — with rich card + action buttons */}
           <div className={`${styles.slackMsgGroup} ${vis["n2"] ? styles.msgVisible : ""}`}>
-            <NovaAvatarImg className={styles.msgAvatar} />
+            <NovaAppAvatar className={styles.msgAvatar} />
             <div className={styles.msgContent}>
               <div className={styles.msgMeta}>
-                <span className={`${styles.msgName} ${styles.msgNameNova}`}>Nova</span>
+                <span className={styles.msgName}>Nova</span>
+                <span className={styles.msgAppBadge}>App</span>
                 <span className={styles.msgTime}>10:15 AM</span>
               </div>
               <p className={styles.msgText}>Perfect. Everything is ready.</p>
 
-              {/* Rich card */}
               <div className={`${styles.richCard} ${vis["n2card"] ? styles.richCardVisible : ""}`}>
                 <div className={styles.richCardAccent} />
                 <div className={styles.richCardBody}>
@@ -324,7 +496,6 @@ function SlackMockup() {
 
               <p className={styles.msgText}>Would you like me to send the payment request directly to Green Leaf Nursery?</p>
 
-              {/* Action buttons */}
               {vis["n2btns"] && (
                 <div className={styles.actionButtons}>
                   <button
@@ -370,10 +541,11 @@ function SlackMockup() {
 
           {/* Nova — update */}
           <div className={`${styles.slackMsgGroup} ${vis["n4"] ? styles.msgVisible : ""}`}>
-            <NovaAvatarImg className={styles.msgAvatar} />
+            <NovaAppAvatar className={styles.msgAvatar} />
             <div className={styles.msgContent}>
               <div className={styles.msgMeta}>
-                <span className={`${styles.msgName} ${styles.msgNameNova}`}>Nova</span>
+                <span className={styles.msgName}>Nova</span>
+                <span className={styles.msgAppBadge}>App</span>
                 <span className={styles.msgTime}>10:22 AM</span>
               </div>
               <p className={styles.msgText}>Update. Green Leaf Nursery has opened the payment request.</p>
@@ -394,18 +566,49 @@ function SlackMockup() {
               </div>
             </div>
           </div>
-
         </div>
 
         {/* Composer */}
-        <div className={styles.slackComposer}>
-          <div className={styles.slackComposerInner}>
-            <span className={styles.slackComposerPlaceholder}>Message #payments-ops</span>
-          </div>
-          <div className={styles.slackComposerActions}>
-            <span className={styles.slackComposerIcon}>&#128522;</span>
-            <span className={styles.slackComposerIcon}>&#128206;</span>
-            <span className={styles.slackComposerIcon}>&#9993;</span>
+        <div className={styles.slackComposerWrap}>
+          <div className={styles.slackComposer}>
+            <div className={styles.slackComposerInset} aria-hidden />
+            <div className={styles.slackComposerToolbar}>
+              <div className={styles.slackComposerTool} aria-hidden>
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M8 11h4.5a2.5 2.5 0 100-5H8v5zm10 4.5a4.5 4.5 0 01-4.5 4.5H6V4h6.5a4.5 4.5 0 013.256 7.606A4.498 4.498 0 0118 15.5zM8 13v5h5.5a2.5 2.5 0 100-5H8z" /></svg>
+              </div>
+              <div className={styles.slackComposerTool} aria-hidden>
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M15 20H7v-2h2.927l2.116-12H9V4h8v2h-2.927l-2.116 12H15z" /></svg>
+              </div>
+              <div className={styles.slackComposerTool} aria-hidden>
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.154 14c.23.516.346 1.09.346 1.72 0 1.342-.524 2.392-1.571 3.147C14.88 19.622 13.433 20 11.586 20c-1.64 0-3.263-.381-4.586-1.144V16.6c1.52.877 3.075 1.4 4.586 1.4 2.56 0 3.689-.897 3.689-2.28 0-.468-.089-.862-.267-1.12H2v-2h20v2h-4.846zM7.556 11c-.14-.386-.222-.822-.222-1.32 0-1.268.497-2.283 1.489-3.047C9.813 5.878 11.18 5.5 12.914 5.5c1.463 0 2.884.323 4.086.97v2.19c-1.262-.67-2.633-1.005-4.086-1.005-2.412 0-3.617.782-3.617 2.065 0 .382.104.692.197.88H7.556z" /></svg>
+              </div>
+              <div className={styles.slackComposerToolDivider} />
+              <div className={styles.slackComposerTool} aria-hidden>
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18.364 15.536L16.95 14.12l1.414-1.414a5 5 0 10-7.071-7.071L9.879 7.05 8.464 5.636 9.88 4.222a7 7 0 019.9 9.9l-1.415 1.414zm-2.828 2.828l-1.415 1.414a7 7 0 01-9.9-9.9l1.415-1.414L7.05 9.88l-1.414 1.414a5 5 0 107.071 7.071l1.414-1.414 1.415 1.414zm-.708-10.607l1.415 1.415-7.071 7.07-1.415-1.414 7.071-7.07z" /></svg>
+              </div>
+              <div className={styles.slackComposerTool} aria-hidden>
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M8 4h13v2H8V4zM4.5 6.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm0 7a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm0 6.9a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM8 11h13v2H8v-2zm0 7h13v2H8v-2z" /></svg>
+              </div>
+            </div>
+            <div className={styles.slackComposerInput}>
+              <span className={styles.slackComposerPlaceholder}>Message #payments-ops</span>
+            </div>
+            <div className={styles.slackComposerFooter}>
+              <div className={styles.slackComposerFooterLeft}>
+                <div className={styles.slackComposerTool} aria-hidden>
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" /></svg>
+                </div>
+                <div className={styles.slackComposerTool} aria-hidden>
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 100-16 8 8 0 000 16zm-5-7h2a3 3 0 006 0h2a5 5 0 01-10 0zm1-2a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm8 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" /></svg>
+                </div>
+                <div className={styles.slackComposerTool} aria-hidden>
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M20 12a8 8 0 10-3.562 6.657l1.11 1.664A9.953 9.953 0 0112 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10v1.5a3.5 3.5 0 01-6.396 1.966A5 5 0 1117 12h-2a3 3 0 10-1.528 2.612A1.5 1.5 0 0020 13.5V12z" /></svg>
+                </div>
+              </div>
+              <div className={styles.slackComposerSend}>
+                <SlackSendIcon />
+              </div>
+            </div>
           </div>
         </div>
       </div>
