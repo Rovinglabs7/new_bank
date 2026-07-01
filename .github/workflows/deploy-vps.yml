@@ -72,3 +72,46 @@ jobs:
               all)      ./deploy.sh --all ;;
               *)        ./deploy.sh ;;
             esac
+
+  verify-health:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for public site health
+        run: |
+          set -euo pipefail
+          SITE="${{ secrets.PROD_SITE_HOST }}"
+          API="${{ secrets.PROD_API_HOST }}"
+          for i in $(seq 1 12); do
+            if curl -sf "https://${SITE}/api/health" | grep -qx ok; then
+              echo "Site health OK"
+              break
+            fi
+            echo "Site not ready yet (${i}/12)..."
+            sleep 10
+            if [ "$i" -eq 12 ]; then exit 1; fi
+          done
+
+      - name: Wait for public API health
+        run: |
+          set -euo pipefail
+          API="${{ secrets.PROD_API_HOST }}"
+          for i in $(seq 1 12); do
+            if curl -sf "https://${API}/health" | grep -q '"status":"ok"'; then
+              echo "API health OK"
+              exit 0
+            fi
+            echo "API not ready yet (${i}/12)..."
+            sleep 10
+          done
+          exit 1
+
+      - name: Confirm home page responds
+        run: |
+          set -euo pipefail
+          SITE="${{ secrets.PROD_SITE_HOST }}"
+          code=$(curl -so /dev/null -w "%{http_code}" "https://${SITE}/")
+          case "$code" in
+            200|301|302|304|307|308) echo "Home page responded with ${code}" ;;
+            *) echo "Home page returned ${code}"; exit 1 ;;
+          esac

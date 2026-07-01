@@ -11,6 +11,7 @@
 #   ./deploy.sh --status            Show active slots and health
 #   ./deploy.sh --diagnose          Debug 502 / upstream mismatches
 #   ./deploy.sh --fix               Recover: restart active slots, rewrite upstream
+#   ./deploy.sh --verify            Public health check only (no deploy)
 
 set -euo pipefail
 
@@ -29,6 +30,11 @@ SITE_HOST="${SITE_HOST:-example.com}"
 API_HOST="${API_HOST:-api.example.com}"
 WEB_HEALTH_PATH="${WEB_HEALTH_PATH:-/api/health}"
 API_HEALTH_PATH="${API_HEALTH_PATH:-/health}"
+WEB_READY_PATH="${WEB_READY_PATH:-/}"
+HEALTH_CONSECUTIVE_OK="${HEALTH_CONSECUTIVE_OK:-3}"
+HEALTH_POLL_INTERVAL="${HEALTH_POLL_INTERVAL:-5}"
+WEB_READY_TIMEOUT="${WEB_READY_TIMEOUT:-300}"
+API_READY_TIMEOUT="${API_READY_TIMEOUT:-120}"
 
 DEPLOY_FRONTEND=false
 DEPLOY_BACKEND=false
@@ -138,9 +144,93 @@ verify_web_health() {
   [ "$body" = "ok" ]
 }
 
+verify_web_ready() {
+  local port="$1"
+  verify_web_health "$port" || return 1
+  local code
+  code=$(curl -so /dev/null -w "%{http_code}" -H "Host: ${SITE_HOST}" "http://127.0.0.1:${port}${WEB_READY_PATH}" || echo "000")
+  case "$code" in
+    200|301|302|304|307|308) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
 verify_api_health() {
   local port="$1"
   curl -sf -H "Host: ${API_HOST}" "http://127.0.0.1:${port}${API_HEALTH_PATH}" | grep -q '"status"[[:space:]]*:[[:space:]]*"ok"'
+}
+
+wait_for_web_ready() {
+  local port="$1" label="${2:-web}"
+  local max="$WEB_READY_TIMEOUT"
+  local need="$HEALTH_CONSECUTIVE_OK"
+  local interval="$HEALTH_POLL_INTERVAL"
+  local consecutive=0
+  local elapsed=0
+
+  echo "Waiting for ${label} readiness on port ${port} (${need} consecutive OK checks)..."
+  while [ "$elapsed" -lt "$max" ]; do
+    if verify_web_ready "$port"; then
+      consecutive=$((consecutive + 1))
+      echo "  ready check ${consecutive}/${need} passed"
+      if [ "$consecutive" -ge "$need" ]; then
+        echo "${label} is ready on port ${port}."
+        return 0
+      fi
+    else
+      consecutive=0
+      echo "  not ready yet (${elapsed}s/${max}s)..."
+    fi
+    sleep "$interval"
+    elapsed=$((elapsed + interval))
+  done
+
+  echo "ERROR: ${label} did not become ready on port ${port} within ${max}s."
+  return 1
+}
+
+wait_for_api_ready() {
+  local port="$1" label="${2:-api}"
+  local max="$API_READY_TIMEOUT"
+  local need="$HEALTH_CONSECUTIVE_OK"
+  local interval="$HEALTH_POLL_INTERVAL"
+  local consecutive=0
+  local elapsed=0
+
+  echo "Waiting for ${label} readiness on port ${port} (${need} consecutive OK checks)..."
+  while [ "$elapsed" -lt "$max" ]; do
+    if verify_api_health "$port"; then
+      consecutive=$((consecutive + 1))
+      echo "  ready check ${consecutive}/${need} passed"
+      if [ "$consecutive" -ge "$need" ]; then
+        echo "${label} is ready on port ${port}."
+        return 0
+      fi
+    else
+      consecutive=0
+      echo "  not ready yet (${elapsed}s/${max}s)..."
+    fi
+    sleep "$interval"
+    elapsed=$((elapsed + interval))
+  done
+
+  echo "ERROR: ${label} did not become ready on port ${port} within ${max}s."
+  return 1
+}
+
+stop_slot_on_failure() {
+  local service="$1" slot="$2"
+  echo "Rolling back failed slot: ${service}-${slot}"
+  compose stop "${service}-${slot}" 2>/dev/null || true
+}
+
+verify_public_health() {
+  echo "==> Verifying public health endpoints (through nginx)..."
+  local web_body
+  web_body=$(curl -sf "https://${SITE_HOST}${WEB_HEALTH_PATH}" || return 1)
+  [ "$web_body" = "ok" ] || return 1
+  curl -sf "https://${API_HOST}${API_HEALTH_PATH}" | grep -q '"status"[[:space:]]*:[[:space:]]*"ok"' || return 1
+  echo "Public health checks passed."
 }
 
 run_db_init() {
@@ -265,7 +355,11 @@ deploy_web_slot() {
   compose up -d --no-deps "$service"
 
   wait_healthy "$container" 150
-  verify_web_health "$port" || { echo "ERROR: web health check failed on port ${port}"; return 1; }
+  if ! wait_for_web_ready "$port" "web-${target_slot}"; then
+    stop_slot_on_failure "web" "$target_slot"
+    echo "ERROR: keeping active web slot ($(read_state WEB blue)) — nginx not switched."
+    return 1
+  fi
 
   local active_web
   active_web=$(read_state WEB blue)
@@ -294,7 +388,11 @@ deploy_api_slot() {
   compose up -d --no-deps "$service"
 
   wait_healthy "$container" 90
-  verify_api_health "$port" || { echo "ERROR: api health check failed on port ${port}"; return 1; }
+  if ! wait_for_api_ready "$port" "api-${target_slot}"; then
+    stop_slot_on_failure "api" "$target_slot"
+    echo "ERROR: keeping active api slot ($(read_state API blue)) — nginx not switched."
+    return 1
+  fi
 
   local active_api
   active_api=$(read_state API blue)
@@ -326,12 +424,13 @@ cmd_init() {
 
   wait_healthy "$(container_name web blue)" 150
   wait_healthy "$(container_name api blue)" 90
-  verify_web_health "$WEB_BLUE_PORT"
-  verify_api_health "$API_BLUE_PORT"
+  wait_for_web_ready "$WEB_BLUE_PORT" "web-blue"
+  wait_for_api_ready "$API_BLUE_PORT" "api-blue"
 
   write_state "blue" "blue"
   write_host_upstream "$WEB_BLUE_PORT" "$API_BLUE_PORT"
   reload_nginx
+  verify_public_health
 
   git rev-parse HEAD >"$REVISION_FILE"
   echo "Init complete. Active: web=blue (${WEB_BLUE_PORT}), api=blue (${API_BLUE_PORT})"
@@ -364,6 +463,7 @@ cmd_deploy() {
   fi
 
   git rev-parse HEAD >"$REVISION_FILE"
+  verify_public_health
   echo "Deploy finished at $(git rev-parse --short HEAD)"
 }
 
@@ -422,6 +522,7 @@ while [ $# -gt 0 ]; do
     --status)     MODE="status" ;;
     --diagnose)   MODE="diagnose" ;;
     --fix)        MODE="fix" ;;
+    --verify)     MODE="verify" ;;
     -h|--help)
       sed -n '2,12p' "$0"
       exit 0
@@ -455,6 +556,9 @@ case "$MODE" in
     ;;
   fix)
     cmd_fix
+    ;;
+  verify)
+    verify_public_health
     ;;
   deploy)
     if [ "$DEPLOY_FRONTEND" = false ] && [ "$DEPLOY_BACKEND" = false ]; then

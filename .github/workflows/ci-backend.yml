@@ -25,7 +25,7 @@ jobs:
           python-version: "3.13"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt httpx
 
       - name: Compile Python sources
         run: python -m compileall app
@@ -34,3 +34,17 @@ jobs:
         env:
           JWT_SECRET: ci-test-secret
         run: python -c "from app.main import app; print(app.title)"
+
+      - name: Health endpoint includes DB check
+        env:
+          JWT_SECRET: ci-test-secret
+        run: |
+          python - <<'PY'
+          from fastapi.testclient import TestClient
+          from app.main import app
+          client = TestClient(app)
+          res = client.get("/health")
+          assert res.status_code == 200, res.text
+          assert res.json()["status"] == "ok"
+          print("health ok")
+          PY
