@@ -1,0 +1,68 @@
+name: Deploy VPS Production
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - "components/**"
+      - "lib/**"
+      - "public/**"
+      - "styles/**"
+      - "config/**"
+      - "hooks/**"
+      - "context/**"
+      - "custom/**"
+      - "scripts/**"
+      - "backend/**"
+      - "package.json"
+      - "package-lock.json"
+      - "next.config.ts"
+      - "tsconfig.json"
+      - "Dockerfile"
+      - "docker-compose.yml"
+      - "deploy.sh"
+      - "nginx/**"
+      - ".dockerignore"
+      - ".github/workflows/deploy-vps.yml"
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "What to deploy"
+        required: true
+        default: auto
+        type: choice
+        options:
+          - auto
+          - frontend
+          - backend
+          - all
+
+concurrency:
+  group: vps-production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script_stop: true
+          script: |
+            set -euo pipefail
+            cd "${{ secrets.VPS_DEPLOY_PATH }}"
+            git fetch origin main
+            git checkout main
+            git pull origin main
+            chmod +x deploy.sh
+            case "${{ github.event.inputs.target || 'auto' }}" in
+              frontend) ./deploy.sh --frontend ;;
+              backend)  ./deploy.sh --backend ;;
+              all)      ./deploy.sh --all ;;
+              *)        ./deploy.sh ;;
+            esac

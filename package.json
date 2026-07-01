@@ -7,6 +7,7 @@
     "build:cloud": "node scripts/prepare-html.mjs && node scripts/prepare-ramp.mjs && node scripts/fix-ramp-sections.mjs && node scripts/download-ramp-lotties.mjs && node scripts/download-ramp-assets.mjs && next build",
     "build": "opennextjs-cloudflare build",
     "build:next": "next build",
+    "build:prod": "node scripts/prepare-html.mjs && node scripts/prepare-ramp.mjs && node scripts/fix-ramp-sections.mjs && node scripts/download-ramp-lotties.mjs && node scripts/download-ramp-assets.mjs && next build",
     "start": "next start",
     "lint": "next lint",
     "prepare-html": "node scripts/prepare-html.mjs",
