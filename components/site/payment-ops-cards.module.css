@@ -246,6 +246,20 @@
   display: block;
 }
 
+.globeGlow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 55% 55% at 52% 50%,
+    transparent 38%,
+    rgba(252, 248, 243, 0.18) 58%,
+    rgba(252, 248, 243, 0.72) 75%,
+    rgba(252, 248, 243, 0.96) 88%,
+    #fcf8f3 100%
+  );
+}
+
 .globeLabel {
   position: absolute;
   transform: translate(-50%, -50%);

@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import * as THREE from "three";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./payment-ops-cards.module.css";
 
@@ -48,53 +50,33 @@ function WorkflowCard() {
       timings.push(t);
     };
 
-    // Step reveals
     show(0, 300);
     showLine(0, 700);
     show(1, 950);
     showLine(1, 1350);
     show(2, 1600);
 
-    // Cursor moves to step 3
     timings.push(setTimeout(() => {
       setCursorVisible(true);
       setCursorPos({ x: 52, y: 62 });
     }, 2000));
-    timings.push(setTimeout(() => {
-      setClicking(true);
-    }, 2300));
-    timings.push(setTimeout(() => {
-      setClicking(false);
-    }, 2550));
+    timings.push(setTimeout(() => { setClicking(true); }, 2300));
+    timings.push(setTimeout(() => { setClicking(false); }, 2550));
 
     showLine(2, 2700);
     show(3, 2950);
     showLine(3, 3350);
     show(4, 3600);
 
-    // Cursor moves to finish
-    timings.push(setTimeout(() => {
-      setCursorPos({ x: 60, y: 82 });
-    }, 3800));
-    timings.push(setTimeout(() => {
-      setClicking(true);
-    }, 4050));
-    timings.push(setTimeout(() => {
-      setClicking(false);
-    }, 4300));
-    timings.push(setTimeout(() => {
-      setCursorVisible(false);
-    }, 4600));
-
+    timings.push(setTimeout(() => { setCursorPos({ x: 60, y: 82 }); }, 3800));
+    timings.push(setTimeout(() => { setClicking(true); }, 4050));
+    timings.push(setTimeout(() => { setClicking(false); }, 4300));
+    timings.push(setTimeout(() => { setCursorVisible(false); }, 4600));
     timings.push(setTimeout(() => {
       setDone(true);
       animatingRef.current = false;
     }, 5000));
-
-    // Loop
-    timings.push(setTimeout(() => {
-      runAnimation();
-    }, 8500));
+    timings.push(setTimeout(() => { runAnimation(); }, 8500));
 
     return () => timings.forEach(clearTimeout);
   }, []);
@@ -108,7 +90,6 @@ function WorkflowCard() {
     <div className={styles.card} ref={cardRef}>
       <div className={styles.cardMedia}>
         <div className={styles.workflowContainer}>
-          {/* Cursor */}
           <AnimatePresence>
             {cursorVisible && (
               <motion.div
@@ -130,7 +111,6 @@ function WorkflowCard() {
             )}
           </AnimatePresence>
 
-          {/* Steps */}
           <div className={styles.workflow}>
             {STEPS.map((step, i) => (
               <div key={step.id} className={styles.stepGroup}>
@@ -168,7 +148,6 @@ function WorkflowCard() {
               </div>
             ))}
 
-            {/* Done badge */}
             <AnimatePresence>
               {done && (
                 <motion.div
@@ -212,31 +191,127 @@ const LOCATIONS = [
   { id: "sydney",    name: "Sydney",    flag: "🇦🇺", rail: "BECS",         currency: "AUD", symbol: "A$", amount: 6210,  lat: -33.9, lng: 151.2 },
 ];
 
-// Fibonacci sphere — even dot distribution
-const GLOBE_DOTS: [number, number][] = (() => {
-  const dots: [number, number][] = [];
-  const n = 560;
-  const golden = Math.PI * (3 - Math.sqrt(5));
-  for (let i = 0; i < n; i++) {
-    const y = 1 - (i / (n - 1)) * 2;
-    const theta = golden * i;
-    const lat = (Math.asin(y) * 180) / Math.PI;
-    const lng = (((theta * 180) / Math.PI) % 360 + 360) % 360 - 180;
-    dots.push([lat, lng]);
-  }
-  return dots;
-})();
+const GLOBE_R = 1.0;
+const TILT_X = (20 * Math.PI) / 180;
 
-function project3D(lat: number, lng: number, rotDeg: number, cx: number, cy: number, r: number) {
-  const latR = (lat * Math.PI) / 180;
-  const lngR = ((lng + rotDeg) * Math.PI) / 180;
-  const x3 = Math.cos(latR) * Math.sin(lngR);
-  const y3 = Math.sin(latR);
-  const z3 = Math.cos(latR) * Math.cos(lngR);
-  return { x: cx + r * x3, y: cy - r * y3, depth: z3 };
+const DOT_VERT = /* glsl */ `
+  uniform float uSize;
+  attribute float aScale;
+  varying float vDepth;
+
+  void main() {
+    vec4 worldPos = modelMatrix * vec4(position, 1.0);
+    vDepth = normalize(worldPos.xyz).z;
+    vec4 mvPos = viewMatrix * worldPos;
+    gl_PointSize = uSize * aScale * (1.0 / -mvPos.z);
+    gl_Position = projectionMatrix * mvPos;
+  }
+`;
+
+const DOT_FRAG = /* glsl */ `
+  varying float vDepth;
+
+  void main() {
+    vec2 uv = gl_PointCoord - 0.5;
+    float d = length(uv);
+    if (d > 0.5) discard;
+    float circleAlpha = smoothstep(0.5, 0.18, d);
+    float depthAlpha = 0.07 + max(0.0, vDepth) * 0.60;
+    gl_FragColor = vec4(0.157, 0.118, 0.082, circleAlpha * depthAlpha);
+  }
+`;
+
+function buildGlobeGeo(count: number) {
+  const positions: number[] = [];
+  const scales: number[] = [];
+  const golden = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 0; i < count; i++) {
+    const y = 1 - (i / (count - 1)) * 2;
+    const r = Math.sqrt(1 - y * y);
+    const theta = golden * i;
+    positions.push(r * Math.cos(theta) * GLOBE_R, y * GLOBE_R, r * Math.sin(theta) * GLOBE_R);
+    scales.push(0.7 + Math.random() * 0.6);
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geo.setAttribute("aScale", new THREE.Float32BufferAttribute(scales, 1));
+  return geo;
 }
 
-function useCountUp(target: number, active: boolean, duration = 1.5) {
+interface LabelPos {
+  id: string;
+  x: number;
+  y: number;
+  depth: number;
+}
+
+interface GlobeSceneProps {
+  onLabels: (labels: LabelPos[]) => void;
+  paused: boolean;
+}
+
+function GlobeScene({ onLabels, paused }: GlobeSceneProps) {
+  const groupRef = useRef<THREE.Group>(null);
+  const { camera, size } = useThree();
+
+  const geometry = useMemo(() => buildGlobeGeo(2200), []);
+  const material = useMemo(
+    () =>
+      new THREE.ShaderMaterial({
+        vertexShader: DOT_VERT,
+        fragmentShader: DOT_FRAG,
+        uniforms: { uSize: { value: 150.0 } },
+        transparent: true,
+        depthWrite: false,
+      }),
+    []
+  );
+
+  // City surface positions (local space)
+  const cityLocal = useMemo(
+    () =>
+      LOCATIONS.map((loc) => {
+        const latR = (loc.lat * Math.PI) / 180;
+        const lngR = (loc.lng * Math.PI) / 180;
+        return new THREE.Vector3(
+          Math.cos(latR) * Math.sin(lngR) * GLOBE_R,
+          Math.sin(latR) * GLOBE_R,
+          Math.cos(latR) * Math.cos(lngR) * GLOBE_R
+        );
+      }),
+    []
+  );
+
+  const tmpV3 = useMemo(() => new THREE.Vector3(), []);
+
+  useFrame((_, delta) => {
+    const grp = groupRef.current;
+    if (!grp) return;
+    if (!paused) grp.rotation.y += delta * 0.18;
+
+    const labels: LabelPos[] = LOCATIONS.map((loc, i) => {
+      tmpV3.copy(cityLocal[i]).applyMatrix4(grp.matrixWorld);
+      const depth = tmpV3.clone().normalize().z;
+      const ndc = tmpV3.clone().project(camera);
+      return {
+        id: loc.id,
+        x: ((ndc.x + 1) / 2) * size.width,
+        y: ((-ndc.y + 1) / 2) * size.height,
+        depth,
+      };
+    });
+
+    onLabels(labels);
+  });
+
+  return (
+    <group ref={groupRef} rotation={[TILT_X, 0, 0]}>
+      <points geometry={geometry} material={material} />
+    </group>
+  );
+}
+
+function useCountUp(target: number, active: boolean, duration = 1.4) {
   const [value, setValue] = useState(0);
   const counted = useRef(false);
   useEffect(() => {
@@ -254,17 +329,10 @@ function useCountUp(target: number, active: boolean, duration = 1.5) {
   return value;
 }
 
-interface LocPos {
-  loc: (typeof LOCATIONS)[0];
-  x: number;
-  y: number;
-  depth: number;
-}
-
-function GlobeLocationLabel({ lp }: { lp: LocPos }) {
-  const visible = lp.depth > 0.12;
-  const opacity = visible ? Math.min(1, (lp.depth - 0.12) / 0.35) : 0;
-  const counted = useCountUp(lp.loc.amount, lp.depth > 0.45);
+function GlobeLabel({ lp }: { lp: LabelPos }) {
+  const loc = LOCATIONS.find((l) => l.id === lp.id)!;
+  const opacity = lp.depth > 0.1 ? Math.min(1, (lp.depth - 0.1) / 0.3) : 0;
+  const counted = useCountUp(loc.amount, lp.depth > 0.45);
 
   return (
     <div
@@ -274,18 +342,18 @@ function GlobeLocationLabel({ lp }: { lp: LocPos }) {
         top: lp.y,
         opacity,
         zIndex: Math.round((lp.depth + 1) * 10),
-        pointerEvents: visible ? "auto" : "none",
+        pointerEvents: opacity > 0.3 ? "auto" : "none",
       }}
     >
       <div className={styles.globeLabelInner}>
-        <span className={styles.globeFlag}>{lp.loc.flag}</span>
+        <span className={styles.globeFlag}>{loc.flag}</span>
         <div>
           <div className={styles.globeCityRow}>
-            <span className={styles.globeCity}>{lp.loc.name}</span>
-            <span className={styles.globeRail}>{lp.loc.rail}</span>
+            <span className={styles.globeCity}>{loc.name}</span>
+            <span className={styles.globeRail}>{loc.rail}</span>
           </div>
           <div className={styles.globeAmount}>
-            {lp.loc.symbol}{counted.toLocaleString()} collected
+            {loc.symbol}{counted.toLocaleString()} collected
           </div>
         </div>
       </div>
@@ -294,91 +362,12 @@ function GlobeLocationLabel({ lp }: { lp: LocPos }) {
 }
 
 function GlobeCard() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [labels, setLabels] = useState<LabelPos[]>([]);
+  const [paused, setPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const rotRef = useRef(0);
-  const lastRef = useRef(0);
-  const pausedRef = useRef(false);
-  const sizeRef = useRef({ w: 0, h: 0 });
-  const [labelPositions, setLabelPositions] = useState<LocPos[]>([]);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    let raf: number;
-
-    const draw = (now: number) => {
-      if (lastRef.current && !pausedRef.current) {
-        rotRef.current = (rotRef.current + (now - lastRef.current) * 0.016) % 360;
-      }
-      lastRef.current = now;
-
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const rect = container.getBoundingClientRect();
-      const W = rect.width;
-      const H = rect.height;
-
-      if (W !== sizeRef.current.w || H !== sizeRef.current.h) {
-        canvas.width = W * dpr;
-        canvas.height = H * dpr;
-        canvas.style.width = W + "px";
-        canvas.style.height = H + "px";
-        ctx.scale(dpr, dpr);
-        sizeRef.current = { w: W, h: H };
-      }
-
-      ctx.clearRect(0, 0, W, H);
-
-      const cx = W * 0.52;
-      const cy = H * 0.5;
-      const r = Math.min(W, H) * 0.37;
-      const rot = rotRef.current;
-
-      // Draw globe dots with depth-based lighting
-      for (const [lat, lng] of GLOBE_DOTS) {
-        const { x, y, depth } = project3D(lat, lng, rot, cx, cy, r);
-        if (depth < -0.05) continue;
-        // Lighting: brighter on front, fade at edges
-        const lit = Math.max(0, depth);
-        const alpha = 0.055 + lit * 0.22;
-        const dotR = 0.85 + lit * 0.7;
-        ctx.beginPath();
-        ctx.arc(x, y, dotR, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(40,30,21,${alpha.toFixed(3)})`;
-        ctx.fill();
-      }
-
-      // Draw connection lines from label anchor to globe surface
-      const positions: LocPos[] = LOCATIONS.map((loc) => {
-        const { x, y, depth } = project3D(loc.lat, loc.lng, rot, cx, cy, r);
-
-        // Draw pulse dot on globe surface
-        if (depth > 0.12) {
-          const pulseAlpha = Math.min(1, (depth - 0.12) / 0.35) * 0.7;
-          // Outer pulse ring
-          ctx.beginPath();
-          ctx.arc(x, y, 4.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(40,30,21,${(pulseAlpha * 0.18).toFixed(3)})`;
-          ctx.fill();
-          // Inner dot
-          ctx.beginPath();
-          ctx.arc(x, y, 2.2, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(40,30,21,${(pulseAlpha * 0.65).toFixed(3)})`;
-          ctx.fill();
-        }
-
-        return { loc, x, y, depth };
-      });
-
-      setLabelPositions(positions);
-      raf = requestAnimationFrame(draw);
-    };
-
-    raf = requestAnimationFrame(draw);
-    return () => cancelAnimationFrame(raf);
+  const handleLabels = useCallback((next: LabelPos[]) => {
+    setLabels(next);
   }, []);
 
   return (
@@ -386,12 +375,24 @@ function GlobeCard() {
       <div
         className={styles.cardMedia}
         ref={containerRef}
-        onMouseEnter={() => { pausedRef.current = true; }}
-        onMouseLeave={() => { pausedRef.current = false; }}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
       >
-        <canvas ref={canvasRef} className={styles.globeCanvas} />
-        {labelPositions.map((lp) => (
-          <GlobeLocationLabel key={lp.loc.id} lp={lp} />
+        <Canvas
+          style={{ width: "100%", height: "100%" }}
+          camera={{ position: [0, 0, 2.8], fov: 48 }}
+          dpr={[1, 2]}
+          gl={{ antialias: true, alpha: true }}
+        >
+          <GlobeScene onLabels={handleLabels} paused={paused} />
+        </Canvas>
+
+        {/* Atmospheric glow overlay */}
+        <div className={styles.globeGlow} aria-hidden />
+
+        {/* DOM labels */}
+        {labels.map((lp) => (
+          <GlobeLabel key={lp.id} lp={lp} />
         ))}
       </div>
 
