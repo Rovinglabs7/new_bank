@@ -154,7 +154,7 @@
 
 .input:focus {
   outline: none;
-  border-color: #d97706;
+  border-color: var(--color-ink);
 }
 
 .helper {
@@ -169,7 +169,7 @@
   padding: 14px;
   border: none;
   border-radius: 8px;
-  background: #d97706;
+  background: var(--color-ink);
   color: #ffffff;
   font-family: var(--font-inter);
   font-size: 15px;
@@ -206,7 +206,7 @@
 
 .signinLink {
   font-weight: 600;
-  color: #d97706;
+  color: var(--color-ink);
   text-decoration: underline;
 }
 
@@ -246,7 +246,7 @@
 
 .countryTrigger:focus {
   outline: none;
-  border-color: #d97706;
+  border-color: var(--color-ink);
 }
 
 .countryPlaceholder {

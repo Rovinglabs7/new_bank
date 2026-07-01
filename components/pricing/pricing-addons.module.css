@@ -51,9 +51,9 @@
 
 .name {
   margin: 0;
-  font-family: var(--font-inter);
-  font-size: 15px;
-  font-weight: 600;
+  font-family: var(--font-season);
+  font-size: 16px;
+  font-weight: 420;
   color: var(--color-ink);
 }
 
@@ -62,7 +62,7 @@
   font-family: var(--font-inter);
   font-size: 13px;
   font-weight: 600;
-  color: #d97706;
+  color: #a06830;
   white-space: nowrap;
 }
 
