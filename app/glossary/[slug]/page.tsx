@@ -8,15 +8,16 @@ import { glossaryTerms } from "@/config/glossary";
 import { site } from "@/config/site";
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export function generateStaticParams() {
   return glossaryTerms.map((term) => ({ slug: term.slug }));
 }
 
-export function generateMetadata({ params }: Props): Metadata {
-  const term = glossaryTerms.find((t) => t.slug === params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const term = glossaryTerms.find((t) => t.slug === slug);
   if (!term) return {};
 
   const jsonLd = {
@@ -36,11 +37,10 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export default function GlossaryTermPage({ params }: Props) {
-  const term = glossaryTerms.find((t) => t.slug === params.slug);
+export default async function GlossaryTermPage({ params }: Props) {
+  const { slug } = await params;
+  const term = glossaryTerms.find((t) => t.slug === slug);
 
-  // notFound() throws a Next.js error so TypeScript doesn't realise term is
-  // defined after this block — the non-null assertion below resolves that.
   if (!term) {
     notFound();
   }

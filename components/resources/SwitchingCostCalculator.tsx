@@ -636,7 +636,7 @@ export function SwitchingCostCalculator() {
       <section className={styles.eduSection}>
         <div className={styles.eduInner}>
           <h2 className={styles.eduHeading}>
-            Why switching isn't just about transaction fees
+            Why switching isn&apos;t just about transaction fees
           </h2>
           <div className={styles.eduGrid}>
             {EDU_ITEMS.map((item) => (
@@ -671,7 +671,7 @@ export function SwitchingCostCalculator() {
             Ready to find out what switching could save you?
           </h2>
           <p className={styles.ctaBody}>
-            Talk to our team. We'll do a free payment health check for your business.
+            Talk to our team. We&apos;ll do a free payment health check for your business.
           </p>
           <div className={styles.ctaButtons}>
             <Link href="/contact-sales" className={styles.primaryBtn}>

@@ -222,7 +222,7 @@ export function FailedPaymentCalculator() {
             Calculate the true cost of failed payments.
           </h1>
           <p className={styles.heroBody}>
-            Failed payments don't just delay revenue — they create operational
+            Failed payments don&apos;t just delay revenue — they create operational
             overhead that compounds quietly over time. Enter your numbers below
             to see the full picture: delayed cash, unrecovered revenue, and the
             staff time absorbed by manual recovery work.
