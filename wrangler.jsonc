@@ -20,5 +20,8 @@
   ],
   "images": {
     "binding": "IMAGES"
+  },
+  "vars": {
+    "MOCK_MODE": "true"
   }
 }

@@ -1,4 +1,11 @@
+import { isMockMode } from "@/config/mock";
+
 const API_URL = process.env.API_URL ?? "http://localhost:4000";
+
+const MOCK_AUTH_RESPONSES: Record<string, unknown> = {
+  "/auth/register": { token: "mock-token" },
+  "/auth/login": { token: "mock-token" },
+};
 
 type ValidationIssue = {
   msg?: string;
@@ -31,6 +38,11 @@ export async function apiFetch<T>(
   path: string,
   options: RequestInit = {},
 ): Promise<T> {
+  if (isMockMode()) {
+    const mock = MOCK_AUTH_RESPONSES[path];
+    if (mock) return mock as T;
+  }
+
   const response = await fetch(`${API_URL}${path}`, {
     ...options,
     headers: {
