@@ -1,7 +1,7 @@
 # Copy to /etc/nginx/sites-available/new-bank and symlink to sites-enabled.
 # Replace DEPLOY_PATH, SITE_HOST, API_HOST, and SSL certificate paths.
 
-include DEPLOY_PATH/nginx/host-upstream.conf;
+include /var/www/new_bank/nginx/host-upstream.conf;
 
 map $http_upgrade $connection_upgrade {
     default upgrade;
@@ -10,30 +10,23 @@ map $http_upgrade $connection_upgrade {
 
 # --- HTTP → HTTPS (site) ---
 server {
-    listen 80;
-    listen [::]:80;
-    server_name SITE_HOST www.SITE_HOST;
+    listen 80; 
+    server_name prod.praevortech.com  www.prod.praevortech.com;
     location / { return 301 https://$host$request_uri; }
 }
 
 # --- HTTP → HTTPS (API) ---
 server {
-    listen 80;
-    listen [::]:80;
-    server_name API_HOST;
+    listen 80; 
+    server_name prod.praevortech.com  www.prod.praevortech.com;
     location / { return 301 https://$host$request_uri; }
 }
 
 # --- Production site (Next.js) ---
 server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
-    server_name SITE_HOST www.SITE_HOST;
-
-    ssl_certificate /etc/letsencrypt/live/SITE_HOST/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/SITE_HOST/privkey.pem;
-    include /etc/letsencrypt/options-ssl-nginx.conf;
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    listen 443 ssl http2; 
+    server_name prod.praevortech.com  www.prod.praevortech.com;
+ 
     client_max_body_size 10M;
 
     location / {
@@ -52,9 +45,8 @@ server {
 
 # --- Production API (FastAPI) ---
 server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
-    server_name API_HOST;
+    listen 443 ssl http2; 
+    server_name api.praevortech.com  www.api.praevortech.com;
 
     ssl_certificate /etc/letsencrypt/live/API_HOST/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/API_HOST/privkey.pem;
