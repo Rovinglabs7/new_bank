@@ -416,7 +416,7 @@ export const site = {
         "Join the growing number of UK businesses simplifying how they get paid with Praevor.",
 
       waitlist: {
-        placeholder: "Enter your work email",
+        placeholder: "Enter your email",
         buttonLabel: "Join the waitlist",
       },
 
