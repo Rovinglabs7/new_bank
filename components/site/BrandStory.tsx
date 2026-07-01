@@ -10,6 +10,9 @@ export function BrandStory() {
             alt="Two cyclists high-fiving on a sunny park path — the freedom that comes when your business runs itself"
             className={styles.image}
           />
+          <div className={styles.imageOverlay}>
+            <h2 className={styles.overlayHeading}>Business should feel this good.</h2>
+          </div>
         </div>
       </div>
     </section>
