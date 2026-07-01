@@ -37,18 +37,18 @@ export const instantBankPay = {
     eyebrow: "Instant Bank Pay",
     heading: "Collect instant bank transfers",
     subtext:
-      "Sprout makes it easy to collect instant payments from your customers, settled in seconds, not days.",
+      "Praevor makes it easy to collect instant payments from your customers, settled in seconds, not days.",
     primaryCta: { label: "Sign up", href: "/signup" },
     secondaryCta: { label: "Request a call", href: "/contact/sales" },
     visualAriaLabel:
-      "Hero visual placeholder, success/confirmation screen mockup in Sprout brand colours",
+      "Hero visual placeholder, success/confirmation screen mockup in Praevor brand colours",
   },
 
   era: {
     heading: "Welcome to the era of 'pay by bank'",
     paragraphs: [
       "The current options for one-off payments are limited. Cards carry expensive transaction fees. Bank transfers offer a poor customer experience. Direct Debit is not built for one-off collections.",
-      "Instant Bank Pay is the Sprout feature that lets your customers pay by bank, using Faster Payments. These instant transfers mean better visibility for you and your customers, save you time chasing one-off payments, and create a smoother experience from start to finish.",
+      "Instant Bank Pay is the Praevor feature that lets your customers pay by bank, using Faster Payments. These instant transfers mean better visibility for you and your customers, save you time chasing one-off payments, and create a smoother experience from start to finish.",
     ],
   },
 
@@ -87,7 +87,7 @@ export const instantBankPay = {
 
   demo: {
     heading: "Try instant bank payments yourself",
-    body: "Curious what the one-off payment experience feels like with Sprout? Watch the 60-second walkthrough below.",
+    body: "Curious what the one-off payment experience feels like with Praevor? Watch the 60-second walkthrough below.",
     videoPlaceholderCaption:
       "Demo video placeholder, replace with real Instant Bank Pay walkthrough video once live",
   },
@@ -164,8 +164,8 @@ export const instantBankPay = {
       {
         id: "partner-user",
         iconType: "puzzle",
-        heading: "Using Sprout through a partner?",
-        body: "If you connect to Sprout through a partner application, Instant Bank Pay is coming soon.",
+        heading: "Using Praevor through a partner?",
+        body: "If you connect to Praevor through a partner application, Instant Bank Pay is coming soon.",
         link: { label: "Register your interest", href: "/contact/sales" },
       },
       {
@@ -178,7 +178,7 @@ export const instantBankPay = {
       {
         id: "sprout-partner",
         iconType: "handshake",
-        heading: "Are you a Sprout partner?",
+        heading: "Are you a Praevor partner?",
         body: "Give your users Instant Bank Pay, a better way to collect instant bank transfers.",
         link: { label: "Everything you need to know", href: "/partners" },
       },

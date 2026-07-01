@@ -17,10 +17,10 @@ export type AboutCard = {
 
 export const about = {
   hero: {
-    eyebrow: "About Sprout",
+    eyebrow: "About Praevor",
     heading: "Recurring payments, rebuilt for the way businesses run today",
     subtext:
-      "Sprout is a recurring payments platform for growing UK and European businesses. We automate collections, cut down failed payments, and give finance teams real visibility into recurring revenue, without the manual chasing.",
+      "Praevor is a recurring payments platform for growing UK and European businesses. We automate collections, cut down failed payments, and give finance teams real visibility into recurring revenue, without the manual chasing.",
     primaryCta: { label: "Get in touch", href: "/contact/sales" } satisfies CtaLink,
     secondaryCta: { label: "Join the team", href: "/careers" } satisfies CtaLink,
   },
@@ -35,14 +35,14 @@ export const about = {
     heading: "It's time for a better way",
     paragraphs: [
       "Chasing payments shouldn't be a part-time job. For most recurring-revenue businesses, getting paid still means manual reminders, spreadsheets stitched together from bank statements, and card payments that quietly fail in the background until a customer notices their access has lapsed.",
-      "Sprout automates the collection itself, through Direct Debit and open banking, gives you visibility into what's coming in and what's at risk, and reduces the number of payments that fail in the first place. It's all built on regulated infrastructure, so the plumbing underneath is something you don't have to think about.",
+      "Praevor automates the collection itself, through Direct Debit and open banking, gives you visibility into what's coming in and what's at risk, and reduces the number of payments that fail in the first place. It's all built on regulated infrastructure, so the plumbing underneath is something you don't have to think about.",
     ],
   },
 
   integrations: {
     heading: "Built to connect with what you already use",
     body:
-      "Sprout connects with the accounting tools you already run your business on, including Xero and QuickBooks, so every payment reconciles automatically instead of becoming another manual task.",
+      "Praevor connects with the accounting tools you already run your business on, including Xero and QuickBooks, so every payment reconciles automatically instead of becoming another manual task.",
     cta: { label: "See our partners", href: "/partners" } satisfies CtaLink,
   },
 
@@ -52,7 +52,7 @@ export const about = {
       {
         title: "People first",
         body:
-          "Behind every business we work with are real people trying to get paid on time. We build Sprout, and support the people using it, with that in mind.",
+          "Behind every business we work with are real people trying to get paid on time. We build Praevor, and support the people using it, with that in mind.",
         cta: { label: "Reach out", href: "/contact/sales" },
       },
       {
@@ -73,7 +73,7 @@ export const about = {
   firstTimeHearing: {
     heading: "You may be hearing about us for the first time",
     body:
-      "Sprout is a newer, growing company. We don't have a long press history yet, and we'd rather be upfront about that than overstate where we are. If you want to keep up with what we're building, our press page is the best place to start.",
+      "Praevor is a newer, growing company. We don't have a long press history yet, and we'd rather be upfront about that than overstate where we are. If you want to keep up with what we're building, our press page is the best place to start.",
     cta: { label: "Visit our press page", href: "/press" } satisfies CtaLink,
   },
 
@@ -87,7 +87,7 @@ export const about = {
       },
       {
         title: "Accessibility statement",
-        body: "Our ongoing commitment to making Sprout usable by everyone.",
+        body: "Our ongoing commitment to making Praevor usable by everyone.",
         cta: { label: "Read our statement", href: "/legal/accessibility" },
       },
     ] satisfies AboutCard[],

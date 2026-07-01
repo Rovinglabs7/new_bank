@@ -199,7 +199,7 @@ export function Footer() {
                   key={platform.id}
                   href={platform.href}
                   className={styles.askAiIconButton}
-                  aria-label={`Ask ${platform.label} about Sprout`}
+                  aria-label={`Ask ${platform.label} about Praevor`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

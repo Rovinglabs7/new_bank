@@ -12,7 +12,7 @@ import { site } from "@/config/site";
 
 export const metadata = {
   title: `Press | ${site.brand}`,
-  description: "News, announcements, and resources for journalists covering Sprout.",
+  description: "News, announcements, and resources for journalists covering Praevor.",
 };
 
 export default function PressPage() {

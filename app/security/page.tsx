@@ -11,7 +11,7 @@ import { site } from "@/config/site";
 export const metadata = {
   title: `Security | ${site.brand}`,
   description:
-    "How Sprout keeps your business and your customers safe, from regulated infrastructure to independently verified identity checks.",
+    "How Praevor keeps your business and your customers safe, from regulated infrastructure to independently verified identity checks.",
 };
 
 export default function SecurityPage() {

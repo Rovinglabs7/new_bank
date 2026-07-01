@@ -97,18 +97,18 @@ const INDUSTRIES: Industry[] = [
   },
 ];
 
-export function WhoSproutWorksFor() {
+export function WhoPraevorWorksFor() {
   return (
     <section className={styles.section} aria-labelledby="who-sprout-heading">
       <div className={styles.inner}>
         <div className={styles.card}>
           <div className={styles.textCol}>
-            <p className={styles.eyebrow}>Who Sprout works for</p>
+            <p className={styles.eyebrow}>Who Praevor works for</p>
             <h2 id="who-sprout-heading" className={styles.heading}>
               Built for businesses of every size.
             </h2>
             <p className={styles.supporting}>
-              From solo founders to growing teams, Sprout adapts to how your
+              From solo founders to growing teams, Praevor adapts to how your
               business gets paid.
             </p>
           </div>

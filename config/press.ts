@@ -18,28 +18,28 @@ export const press = {
   hero: {
     eyebrow: "Newsroom",
     heading: "Press",
-    subtext: "News, announcements, and resources for journalists covering Sprout.",
+    subtext: "News, announcements, and resources for journalists covering Praevor.",
   },
 
   about: {
     body:
-      "Sprout is an AI-native recurring payments platform, built by Krandel Labs Ltd, for businesses that collect one-off or recurring revenue from their customers' bank accounts.",
+      "Praevor is an AI-native recurring payments platform, built by Krandel Labs Ltd, for businesses that collect one-off or recurring revenue from their customers' bank accounts.",
     contactLine: "For media enquiries, please contact",
-    contactEmail: "press@sprout.com",
+    contactEmail: "press@praevor.com",
   },
 
   latestNews: {
     heading: "Latest news",
     body:
       "We don't have any press coverage to share yet, we're early. If you're a journalist covering payments, fintech, or AI infrastructure and would like to talk to our team, get in touch below.",
-    cta: { label: "Contact our press team", href: "mailto:press@sprout.com" },
+    cta: { label: "Contact our press team", href: "mailto:press@praevor.com" },
   },
 
   brandAssets: {
     heading: "Brand assets",
     body: "Download our logo, brand colours, and usage guidelines.",
     cta: { label: "Download press kit", href: "/assets/sprout-press-kit.zip" },
-    note: "Includes: Sprout wordmark (light and dark), logomark, brand colour palette, typography guidelines.",
+    note: "Includes: Praevor wordmark (light and dark), logomark, brand colour palette, typography guidelines.",
   },
 
   companyFacts: {
@@ -61,14 +61,14 @@ export const press = {
     heading: "In the press",
     body: "No coverage yet. Check back soon, or",
     linkText: "get in touch",
-    linkHref: "mailto:press@sprout.com",
+    linkHref: "mailto:press@praevor.com",
     afterLinkText: "if you're working on a story.",
   },
 
   mediaEnquiries: {
     heading: "Media enquiries",
     body: "For interviews, comment, or further information, contact:",
-    email: "press@sprout.com",
+    email: "press@praevor.com",
     responseTime: "We aim to respond to media enquiries within 24 hours.",
   },
 };

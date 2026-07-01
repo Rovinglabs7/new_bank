@@ -93,7 +93,7 @@ export function PartnersForm() {
               id="partners-integration"
               name="integration"
               required
-              placeholder="Tell us about your platform and how you'd like to use Sprout"
+              placeholder="Tell us about your platform and how you'd like to use Praevor"
               className={styles.textarea}
             />
           </div>

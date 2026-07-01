@@ -61,7 +61,7 @@ export function SPHero() {
           animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
         >
-          {/* image placeholder : device mockup showing Sprout dashboard subscription view */}
+          {/* image placeholder : device mockup showing Praevor dashboard subscription view */}
           <div className={styles.imagePlaceholder} aria-hidden />
         </motion.div>
       </div>

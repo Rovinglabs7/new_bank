@@ -27,7 +27,7 @@ export function SPSocialProof() {
             </div>
 
             <div className={styles.visual} aria-hidden>
-              {/* image placeholder : illustration in Sprout brand colours */}
+              {/* image placeholder : illustration in Praevor brand colours */}
               <div className={styles.imagePlaceholder} />
             </div>
           </div>

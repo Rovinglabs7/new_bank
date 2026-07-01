@@ -44,11 +44,11 @@ function MediaTile({ item }: { item: MediaItem }) {
   );
 }
 
-export function WhoSproutMarquee() {
+export function WhoPraevorMarquee() {
   const loopMedia = [...MEDIA, ...MEDIA];
 
   return (
-    <section className={styles.section} aria-label="Sprout in action">
+    <section className={styles.section} aria-label="Praevor in action">
       <div className={styles.marqueeViewport}>
         <div className={styles.marqueeTrack}>
           {loopMedia.map((item, i) => (

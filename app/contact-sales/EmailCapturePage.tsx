@@ -120,7 +120,7 @@ export function EmailCapturePage() {
               <ExpectItem
                 icon={<PlayIcon />}
                 title="Personalised product walkthrough"
-                body="See how Sprout fits your business and existing workflows."
+                body="See how Praevor fits your business and existing workflows."
               />
               <ExpectItem
                 icon={<PersonIcon />}

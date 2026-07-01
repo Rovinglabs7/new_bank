@@ -273,7 +273,7 @@ export function QualifyPage() {
               <ExpectItem
                 icon={<PlayIcon />}
                 title="Personalised product walkthrough"
-                body="See how Sprout fits your business and existing workflows."
+                body="See how Praevor fits your business and existing workflows."
               />
               <ExpectItem
                 icon={<PersonIcon />}
@@ -318,7 +318,7 @@ function ConfirmationPanel({ email }: { email: string }) {
           Now choose a time that works for you.
         </h1>
         <p className={styles.confirmBody}>
-          We&apos;ve received your details{email ? ` and sent a confirmation to ${email}` : ""}. Pick a slot below and your Sprout specialist will be there, prepared and ready to go.
+          We&apos;ve received your details{email ? ` and sent a confirmation to ${email}` : ""}. Pick a slot below and your Praevor specialist will be there, prepared and ready to go.
         </p>
       </div>
 
@@ -327,7 +327,7 @@ function ConfirmationPanel({ email }: { email: string }) {
         <iframe
           src="https://calendly.com/d/demo"
           className={styles.calendlyFrame}
-          title="Book a time with Sprout"
+          title="Book a time with Praevor"
           frameBorder="0"
         />
         <div className={styles.calendlyOverlay} aria-hidden>

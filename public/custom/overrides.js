@@ -2,7 +2,7 @@
   "use strict";
 
   /**
-   * Sprout customizations — edit this file for future changes.
+   * Praevor customizations — edit this file for future changes.
    * Framer animations stay enabled; this re-applies after hydration.
    */
   var CONFIG = {
@@ -10,7 +10,7 @@
     hideSelectors: ['a[href*="producthunt"]', 'a[href*="ycombinator"]'],
     hideTextPatterns: [/product\s*hunt/i, /y\s*combinator/i, /backed by yc/i],
     textReplacements: [
-      // Example: { from: "Get Bond today", to: "Get Sprout today" },
+      // Example: { from: "Get Bond today", to: "Get Praevor today" },
     ],
   };
 

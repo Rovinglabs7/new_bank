@@ -1,6 +1,6 @@
 export const mockUser = {
   id: "mock-user-id",
-  email: "dev@sprout.com",
+  email: "dev@praevor.com",
   name: "Bean There Coffee",
 } as const;
 

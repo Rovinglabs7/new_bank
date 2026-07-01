@@ -234,7 +234,7 @@ export const pricing = {
   ] satisfies PricingPlan[],
 
   calculator: {
-    heading: "Will Sprout pay for itself?",
+    heading: "Will Praevor pay for itself?",
     subheading:
       "Enter your monthly collections and average payment to see your estimated cost, recovered revenue and time saved.",
   },
@@ -283,7 +283,7 @@ export const pricing = {
             standard: true,
             growth: true,
             enterprise: true,
-            tooltip: "Sprout is authorised by the FCA as a Payment Institution. All client funds are held in safeguarded accounts, separate from company funds.",
+            tooltip: "Praevor is authorised by the FCA as a Payment Institution. All client funds are held in safeguarded accounts, separate from company funds.",
           },
           { label: "Named compliance specialist", standard: false, growth: false, enterprise: true, tooltip: "A dedicated compliance contact who knows your account, available for queries, reviews and regulatory submissions." },
           { label: "Advanced fraud protection", standard: false, growth: false, enterprise: true, tooltip: "Enhanced screening for high-risk transactions, including velocity checks, device fingerprinting and anomaly detection." },
@@ -292,14 +292,14 @@ export const pricing = {
             standard: false,
             growth: false,
             enterprise: true,
-            tooltip: "Sprout's team assists with evidence gathering and submissions for disputed transactions, reducing manual work on your end.",
+            tooltip: "Praevor's team assists with evidence gathering and submissions for disputed transactions, reducing manual work on your end.",
           },
         ],
       },
       {
         category: "Automation",
         rows: [
-          { label: "AI Concierge built into your dashboard to answer questions and automate routine tasks", standard: true, growth: true, enterprise: true, tooltip: "Ask questions, run reports and trigger workflows using plain language directly inside your Sprout dashboard." },
+          { label: "AI Concierge built into your dashboard to answer questions and automate routine tasks", standard: true, growth: true, enterprise: true, tooltip: "Ask questions, run reports and trigger workflows using plain language directly inside your Praevor dashboard." },
           { label: "Native reconciliation with Xero and QuickBooks", standard: true, growth: true, enterprise: true, tooltip: "Payments, payouts and refunds sync automatically to your accounting software with no manual exports needed." },
           {
             label: "AI Concierge in your dashboard, Slack, Microsoft Teams and WhatsApp",
@@ -313,7 +313,7 @@ export const pricing = {
             standard: false,
             growth: true,
             enterprise: true,
-            tooltip: "Manage separate payment flows, customer bases and reporting for multiple brands or entities under one Sprout account.",
+            tooltip: "Manage separate payment flows, customer bases and reporting for multiple brands or entities under one Praevor account.",
           },
         ],
       },
@@ -353,7 +353,7 @@ export const pricing = {
             standard: true,
             growth: true,
             enterprise: true,
-            tooltip: "Self-serve documentation covering every Sprout feature, plus a step-by-step checklist to get collecting quickly.",
+            tooltip: "Self-serve documentation covering every Praevor feature, plus a step-by-step checklist to get collecting quickly.",
           },
           { label: "Priority support with responses in under 20 minutes", standard: false, growth: true, enterprise: true, tooltip: "Growth and Enterprise customers are routed to a dedicated queue with guaranteed response times under 20 minutes." },
         ],
@@ -445,7 +445,7 @@ export const pricing = {
         name: "Your name on bank statements",
         price: "£22/month",
         description:
-          "Display your business name on your customers' bank statements instead of Sprout. Reduce confusion, increase recognition and minimise payment queries.",
+          "Display your business name on your customers' bank statements instead of Praevor. Reduce confusion, increase recognition and minimise payment queries.",
       },
       {
         name: "Extended checkout template library",
@@ -463,13 +463,13 @@ export const pricing = {
         name: "Embedded Platform API",
         price: "£199/month",
         description:
-          "Embed Sprout directly into your own product with platform-grade APIs, webhooks, sandbox environments and partner onboarding tools.",
+          "Embed Praevor directly into your own product with platform-grade APIs, webhooks, sandbox environments and partner onboarding tools.",
       },
       {
         name: "White-label payment pages",
         price: "£299/month",
         description:
-          "Replace every Sprout touchpoint with your own brand, domain and styling for a completely white-labelled payment experience.",
+          "Replace every Praevor touchpoint with your own brand, domain and styling for a completely white-labelled payment experience.",
       },
       {
         name: "International SEPA Collections",
@@ -486,10 +486,10 @@ export const pricing = {
       {
         name: "Priority Support",
         price: "£49/month",
-        description: "Faster response times with priority handling from the Sprout Support team.",
+        description: "Faster response times with priority handling from the Praevor Support team.",
       },
       {
-        name: "Sprout Intelligence",
+        name: "Praevor Intelligence",
         price: "£59/month",
         description:
           "Your AI-powered payment operations assistant. Recover revenue, automate routine tasks, forecast cash flow and keep your business moving with intelligent workflows and proactive insights.",
@@ -553,12 +553,12 @@ export const pricing = {
           "Yes. Every plan is a monthly rolling agreement, there's no lock-in contract on Standard or Growth. You can downgrade or close your account whenever you choose, and you'll only be charged fees that applied while your account was active.",
       },
       {
-        question: "How does Sprout charge me, is it deducted automatically?",
+        question: "How does Praevor charge me, is it deducted automatically?",
         answer:
           "Yes. Fees are deducted directly from your collected payments before they're paid out to you, so there's nothing separate to pay each month and nothing you need to remember to settle. Enterprise plans are invoiced monthly instead, by agreement.",
       },
       {
-        question: "Why does Sprout charge VAT on its fees?",
+        question: "Why does Praevor charge VAT on its fees?",
         answer:
           "It's the VAT status of the supplier, not the customer, that determines this under UK law. Krandel Labs Ltd is a VAT-registered business providing a VATable service, so VAT applies to transaction fees regardless of your own business's VAT status. We'd always recommend speaking to a qualified accountant or tax adviser about whether this is reclaimable for your specific situation, we're not able to give tax advice ourselves.",
       },
@@ -599,7 +599,7 @@ export const pricing = {
       {
         question: "Do you support multiple entities or trading names under one account?",
         answer:
-          "Yes, from Growth upward. If you operate more than one legal entity or trading name, for example a group of gyms, or a holding company with several subsidiaries, you can manage them from a single Sprout account with separated reporting for each.",
+          "Yes, from Growth upward. If you operate more than one legal entity or trading name, for example a group of gyms, or a holding company with several subsidiaries, you can manage them from a single Praevor account with separated reporting for each.",
       },
       {
         question: "What integrations are available?",
@@ -612,7 +612,7 @@ export const pricing = {
           "Yes. All bank connections happen via regulated Open Banking infrastructure, we never see or store your customers' online banking login details. All data is encrypted in transit and at rest, and Krandel Labs Ltd operates under the FCA's Payment Services Regulations 2017, with client funds held in fully segregated safeguarding accounts.",
       },
       {
-        question: "Can I try Sprout before committing?",
+        question: "Can I try Praevor before committing?",
         answer:
           "There's no separate trial, because Standard has no monthly fee and no setup cost, you can start using it immediately and only pay when a payment actually collects. If it's not right for your business, you can close your account at any time with nothing further owed.",
       },

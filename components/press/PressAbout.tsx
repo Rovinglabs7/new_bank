@@ -9,7 +9,7 @@ export function PressAbout() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className={styles.section} aria-label="About Sprout">
+    <section className={styles.section} aria-label="About Praevor">
       <motion.div
         className={styles.inner}
         initial={reduceMotion ? undefined : { opacity: 0, y: 24 }}

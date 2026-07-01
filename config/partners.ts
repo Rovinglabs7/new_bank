@@ -46,7 +46,7 @@ export type ValueStat = {
 
 export const partners = {
   hero: {
-    eyebrow: "Sprout for Partners",
+    eyebrow: "Praevor for Partners",
     heading: "Become a partner",
     subtext:
       "Let your users collect bank payments directly from your platform, and earn revenue from every transaction.",
@@ -77,7 +77,7 @@ export const partners = {
   addPayments: {
     heading: "Add bank payments to your platform",
     body:
-      "Integrate Sprout into your platform and your users will be able to collect one-off and recurring payments without leaving your product.",
+      "Integrate Praevor into your platform and your users will be able to collect one-off and recurring payments without leaving your product.",
     groups: [
       {
         heading: "Payment methods enabled",
@@ -105,7 +105,7 @@ export const partners = {
   },
 
   whyPartner: {
-    heading: "Why partner with Sprout?",
+    heading: "Why partner with Praevor?",
     body: "We're building a partner programme around the things that actually matter to the platforms we work with.",
     items: [
       {
@@ -117,7 +117,7 @@ export const partners = {
         number: "02",
         title: "Grow alongside us",
         body:
-          "As Sprout expands into new markets, our go-to-market support will help you reach more customers in step with us.",
+          "As Praevor expands into new markets, our go-to-market support will help you reach more customers in step with us.",
       },
       {
         number: "03",
@@ -128,7 +128,7 @@ export const partners = {
         number: "04",
         title: "Compliance is covered by us",
         body:
-          "Partners don't need to be experts in payment regulation. Sprout verifies your merchants and removes the regulatory burden from you.",
+          "Partners don't need to be experts in payment regulation. Praevor verifies your merchants and removes the regulatory burden from you.",
       },
     ] satisfies NumberedItem[],
   },
@@ -140,7 +140,7 @@ export const partners = {
         number: "01",
         title: "Get in touch",
         body:
-          "Get in touch and our partner team will support you along the way. If you're a self-starter, {{submit this form}} and register your interest in becoming a Sprout integration partner. Once reviewed, we'll set you up on our partner portal.",
+          "Get in touch and our partner team will support you along the way. If you're a self-starter, {{submit this form}} and register your interest in becoming a Praevor integration partner. Once reviewed, we'll set you up on our partner portal.",
         linkText: "submit this form",
         linkHref: "#form",
       },
@@ -156,11 +156,11 @@ export const partners = {
         number: "03",
         title: "Get your integration approved",
         body:
-          "Jump on a call, or send us a demo. Once approved, you'll be an official Sprout partner, we'll help with marketing materials and any support you need.",
+          "Jump on a call, or send us a demo. Once approved, you'll be an official Praevor partner, we'll help with marketing materials and any support you need.",
       },
       {
         number: "04",
-        title: "Join the Sprout ecosystem",
+        title: "Join the Praevor ecosystem",
         body:
           "You'll receive revenue share on every transaction processed through your integration. We'll feature you in our partner directory, and a dedicated contact will help you grow the partnership over time.",
       },
@@ -170,7 +170,7 @@ export const partners = {
   partnerFirst: {
     heading: "We're a partner-first organisation",
     body:
-      "We're building Sprout's partner programme from day one with the same principles that matter to every business we work with: clear revenue share, real compliance support, and a team that actually responds.",
+      "We're building Praevor's partner programme from day one with the same principles that matter to every business we work with: clear revenue share, real compliance support, and a team that actually responds.",
     videoSrc: "/videos/partners/partner-network-2.mp4",
     videoCaption: "Every integration is backed by a real partner team, not a support queue.",
     note: "Partner case studies will appear here once our first integrations go live.",
@@ -185,7 +185,7 @@ export const partners = {
       },
       {
         title: "Developer docs",
-        body: "Everything you need to build your Sprout integration and get it certified.",
+        body: "Everything you need to build your Praevor integration and get it certified.",
         cta: { label: "Read developer docs", href: "/developers" },
       },
       {

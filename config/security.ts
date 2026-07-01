@@ -24,7 +24,7 @@ export const security = {
     eyebrow: "Security",
     heading: "Built securely from the ground up",
     subheading:
-      "Every payment Sprout processes runs through regulated infrastructure, independently verified identity checks, and encryption end to end. Here's exactly how we keep your business and your customers safe.",
+      "Every payment Praevor processes runs through regulated infrastructure, independently verified identity checks, and encryption end to end. Here's exactly how we keep your business and your customers safe.",
   },
 
   trustStrip: {
@@ -92,6 +92,6 @@ export const security = {
     primaryCta: { label: "Sign up now", href: "/demo" },
     secondaryCta: { label: "Talk to Sales", href: "/contact/sales" },
     disclaimer:
-      "Sprout is not a bank. Funds are safeguarded, not covered by the FSCS.",
+      "Praevor is not a bank. Funds are safeguarded, not covered by the FSCS.",
   },
 };

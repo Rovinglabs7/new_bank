@@ -18,7 +18,7 @@ import { site } from "@/config/site";
 export const metadata = {
   title: `Careers | ${site.brand}`,
   description:
-    "Join Sprout and help build the payments platform that gives every business the reliability only the largest companies could afford.",
+    "Join Praevor and help build the payments platform that gives every business the reliability only the largest companies could afford.",
 };
 
 export default function CareersPage() {

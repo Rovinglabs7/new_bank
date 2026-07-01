@@ -14,7 +14,7 @@ import { site } from "@/config/site";
 export const metadata = {
   title: `About | ${site.brand}`,
   description:
-    "Sprout is a recurring payments platform for growing UK and European businesses, automating collections and reducing failed payments.",
+    "Praevor is a recurring payments platform for growing UK and European businesses, automating collections and reducing failed payments.",
 };
 
 export default function AboutPage() {

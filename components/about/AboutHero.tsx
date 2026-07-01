@@ -6,7 +6,7 @@ export function AboutHero() {
   const { hero } = about;
 
   return (
-    <section className={styles.hero} aria-label="About Sprout">
+    <section className={styles.hero} aria-label="About Praevor">
       <div className={styles.inner}>
         <p className={styles.eyebrow}>{hero.eyebrow}</p>
         <h1 className={styles.heading}>{hero.heading}</h1>

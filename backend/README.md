@@ -1,6 +1,6 @@
-# Sprout API (FastAPI)
+# Praevor API (FastAPI)
 
-Standalone authentication and business API for Sprout. Runs separately from the Next.js site so database credentials and password hashing never live on the frontend.
+Standalone authentication and business API for Praevor. Runs separately from the Next.js site so database credentials and password hashing never live on the frontend.
 
 ## Setup
 
@@ -41,4 +41,4 @@ Docs: http://localhost:4000/docs
 
 ## Production
 
-Deploy to its own host (e.g. `api.sprout.com`). Use Postgres instead of SQLite. Store secrets in your host's secret manager.
+Deploy to its own host (e.g. `api.praevor.com`). Use Postgres instead of SQLite. Store secrets in your host's secret manager.

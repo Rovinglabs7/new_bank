@@ -18,7 +18,7 @@ export function CustomerStory() {
           <p className={styles.eyebrow}>Customer Story</p>
           <blockquote className={styles.quote}>
             <p>
-              &ldquo;Sprout has transformed the way we collect payments. What
+              &ldquo;Praevor has transformed the way we collect payments. What
               used to take hours each week now happens automatically, giving
               our team more time to focus on delivering exceptional
               care.&rdquo;

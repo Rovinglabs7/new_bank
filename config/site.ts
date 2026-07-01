@@ -1,17 +1,17 @@
 /**
- * Edit copy here, this is the single source of truth for the Sprout site.
+ * Edit copy here, this is the single source of truth for the Praevor site.
  * No Framer hydration will overwrite these values.
  */
 export const site = {
-  brand: "Sprout",
-  title: "Sprout, Payments for ambitious teams",
+  brand: "Praevor",
+  title: "Praevor, Payments for ambitious teams",
   description:
     "Getting paid should be the easiest part of running your business.",
 
   announcementBar: {
     tag: "New",
     message:
-      "Be among the first to experience Sprout. We're inviting a small group of businesses to help us build a better way to collect payments.",
+      "Be among the first to experience Praevor. We're inviting a small group of businesses to help us build a better way to collect payments.",
   },
 
   nav: [
@@ -111,7 +111,7 @@ export const site = {
         items: [
           {
             title: "Customer Stories",
-            subtext: "See how businesses grow with Sprout.",
+            subtext: "See how businesses grow with Praevor.",
             href: "/customers",
           },
           {
@@ -126,7 +126,7 @@ export const site = {
           },
           {
             title: "Integrations",
-            subtext: "Discover the tools Sprout works with.",
+            subtext: "Discover the tools Praevor works with.",
             href: "/integrations",
           },
           {
@@ -146,7 +146,7 @@ export const site = {
           },
           {
             title: "Developer Docs",
-            subtext: "Build with the Sprout API.",
+            subtext: "Build with the Praevor API.",
             href: "/developers/docs",
           },
           {
@@ -170,7 +170,7 @@ export const site = {
         heading: "Company",
         items: [
           {
-            title: "About Sprout",
+            title: "About Praevor",
             subtext: "Learn about our mission and team.",
             href: "/about",
           },
@@ -214,12 +214,12 @@ export const site = {
     headline:
       "Getting paid should be the easiest part of running your business.",
     subheadline:
-      "Sprout connects to your business, automates payment operations, and makes getting paid simpler for you and your customers.",
+      "Praevor connects to your business, automates payment operations, and makes getting paid simpler for you and your customers.",
     primaryCta: { label: "Get started for free", href: "/signup" },
   },
 
   footer: {
-    brand: "sprout.",
+    brand: "praevor.",
     tagline: "Recurring payments that run themselves.",
 
     contact: {
@@ -236,7 +236,7 @@ export const site = {
           label: "Support",
           items: [
             { label: "Request support", href: "/support" },
-            { label: "support@sprout.com", href: "mailto:support@sprout.com" },
+            { label: "support@praevor.com", href: "mailto:support@praevor.com" },
           ],
         },
       ],
@@ -385,27 +385,27 @@ export const site = {
     ],
 
     askAi: {
-      heading: "Ask AI about Sprout",
+      heading: "Ask AI about Praevor",
       platforms: [
         {
           id: "chatgpt",
           label: "ChatGPT",
-          href: "https://chat.openai.com/?q=What+is+Sprout%2C+the+payments+platform%3F",
+          href: "https://chat.openai.com/?q=What+is+Praevor%2C+the+payments+platform%3F",
         },
         {
           id: "claude",
           label: "Claude",
-          href: "https://claude.ai/new?q=What+is+Sprout%2C+the+payments+platform%3F",
+          href: "https://claude.ai/new?q=What+is+Praevor%2C+the+payments+platform%3F",
         },
         {
           id: "perplexity",
           label: "Perplexity",
-          href: "https://www.perplexity.ai/search?q=What+is+Sprout%2C+the+payments+platform%3F",
+          href: "https://www.perplexity.ai/search?q=What+is+Praevor%2C+the+payments+platform%3F",
         },
         {
           id: "gemini",
           label: "Gemini",
-          href: "https://gemini.google.com/app?q=What+is+Sprout%2C+the+payments+platform%3F",
+          href: "https://gemini.google.com/app?q=What+is+Praevor%2C+the+payments+platform%3F",
         },
       ],
     },
@@ -418,7 +418,7 @@ export const site = {
       { code: "NL", label: "Netherlands", flag: "🇳🇱" },
     ],
 
-    wordmark: "Sprout AI",
+    wordmark: "Praevor AI",
 
     bottom: {
       legalLinks: [
@@ -434,23 +434,23 @@ export const site = {
       ],
 
       copyrightNotice:
-        '© 2026 Krandel Labs Ltd. "Sprout" and the Sprout logo are registered trademarks of the company.',
+        '© 2026 Krandel Labs Ltd. "Praevor" and the Praevor logo are registered trademarks of the company.',
 
       legalParagraphs: [
-        "Sprout is a trading name of Krandel Labs Ltd, a company registered in England and Wales with company number 16284957. Registered office: 71-75 Shelton Street, Covent Garden, London, WC2H 9JQ.",
+        "Praevor is a trading name of Krandel Labs Ltd, a company registered in England and Wales with company number 16284957. Registered office: 71-75 Shelton Street, Covent Garden, London, WC2H 9JQ.",
         "Krandel Labs Ltd is authorised and regulated by the Financial Conduct Authority as a Small Payment Institution under the Payment Services Regulations 2017, firm reference number 1029384.",
-        "Sprout's recurring direct debit collections are processed via Bacs, and are submitted on Sprout's behalf by Modulr FS Limited, a company authorised and regulated by the Financial Conduct Authority as an Electronic Money Institution, firm reference number 900573, and a direct participant of the Bacs payment scheme.",
+        "Praevor's recurring direct debit collections are processed via Bacs, and are submitted on Praevor's behalf by Modulr FS Limited, a company authorised and regulated by the Financial Conduct Authority as an Electronic Money Institution, firm reference number 900573, and a direct participant of the Bacs payment scheme.",
         "Open banking connectivity, account verification, and instant bank payments are provided by TrueLayer Limited, authorised and regulated by the Financial Conduct Authority as a Payment Initiation Service Provider under the Payment Services Regulations 2017.",
-        "Identity verification, business checks, and Know Your Business (KYB) screening are conducted by Sumsub UK Ltd on Sprout's behalf. Ongoing anti-money laundering monitoring and sanctions screening are provided by ComplyAdvantage UK Ltd.",
-        "Client funds collected by Sprout on behalf of merchants are held in segregated safeguarding accounts in accordance with the Payment Services Regulations 2017, and are never used for Krandel Labs Ltd's own operating purposes, lending, or investment activities.",
-        "Sprout is not a bank and does not accept deposits. Funds processed through Sprout are not covered by the Financial Services Compensation Scheme (FSCS). Safeguarded funds are instead protected under the statutory safeguarding requirements set out in the Payment Services Regulations 2017 and supervised by the Financial Conduct Authority.",
+        "Identity verification, business checks, and Know Your Business (KYB) screening are conducted by Sumsub UK Ltd on Praevor's behalf. Ongoing anti-money laundering monitoring and sanctions screening are provided by ComplyAdvantage UK Ltd.",
+        "Client funds collected by Praevor on behalf of merchants are held in segregated safeguarding accounts in accordance with the Payment Services Regulations 2017, and are never used for Krandel Labs Ltd's own operating purposes, lending, or investment activities.",
+        "Praevor is not a bank and does not accept deposits. Funds processed through Praevor are not covered by the Financial Services Compensation Scheme (FSCS). Safeguarded funds are instead protected under the statutory safeguarding requirements set out in the Payment Services Regulations 2017 and supervised by the Financial Conduct Authority.",
         "International collections processed outside the United Kingdom, including SEPA Direct Debit collections within the European Economic Area, are subject to the relevant local payment scheme rules and may be processed by regulated entities other than those listed above. Further detail on the specific entity responsible for processing any given transaction is available within the merchant dashboard and on request.",
-        "Visa, Mastercard, and other payment network marks referenced on this site are registered trademarks of their respective owners. All other trademarks, logos, and service marks displayed on this site are the property of their respective owners and their use does not imply any affiliation with or endorsement by Sprout or Krandel Labs Ltd unless explicitly stated.",
-        '"Sprout," the Sprout logo, "AI Concierge," and other Sprout product names referenced on this site are trademarks or trade names of Krandel Labs Ltd.',
+        "Visa, Mastercard, and other payment network marks referenced on this site are registered trademarks of their respective owners. All other trademarks, logos, and service marks displayed on this site are the property of their respective owners and their use does not imply any affiliation with or endorsement by Praevor or Krandel Labs Ltd unless explicitly stated.",
+        '"Praevor," the Praevor logo, "AI Concierge," and other Praevor product names referenced on this site are trademarks or trade names of Krandel Labs Ltd.',
       ],
 
       ctaLine:
-        "Join the growing number of UK businesses simplifying how they get paid with Sprout.",
+        "Join the growing number of UK businesses simplifying how they get paid with Praevor.",
 
       waitlist: {
         placeholder: "Enter your work email",

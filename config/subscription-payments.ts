@@ -53,7 +53,7 @@ export const subscriptionPayments = {
     valueProps: [
       {
         heading: "Lower costs",
-        body: "Card payments are expensive and failure-prone. Sprout is built on bank payments, which cuts out unnecessary costs.",
+        body: "Card payments are expensive and failure-prone. Praevor is built on bank payments, which cuts out unnecessary costs.",
         link: { label: "Learn more", href: "/products/subscription-payments" },
       },
       {
@@ -74,13 +74,13 @@ export const subscriptionPayments = {
       {
         number: "01",
         heading: "Choose what kind of payment to collect",
-        body: "Maybe you want to add 'Pay Now' links to your invoices. Or include Sprout in your online checkout. Or set up automatic, recurring payments for new members or subscribers.",
+        body: "Maybe you want to add 'Pay Now' links to your invoices. Or include Praevor in your online checkout. Or set up automatic, recurring payments for new members or subscribers.",
         imagePlaceholder: "payment type selection screen mockup",
       },
       {
         number: "02",
         heading: "Set up, send, or schedule",
-        body: "When your customer chooses to pay by Sprout, they'll either make an instant bank payment, or set up a flexible Direct Debit so you can collect future payments automatically, even if dates or amounts change. You can do both at once.",
+        body: "When your customer chooses to pay by Praevor, they'll either make an instant bank payment, or set up a flexible Direct Debit so you can collect future payments automatically, even if dates or amounts change. You can do both at once.",
         imagePlaceholder: "mandate setup flow mockup",
       },
       {
@@ -150,13 +150,13 @@ export const subscriptionPayments = {
 
   integrations: {
     heading: "We play nice with others",
-    body: "You can use Sprout on its own to collect payments. Or connect it to software you already use to run your business, to manage everything in one place.",
-    link: { label: "See all systems Sprout connects with", href: "/integrations" },
+    body: "You can use Praevor on its own to collect payments. Or connect it to software you already use to run your business, to manage everything in one place.",
+    link: { label: "See all systems Praevor connects with", href: "/integrations" },
   },
 
   socialProof: {
     heading: "What businesses are saying",
-    body: "We're building Sprout with businesses just like yours, not after the fact, but from the start.",
+    body: "We're building Praevor with businesses just like yours, not after the fact, but from the start.",
   },
 
   customerLove: {
@@ -191,7 +191,7 @@ export const subscriptionPayments = {
 
   closing: {
     heading: "Ready for payment collection that just works?",
-    body: "Give Sprout a go, no obligations, with low, pay-as-you-go pricing. And get started in minutes.",
+    body: "Give Praevor a go, no obligations, with low, pay-as-you-go pricing. And get started in minutes.",
     primaryCta: { label: "Sign up", href: "/signup" },
     secondaryCta: { label: "See pricing", href: "/pricing" },
   },

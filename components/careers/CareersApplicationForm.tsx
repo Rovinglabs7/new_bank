@@ -192,7 +192,7 @@ export function CareersApplicationForm() {
                   aria-describedby="careers-video-help"
                 />
                 <span id="careers-video-help" className={styles.helper}>
-                  Record a short video: who you are, what you do best, and what you would bring to Sprout.
+                  Record a short video: who you are, what you do best, and what you would bring to Praevor.
                 </span>
               </div>
 
@@ -211,7 +211,7 @@ export function CareersApplicationForm() {
 
               <div className={styles.field}>
                 <label className={styles.label} htmlFor="careers-offer">
-                  What can you offer Sprout?
+                  What can you offer Praevor?
                 </label>
                 <textarea
                   id="careers-offer"
@@ -224,13 +224,13 @@ export function CareersApplicationForm() {
 
               <div className={styles.field}>
                 <label className={styles.label} htmlFor="careers-why">
-                  Why Sprout, and why now?
+                  Why Praevor, and why now?
                 </label>
                 <textarea
                   id="careers-why"
-                  name="whySprout"
+                  name="whyPraevor"
                   required
-                  placeholder="What drew you to Sprout specifically? Why is now the right moment for you?"
+                  placeholder="What drew you to Praevor specifically? Why is now the right moment for you?"
                   className={styles.textarea}
                 />
               </div>

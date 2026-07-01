@@ -43,7 +43,7 @@ const heroImages: CareerImage[] = [
 const operationsImages: CareerImage[] = [
   { src: "/pexels-rdne-7414009.jpg", alt: "Operations team reviewing dashboards together" },
   { src: "/hero/team-laptop.jpg", alt: "Small team reviewing a project together on a laptop" },
-  { src: "/videos/product-walkthrough.mp4", alt: "Walkthrough of the Sprout product in action", type: "video" },
+  { src: "/videos/product-walkthrough.mp4", alt: "Walkthrough of the Praevor product in action", type: "video" },
 ];
 
 const departmentImages: CareerImage[] = [
@@ -64,8 +64,8 @@ export const careers = {
   about: {
     heading: "About us",
     paragraphs: [
-      "Sprout began with a pattern we kept seeing inside growing businesses: reliable people running good businesses, quietly let down by payment infrastructure that wasn't built for them.",
-      "We built Sprout as a simple way to give every business recurring payments that just work: collections that run themselves, compliance you can actually see, and money that arrives when it's supposed to.",
+      "Praevor began with a pattern we kept seeing inside growing businesses: reliable people running good businesses, quietly let down by payment infrastructure that wasn't built for them.",
+      "We built Praevor as a simple way to give every business recurring payments that just work: collections that run themselves, compliance you can actually see, and money that arrives when it's supposed to.",
     ],
   },
 
@@ -74,7 +74,7 @@ export const careers = {
     items: [
       { label: "Address", value: "71-75 Shelton Street, Covent Garden, London, WC2H 9JQ, United Kingdom" },
       { label: "Phone", value: "+44 7353 179684" },
-      { label: "Email", value: "Careers@sprout.com" },
+      { label: "Email", value: "Careers@praevor.com" },
     ],
   },
 
@@ -98,7 +98,7 @@ export const careers = {
         number: "01",
         title: "Customers first",
         description:
-          "The businesses using Sprout are why we exist. We obsess over making getting paid genuinely easier.",
+          "The businesses using Praevor are why we exist. We obsess over making getting paid genuinely easier.",
       },
       {
         number: "02",
@@ -116,7 +116,7 @@ export const careers = {
         number: "04",
         title: "Keep it simple",
         description:
-          "Complexity is easy. Clarity is hard. We choose the path that makes Sprout feel obvious.",
+          "Complexity is easy. Clarity is hard. We choose the path that makes Praevor feel obvious.",
       },
       {
         number: "05",
@@ -148,7 +148,7 @@ export const careers = {
       {
         name: "Design",
         description:
-          "Ever fallen in love with how Sprout feels? Thank the design team. Their thirst for simplicity and attention to detail is unmatched.",
+          "Ever fallen in love with how Praevor feels? Thank the design team. Their thirst for simplicity and attention to detail is unmatched.",
       },
       {
         name: "Customer Experience",
@@ -173,7 +173,7 @@ export const careers = {
       {
         name: "Product",
         description:
-          "A synergy of business, engineering and design: they bring harmony to Sprout and hold it in perfect balance.",
+          "A synergy of business, engineering and design: they bring harmony to Praevor and hold it in perfect balance.",
       },
       {
         name: "Legal and Compliance",
@@ -183,7 +183,7 @@ export const careers = {
       {
         name: "Growth",
         description:
-          "Master storytellers who work day in, day out to tell the Sprout story. If you've ever heard of us, it's thanks to them.",
+          "Master storytellers who work day in, day out to tell the Praevor story. If you've ever heard of us, it's thanks to them.",
       },
     ] satisfies Department[],
   },

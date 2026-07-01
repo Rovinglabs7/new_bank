@@ -5,7 +5,7 @@ export function AboutTrustStrip() {
   const { trustStrip } = about;
 
   return (
-    <section className={styles.section} aria-label="Who Sprout is built for">
+    <section className={styles.section} aria-label="Who Praevor is built for">
       <div className={styles.inner}>
         <h2 className={styles.heading}>{trustStrip.heading}</h2>
         <p className={styles.subtext}>{trustStrip.subtext}</p>
