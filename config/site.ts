@@ -125,6 +125,16 @@ export const site = {
             href: "/guides/payment-timing",
           },
           {
+            title: "Failed Payment Calculator",
+            subtext: "Calculate the true cost of failed payments.",
+            href: "/resources/failed-payment-calculator",
+          },
+          {
+            title: "Settlement Time Calculator",
+            subtext: "Know exactly when your payments will settle.",
+            href: "/resources/settlement-calculator",
+          },
+          {
             title: "Integrations",
             subtext: "Discover the tools Praevor works with.",
             href: "/integrations",

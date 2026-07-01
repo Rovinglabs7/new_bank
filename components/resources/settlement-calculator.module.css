@@ -1,0 +1,693 @@
+/* ─── Hero ─────────────────────────────────────────────────────────────────── */
+
+.hero {
+  background: var(--color-ink);
+  padding: 140px 40px 96px;
+}
+
+.heroInner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0 0 20px;
+}
+
+.heroHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 24px;
+  line-height: 1.15;
+}
+
+.heroBody {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+  max-width: 640px;
+}
+
+/* ─── Calculator section ───────────────────────────────────────────────────── */
+
+.calculatorSection {
+  background: #ffffff;
+  padding: 80px 0 0;
+}
+
+.calculatorInner {
+  max-width: var(--page-max, 1280px);
+  margin: 0 auto;
+  padding: 0 40px 80px;
+}
+
+.calculatorCard {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid rgba(40, 30, 21, 0.1);
+  box-shadow: 0 8px 40px rgba(40, 30, 21, 0.08);
+  padding: 48px;
+}
+
+.calculatorGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+}
+
+.colHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0 0 32px;
+}
+
+/* ─── Inputs ───────────────────────────────────────────────────────────────── */
+
+.inputsCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.label {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  border: 1px solid rgba(40, 30, 21, 0.18);
+  border-radius: 10px;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 15px;
+  color: var(--color-ink);
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.15s ease;
+  -moz-appearance: textfield;
+  appearance: auto;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input:focus {
+  border-color: var(--color-ink);
+}
+
+/* ─── Tooltip ──────────────────────────────────────────────────────────────── */
+
+.tooltipWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tooltipTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(40, 30, 21, 0.15);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-ink);
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.tooltipText {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-ink);
+  color: #ffffff;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 10px 14px;
+  border-radius: 8px;
+  white-space: normal;
+  width: 220px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.tooltipText::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--color-ink);
+}
+
+/* ─── Results ──────────────────────────────────────────────────────────────── */
+
+.resultsCol {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Date card ────────────────────────────────────────────────────────────── */
+
+.dateCard {
+  background: var(--color-ink);
+  border-radius: 20px;
+  padding: 36px;
+  margin-bottom: 24px;
+  color: #ffffff;
+}
+
+.dateCardLabel {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 12px;
+}
+
+.settlementDate {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 36px;
+  color: #ffffff;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.settlementDay {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ─── Metrics ──────────────────────────────────────────────────────────────── */
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.metricCard {
+  background: rgba(40, 30, 21, 0.04);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.metricValue {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 28px;
+  color: var(--color-ink);
+  margin-bottom: 6px;
+  line-height: 1.1;
+}
+
+.metricLabel {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--color-ink-muted);
+  line-height: 1.4;
+}
+
+.badgeOk {
+  display: inline-block;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(34, 139, 34, 0.1);
+  color: #1a7a1a;
+}
+
+.badgeWarning {
+  display: inline-block;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(180, 100, 0, 0.1);
+  color: #9a5700;
+}
+
+/* ─── Explanation ──────────────────────────────────────────────────────────── */
+
+.explanationPanel {
+  border-left: 3px solid rgba(40, 30, 21, 0.15);
+  padding-left: 20px;
+}
+
+.explanationItem {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-ink-muted);
+  margin: 0 0 10px;
+}
+
+.explanationItem:last-child {
+  margin-bottom: 0;
+}
+
+/* ─── Timeline ─────────────────────────────────────────────────────────────── */
+
+.timelineSection {
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(40, 30, 21, 0.08);
+}
+
+.timelineSectionHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0 0 32px;
+  text-align: center;
+}
+
+.timeline {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin-top: 0;
+}
+
+.timelineStep {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.timelineConnector {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: rgba(40, 30, 21, 0.1);
+  z-index: 0;
+}
+
+.timelineConnectorActive {
+  background: rgba(40, 30, 21, 0.4);
+}
+
+.timelineDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(40, 30, 21, 0.1);
+  border: 2px solid rgba(40, 30, 21, 0.2);
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.timelineDotActive {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  box-shadow: 0 0 0 4px rgba(40, 30, 21, 0.12);
+}
+
+.timelineDotPast {
+  background: rgba(40, 30, 21, 0.4);
+  border-color: rgba(40, 30, 21, 0.4);
+}
+
+.timelineLabel {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 11px;
+  color: var(--color-ink-muted);
+  margin-top: 10px;
+  text-align: center;
+  max-width: 80px;
+  line-height: 1.4;
+}
+
+/* ─── Cash flow ────────────────────────────────────────────────────────────── */
+
+.cashFlowSection {
+  background: #faf6f1;
+  border-radius: 20px;
+  padding: 36px;
+  margin-top: 32px;
+}
+
+.cashFlowHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0 0 16px;
+}
+
+.cashFlowBody {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-ink-muted);
+  margin: 0;
+}
+
+.cashFlowBody strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+/* ─── Insights ─────────────────────────────────────────────────────────────── */
+
+.insightsSection {
+  margin-top: 32px;
+}
+
+.insightsPanel {
+  border-left: 3px solid rgba(40, 30, 21, 0.15);
+  padding-left: 20px;
+}
+
+.insightItem {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-ink-muted);
+  margin: 0 0 12px;
+}
+
+.insightItem:last-child {
+  margin-bottom: 0;
+}
+
+/* ─── Educational ──────────────────────────────────────────────────────────── */
+
+.eduSection {
+  background: #f7f5f2;
+  padding: 96px 40px;
+}
+
+.eduInner {
+  max-width: var(--page-max, 1280px);
+  margin: 0 auto;
+}
+
+.eduHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  font-weight: 400;
+  color: var(--color-ink);
+  text-align: center;
+  margin: 0 0 16px;
+}
+
+.eduSubtext {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 16px;
+  color: var(--color-ink-muted);
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 56px;
+  line-height: 1.6;
+}
+
+.eduGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.eduItem {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px;
+  border: 1px solid rgba(40, 30, 21, 0.06);
+}
+
+.eduItemHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0 0 12px;
+}
+
+.eduItemBody {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-ink-muted);
+  margin: 0;
+}
+
+/* ─── FAQ ──────────────────────────────────────────────────────────────────── */
+
+.faqSection {
+  padding: 96px 40px;
+  background: #ffffff;
+}
+
+.faqInner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.faqHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0 0 48px;
+  text-align: center;
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+}
+
+.faqItem {
+  border-bottom: 1px solid rgba(40, 30, 21, 0.1);
+  padding: 24px 0;
+}
+
+.faqItem:first-child {
+  border-top: 1px solid rgba(40, 30, 21, 0.1);
+}
+
+.faqQuestion {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0 0 8px;
+}
+
+.faqAnswer {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-ink-muted);
+  margin: 0;
+}
+
+/* ─── CTA ──────────────────────────────────────────────────────────────────── */
+
+.ctaSection {
+  background: var(--color-ink);
+  padding: 120px 40px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.ctaInner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.ctaHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 20px;
+  line-height: 1.2;
+}
+
+.ctaBody {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+}
+
+.ctaButtons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
+.primaryBtn {
+  background: #ffffff;
+  color: var(--color-ink);
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 16px;
+  font-weight: 400;
+  border: none;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.primaryBtn:hover {
+  opacity: 0.9;
+}
+
+.secondaryBtn {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.secondaryBtn:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 1100px) {
+  .eduGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .calculatorGrid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .calculatorCard {
+    padding: 32px 24px;
+  }
+
+  .metricsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .eduGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .timelineLabel {
+    font-size: 10px;
+    max-width: 60px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 100px 24px 72px;
+  }
+
+  .calculatorInner {
+    padding: 0 20px 60px;
+  }
+
+  .calculatorCard {
+    padding: 28px 20px;
+  }
+
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .settlementDate {
+    font-size: 28px;
+  }
+
+  .eduSection {
+    padding: 72px 20px;
+  }
+
+  .eduGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .faqSection {
+    padding: 72px 20px;
+  }
+
+  .ctaSection {
+    padding: 80px 24px;
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .timelineLabel {
+    font-size: 9px;
+    max-width: 50px;
+  }
+}
