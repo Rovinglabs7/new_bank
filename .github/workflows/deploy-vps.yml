@@ -56,11 +56,10 @@ jobs:
           script: |
             set -euo pipefail
             DEPLOY_PATH="${{ secrets.VPS_DEPLOY_PATH }}"
+            echo "SSH user: $(whoami)"
+            echo "Deploy path: ${DEPLOY_PATH}"
             cd "${DEPLOY_PATH}"
-            # Repo may be owned by a different user (e.g. cloned with sudo)
-            export GIT_CONFIG_COUNT=1
-            export GIT_CONFIG_KEY_0=safe.directory
-            export GIT_CONFIG_VALUE_0="${DEPLOY_PATH}"
+            git() { command git -c safe.directory="${DEPLOY_PATH}" "$@"; }
             git fetch origin main
             git checkout main
             git pull --ff-only origin main
