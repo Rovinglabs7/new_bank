@@ -260,7 +260,12 @@
 }
 
 .typingRowTeams {
-  padding: 5px 0;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.typingRowTeams .typingBubble {
+  background: #f5f5f5;
 }
 
 .typingAvatar {
@@ -936,121 +941,241 @@
   }
 }
 
-/* ─── Teams window (floating app, no bezel) ──────────────────────────────── */
+/* ─── Teams window (Fluent light theme) ──────────────────────────────────── */
 
 .teamsWindow {
   display: flex;
+  flex-direction: column;
   width: 100%;
-  max-width: 640px;
+  max-width: 664px;
   height: 520px;
-  border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 0 2px rgba(0, 0, 0, 0.12),
+    0 8px 24px rgba(0, 0, 0, 0.14);
+  overflow: hidden;
+  background: #ebebeb;
+  font-family: "Segoe UI", var(--font-inter, "Inter", sans-serif);
+}
+
+.teamsTitleBar {
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px 0 16px;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.teamsTitleBarLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.teamsTitleBarDivider {
+  width: 1px;
+  height: 16px;
+  background: #e0e0e0;
+  flex-shrink: 0;
+}
+
+.teamsTitleBarSearch {
+  font-size: 13px;
+  color: #616161;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.teamsTitleBarControls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.teamsWinBtn {
+  width: 10px;
+  height: 10px;
+  background: #424242;
+  border-radius: 1px;
+  opacity: 0.85;
+}
+
+.teamsWinBtnClose {
+  width: 11px;
+  height: 11px;
+}
+
+.teamsBody {
+  flex: 1;
+  display: flex;
+  min-height: 0;
   overflow: hidden;
 }
 
-/* ─── Teams left rail ────────────────────────────────────────────────────── */
+/* ─── Teams app bar ──────────────────────────────────────────────────────── */
 
 .teamsRail {
-  width: 48px;
+  width: 56px;
   flex-shrink: 0;
-  background: #2d2c2c;
+  background: #ebebeb;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 8px 0;
-  gap: 4px;
+  padding: 4px 0;
+  gap: 2px;
+  border-right: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 4px 0 8px -4px rgba(173, 173, 173, 0.2);
 }
 
-.teamsRailAvatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #7B83EB;
-  color: white;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 12px;
-  font-weight: 700;
+.teamsRailTab {
+  position: relative;
+  width: 52px;
+  min-height: 48px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 8px;
-}
-
-.teamsRailIcon {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  color: rgba(255, 255, 255, 0.6);
+  gap: 2px;
+  border-radius: 4px;
+  color: #616161;
   cursor: default;
 }
 
-.teamsRailIconActive {
-  background: #7B83EB;
-  color: #ffffff;
+.teamsRailTab svg {
+  flex-shrink: 0;
 }
 
-/* ─── Teams panel ────────────────────────────────────────────────────────── */
+.teamsRailTab span:last-child {
+  font-size: 9px;
+  line-height: 12px;
+}
+
+.teamsRailTabActive {
+  color: #5b5fc7;
+}
+
+.teamsRailTabActive::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: #5b5fc7;
+  border-radius: 20px;
+}
+
+.teamsRailBadge {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  min-width: 14px;
+  height: 14px;
+  padding: 0 4px;
+  border-radius: 16px;
+  background: #cc4a31;
+  border: 1px solid #ebebeb;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 14px;
+  text-align: center;
+}
+
+/* ─── Teams chat list panel ──────────────────────────────────────────────── */
 
 .teamsPanel {
-  width: 220px;
+  width: 168px;
   flex-shrink: 0;
-  background: #292828;
-  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.55);
+  color: #424242;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border-right: 1px solid #e0e0e0;
 }
 
 .teamsPanelHeader {
-  padding: 12px 14px;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 15px;
-  font-weight: 600;
-  color: #ffffff;
+  height: 44px;
+  padding: 0 12px 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e0e0e0;
+  flex-shrink: 0;
 }
 
-.teamsTeam {
-  padding: 6px 14px;
+.teamsPanelTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #242424;
+}
+
+.teamsPanelHeaderIcon {
+  font-size: 12px;
+  color: #242424;
+}
+
+.teamsPanelSectionLabel {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-family: var(--font-inter, "Inter", sans-serif);
+  padding: 8px 12px 4px 8px;
+  font-size: 11px;
+  color: #616161;
+}
+
+.teamsPanelChevron {
+  font-size: 10px;
+  color: #bdbdbd;
+}
+
+.teamsTeam {
+  padding: 4px 12px 4px 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 13px;
   font-weight: 600;
-  color: #ffffff;
+  color: #242424;
   cursor: default;
 }
 
 .teamsTeamChevron {
-  font-size: 11px;
-  opacity: 0.7;
+  font-size: 10px;
+  color: #bdbdbd;
 }
 
 .teamsTeamName {
-  font-family: var(--font-inter, "Inter", sans-serif);
   font-size: 13px;
 }
 
 .teamsChannelList {
   display: flex;
   flex-direction: column;
+  padding: 0 4px;
 }
 
 .teamsChannelItem {
-  padding: 5px 14px 5px 26px;
-  font-family: var(--font-inter, "Inter", sans-serif);
+  padding: 6px 12px 6px 28px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.65);
+  color: #424242;
+  border-radius: 4px;
   cursor: default;
 }
 
 .teamsChannelItemActive {
-  color: #ffffff;
+  color: #242424;
   font-weight: 600;
-  background: rgba(255, 255, 255, 0.1);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 /* ─── Teams main area ────────────────────────────────────────────────────── */
@@ -1059,49 +1184,124 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #f5f5f5;
+  background: #ffffff;
   min-width: 0;
+  min-height: 0;
 }
 
 .teamsHeader {
   background: #ffffff;
-  border-bottom: 1px solid #e8e8e8;
-  padding: 10px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 10px 16px 0;
   flex-shrink: 0;
+}
+
+.teamsHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
 }
 
 .teamsHeaderTitle {
   display: block;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   color: #242424;
+  line-height: 1.2;
 }
 
 .teamsHeaderSub {
   display: block;
-  font-family: var(--font-inter, "Inter", sans-serif);
   font-size: 12px;
   color: #616161;
-  margin-top: 2px;
+  margin-top: 1px;
+}
+
+.teamsHeaderTabs {
+  display: flex;
+  gap: 16px;
+  padding-left: 42px;
+}
+
+.teamsHeaderTab {
+  font-size: 13px;
+  color: #616161;
+  padding-bottom: 8px;
+  cursor: default;
+}
+
+.teamsHeaderTabActive {
+  color: #242424;
+  font-weight: 600;
+  border-bottom: 2px solid #5b5fc7;
+}
+
+.teamsAvatarGroup {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  background: transparent;
+}
+
+.teamsAvatarGroupTile {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.teamsAvatarGroupTile:first-child {
+  left: 0;
+  top: 0;
+  width: 52%;
+  height: 100%;
+}
+
+.teamsAvatarGroupTile:last-child {
+  right: 0;
+  top: 0;
+  width: 48%;
+  height: 100%;
+  border-left: 1px solid #ffffff;
 }
 
 .teamsFeed {
   flex: 1;
   overflow-y: auto;
-  padding: 16px;
+  overflow-x: hidden;
+  padding: 12px 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
   scroll-behavior: smooth;
+  background: #ffffff;
+}
+
+.teamsFeedAnchor {
+  flex-shrink: 0;
+  height: 1px;
+  width: 100%;
 }
 
 /* ─── Teams message groups ───────────────────────────────────────────────── */
 
 .teamsMsgGroup {
-  display: flex;
+  display: none;
   gap: 10px;
-  margin-bottom: 16px;
+  align-items: flex-start;
   opacity: 0;
   transform: translateY(6px);
   transition: opacity 0.3s ease, transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.teamsMsgGroup.msgVisible {
+  display: flex;
 }
 
 .teamsAvatar {
@@ -1113,17 +1313,17 @@
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 2px;
 }
 
 .teamsAvatarEmma {
-  background: #7B83EB;
+  background: #7b83eb;
 }
 
 .teamsAvatarJames {
-  background: #2EB67D;
+  background: #2eb67d;
 }
 
 .teamsAvatarNovaImg {
@@ -1132,6 +1332,7 @@
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .teamsMsgContent {
@@ -1142,76 +1343,102 @@
 .teamsMsgMeta {
   display: flex;
   align-items: baseline;
-  gap: 8px;
-  margin-bottom: 3px;
+  gap: 10px;
+  margin-bottom: 4px;
 }
 
 .teamsMsgName {
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 600;
   color: #242424;
 }
 
 .teamsMsgNameNova {
-  color: #5059C9;
+  color: #5b5fc7;
 }
 
 .teamsMsgTime {
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 11px;
+  font-size: 12px;
   color: #616161;
+}
+
+.teamsMsgBubble {
+  background: #f5f5f5;
+  border-radius: 4px 4px 4px 0;
+  padding: 8px 12px;
+  max-width: 100%;
 }
 
 .teamsMsgText {
   margin: 0;
-  font-family: var(--font-inter, "Inter", sans-serif);
   font-size: 14px;
   color: #242424;
-  line-height: 1.5;
+  line-height: 1.43;
 }
 
 .teamsMsgLikeBar {
   display: flex;
   gap: 12px;
   margin-top: 4px;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 11px;
+  font-size: 12px;
   color: #616161;
   cursor: default;
 }
 
+
 /* ─── Teams composer ─────────────────────────────────────────────────────── */
 
 .teamsComposer {
-  background: #ffffff;
-  border-top: 1px solid #e8e8e8;
-  padding: 8px 12px;
+  background: #f5f5f5;
+  padding: 10px 16px 12px;
   flex-shrink: 0;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
 }
 
 .teamsComposerBar {
-  border: 1px solid #e8e8e8;
+  border: 1px solid #f0f0f0;
   border-radius: 4px;
-  padding: 8px 12px;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
-  color: #bbb;
+  padding: 10px 12px;
+  background: #ffffff;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
 }
 
 .teamsComposerPlaceholder {
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
-  color: #bbb;
+  font-size: 14px;
+  color: #424242;
+  opacity: 0.55;
+  line-height: 1.3;
 }
 
 .teamsComposerToolbar {
   display: flex;
-  gap: 12px;
+  align-items: center;
+  gap: 2px;
   margin-top: 6px;
-  font-family: var(--font-inter, "Inter", sans-serif);
+}
+
+.teamsComposerTool {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 13px;
-  color: #888;
+  color: #616161;
+  border-radius: 4px;
+  cursor: default;
+}
+
+.teamsComposerSend {
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #616161;
   cursor: default;
 }
 

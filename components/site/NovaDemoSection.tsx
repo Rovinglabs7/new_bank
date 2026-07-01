@@ -632,16 +632,22 @@ function SlackMockup() {
 
 function TeamsMockup() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const feedEndRef = useRef<HTMLDivElement>(null);
   const [vis, setVis] = useState<VisibleSet>({});
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const started = useRef(false);
 
+  const scrollToBottom = useCallback(() => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        feedEndRef.current?.scrollIntoView({ block: "end", behavior: "smooth" });
+      });
+    });
+  }, []);
+
   const show = useCallback((id: string, delay: number) => {
     const t = setTimeout(() => {
       setVis((p) => ({ ...p, [id]: true }));
-      requestAnimationFrame(() => {
-        if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-      });
     }, delay);
     timers.current.push(t);
   }, []);
@@ -673,6 +679,12 @@ function TeamsMockup() {
   }, [show, hide]);
 
   useEffect(() => {
+    scrollToBottom();
+    const t = setTimeout(scrollToBottom, 360);
+    return () => clearTimeout(t);
+  }, [vis, scrollToBottom]);
+
+  useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
@@ -695,170 +707,214 @@ function TeamsMockup() {
 
   return (
     <div className={styles.teamsWindow}>
-      {/* Left icon rail */}
-      <div className={styles.teamsRail}>
-        <div className={styles.teamsRailAvatar}>E</div>
-        <div className={styles.teamsRailIcon} title="Activity">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+      <div className={styles.teamsTitleBar}>
+        <div className={styles.teamsTitleBarLeft}>
+          <TeamsIcon />
+          <span className={styles.teamsTitleBarDivider} aria-hidden />
+          <span className={styles.teamsTitleBarSearch}>Search</span>
         </div>
-        <div className={styles.teamsRailIcon} title="Chat">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
-        <div className={`${styles.teamsRailIcon} ${styles.teamsRailIconActive}`} title="Teams">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-            <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
-        <div className={styles.teamsRailIcon} title="Calendar">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-            <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-            <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-            <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-          </svg>
-        </div>
-        <div className={styles.teamsRailIcon} title="Files">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+        <div className={styles.teamsTitleBarControls} aria-hidden>
+          <span className={styles.teamsWinBtn} />
+          <span className={styles.teamsWinBtn} />
+          <span className={`${styles.teamsWinBtn} ${styles.teamsWinBtnClose}`} />
         </div>
       </div>
 
-      {/* Teams/channel panel */}
-      <div className={styles.teamsPanel}>
-        <div className={styles.teamsPanelHeader}>Teams</div>
-        <div className={styles.teamsTeam}>
-          <span className={styles.teamsTeamChevron}>&#x25BE;</span>
-          <span className={styles.teamsTeamName}>Operations</span>
-        </div>
-        <div className={styles.teamsChannelList}>
-          <div className={styles.teamsChannelItem}>General</div>
-          <div className={`${styles.teamsChannelItem} ${styles.teamsChannelItemActive}`}>Payments</div>
-          <div className={styles.teamsChannelItem}>Finance</div>
-        </div>
-      </div>
-
-      {/* Main conversation */}
-      <div className={styles.teamsMain}>
-        <div className={styles.teamsHeader}>
-          <span className={styles.teamsHeaderTitle}>Payments</span>
-          <span className={styles.teamsHeaderSub}>Operations &middot; 4 members</span>
-        </div>
-
-        <div className={styles.teamsFeed} ref={scrollRef}>
-
-          <div className={`${styles.teamsMsgGroup} ${vis["e1"] ? styles.msgVisible : ""}`}>
-            <div className={`${styles.teamsAvatar} ${styles.teamsAvatarEmma}`}>E</div>
-            <div className={styles.teamsMsgContent}>
-              <div className={styles.teamsMsgMeta}>
-                <span className={styles.teamsMsgName}>Emma</span>
-                <span className={styles.teamsMsgTime}>Yesterday 9:02 AM</span>
-              </div>
-              <p className={styles.teamsMsgText}>Morning everyone. Has Oakwood Care completed their direct debit yet?</p>
-              <div className={styles.teamsMsgLikeBar}>
-                <span>&#128077; Like</span>
-                <span>Reply</span>
-              </div>
-            </div>
+      <div className={styles.teamsBody}>
+        {/* App bar */}
+        <div className={styles.teamsRail}>
+          <div className={styles.teamsRailTab}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+              <path d="M12 22a2 2 0 002-2h-4a2 2 0 002 2zm6-6V11a6 6 0 10-12 0v5l-2 2v1h16v-1l-2-2z" />
+            </svg>
+            <span>Activity</span>
           </div>
-
-          {vis["nt1"] && <TypingIndicator platform="teams" />}
-
-          <div className={`${styles.teamsMsgGroup} ${vis["n1"] ? styles.msgVisible : ""}`}>
-            <NovaAvatarImg className={styles.teamsAvatarNovaImg} />
-            <div className={styles.teamsMsgContent}>
-              <div className={styles.teamsMsgMeta}>
-                <span className={`${styles.teamsMsgName} ${styles.teamsMsgNameNova}`}>Nova</span>
-                <span className={styles.teamsMsgTime}>9:03 AM</span>
-              </div>
-              <p className={styles.teamsMsgText}>Not yet. They viewed the request yesterday but haven&apos;t authorised. I&apos;ve scheduled a reminder for this morning.</p>
-              <div className={styles.teamsMsgLikeBar}>
-                <span>&#128077; Like</span>
-                <span>Reply</span>
-              </div>
-            </div>
+          <div className={`${styles.teamsRailTab} ${styles.teamsRailTabActive}`}>
+            <span className={styles.teamsRailBadge}>1</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+              <path d="M4 4h16a2 2 0 012 2v10a2 2 0 01-2 2H8l-4 4V6a2 2 0 012-2z" />
+            </svg>
+            <span>Chat</span>
           </div>
-
-          <div className={`${styles.teamsMsgGroup} ${vis["e2"] ? styles.msgVisible : ""}`}>
-            <div className={`${styles.teamsAvatar} ${styles.teamsAvatarEmma}`}>E</div>
-            <div className={styles.teamsMsgContent}>
-              <div className={styles.teamsMsgMeta}>
-                <span className={styles.teamsMsgName}>Emma</span>
-                <span className={styles.teamsMsgTime}>9:04 AM</span>
-              </div>
-              <p className={styles.teamsMsgText}>Perfect. Thanks for keeping an eye on it.</p>
-              <div className={styles.teamsMsgLikeBar}>
-                <span>&#128077; Like</span>
-                <span>Reply</span>
-              </div>
-            </div>
+          <div className={styles.teamsRailTab}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+              <path d="M9 12a3 3 0 106 0 3 3 0 00-6 0zm-7 8v-1.5A4.5 4.5 0 019.5 14h5A4.5 4.5 0 0120 18.5V20H2zM16 7a4 4 0 11-8 0 4 4 0 018 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zm-2 4.5V20h6v-1.5a3.5 3.5 0 00-3.5-3.5h-1A3.5 3.5 0 0014 15.5z" />
+            </svg>
+            <span>Teams</span>
           </div>
-
-          {vis["nt2"] && <TypingIndicator platform="teams" />}
-
-          <div className={`${styles.teamsMsgGroup} ${vis["n2"] ? styles.msgVisible : ""}`}>
-            <NovaAvatarImg className={styles.teamsAvatarNovaImg} />
-            <div className={styles.teamsMsgContent}>
-              <div className={styles.teamsMsgMeta}>
-                <span className={`${styles.teamsMsgName} ${styles.teamsMsgNameNova}`}>Nova</span>
-                <span className={styles.teamsMsgTime}>9:41 AM</span>
-              </div>
-              <p className={styles.teamsMsgText}>Update. Oakwood Care has now completed the authorisation. First collection is scheduled for Monday.</p>
-              <div className={styles.teamsMsgLikeBar}>
-                <span>&#128077; Like</span>
-                <span>Reply</span>
-              </div>
-            </div>
+          <div className={styles.teamsRailTab}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+              <path d="M6 2a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H6zm0 2h12v16H6V4zm2 2h8v2H8V6zm0 4h8v2H8v-2z" />
+            </svg>
+            <span>Calendar</span>
           </div>
-
-          <div className={`${styles.teamsMsgGroup} ${vis["j1"] ? styles.msgVisible : ""}`}>
-            <div className={`${styles.teamsAvatar} ${styles.teamsAvatarJames}`}>J</div>
-            <div className={styles.teamsMsgContent}>
-              <div className={styles.teamsMsgMeta}>
-                <span className={styles.teamsMsgName}>James</span>
-                <span className={styles.teamsMsgTime}>9:42 AM</span>
-              </div>
-              <p className={styles.teamsMsgText}>Brilliant. One less thing to chase.</p>
-              <div className={styles.teamsMsgLikeBar}>
-                <span>&#128077; Like</span>
-                <span>Reply</span>
-              </div>
-            </div>
-          </div>
-
-          <div className={`${styles.teamsMsgGroup} ${vis["n3"] ? styles.msgVisible : ""}`}>
-            <NovaAvatarImg className={styles.teamsAvatarNovaImg} />
-            <div className={styles.teamsMsgContent}>
-              <div className={styles.teamsMsgMeta}>
-                <span className={`${styles.teamsMsgName} ${styles.teamsMsgNameNova}`}>Nova</span>
-                <span className={styles.teamsMsgTime}>9:42 AM</span>
-              </div>
-              <p className={styles.teamsMsgText}>I&apos;ll notify the team once the payment settles.</p>
-              <div className={styles.teamsMsgLikeBar}>
-                <span>&#128077; Like</span>
-                <span>Reply</span>
-              </div>
-            </div>
-          </div>
-
         </div>
 
-        {/* Composer */}
-        <div className={styles.teamsComposer}>
-          <div className={styles.teamsComposerBar}>
-            <span className={styles.teamsComposerPlaceholder}>Start a new conversation</span>
+        {/* Chat list */}
+        <div className={styles.teamsPanel}>
+          <div className={styles.teamsPanelHeader}>
+            <span className={styles.teamsPanelTitle}>Chat</span>
+            <span className={styles.teamsPanelHeaderIcon} aria-hidden>&#9662;</span>
           </div>
-          <div className={styles.teamsComposerToolbar}>
-            <span>A</span>
-            <span>&#128522;</span>
-            <span>&#128206;</span>
-            <span>&#8230;</span>
+          <div className={styles.teamsPanelSectionLabel}>
+            <span className={styles.teamsPanelChevron}>&#9656;</span>
+            <span>Teams and channels</span>
+          </div>
+          <div className={styles.teamsTeam}>
+            <span className={styles.teamsTeamChevron}>&#9656;</span>
+            <span className={styles.teamsTeamName}>Operations</span>
+          </div>
+          <div className={styles.teamsChannelList}>
+            <div className={styles.teamsChannelItem}>General</div>
+            <div className={`${styles.teamsChannelItem} ${styles.teamsChannelItemActive}`}>Payments</div>
+            <div className={styles.teamsChannelItem}>Finance</div>
+          </div>
+        </div>
+
+        {/* Main conversation */}
+        <div className={styles.teamsMain}>
+          <div className={styles.teamsHeader}>
+            <div className={styles.teamsHeaderLeft}>
+              <div className={`${styles.teamsAvatar} ${styles.teamsAvatarGroup}`} aria-hidden>
+                <span className={styles.teamsAvatarGroupTile} style={{ background: "#7B83EB" }}>E</span>
+                <span className={styles.teamsAvatarGroupTile} style={{ background: "#5059C9" }}>J</span>
+              </div>
+              <div>
+                <span className={styles.teamsHeaderTitle}>Payments</span>
+                <span className={styles.teamsHeaderSub}>Operations &middot; 4 members</span>
+              </div>
+            </div>
+            <div className={styles.teamsHeaderTabs}>
+              <span className={`${styles.teamsHeaderTab} ${styles.teamsHeaderTabActive}`}>Posts</span>
+              <span className={styles.teamsHeaderTab}>Files</span>
+            </div>
+          </div>
+
+          <div className={styles.teamsFeed} ref={scrollRef}>
+            <div className={`${styles.teamsMsgGroup} ${vis["e1"] ? styles.msgVisible : ""}`}>
+              <div className={`${styles.teamsAvatar} ${styles.teamsAvatarEmma}`}>E</div>
+              <div className={styles.teamsMsgContent}>
+                <div className={styles.teamsMsgMeta}>
+                  <span className={styles.teamsMsgName}>Emma</span>
+                  <span className={styles.teamsMsgTime}>Yesterday 9:02 AM</span>
+                </div>
+                <div className={styles.teamsMsgBubble}>
+                  <p className={styles.teamsMsgText}>Morning everyone. Has Oakwood Care completed their direct debit yet?</p>
+                </div>
+                <div className={styles.teamsMsgLikeBar}>
+                  <span>&#128077; Like</span>
+                  <span>Reply</span>
+                </div>
+              </div>
+            </div>
+
+            {vis["nt1"] && <TypingIndicator platform="teams" />}
+
+            <div className={`${styles.teamsMsgGroup} ${vis["n1"] ? styles.msgVisible : ""}`}>
+              <NovaAvatarImg className={styles.teamsAvatarNovaImg} />
+              <div className={styles.teamsMsgContent}>
+                <div className={styles.teamsMsgMeta}>
+                  <span className={`${styles.teamsMsgName} ${styles.teamsMsgNameNova}`}>Nova</span>
+                  <span className={styles.teamsMsgTime}>9:03 AM</span>
+                </div>
+                <div className={styles.teamsMsgBubble}>
+                  <p className={styles.teamsMsgText}>Not yet. They viewed the request yesterday but haven&apos;t authorised. I&apos;ve scheduled a reminder for this morning.</p>
+                </div>
+                <div className={styles.teamsMsgLikeBar}>
+                  <span>&#128077; Like</span>
+                  <span>Reply</span>
+                </div>
+              </div>
+            </div>
+
+            <div className={`${styles.teamsMsgGroup} ${vis["e2"] ? styles.msgVisible : ""}`}>
+              <div className={`${styles.teamsAvatar} ${styles.teamsAvatarEmma}`}>E</div>
+              <div className={styles.teamsMsgContent}>
+                <div className={styles.teamsMsgMeta}>
+                  <span className={styles.teamsMsgName}>Emma</span>
+                  <span className={styles.teamsMsgTime}>9:04 AM</span>
+                </div>
+                <div className={styles.teamsMsgBubble}>
+                  <p className={styles.teamsMsgText}>Perfect. Thanks for keeping an eye on it.</p>
+                </div>
+                <div className={styles.teamsMsgLikeBar}>
+                  <span>&#128077; Like</span>
+                  <span>Reply</span>
+                </div>
+              </div>
+            </div>
+
+            {vis["nt2"] && <TypingIndicator platform="teams" />}
+
+            <div className={`${styles.teamsMsgGroup} ${vis["n2"] ? styles.msgVisible : ""}`}>
+              <NovaAvatarImg className={styles.teamsAvatarNovaImg} />
+              <div className={styles.teamsMsgContent}>
+                <div className={styles.teamsMsgMeta}>
+                  <span className={`${styles.teamsMsgName} ${styles.teamsMsgNameNova}`}>Nova</span>
+                  <span className={styles.teamsMsgTime}>9:41 AM</span>
+                </div>
+                <div className={styles.teamsMsgBubble}>
+                  <p className={styles.teamsMsgText}>Update. Oakwood Care has now completed the authorisation. First collection is scheduled for Monday.</p>
+                </div>
+                <div className={styles.teamsMsgLikeBar}>
+                  <span>&#128077; Like</span>
+                  <span>Reply</span>
+                </div>
+              </div>
+            </div>
+
+            <div className={`${styles.teamsMsgGroup} ${vis["j1"] ? styles.msgVisible : ""}`}>
+              <div className={`${styles.teamsAvatar} ${styles.teamsAvatarJames}`}>J</div>
+              <div className={styles.teamsMsgContent}>
+                <div className={styles.teamsMsgMeta}>
+                  <span className={styles.teamsMsgName}>James</span>
+                  <span className={styles.teamsMsgTime}>9:42 AM</span>
+                </div>
+                <div className={styles.teamsMsgBubble}>
+                  <p className={styles.teamsMsgText}>Brilliant. One less thing to chase.</p>
+                </div>
+                <div className={styles.teamsMsgLikeBar}>
+                  <span>&#128077; Like</span>
+                  <span>Reply</span>
+                </div>
+              </div>
+            </div>
+
+            <div className={`${styles.teamsMsgGroup} ${vis["n3"] ? styles.msgVisible : ""}`}>
+              <NovaAvatarImg className={styles.teamsAvatarNovaImg} />
+              <div className={styles.teamsMsgContent}>
+                <div className={styles.teamsMsgMeta}>
+                  <span className={`${styles.teamsMsgName} ${styles.teamsMsgNameNova}`}>Nova</span>
+                  <span className={styles.teamsMsgTime}>9:42 AM</span>
+                </div>
+                <div className={styles.teamsMsgBubble}>
+                  <p className={styles.teamsMsgText}>I&apos;ll notify the team once the payment settles.</p>
+                </div>
+                <div className={styles.teamsMsgLikeBar}>
+                  <span>&#128077; Like</span>
+                  <span>Reply</span>
+                </div>
+              </div>
+            </div>
+
+            <div ref={feedEndRef} className={styles.teamsFeedAnchor} aria-hidden />
+          </div>
+
+          <div className={styles.teamsComposer}>
+            <div className={styles.teamsComposerBar}>
+              <span className={styles.teamsComposerPlaceholder}>Start a new conversation. Type @ to mention someone.</span>
+            </div>
+            <div className={styles.teamsComposerToolbar}>
+              <span className={styles.teamsComposerTool} aria-hidden>A</span>
+              <span className={styles.teamsComposerTool} aria-hidden>&#128522;</span>
+              <span className={styles.teamsComposerTool} aria-hidden>&#128206;</span>
+              <span className={styles.teamsComposerTool} aria-hidden>&#8230;</span>
+              <span className={styles.teamsComposerSend} aria-hidden>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                </svg>
+              </span>
+            </div>
           </div>
         </div>
       </div>
