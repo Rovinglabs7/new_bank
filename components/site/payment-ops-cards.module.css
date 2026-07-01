@@ -1,0 +1,367 @@
+/* ─── Section ──────────────────────────────────────────────────────────────── */
+
+.section {
+  padding: 100px 0 120px;
+  background: var(--color-cream);
+}
+
+.inner {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ─── Header ───────────────────────────────────────────────────────────────── */
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.eyebrow {
+  margin: 0 0 16px;
+  font-family: var(--font-inter);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.sectionHeading {
+  margin: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.headingPrimary {
+  font-family: var(--font-season);
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  font-weight: 420;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  color: var(--color-ink);
+}
+
+.headingMuted {
+  font-family: var(--font-season);
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  font-weight: 420;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  color: var(--color-ink-muted);
+}
+
+.sectionSub {
+  margin: 12px 0 0;
+  font-family: var(--font-inter);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--color-ink-muted);
+}
+
+/* ─── Grid ─────────────────────────────────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* ─── Card ─────────────────────────────────────────────────────────────────── */
+
+.card {
+  background: #ffffff;
+  border: 1px solid rgba(40, 30, 21, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.25s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 40px rgba(40, 30, 21, 0.08);
+}
+
+.cardMedia {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: rgba(40, 30, 21, 0.025);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(40, 30, 21, 0.06);
+}
+
+.cardContent {
+  padding: 28px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.cardHeadline {
+  margin: 0;
+  font-family: var(--font-season);
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  font-weight: 420;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--color-ink);
+}
+
+.cardBody {
+  margin: 0;
+  font-family: var(--font-inter);
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-ink-muted);
+  max-width: 440px;
+}
+
+.cardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  font-family: var(--font-inter);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.cardLink:hover {
+  color: var(--color-ink);
+}
+
+/* ─── Workflow ─────────────────────────────────────────────────────────────── */
+
+.workflowContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.workflow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  min-width: 260px;
+}
+
+.stepGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.stepBlock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid rgba(40, 30, 21, 0.12);
+  border-radius: 10px;
+  padding: 10px 16px;
+  box-shadow: 0 1px 4px rgba(40, 30, 21, 0.06);
+  min-width: 240px;
+}
+
+.stepLabel {
+  font-family: var(--font-inter);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  background: rgba(40, 30, 21, 0.05);
+  border-radius: 4px;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+
+.stepValue {
+  font-family: var(--font-inter);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.connectorWrap {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 20px;
+  height: 18px;
+}
+
+.connectorLine {
+  width: 1.5px;
+  height: 18px;
+  background: rgba(40, 30, 21, 0.18);
+  border-radius: 2px;
+}
+
+.doneBadge {
+  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(22, 163, 74, 0.08);
+  border: 1px solid rgba(22, 163, 74, 0.22);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 600;
+  color: #16a34a;
+}
+
+.doneCheck {
+  font-size: 13px;
+}
+
+/* ─── Cursor ───────────────────────────────────────────────────────────────── */
+
+.cursor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 20;
+  transform: translate(-2px, -2px);
+}
+
+/* ─── Globe ────────────────────────────────────────────────────────────────── */
+
+.globeContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.globeSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.globeLabel {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+
+.globeLabelInner {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(40, 30, 21, 0.1);
+  border-radius: 8px;
+  padding: 6px 10px;
+  box-shadow: 0 2px 8px rgba(40, 30, 21, 0.08);
+  backdrop-filter: blur(4px);
+  cursor: default;
+  white-space: nowrap;
+}
+
+.globeDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(40, 30, 21, 0.12);
+}
+
+.globeCity {
+  font-family: var(--font-inter);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-ink);
+  line-height: 1.2;
+}
+
+.globeAmount {
+  font-family: var(--font-inter);
+  font-size: 10px;
+  color: var(--color-ink-muted);
+  line-height: 1.2;
+}
+
+.globeTooltip {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-ink);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 140px;
+  z-index: 30;
+  box-shadow: 0 4px 16px rgba(40, 30, 21, 0.18);
+}
+
+.tooltipRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.tooltipKey {
+  font-family: var(--font-inter);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+.tooltipVal {
+  font-family: var(--font-inter);
+  font-size: 11px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding: 72px 0 88px;
+  }
+
+  .inner {
+    padding: 0 24px;
+  }
+}
+
+@media (max-width: 560px) {
+  .section {
+    padding: 56px 0 72px;
+  }
+
+  .inner {
+    padding: 0 16px;
+  }
+
+  .cardContent {
+    padding: 20px 20px 24px;
+  }
+
+  .stepBlock {
+    min-width: 200px;
+  }
+}

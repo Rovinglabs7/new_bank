@@ -15,8 +15,8 @@ import {
   RampPlatformBackOffice,
   RampFinanceIntelligence,
   RampStackBanner,
-  RampTeamScale,
 } from "@/components/ramp/sections";
+import { PaymentOpsCards } from "@/components/site/PaymentOpsCards";
 
 export default function HomePage() {
   return (
@@ -35,8 +35,8 @@ export default function HomePage() {
         <RampPlatformBackOffice />
         <RampFinanceIntelligence />
         <RampStackBanner />
-        <RampTeamScale />
       </main>
+      <PaymentOpsCards />
       <WhoPraevorWorksFor />
       <WhoPraevorMarquee />
       <Footer />
