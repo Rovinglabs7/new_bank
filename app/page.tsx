@@ -12,13 +12,10 @@ import { WhoPraevorMarquee } from "@/components/site/WhoSproutMarquee";
 import { Footer } from "@/components/site/Footer";
 import { RampMotion } from "@/components/ramp/RampMotion";
 import {
-  RampLogosMarquee,
   RampPlatformBackOffice,
-  RampSystemsIntegration,
   RampFinanceIntelligence,
   RampStackBanner,
   RampTeamScale,
-  RampTestimonials,
 } from "@/components/ramp/sections";
 
 export default function HomePage() {
@@ -35,13 +32,10 @@ export default function HomePage() {
       <Integration />
       <CustomerStory />
       <main className="ramp-home">
-        <RampLogosMarquee />
         <RampPlatformBackOffice />
-        <RampSystemsIntegration />
         <RampFinanceIntelligence />
         <RampStackBanner />
         <RampTeamScale />
-        <RampTestimonials />
       </main>
       <WhoPraevorWorksFor />
       <WhoPraevorMarquee />
