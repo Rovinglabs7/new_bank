@@ -1,0 +1,356 @@
+/* ─── Page wrapper ─────────────────────────────────────────────────────────── */
+
+.page {
+  background: #ffffff;
+}
+
+/* ─── Breadcrumb ───────────────────────────────────────────────────────────── */
+
+.breadcrumbBar {
+  background: #f7f5f2;
+  border-bottom: 1px solid rgba(40, 30, 21, 0.08);
+  padding: 14px 40px;
+}
+
+.breadcrumbInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.breadcrumbLink {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  transition: color 0.12s ease;
+}
+
+.breadcrumbLink:hover {
+  color: var(--color-ink);
+}
+
+.breadcrumbSep {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
+  color: rgba(40, 30, 21, 0.3);
+}
+
+.breadcrumbCurrent {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+/* ─── Hero / Header ────────────────────────────────────────────────────────── */
+
+.termHero {
+  background: var(--color-ink);
+  padding: 80px 40px 72px;
+}
+
+.termHeroInner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.categoryBadge {
+  display: inline-block;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+}
+
+.termTitle {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 28px;
+  line-height: 1.1;
+}
+
+.definitionBox {
+  border-left: 3px solid rgba(255, 255, 255, 0.3);
+  padding-left: 20px;
+}
+
+.definitionText {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 18px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.82);
+  font-style: italic;
+  margin: 0;
+}
+
+/* ─── Main content area ────────────────────────────────────────────────────── */
+
+.contentSection {
+  padding: 72px 40px 96px;
+}
+
+.contentInner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ─── Explanation ──────────────────────────────────────────────────────────── */
+
+.explanationHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0 0 20px;
+}
+
+.explanationBody {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--color-ink-muted);
+  margin: 0 0 16px;
+}
+
+.explanationBody:last-child {
+  margin-bottom: 0;
+}
+
+/* ─── Why it matters callout ───────────────────────────────────────────────── */
+
+.whyBox {
+  background: #faf6f1;
+  border-radius: 16px;
+  padding: 32px;
+  margin: 48px 0;
+  border-left: 4px solid rgba(40, 30, 21, 0.2);
+}
+
+.whyLabel {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(40, 30, 21, 0.5);
+  margin: 0 0 12px;
+}
+
+.whyText {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-ink);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ─── Related terms ────────────────────────────────────────────────────────── */
+
+.relatedSection {
+  margin-top: 56px;
+}
+
+.sectionHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0 0 24px;
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.relatedCard {
+  border: 1px solid rgba(40, 30, 21, 0.1);
+  border-radius: 14px;
+  padding: 20px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.relatedCard:hover {
+  border-color: rgba(40, 30, 21, 0.28);
+  box-shadow: 0 4px 16px rgba(40, 30, 21, 0.06);
+}
+
+.relatedTermName {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.relatedTermCategory {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 12px;
+  color: var(--color-ink-muted);
+  margin: 0;
+}
+
+.relatedArrow {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--color-ink);
+  margin-top: 4px;
+  opacity: 0.6;
+}
+
+/* ─── Resources ────────────────────────────────────────────────────────────── */
+
+.resourcesSection {
+  margin-top: 48px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(40, 30, 21, 0.1);
+}
+
+.resourcesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.resourceLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-ink);
+  text-decoration: none;
+  padding: 14px 20px;
+  border: 1px solid rgba(40, 30, 21, 0.15);
+  border-radius: 12px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.resourceLink:hover {
+  border-color: var(--color-ink);
+  background: rgba(40, 30, 21, 0.02);
+}
+
+/* ─── Back link ────────────────────────────────────────────────────────────── */
+
+.backSection {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(40, 30, 21, 0.08);
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: opacity 0.12s ease;
+}
+
+.backLink:hover {
+  opacity: 0.7;
+}
+
+/* ─── Category badge colours ───────────────────────────────────────────────── */
+
+.cat-direct-debit {
+  background: #e8f0fe;
+  color: #1a56db;
+}
+
+.cat-open-banking {
+  background: #def7ec;
+  color: #046c4e;
+}
+
+.cat-settlement {
+  background: #fdf6b2;
+  color: #723b13;
+}
+
+.cat-compliance {
+  background: #fde8e8;
+  color: #9b1c1c;
+}
+
+.cat-payments {
+  background: #edebfe;
+  color: #5521b5;
+}
+
+.cat-disputes {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.cat-reconciliation {
+  background: #e1effe;
+  color: #1e429f;
+}
+
+.cat-infrastructure {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .breadcrumbBar {
+    padding: 12px 24px;
+  }
+
+  .termHero {
+    padding: 60px 24px 56px;
+  }
+
+  .contentSection {
+    padding: 48px 24px 72px;
+  }
+
+  .relatedGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .termHero {
+    padding: 48px 20px 48px;
+  }
+
+  .contentSection {
+    padding: 40px 20px 64px;
+  }
+
+  .relatedGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .breadcrumbBar {
+    padding: 12px 20px;
+  }
+}
