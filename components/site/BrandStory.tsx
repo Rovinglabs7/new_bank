@@ -13,7 +13,7 @@ export function BrandStory() {
         </p>
         <div className={styles.imageWrap}>
           <img
-            src="/brand-story.jpg"
+            src="/denago-ebikes-bqXfzZOYyuU-unsplash.jpg"
             alt="Two cyclists high-fiving on a sunny park path — the freedom that comes when your business runs itself"
             className={styles.image}
           />
