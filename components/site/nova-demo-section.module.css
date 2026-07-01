@@ -994,22 +994,20 @@
 
 .teamsTitleBarControls {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  align-items: stretch;
+  height: 100%;
+  margin-right: -8px;
   flex-shrink: 0;
 }
 
-.teamsWinBtn {
-  width: 10px;
-  height: 10px;
-  background: #424242;
-  border-radius: 1px;
-  opacity: 0.85;
-}
-
-.teamsWinBtnClose {
-  width: 11px;
-  height: 11px;
+.teamsWinControl {
+  width: 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #424242;
+  flex-shrink: 0;
 }
 
 .teamsBody {
@@ -1278,14 +1276,8 @@
   flex-direction: column;
   gap: 12px;
   min-height: 0;
-  scroll-behavior: smooth;
   background: #ffffff;
-}
-
-.teamsFeedAnchor {
-  flex-shrink: 0;
-  height: 1px;
-  width: 100%;
+  overscroll-behavior: contain;
 }
 
 /* ─── Teams message groups ───────────────────────────────────────────────── */

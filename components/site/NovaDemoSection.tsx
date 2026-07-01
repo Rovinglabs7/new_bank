@@ -632,7 +632,6 @@ function SlackMockup() {
 
 function TeamsMockup() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const feedEndRef = useRef<HTMLDivElement>(null);
   const [vis, setVis] = useState<VisibleSet>({});
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const started = useRef(false);
@@ -640,7 +639,8 @@ function TeamsMockup() {
   const scrollToBottom = useCallback(() => {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        feedEndRef.current?.scrollIntoView({ block: "end", behavior: "smooth" });
+        const el = scrollRef.current;
+        if (el) el.scrollTop = el.scrollHeight;
       });
     });
   }, []);
@@ -714,9 +714,21 @@ function TeamsMockup() {
           <span className={styles.teamsTitleBarSearch}>Search</span>
         </div>
         <div className={styles.teamsTitleBarControls} aria-hidden>
-          <span className={styles.teamsWinBtn} />
-          <span className={styles.teamsWinBtn} />
-          <span className={`${styles.teamsWinBtn} ${styles.teamsWinBtnClose}`} />
+          <span className={styles.teamsWinControl}>
+            <svg viewBox="0 0 10 1" width="10" height="1" aria-hidden>
+              <rect width="10" height="1" rx="0.5" fill="currentColor" />
+            </svg>
+          </span>
+          <span className={styles.teamsWinControl}>
+            <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden>
+              <rect x="0.5" y="0.5" width="9" height="9" rx="0.5" fill="none" stroke="currentColor" strokeWidth="1" />
+            </svg>
+          </span>
+          <span className={styles.teamsWinControl}>
+            <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden>
+              <path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+            </svg>
+          </span>
         </div>
       </div>
 
@@ -897,7 +909,6 @@ function TeamsMockup() {
               </div>
             </div>
 
-            <div ref={feedEndRef} className={styles.teamsFeedAnchor} aria-hidden />
           </div>
 
           <div className={styles.teamsComposer}>
