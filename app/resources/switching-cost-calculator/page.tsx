@@ -4,9 +4,8 @@ import { Footer } from "@/components/site/Footer";
 import { SwitchingCostCalculator } from "@/components/resources/SwitchingCostCalculator";
 
 export const metadata = {
-  title: "Switching Cost Calculator | Praevor",
-  description:
-    "Calculate the true operational cost of staying with your current payment provider. See your hidden costs, maturity score, and estimated savings from switching.",
+  title: "Payment Operations Health Check | Praevor",
+  description: "Discover the true operational cost of your current payment setup. Estimate hidden costs from failed payments, manual processes and delayed settlements — free tool by Praevor.",
 };
 
 export default function SwitchingCostCalculatorPage() {

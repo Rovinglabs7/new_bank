@@ -11,12 +11,12 @@
 }
 
 .eyebrow {
-  font-family: var(--font-season), "Season Mix Regular", serif;
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.14em;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.55);
   margin: 0 0 20px;
 }
 
@@ -33,7 +33,7 @@
   font-family: var(--font-inter), "Inter", sans-serif;
   font-size: 17px;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.78);
   margin: 0;
   max-width: 640px;
 }
@@ -41,32 +41,36 @@
 /* ─── Calculator section ───────────────────────────────────────────────────── */
 
 .calculatorSection {
-  background: #f7f5f2;
-  padding: 80px 0 96px;
+  background: #ffffff;
+  padding: 80px 0 0;
 }
 
 .calculatorInner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 40px 96px;
 }
 
 .calculatorCard {
   background: #ffffff;
   border-radius: 24px;
-  border: 1px solid rgba(40, 30, 21, 0.08);
-  box-shadow: 0 2px 16px rgba(40, 30, 21, 0.08);
+  border: 1px solid rgba(40, 30, 21, 0.1);
+  box-shadow: 0 8px 40px rgba(40, 30, 21, 0.08);
   padding: 48px;
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
 }
 
 /* ─── Steps ────────────────────────────────────────────────────────────────── */
 
-.step {
-  display: flex;
-  flex-direction: column;
+.stepBlock {
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid rgba(40, 30, 21, 0.08);
+}
+
+.stepBlock:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
 }
 
 .stepLabel {
@@ -76,16 +80,32 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: rgba(40, 30, 21, 0.4);
-  margin-bottom: 20px;
+  margin: 0 0 8px;
 }
 
-.stepGrid {
+.stepHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0 0 28px;
+}
+
+.stepSubtext {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  color: var(--color-ink-muted);
+  margin: -16px 0 20px;
+  line-height: 1.5;
+}
+
+/* ─── Inputs grid ──────────────────────────────────────────────────────────── */
+
+.inputsGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 24px;
 }
-
-/* ─── Inputs ───────────────────────────────────────────────────────────────── */
 
 .inputGroup {
   display: flex;
@@ -98,24 +118,8 @@
   font-size: 13px;
   font-weight: 600;
   color: var(--color-ink);
-  letter-spacing: 0.01em;
-  line-height: 1.4;
-}
-
-.prefixWrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.prefix {
-  position: absolute;
-  left: 14px;
-  font-family: var(--font-inter), "Inter", sans-serif;
-  font-size: 15px;
-  color: var(--color-ink);
-  pointer-events: none;
-  z-index: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .input {
@@ -123,7 +127,7 @@
   box-sizing: border-box;
   padding: 12px 16px;
   border: 1px solid rgba(40, 30, 21, 0.18);
-  border-radius: 12px;
+  border-radius: 10px;
   font-family: var(--font-inter), "Inter", sans-serif;
   font-size: 15px;
   color: var(--color-ink);
@@ -143,46 +147,47 @@
   border-color: var(--color-ink);
 }
 
-.inputPrefixed {
-  padding-left: 28px;
-}
-
 .select {
   width: 100%;
   box-sizing: border-box;
   padding: 12px 16px;
   border: 1px solid rgba(40, 30, 21, 0.18);
-  border-radius: 12px;
+  border-radius: 10px;
   font-family: var(--font-inter), "Inter", sans-serif;
   font-size: 15px;
   color: var(--color-ink);
   background: #ffffff;
   outline: none;
-  appearance: none;
   cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23281e15' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  transition: border-color 0.15s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23281e15' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 14px center;
-  transition: border-color 0.15s ease;
+  padding-right: 36px;
 }
 
 .select:focus {
   border-color: var(--color-ink);
 }
 
-/* ─── Checkboxes ───────────────────────────────────────────────────────────── */
-
-.checkboxGroupLabel {
+.readOnly {
+  padding: 12px 16px;
+  border: 1px solid rgba(40, 30, 21, 0.1);
+  border-radius: 10px;
   font-family: var(--font-inter), "Inter", sans-serif;
-  font-size: 14px;
-  color: var(--color-ink-muted);
-  margin: 0 0 16px;
+  font-size: 15px;
+  color: var(--color-ink);
+  background: rgba(40, 30, 21, 0.03);
+  font-weight: 600;
 }
+
+/* ─── Checkboxes ───────────────────────────────────────────────────────────── */
 
 .checkboxGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
 }
 
 .checkboxLabel {
@@ -192,215 +197,292 @@
   font-family: var(--font-inter), "Inter", sans-serif;
   font-size: 14px;
   color: var(--color-ink);
-  line-height: 1.5;
   cursor: pointer;
+  line-height: 1.5;
 }
 
 .checkbox {
+  flex-shrink: 0;
   width: 18px;
   height: 18px;
-  border-radius: 4px;
-  border: 1.5px solid rgba(40, 30, 21, 0.3);
+  margin-top: 1px;
   accent-color: var(--color-ink);
   cursor: pointer;
-  flex-shrink: 0;
-  margin-top: 2px;
 }
 
-/* ─── Results ──────────────────────────────────────────────────────────────── */
+/* ─── Results sections ─────────────────────────────────────────────────────── */
 
 .resultsSection {
-  margin-top: 56px;
+  margin-top: 64px;
 }
 
 .resultsSectionHeading {
   font-family: var(--font-season), "Season Mix Regular", serif;
-  font-size: 22px;
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
   font-weight: 400;
   color: var(--color-ink);
-  margin: 0 0 24px;
+  margin: 0 0 32px;
 }
 
-/* ─── Operational Profile (3-col grid) ────────────────────────────────────── */
+/* ─── Metric cards (Section 1) ─────────────────────────────────────────────── */
 
-.profileGrid {
+.metricsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  margin-bottom: 48px;
 }
 
-.profileCard {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 28px;
-  border: 1px solid rgba(40, 30, 21, 0.08);
-  box-shadow: 0 2px 16px rgba(40, 30, 21, 0.08);
+.metricCard {
+  background: rgba(40, 30, 21, 0.04);
+  border-radius: 16px;
+  padding: 28px 24px;
+  border: 1px solid rgba(40, 30, 21, 0.06);
 }
 
-.profileValue {
+.metricValue {
   font-family: var(--font-season), "Season Mix Regular", serif;
   font-size: 32px;
   color: var(--color-ink);
-  line-height: 1.1;
   margin-bottom: 8px;
+  line-height: 1.1;
 }
 
-.profileLabel {
+.metricLabel {
   font-family: var(--font-inter), "Inter", sans-serif;
   font-size: 13px;
   color: var(--color-ink-muted);
   line-height: 1.4;
 }
 
-/* ─── Hidden cost metrics (2-col dark cards) ───────────────────────────────── */
+/* ─── Dark cards (Section 2) ───────────────────────────────────────────────── */
 
-.hiddenCostGrid {
+.darkCardsGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  margin-bottom: 48px;
 }
 
-.hiddenCostCard {
+.darkCard {
   background: var(--color-ink);
-  border-radius: 20px;
-  padding: 28px;
+  border-radius: 16px;
+  padding: 28px 24px;
 }
 
-.hiddenCostTotal {
-  background: #1a120b;
+.darkCardValue {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 28px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  line-height: 1.1;
 }
 
-.hiddenCostLabel {
+.darkCardLabel {
   font-family: var(--font-inter), "Inter", sans-serif;
-  font-size: 12px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.4;
+}
+
+.totalImpactCard {
+  margin-top: 16px;
+  background: #1a1208;
+  border-radius: 20px;
+  padding: 36px;
+  color: #ffffff;
+}
+
+.totalImpactLabel {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.55);
   margin-bottom: 12px;
 }
 
-.hiddenCostValue {
+.totalImpactValue {
   font-family: var(--font-season), "Season Mix Regular", serif;
-  font-size: 36px;
+  font-size: 52px;
   color: #ffffff;
   line-height: 1.1;
+  margin-bottom: 8px;
 }
 
-/* ─── Maturity score ───────────────────────────────────────────────────────── */
-
-.maturityCard {
-  background: #ffffff;
-  border-radius: 24px;
-  border: 1px solid rgba(40, 30, 21, 0.08);
-  box-shadow: 0 2px 16px rgba(40, 30, 21, 0.08);
-  padding: 40px;
-  margin-bottom: 24px;
+.totalImpactSubtext {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.5;
 }
 
-.maturityHeader {
+/* ─── Recommendations (Section 3) ─────────────────────────────────────────── */
+
+.recommendationsList {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 28px;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.maturityTitle {
+.recommendationItem {
+  border-left: 3px solid var(--color-ink);
+  padding: 16px 20px;
+  background: rgba(40, 30, 21, 0.03);
+  border-radius: 0 12px 12px 0;
+}
+
+.recommendationTitle {
   font-family: var(--font-season), "Season Mix Regular", serif;
-  font-size: 22px;
+  font-size: 17px;
   font-weight: 400;
   color: var(--color-ink);
   margin-bottom: 4px;
 }
 
-.maturitySubtitle {
+.recommendationBody {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  color: var(--color-ink-muted);
+  line-height: 1.6;
+}
+
+/* ─── Opportunity section (Section 4) ─────────────────────────────────────── */
+
+.opportunitySection {
+  background: var(--color-ink);
+  margin-top: 64px;
+  border-radius: 24px;
+  padding: 56px 48px;
+}
+
+.opportunityInner {
+  max-width: 100%;
+}
+
+.opportunityHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 12px;
+}
+
+.opportunityDisclaimer {
   font-family: var(--font-inter), "Inter", sans-serif;
   font-size: 13px;
-  color: var(--color-ink-muted);
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 36px;
+  font-style: italic;
 }
 
-.maturityNumber {
+.opportunityGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.opportunityCard {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 28px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.opportunityValue {
   font-family: var(--font-season), "Season Mix Regular", serif;
-  font-size: 56px;
-  line-height: 1;
-  font-weight: 400;
+  font-size: 26px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  line-height: 1.2;
 }
 
-.maturityMax {
-  font-size: 22px;
-  opacity: 0.5;
+.opportunityCardLabel {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.4;
+}
+
+.vsTag {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 11px;
+  margin-left: 4px;
+}
+
+/* ─── Maturity Score (Section 5) ───────────────────────────────────────────── */
+
+.scoreCard {
+  background: rgba(40, 30, 21, 0.03);
+  border: 1px solid rgba(40, 30, 21, 0.08);
+  border-radius: 20px;
+  padding: 36px;
+}
+
+.scoreRow {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.scoreNumber {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 64px;
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+.scoreScaleLabel {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .gaugeTrack {
-  height: 12px;
-  background: rgba(40, 30, 21, 0.08);
+  width: 100%;
+  height: 10px;
+  background: rgba(40, 30, 21, 0.1);
   border-radius: 999px;
   overflow: hidden;
-  margin-bottom: 8px;
+  margin-bottom: 32px;
 }
 
-.gaugeBar {
+.gaugeFill {
   height: 100%;
   border-radius: 999px;
   transition: width 0.4s ease, background 0.4s ease;
 }
 
-.gaugeLabels {
+.categoryPills {
   display: flex;
-  justify-content: space-between;
-  font-family: var(--font-inter), "Inter", sans-serif;
-  font-size: 11px;
-  margin-bottom: 32px;
-}
-
-.gaugeLabelRed {
-  color: #ef4444;
-}
-
-.gaugeLabelAmber {
-  color: #f59e0b;
-  text-align: center;
-}
-
-.gaugeLabelGreen {
-  color: #22c55e;
-  text-align: right;
-}
-
-.pillGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  flex-wrap: wrap;
   gap: 10px;
 }
 
-.pill {
+.categoryPill {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(40, 30, 21, 0.1);
   border-radius: 999px;
-  padding: 8px 14px;
+  padding: 8px 16px;
   font-family: var(--font-inter), "Inter", sans-serif;
   font-size: 13px;
 }
 
-.pillGreen {
-  background: rgba(34, 197, 94, 0.1);
-  color: #15803d;
-}
-
-.pillAmber {
-  background: rgba(245, 158, 11, 0.1);
-  color: #b45309;
-}
-
-.pillRed {
-  background: rgba(239, 68, 68, 0.1);
-  color: #b91c1c;
+.pillDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .pillName {
+  color: var(--color-ink);
   font-weight: 500;
 }
 
@@ -409,84 +491,38 @@
   font-size: 12px;
 }
 
-/* ─── Recommendations ──────────────────────────────────────────────────────── */
+/* ─── Provider note ────────────────────────────────────────────────────────── */
 
-.recommendationsCard {
+.providerNote {
   background: #faf6f1;
-  border-radius: 20px;
-  padding: 32px;
-  margin-bottom: 24px;
+  border-radius: 16px;
+  padding: 28px;
+  margin-top: 24px;
 }
 
-.recHeading {
+.providerNoteHeading {
   font-family: var(--font-season), "Season Mix Regular", serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
   color: var(--color-ink);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
-.recProviderMessage {
+.providerNoteBody {
   font-family: var(--font-inter), "Inter", sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.7;
-  color: var(--color-ink);
+  color: var(--color-ink-muted);
   margin: 0 0 12px;
 }
 
-.recProaevorMessage {
+.providerNoteAppend {
   font-family: var(--font-inter), "Inter", sans-serif;
   font-size: 14px;
   line-height: 1.6;
-  color: var(--color-ink-muted);
+  color: var(--color-ink);
+  font-weight: 500;
   margin: 0;
-  border-left: 3px solid rgba(40, 30, 21, 0.15);
-  padding-left: 16px;
-}
-
-/* ─── Opportunity card ─────────────────────────────────────────────────────── */
-
-.opportunityCard {
-  background: var(--color-ink);
-  border-radius: 24px;
-  padding: 44px;
-  color: #ffffff;
-}
-
-.opportunityEyebrow {
-  font-family: var(--font-inter), "Inter", sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 28px;
-}
-
-.opportunityGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-}
-
-.opportunityMetric {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.opportunityValue {
-  font-family: var(--font-season), "Season Mix Regular", serif;
-  font-size: 40px;
-  color: #ffffff;
-  line-height: 1.1;
-}
-
-.opportunityLabel {
-  font-family: var(--font-inter), "Inter", sans-serif;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
-  line-height: 1.4;
 }
 
 /* ─── Educational ──────────────────────────────────────────────────────────── */
@@ -518,8 +554,8 @@
 
 .eduItem {
   background: #ffffff;
-  border-radius: 20px;
-  padding: 32px;
+  border-radius: 16px;
+  padding: 32px 28px;
   border: 1px solid rgba(40, 30, 21, 0.06);
 }
 
@@ -537,6 +573,48 @@
   line-height: 1.7;
   color: var(--color-ink-muted);
   margin: 0;
+}
+
+/* ─── Transparency ─────────────────────────────────────────────────────────── */
+
+.transparencySection {
+  background: #ffffff;
+  padding: 64px 40px;
+}
+
+.transparencyInner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.transparencyBox {
+  background: #faf6f1;
+  border: 1px solid rgba(40, 30, 21, 0.12);
+  border-radius: 16px;
+  padding: 36px;
+}
+
+.transparencyHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0 0 20px;
+}
+
+.transparencyList {
+  margin: 0;
+  padding: 0 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.transparencyList li {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-ink-muted);
 }
 
 /* ─── FAQ ──────────────────────────────────────────────────────────────────── */
@@ -569,7 +647,7 @@
   border-bottom: 1px solid rgba(40, 30, 21, 0.1);
 }
 
-.faqItem:first-of-type {
+.faqItem:first-child {
   border-top: 1px solid rgba(40, 30, 21, 0.1);
 }
 
@@ -578,11 +656,13 @@
   font-size: 18px;
   font-weight: 400;
   color: var(--color-ink);
-  padding: 24px 32px 24px 0;
+  padding: 22px 0;
   cursor: pointer;
   list-style: none;
-  position: relative;
-  line-height: 1.4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
 }
 
 .faqSummary::-webkit-details-marker {
@@ -591,19 +671,17 @@
 
 .faqSummary::after {
   content: "+";
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 22px;
   font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 20px;
   font-weight: 300;
-  color: var(--color-ink-muted);
+  color: rgba(40, 30, 21, 0.4);
+  flex-shrink: 0;
+  margin-left: 16px;
   transition: transform 0.2s ease;
 }
 
 .faqItem[open] .faqSummary::after {
-  content: "−";
+  content: "\2212";
 }
 
 .faqAnswer {
@@ -611,8 +689,7 @@
   font-size: 15px;
   line-height: 1.7;
   color: var(--color-ink-muted);
-  margin: 0;
-  padding-bottom: 24px;
+  margin: 0 0 22px;
 }
 
 /* ─── CTA ──────────────────────────────────────────────────────────────────── */
@@ -695,39 +772,33 @@
 
 /* ─── Responsive ───────────────────────────────────────────────────────────── */
 
-@media (max-width: 1024px) {
-  .stepGrid {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 900px) {
+  .inputsGrid {
+    grid-template-columns: 1fr;
   }
 
-  .profileGrid {
-    grid-template-columns: repeat(2, 1fr);
+  .calculatorCard {
+    padding: 32px 24px;
+  }
+
+  .metricsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .darkCardsGrid {
+    grid-template-columns: 1fr;
   }
 
   .opportunityGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .pillGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 900px) {
-  .calculatorCard {
-    padding: 32px 24px;
-  }
-
-  .hiddenCostGrid {
-    grid-template-columns: 1fr;
-  }
-
   .eduGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .checkboxGrid {
-    grid-template-columns: 1fr;
+  .opportunitySection {
+    padding: 40px 28px;
   }
 }
 
@@ -736,59 +807,32 @@
     padding: 100px 24px 72px;
   }
 
-  .calculatorSection {
-    padding: 48px 0 72px;
-  }
-
   .calculatorInner {
-    padding: 0 20px;
+    padding: 0 20px 72px;
   }
 
   .calculatorCard {
     padding: 28px 20px;
-    gap: 36px;
   }
 
-  .stepGrid {
+  .metricsGrid {
     grid-template-columns: 1fr;
-  }
-
-  .profileGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .hiddenCostValue {
-    font-size: 28px;
-  }
-
-  .pillGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .maturityNumber {
-    font-size: 40px;
   }
 
   .opportunityGrid {
     grid-template-columns: 1fr;
-    gap: 20px;
   }
 
-  .opportunityValue {
-    font-size: 32px;
+  .checkboxGrid {
+    grid-template-columns: 1fr;
   }
 
-  .opportunityCard {
-    padding: 32px 24px;
+  .totalImpactValue {
+    font-size: 36px;
   }
 
-  .maturityCard {
-    padding: 28px 20px;
-  }
-
-  .maturityHeader {
-    flex-direction: column;
-    gap: 16px;
+  .scoreNumber {
+    font-size: 48px;
   }
 
   .eduSection {
@@ -797,6 +841,10 @@
 
   .eduGrid {
     grid-template-columns: 1fr;
+  }
+
+  .transparencySection {
+    padding: 48px 20px;
   }
 
   .faqSection {
