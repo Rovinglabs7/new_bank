@@ -708,27 +708,58 @@ function TeamsMockup() {
   return (
     <div className={styles.teamsWindow}>
       <div className={styles.teamsTitleBar}>
-        <div className={styles.teamsTitleBarLeft}>
+        <div className={styles.teamsTitleBarLogo} aria-hidden>
           <TeamsIcon />
-          <span className={styles.teamsTitleBarDivider} aria-hidden />
-          <span className={styles.teamsTitleBarSearch}>Search</span>
         </div>
-        <div className={styles.teamsTitleBarControls} aria-hidden>
-          <span className={styles.teamsWinControl}>
-            <svg viewBox="0 0 10 1" width="10" height="1" aria-hidden>
-              <rect width="10" height="1" rx="0.5" fill="currentColor" />
+
+        <div className={styles.teamsTitleBarCenter}>
+          <span className={styles.teamsTitleBarNavBtn} aria-hidden>
+            <svg viewBox="0 0 20 20" width="20" height="20" fill="currentColor">
+              <path d="M11.8 4.2a1 1 0 011.4 1.4L8.6 10l4.6 4.4a1 1 0 01-1.4 1.4l-5.4-5.2a1 1 0 010-1.4l5.4-5z" />
             </svg>
           </span>
-          <span className={styles.teamsWinControl}>
-            <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden>
-              <rect x="0.5" y="0.5" width="9" height="9" rx="0.5" fill="none" stroke="currentColor" strokeWidth="1" />
+          <span className={styles.teamsTitleBarNavBtn} aria-hidden>
+            <svg viewBox="0 0 20 20" width="20" height="20" fill="currentColor">
+              <path d="M8.2 4.2a1 1 0 00-1.4 1.4L11.4 10l-4.6 4.4a1 1 0 001.4 1.4l5.4-5.2a1 1 0 000-1.4l-5.4-5z" />
             </svg>
           </span>
-          <span className={styles.teamsWinControl}>
-            <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden>
-              <path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+          <div className={styles.teamsTitleBarSearchBox}>
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden>
+              <path d="M8.5 3a5.5 5.5 0 014.23 8.98l3.27 3.27a.75.75 0 11-1.06 1.06l-3.27-3.27A5.5 5.5 0 118.5 3zm0 1.5a4 4 0 100 8 4 4 0 000-8z" />
+            </svg>
+            <span>Search</span>
+          </div>
+        </div>
+
+        <div className={styles.teamsTitleBarRight} aria-hidden>
+          <span className={styles.teamsTitleBarIconBtn}>
+            <svg viewBox="0 0 20 20" width="20" height="20" fill="currentColor" aria-hidden>
+              <circle cx="4" cy="10" r="1.25" />
+              <circle cx="10" cy="10" r="1.25" />
+              <circle cx="16" cy="10" r="1.25" />
             </svg>
           </span>
+          <span className={styles.teamsTitleBarAvatarWrap}>
+            <span className={`${styles.teamsTitleBarAvatar} ${styles.teamsAvatarEmma}`}>E</span>
+            <span className={styles.teamsTitleBarPresence} />
+          </span>
+          <div className={styles.teamsTitleBarControls}>
+            <span className={styles.teamsWinControl}>
+              <svg viewBox="0 0 10 1" width="10" height="1" aria-hidden>
+                <rect width="10" height="1" rx="0.5" fill="currentColor" />
+              </svg>
+            </span>
+            <span className={styles.teamsWinControl}>
+              <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden>
+                <rect x="0.5" y="0.5" width="9" height="9" rx="0.5" fill="none" stroke="currentColor" strokeWidth="1" />
+              </svg>
+            </span>
+            <span className={styles.teamsWinControl}>
+              <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden>
+                <path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+              </svg>
+            </span>
+          </div>
         </div>
       </div>
 
