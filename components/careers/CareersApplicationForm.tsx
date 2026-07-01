@@ -3,6 +3,7 @@
 import { useEffect, useId, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { careers } from "@/config/careers";
+import { submitCareerApplicationFromClient } from "@/lib/actions/leads";
 import styles from "./careers-application-form.module.css";
 
 function CloseIcon() {
@@ -24,6 +25,9 @@ function CloseIcon() {
 export function CareersApplicationForm() {
   const { applicationForm, departments } = careers;
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
   const titleId = useId();
   const reduceMotion = useReducedMotion();
 
@@ -35,12 +39,46 @@ export function CareersApplicationForm() {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") {
         setSelectedDepartment(null);
+        setSubmitted(false);
+        setError("");
       }
     }
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen]);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (submitting || submitted) return;
+
+    const formEl = e.currentTarget;
+    const data = new FormData(formEl);
+    const payload = Object.fromEntries(
+      Array.from(data.entries()).map(([key, value]) => [key, String(value)]),
+    );
+
+    setSubmitting(true);
+    setError("");
+
+    const result = await submitCareerApplicationFromClient(payload);
+
+    setSubmitting(false);
+
+    if (result.error) {
+      setError(result.error);
+      return;
+    }
+
+    setSubmitted(true);
+    formEl.reset();
+  }
+
+  function closeModal() {
+    setSelectedDepartment(null);
+    setSubmitted(false);
+    setError("");
+  }
 
   return (
     <section className={styles.section} id="open-roles" aria-label={applicationForm.heading}>
@@ -64,7 +102,11 @@ export function CareersApplicationForm() {
               key={item.name}
               className={styles.card}
               aria-haspopup="dialog"
-              onClick={() => setSelectedDepartment(item.name)}
+              onClick={() => {
+                setSubmitted(false);
+                setError("");
+                setSelectedDepartment(item.name);
+              }}
             >
               <h3 className={styles.cardTitle}>{item.name}</h3>
               <p className={styles.cardDescription}>{item.description}</p>
@@ -77,7 +119,7 @@ export function CareersApplicationForm() {
       {isOpen ? (
         <div
           className={styles.overlay}
-          onClick={() => setSelectedDepartment(null)}
+          onClick={closeModal}
         >
           <div
             className={styles.modal}
@@ -90,11 +132,22 @@ export function CareersApplicationForm() {
               type="button"
               className={styles.modalClose}
               aria-label="Close"
-              onClick={() => setSelectedDepartment(null)}
+              onClick={closeModal}
             >
               <CloseIcon />
             </button>
 
+            {submitted ? (
+              <>
+                <h2 id={titleId} className={styles.heading}>
+                  Application received
+                </h2>
+                <p className={styles.subtext}>
+                  Thanks for applying. We&apos;ll review your submission and get back to you if there&apos;s a fit.
+                </p>
+              </>
+            ) : (
+              <>
             <h2 id={titleId} className={styles.heading}>
               {applicationForm.heading}
             </h2>
@@ -102,11 +155,13 @@ export function CareersApplicationForm() {
 
             <form
               className={styles.form}
-              onSubmit={(e) => {
-                e.preventDefault();
-                // TODO: wire up application form submission endpoint
-              }}
+              onSubmit={handleSubmit}
             >
+              {error ? (
+                <p className={styles.formError} role="alert">
+                  {error}
+                </p>
+              ) : null}
               <div className={styles.field}>
                 <label className={styles.label} htmlFor="careers-full-name">
                   Full name
@@ -235,10 +290,12 @@ export function CareersApplicationForm() {
                 />
               </div>
 
-              <button type="submit" className={styles.submit}>
-                {applicationForm.submitLabel}
+              <button type="submit" className={styles.submit} disabled={submitting}>
+                {submitting ? "Submitting..." : applicationForm.submitLabel}
               </button>
             </form>
+              </>
+            )}
           </div>
         </div>
       ) : null}

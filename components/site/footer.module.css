@@ -456,6 +456,17 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
+.waitlistFeedback {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #f87171;
+}
+
+.waitlistSuccess {
+  color: #4ade80;
+}
+
 .waitlistInput {
   flex: 1;
   min-width: 0;

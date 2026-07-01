@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { site } from "@/config/site";
+import { joinWaitlist } from "@/lib/actions/leads";
 import styles from "./footer.module.css";
 
 const socialIconPaths: Record<string, string> = {
@@ -99,6 +100,10 @@ export function Footer() {
   const [countryOpen, setCountryOpen] = useState(false);
   const [country, setCountry] = useState<(typeof footer.countries)[number]>(
     footer.countries[0],
+  );
+  const [waitlistState, waitlistAction, waitlistPending] = useActionState(
+    joinWaitlist,
+    {},
   );
 
   return (
@@ -279,22 +284,37 @@ export function Footer() {
             <div className={styles.waitlistBlock} id="waitlist">
               <p className={styles.bottomCta}>{footer.bottom.ctaLine}</p>
 
-              <form
-                className={styles.waitlistForm}
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  // TODO: wire up waitlist submission endpoint
-                }}
-              >
+              {waitlistState.error ? (
+                <p className={styles.waitlistFeedback} role="alert">
+                  {waitlistState.error}
+                </p>
+              ) : null}
+              {waitlistState.success ? (
+                <p className={`${styles.waitlistFeedback} ${styles.waitlistSuccess}`}>
+                  You&apos;re on the list. We&apos;ll be in touch.
+                </p>
+              ) : null}
+
+              <form className={styles.waitlistForm} action={waitlistAction}>
                 <input
                   type="email"
+                  name="email"
                   required
                   placeholder={footer.bottom.waitlist.placeholder}
                   className={styles.waitlistInput}
                   aria-label={footer.bottom.waitlist.placeholder}
+                  disabled={waitlistPending || waitlistState.success}
                 />
-                <button type="submit" className={styles.waitlistButton}>
-                  {footer.bottom.waitlist.buttonLabel}
+                <button
+                  type="submit"
+                  className={styles.waitlistButton}
+                  disabled={waitlistPending || waitlistState.success}
+                >
+                  {waitlistPending
+                    ? "Joining..."
+                    : waitlistState.success
+                      ? "Joined"
+                      : footer.bottom.waitlist.buttonLabel}
                 </button>
               </form>
             </div>

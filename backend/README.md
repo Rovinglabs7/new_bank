@@ -30,6 +30,10 @@ Docs: http://localhost:4000/docs
 | POST | `/auth/register` | Create account + business |
 | POST | `/auth/login` | Sign in with email/password |
 | GET | `/auth/me` | Current user (`Authorization: Bearer <token>`) |
+| POST | `/leads/waitlist` | Join the marketing waitlist |
+| POST | `/leads/demo` | Submit a demo / sales request |
+| POST | `/leads/partner` | Submit a partner application |
+| POST | `/leads/career` | Submit a careers application |
 
 ## Environment
 

@@ -69,6 +69,16 @@
   margin-top: 36px;
 }
 
+.fieldError {
+  margin: 0;
+  padding: 11px 14px;
+  border-radius: 8px;
+  background: #fef9ee;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  font-size: 13.5px;
+  color: #92400e;
+}
+
 .fieldRow {
   display: grid;
   grid-template-columns: 1fr 1fr;

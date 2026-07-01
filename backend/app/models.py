@@ -1,7 +1,8 @@
 import uuid
 from datetime import datetime
+from typing import Any
 
-from sqlalchemy import DateTime, ForeignKey, String, func
+from sqlalchemy import DateTime, ForeignKey, JSON, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -40,3 +41,13 @@ class Business(Base):
     )
 
     user: Mapped[User] = relationship(back_populates="business")
+
+
+class LeadSubmission(Base):
+    __tablename__ = "lead_submissions"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=new_id)
+    kind: Mapped[str] = mapped_column(String, index=True)
+    email: Mapped[str | None] = mapped_column(String, nullable=True, index=True)
+    payload: Mapped[dict[str, Any]] = mapped_column(JSON)
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())

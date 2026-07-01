@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { site } from "@/config/site";
+import { submitDemoRequestFromClient } from "@/lib/actions/leads";
 import styles from "./qualify.module.css";
 
 const teamPhotos = [
@@ -42,6 +43,8 @@ type FormState = {
 export function QualifyPage() {
   const params = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState<FormState>({
     email: "",
     firstName: "",
@@ -75,8 +78,20 @@ export function QualifyPage() {
     }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setSubmitting(true);
+    setError("");
+
+    const result = await submitDemoRequestFromClient(form);
+
+    setSubmitting(false);
+
+    if (result.error) {
+      setError(result.error);
+      return;
+    }
+
     setSubmitted(true);
   }
 
@@ -103,6 +118,12 @@ export function QualifyPage() {
               </p>
 
               <form className={styles.form} onSubmit={handleSubmit} noValidate>
+                {error ? (
+                  <p className={styles.fieldError} role="alert">
+                    {error}
+                  </p>
+                ) : null}
+
                 {/* Email prefilled */}
                 <label className={styles.field}>
                   <span className={styles.label}>Work email</span>
@@ -227,11 +248,13 @@ export function QualifyPage() {
                   </div>
                 </fieldset>
 
-                <button type="submit" className={styles.submit}>
-                  Book my demo
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                <button type="submit" className={styles.submit} disabled={submitting}>
+                  {submitting ? "Submitting..." : "Book my demo"}
+                  {!submitting ? (
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+                      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  ) : null}
                 </button>
               </form>
 
