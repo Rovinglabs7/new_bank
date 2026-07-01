@@ -61,8 +61,10 @@ jobs:
             cd "${DEPLOY_PATH}"
             git() { command git -c safe.directory="${DEPLOY_PATH}" "$@"; }
             git fetch origin main
+            DEPLOY_BASE_REV="$(git rev-parse HEAD)"
             git checkout main
-            git pull --ff-only origin main
+            git reset --hard origin/main
+            export DEPLOY_BASE_REV
             chmod +x deploy.sh
             case "${{ github.event.inputs.target || 'auto' }}" in
               frontend) ./deploy.sh --frontend ;;

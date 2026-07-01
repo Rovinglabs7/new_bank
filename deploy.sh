@@ -145,7 +145,54 @@ verify_api_health() {
 
 run_db_init() {
   echo "==> Ensuring database schema (SQLAlchemy create_all)..."
+  compose build api-blue
   compose run --rm --no-deps --entrypoint "" api-blue python -c "from app.database import init_db; init_db()"
+}
+
+recover_state_from_containers() {
+  local web_slot="" api_slot=""
+
+  for slot in blue green; do
+    local web_c api_c
+    web_c=$(container_name "web" "$slot")
+    api_c=$(container_name "api" "$slot")
+    if docker ps --format '{{.Names}}' | grep -qx "$web_c"; then
+      if verify_web_health "$(web_port_for_slot "$slot")" 2>/dev/null; then
+        web_slot="$slot"
+      fi
+    fi
+    if docker ps --format '{{.Names}}' | grep -qx "$api_c"; then
+      if verify_api_health "$(api_port_for_slot "$slot")" 2>/dev/null; then
+        api_slot="$slot"
+      fi
+    fi
+  done
+
+  if [ -z "$web_slot" ] || [ -z "$api_slot" ]; then
+    return 1
+  fi
+
+  write_state "$web_slot" "$api_slot"
+  write_host_upstream "$(web_port_for_slot "$web_slot")" "$(api_port_for_slot "$api_slot")"
+  echo "Recovered deploy state from running containers (web=${web_slot}, api=${api_slot})."
+  return 0
+}
+
+ensure_deploy_ready() {
+  if [ -f "$STATE_FILE" ]; then
+    return 0
+  fi
+
+  echo "No ${STATE_FILE} found."
+  if recover_state_from_containers; then
+    if [ ! -f "$REVISION_FILE" ]; then
+      git rev-parse HEAD >"$REVISION_FILE" 2>/dev/null || true
+    fi
+    return 0
+  fi
+
+  echo "No healthy deployment detected — running init..."
+  cmd_init
 }
 
 detect_changes() {
@@ -153,21 +200,33 @@ detect_changes() {
   DEPLOY_BACKEND=false
 
   local base=""
-  if [ -f "$REVISION_FILE" ]; then
+  if [ -n "${DEPLOY_BASE_REV:-}" ]; then
+    base="$DEPLOY_BASE_REV"
+  elif [ -f "$REVISION_FILE" ]; then
     base=$(cat "$REVISION_FILE")
   fi
 
   if [ -z "$base" ]; then
-    echo "No ${REVISION_FILE} — treating as first deploy (both services)."
+    if [ -f "$STATE_FILE" ] && git rev-parse HEAD~1 >/dev/null 2>&1; then
+      base=$(git rev-parse HEAD~1)
+      echo "No ${REVISION_FILE} — comparing against previous commit (${base:0:8})."
+    else
+      echo "No deploy baseline — will deploy both services."
+      DEPLOY_FRONTEND=true
+      DEPLOY_BACKEND=true
+      return
+    fi
+  fi
+
+  if ! git cat-file -e "${base}^{commit}" 2>/dev/null; then
+    echo "WARN: baseline ${base:0:8} not found — deploying both."
     DEPLOY_FRONTEND=true
     DEPLOY_BACKEND=true
     return
   fi
 
-  if ! git cat-file -e "${base}^{commit}" 2>/dev/null; then
-    echo "WARN: ${REVISION_FILE} points to missing commit — deploying both."
-    DEPLOY_FRONTEND=true
-    DEPLOY_BACKEND=true
+  if [ "$base" = "$(git rev-parse HEAD)" ]; then
+    echo "Already at deployed revision (${base:0:8})."
     return
   fi
 
@@ -279,13 +338,11 @@ cmd_init() {
 }
 
 cmd_deploy() {
-  if [ ! -f "$STATE_FILE" ]; then
-    echo "ERROR: No ${STATE_FILE}. Run ./deploy.sh --init first."
-    exit 1
-  fi
+  ensure_deploy_ready
 
   if [ "$DEPLOY_FRONTEND" = false ] && [ "$DEPLOY_BACKEND" = false ]; then
     echo "Nothing to deploy."
+    git rev-parse HEAD >"$REVISION_FILE"
     exit 0
   fi
 
