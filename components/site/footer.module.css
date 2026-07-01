@@ -423,6 +423,8 @@
 
 .waitlistBlock {
   margin: 40px 0 0;
+  width: 100%;
+  max-width: 480px;
 }
 
 .bottomCta {
@@ -439,8 +441,8 @@
 .waitlistForm {
   display: flex;
   align-items: center;
-  max-width: 100%;
   width: 100%;
+  max-width: 480px;
   margin-top: 14px;
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.04);
@@ -617,6 +619,7 @@
     text-align: center;
   }
 
+  .waitlistBlock,
   .waitlistForm {
     max-width: 100%;
   }
