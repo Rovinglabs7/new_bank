@@ -1,5 +1,5 @@
 .section {
-  background: var(--color-cream);
+  background: linear-gradient(180deg, #faf6f1 0%, var(--color-cream) 100%);
   padding: 0 0 96px;
 }
 
@@ -26,12 +26,19 @@
   border: 1px solid rgba(40, 30, 21, 0.1);
   border-radius: 20px;
   padding: 32px 28px;
-  box-shadow: 0 24px 48px rgba(40, 30, 21, 0.08);
+  box-shadow: 0 8px 32px rgba(40, 30, 21, 0.07);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 16px 48px rgba(40, 30, 21, 0.12);
+  transform: translateY(-2px);
 }
 
 .recommended {
   border-color: var(--color-ink);
-  box-shadow: 0 24px 48px rgba(40, 30, 21, 0.18);
+  background: linear-gradient(160deg, #fffdf9 0%, #fff8ee 100%);
+  box-shadow: 0 16px 48px rgba(40, 30, 21, 0.14);
 }
 
 .badge {
@@ -50,12 +57,12 @@
 
 .eyebrow {
   margin: 0 0 6px;
-  font-family: var(--font-inter);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-family: var(--font-season);
+  font-size: 13px;
+  font-weight: 420;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #d97706;
+  color: #a06830;
 }
 
 .name {
@@ -103,9 +110,9 @@
 
 .featurePrefix {
   margin: 24px 0 0;
-  font-family: var(--font-inter);
-  font-size: 13px;
-  font-weight: 600;
+  font-family: var(--font-season);
+  font-size: 14px;
+  font-weight: 420;
   color: var(--color-ink);
 }
 
@@ -156,7 +163,7 @@
   width: 16px;
   height: 16px;
   margin-top: 3px;
-  color: #d97706;
+  color: #a06830;
 }
 
 .actions {
@@ -173,7 +180,7 @@
   font-family: var(--font-inter);
   font-size: 13px;
   font-weight: 500;
-  color: #d97706;
+  color: #a06830;
   text-align: center;
 }
 
@@ -216,7 +223,7 @@
   font-family: var(--font-inter);
   font-size: 13px;
   font-weight: 500;
-  color: #d97706;
+  color: #a06830;
 }
 
 @media (max-width: 900px) {

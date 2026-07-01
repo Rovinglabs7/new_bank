@@ -1,41 +1,61 @@
 .wrapper {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
   justify-content: center;
   margin-bottom: 40px;
 }
 
-.pill {
+/* Single toggle container */
+.toggle {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 6px 16px;
+  background: rgba(40, 30, 21, 0.06);
+  border: 1px solid rgba(40, 30, 21, 0.12);
   border-radius: 999px;
-  border: 1.5px solid rgba(40, 30, 21, 0.2);
-  background: transparent;
-  color: var(--color-ink-muted);
-  font-family: var(--font-inter);
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
-  white-space: nowrap;
-  line-height: 1.4;
+  padding: 4px;
+  gap: 2px;
+  position: relative;
 }
 
-.pill:hover {
-  border-color: var(--color-ink);
+.option {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 20px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--color-ink-muted);
+  font-family: var(--font-season);
+  font-size: 0.9rem;
+  font-weight: 420;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+  line-height: 1.4;
+  z-index: 1;
+}
+
+.option:hover {
   color: var(--color-ink);
 }
 
-.pillActive {
-  background: var(--color-ink);
-  border-color: var(--color-ink);
+.optionActive {
   color: var(--color-white);
 }
 
-.pillActive:hover {
-  background: var(--color-ink);
+.optionActive:hover {
   color: var(--color-white);
+}
+
+/* Sliding background pill */
+.slider {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  border-radius: 999px;
+  background: var(--color-ink);
+  box-shadow: 0 1px 4px rgba(40, 30, 21, 0.18);
+  transition: left 0.22s cubic-bezier(0.4, 0, 0.2, 1), width 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 0;
 }
