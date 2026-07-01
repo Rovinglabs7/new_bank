@@ -1741,3 +1741,36 @@
     aspect-ratio: 3 / 4;
   }
 }
+
+@media (max-width: 480px) {
+  .section {
+    padding: 64px 0;
+  }
+
+  .inner {
+    padding: 0 16px;
+    gap: 32px;
+  }
+
+  .heading {
+    font-size: clamp(1.8rem, 7vw, 2.2rem);
+  }
+
+  .subtext {
+    font-size: 15px;
+  }
+
+  .tabs {
+    gap: 6px;
+  }
+
+  .tab {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .slackWindow,
+  .teamsWindow {
+    height: 340px;
+  }
+}

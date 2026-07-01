@@ -99,24 +99,39 @@
 
   .textCol {
     flex: none;
+    width: 100%;
+  }
+
+  .pillGrid {
+    width: 100%;
   }
 }
 
 @media (max-width: 600px) {
   .section {
-    padding: 64px 0 80px;
+    padding: 56px 0 72px;
   }
 
   .inner {
-    padding: 0 20px;
+    padding: 0 16px;
   }
 
   .card {
-    padding: 28px;
+    padding: 24px;
     border-radius: 20px;
+    gap: 24px;
+  }
+
+  .heading {
+    font-size: 1.6rem;
   }
 
   .pill {
     white-space: normal;
+    font-size: 13px;
+  }
+
+  .pillIcon {
+    flex-shrink: 0;
   }
 }

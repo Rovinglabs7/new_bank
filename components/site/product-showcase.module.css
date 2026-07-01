@@ -108,6 +108,12 @@
   min-height: 140px;
 }
 
+@media (max-width: 1024px) {
+  .row1 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 @media (max-width: 900px) {
   .row1 {
     grid-template-columns: 1fr;
@@ -120,20 +126,26 @@
   .row2 .card:last-child {
     grid-column: 1 / -1;
   }
+
+  .row1-narrow,
+  .row1-wide {
+    min-height: 360px;
+  }
 }
 
 @media (max-width: 600px) {
   .showcase {
-    padding: 56px 0 80px;
+    padding: 56px 0 72px;
   }
 
   .inner {
-    padding: 0 20px;
+    padding: 0 16px;
   }
 
   .row1,
   .row2 {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .row2 .card:last-child {
@@ -141,12 +153,16 @@
   }
 
   .card {
-    padding: 28px;
+    padding: 24px;
   }
 
   .row1-narrow,
   .row1-wide,
   .row2 .card {
     min-height: auto;
+  }
+
+  .cardTitle {
+    font-size: 1.4rem;
   }
 }

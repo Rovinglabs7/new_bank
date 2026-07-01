@@ -91,31 +91,61 @@
 @media (max-width: 1024px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
   }
 
   .grid > .card:last-child {
     grid-column: 1 / -1;
   }
+
+  .grid > .card:last-child .imagePlaceholder {
+    aspect-ratio: 21 / 9;
+  }
 }
 
 @media (max-width: 768px) {
   .solutions {
-    padding: 64px 0 80px;
+    padding: 56px 0 72px;
   }
 
   .inner {
     padding: 0 20px;
   }
 
+  .heading {
+    margin-bottom: 40px;
+    font-size: clamp(1.7rem, 5vw, 2.4rem);
+  }
+
   .grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .grid > .card:last-child {
     grid-column: auto;
   }
 
+  .grid > .card:last-child .imagePlaceholder {
+    aspect-ratio: 4 / 3;
+  }
+
   .imagePlaceholder {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 3;
+  }
+
+  .cardHeading {
+    font-size: 20px;
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .solutions {
+    padding: 48px 0 60px;
+  }
+
+  .inner {
+    padding: 0 16px;
   }
 }

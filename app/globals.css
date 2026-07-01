@@ -25,6 +25,14 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  min-width: 0;
+}
+
+/* Prevent horizontal overflow on all screen sizes */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 html {

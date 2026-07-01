@@ -79,16 +79,38 @@
 }
 
 @media (max-width: 700px) {
+  .bar {
+    height: auto;
+  }
+
   .inner {
-    padding: 8px 20px;
+    padding: 10px 44px 10px 16px;
     flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 6px;
+    position: relative;
   }
 
   .message {
     font-size: 12px;
+    flex: 1 1 100%;
+    text-align: left;
+    order: 2;
+  }
+
+  .tag {
+    order: 1;
   }
 
   .cta {
     font-size: 12px;
+    order: 3;
+  }
+
+  .close {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }

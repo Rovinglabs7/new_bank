@@ -94,20 +94,26 @@
 
 @media (max-width: 600px) {
   .section {
-    padding: 72px 0;
+    padding: 56px 0;
   }
 
   .inner {
-    padding: 0 20px;
+    padding: 0 16px;
+  }
+
+  .heading {
+    font-size: clamp(2rem, 8vw, 3rem);
+    margin-bottom: 32px;
   }
 
   .imageWrap {
     border-radius: 16px;
+    margin-top: 32px;
   }
 
   .image {
     border-radius: 16px;
-    height: 300px;
+    height: clamp(220px, 60vw, 340px);
     object-position: center center;
   }
 }

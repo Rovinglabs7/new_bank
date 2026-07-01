@@ -83,31 +83,48 @@
 
   .itemB,
   .itemD {
-    width: 168px;
-    height: 220px;
+    width: clamp(120px, 16vw, 168px);
+    height: clamp(156px, 21vw, 220px);
   }
 
   .itemC {
-    width: 200px;
-    height: 260px;
+    width: clamp(140px, 19vw, 200px);
+    height: clamp(182px, 25vw, 260px);
   }
 }
 
 @media (max-width: 700px) {
   .collage {
-    gap: 12px;
-    margin-top: 40px;
-    padding: 0 20px;
+    gap: 10px;
+    margin-top: 36px;
+    padding: 0 16px;
   }
 
+  .itemB,
+  .itemD {
+    width: clamp(96px, 22vw, 140px);
+    height: clamp(124px, 28vw, 182px);
+    transform: translateY(-8px);
+  }
+
+  .itemC {
+    width: clamp(120px, 28vw, 174px);
+    height: clamp(154px, 36vw, 224px);
+    margin: 0;
+    transform: none;
+  }
+}
+
+@media (max-width: 420px) {
   .itemB,
   .itemD {
     display: none;
   }
 
   .itemC {
-    width: min(280px, 70vw);
-    height: 340px;
+    width: min(240px, 65vw);
+    height: auto;
+    aspect-ratio: 3 / 4;
     margin: 0;
     transform: none;
   }

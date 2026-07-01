@@ -100,7 +100,7 @@
   }
 
   .image {
-    min-height: 320px;
+    min-height: 300px;
   }
 
   .textCol {
@@ -110,10 +110,24 @@
 
 @media (max-width: 600px) {
   .section {
-    padding: 64px 0 80px;
+    padding: 56px 0 72px;
   }
 
   .inner {
-    padding: 0 20px;
+    padding: 0 16px;
+    gap: 24px;
+  }
+
+  .image {
+    min-height: 240px;
+    border-radius: 12px;
+  }
+
+  .imageCol {
+    border-radius: 12px;
+  }
+
+  .quote p {
+    font-size: 1.35rem;
   }
 }

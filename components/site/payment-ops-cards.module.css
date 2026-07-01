@@ -332,6 +332,10 @@
   .inner {
     padding: 0 24px;
   }
+
+  .cardMedia {
+    aspect-ratio: 4 / 3;
+  }
 }
 
 @media (max-width: 560px) {
@@ -348,6 +352,15 @@
   }
 
   .stepBlock {
-    min-width: 200px;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .cardMedia {
+    aspect-ratio: 1 / 1;
+  }
+
+  .sectionSub {
+    font-size: 15px;
   }
 }

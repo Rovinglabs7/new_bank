@@ -53,11 +53,21 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 0 0 80px;
+    padding: 0 0 72px;
   }
 
   .mediaTile {
-    width: 160px;
+    width: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 0 0 56px;
+  }
+
+  .mediaTile {
+    width: 120px;
   }
 }
 
