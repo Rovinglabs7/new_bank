@@ -74,7 +74,6 @@ export const careers = {
     items: [
       { label: "Address", value: "71-75 Shelton Street, Covent Garden, London, WC2H 9JQ, United Kingdom" },
       { label: "Phone", value: "+44 7353 179684" },
-      { label: "Email", value: "hello@sprout.com" },
       { label: "Email", value: "Careers@sprout.com" },
     ],
   },

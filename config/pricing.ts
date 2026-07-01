@@ -28,6 +28,7 @@ export type ComparisonRow = {
   standard: boolean | string;
   growth: boolean | string;
   enterprise: boolean | string;
+  tooltip?: string;
 };
 
 export type ComparisonCategory = {
@@ -258,65 +259,70 @@ export const pricing = {
             enterprise: true,
           },
           { label: "Payment links you can share anywhere", standard: true, growth: true, enterprise: true },
-          { label: "Predict failed payments before they happen", standard: false, growth: true, enterprise: true },
-          { label: "Automatically retry collections when customers are most likely to have funds available", standard: false, growth: true, enterprise: true },
-          { label: "Instant settlement available for eligible payments", standard: false, growth: true, enterprise: true },
-          { label: "Verify bank details during mandate setup to reduce failed collections", standard: false, growth: true, enterprise: true },
+          { label: "Predict failed payments before they happen", standard: false, growth: true, enterprise: true, tooltip: "AI flags payments likely to fail up to 3 days before they're due, so you can act before revenue is lost." },
+          { label: "Automatically retry collections when customers are most likely to have funds available", standard: false, growth: true, enterprise: true, tooltip: "Intelligent retry logic analyses bank behaviour patterns to time retries when funds are most likely present." },
+          { label: "Instant settlement available for eligible payments", standard: false, growth: true, enterprise: true, tooltip: "Advance your next payout to the same day on eligible payments. A 0.6% fee applies to the advanced amount." },
+          { label: "Verify bank details during mandate setup to reduce failed collections", standard: false, growth: true, enterprise: true, tooltip: "Open Banking verification confirms account details are live and correct before the first payment is collected." },
           {
             label: "SEPA and international collections at near-domestic rates",
             standard: false,
             growth: false,
             enterprise: true,
+            tooltip: "Collect across EU member states via SEPA Direct Debit. Rates are negotiated to match local scheme pricing.",
           },
-          { label: "Multi-currency settlement", standard: false, growth: false, enterprise: true },
-          { label: "Local payment scheme support across supported markets", standard: false, growth: false, enterprise: true },
+          { label: "Multi-currency settlement", standard: false, growth: false, enterprise: true, tooltip: "Settle collected funds in multiple currencies without converting everything to GBP first." },
+          { label: "Local payment scheme support across supported markets", standard: false, growth: false, enterprise: true, tooltip: "Access country-specific payment rails in supported regions, reducing cross-border fees for international customers." },
         ],
       },
       {
         category: "Compliance and trust",
         rows: [
-          { label: "Real-time compliance dashboard with live onboarding and verification status", standard: true, growth: true, enterprise: true },
+          { label: "Real-time compliance dashboard with live onboarding and verification status", standard: true, growth: true, enterprise: true, tooltip: "See the exact status of every KYC check, director verification and bank account confirmation in one place." },
           {
             label: "FCA-regulated payment infrastructure with safeguarded client funds",
             standard: true,
             growth: true,
             enterprise: true,
+            tooltip: "Sprout is authorised by the FCA as a Payment Institution. All client funds are held in safeguarded accounts, separate from company funds.",
           },
-          { label: "Named compliance specialist", standard: false, growth: false, enterprise: true },
-          { label: "Advanced fraud protection", standard: false, growth: false, enterprise: true },
+          { label: "Named compliance specialist", standard: false, growth: false, enterprise: true, tooltip: "A dedicated compliance contact who knows your account, available for queries, reviews and regulatory submissions." },
+          { label: "Advanced fraud protection", standard: false, growth: false, enterprise: true, tooltip: "Enhanced screening for high-risk transactions, including velocity checks, device fingerprinting and anomaly detection." },
           {
             label: "Payment dispute and chargeback support",
             standard: false,
             growth: false,
             enterprise: true,
+            tooltip: "Sprout's team assists with evidence gathering and submissions for disputed transactions, reducing manual work on your end.",
           },
         ],
       },
       {
         category: "Automation",
         rows: [
-          { label: "AI Concierge built into your dashboard to answer questions and automate routine tasks", standard: true, growth: true, enterprise: true },
-          { label: "Native reconciliation with Xero and QuickBooks", standard: true, growth: true, enterprise: true },
+          { label: "AI Concierge built into your dashboard to answer questions and automate routine tasks", standard: true, growth: true, enterprise: true, tooltip: "Ask questions, run reports and trigger workflows using plain language directly inside your Sprout dashboard." },
+          { label: "Native reconciliation with Xero and QuickBooks", standard: true, growth: true, enterprise: true, tooltip: "Payments, payouts and refunds sync automatically to your accounting software with no manual exports needed." },
           {
             label: "AI Concierge in your dashboard, Slack, Microsoft Teams and WhatsApp",
             standard: false,
             growth: true,
             enterprise: true,
+            tooltip: "Extend your AI Concierge beyond the dashboard — get updates, run queries and trigger actions from your team's existing tools.",
           },
           {
             label: "Multi-entity support for businesses managing multiple trading names",
             standard: false,
             growth: true,
             enterprise: true,
+            tooltip: "Manage separate payment flows, customer bases and reporting for multiple brands or entities under one Sprout account.",
           },
         ],
       },
       {
         category: "Reporting",
         rows: [
-          { label: "Standard dashboard reporting", standard: true, growth: true, enterprise: true },
-          { label: "Custom report builder", standard: false, growth: true, enterprise: true },
-          { label: "Revenue, cash flow and churn forecasting", standard: false, growth: true, enterprise: true },
+          { label: "Standard dashboard reporting", standard: true, growth: true, enterprise: true, tooltip: "Pre-built views covering collections, payouts, failed payments and customer activity." },
+          { label: "Custom report builder", standard: false, growth: true, enterprise: true, tooltip: "Build and save reports with the exact filters, date ranges and fields your team needs." },
+          { label: "Revenue, cash flow and churn forecasting", standard: false, growth: true, enterprise: true, tooltip: "AI-powered projections based on your collection history, customer behaviour and seasonal patterns." },
         ],
       },
       {
@@ -341,14 +347,15 @@ export const pricing = {
       {
         category: "Support",
         rows: [
-          { label: "24/7 chat support", standard: true, growth: true, enterprise: true },
+          { label: "24/7 chat support", standard: true, growth: true, enterprise: true, tooltip: "Live chat available around the clock with average first response under 4 hours on Standard." },
           {
             label: "Help Centre, switching guide and onboarding checklist",
             standard: true,
             growth: true,
             enterprise: true,
+            tooltip: "Self-serve documentation covering every Sprout feature, plus a step-by-step checklist to get collecting quickly.",
           },
-          { label: "Priority support with responses in under 20 minutes", standard: false, growth: true, enterprise: true },
+          { label: "Priority support with responses in under 20 minutes", standard: false, growth: true, enterprise: true, tooltip: "Growth and Enterprise customers are routed to a dedicated queue with guaranteed response times under 20 minutes." },
         ],
       },
     ] satisfies ComparisonCategory[],

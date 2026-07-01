@@ -23,6 +23,23 @@ function Cell({ value }: { value: boolean | string }) {
   );
 }
 
+function InfoIcon() {
+  return (
+    <svg
+      className={styles.tooltipIcon}
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      aria-hidden
+    >
+      <circle cx="7" cy="7" r="6.5" stroke="currentColor" strokeOpacity="0.8" />
+      <path d="M7 6v4" stroke="currentColor" strokeLinecap="round" />
+      <circle cx="7" cy="4.5" r="0.75" fill="currentColor" />
+    </svg>
+  );
+}
+
 export function PricingComparison() {
   const { comparison } = pricing;
 
@@ -55,7 +72,17 @@ export function PricingComparison() {
                   {category.rows.map((row) => (
                     <tr key={row.label}>
                       <th className={styles.featureCell} scope="row">
-                        <span className={styles.featureLabel}>{row.label}</span>
+                        <span className={styles.featureLabelRow}>
+                          <span className={styles.featureLabel}>{row.label}</span>
+                          {row.tooltip ? (
+                            <span className={styles.tooltipWrapper}>
+                              <InfoIcon />
+                              <span className={styles.tooltipText} role="tooltip">
+                                {row.tooltip}
+                              </span>
+                            </span>
+                          ) : null}
+                        </span>
                       </th>
                       <td>
                         <Cell value={row.standard} />
