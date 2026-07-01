@@ -787,25 +787,24 @@
 
 /* ─── Phone frame (WhatsApp) ───────────────────────────────────────────────── */
 
+/* iPad Pro portrait proportions ~3:4 ratio */
 .phoneFrame {
-  width: 240px;
+  width: 380px;
+  height: 500px;
   background: #1a1a1e;
-  border-radius: 50px;
+  border-radius: 24px;
   border: 6px solid #2a2a2e;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 12px 0 0;
+  align-items: stretch;
   filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.2));
   overflow: hidden;
 }
 
 .phoneDynamicIsland {
-  width: 80px;
-  height: 26px;
-  background: #1a1a1e;
-  border-radius: 20px;
-  margin-bottom: 6px;
+  width: 100%;
+  height: 28px;
+  background: #075e54;
   flex-shrink: 0;
 }
 
@@ -816,7 +815,6 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  min-height: 480px;
 }
 
 .phoneHomeBar {
@@ -1241,7 +1239,9 @@
   }
 
   .phoneFrame {
-    width: 200px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 4;
   }
 }
 
@@ -1268,6 +1268,8 @@
   }
 
   .phoneFrame {
-    width: 180px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 4;
   }
 }

@@ -127,14 +127,14 @@ function TypingIndicator({ platform }: { platform?: "slack" | "teams" }) {
 function RichCard({ visible }: { visible: boolean }) {
   return (
     <div className={`${styles.richCard} ${visible ? styles.richCardVisible : ""}`}>
-      <div className={styles.richCardIcon}>🔄</div>
+      <div className={styles.richCardIcon}>📨</div>
       <div className={styles.richCardBody}>
-        <div className={styles.richCardTitle}>Recurring Payment</div>
-        <div className={styles.richCardName}>Green Leaf Nursery</div>
-        <div className={styles.richCardDetails}>£240 / month · Starts 1 August</div>
+        <div className={styles.richCardTitle}>Payment Reminder Sent</div>
+        <div className={styles.richCardName}>Bright Dental</div>
+        <div className={styles.richCardDetails}>£1,240 due · Expires in 3 days</div>
         <div className={styles.richCardStatus}>
           <span className={styles.statusDot} />
-          Awaiting authorisation
+          Reminder delivered
         </div>
       </div>
     </div>
@@ -178,41 +178,33 @@ function SlackMockup() {
     // 2500ms — Nova reply
     hide("nt1", 2500);
     show("n1", 2500);
-    // 4000ms — Daniel 2
-    show("d2", 4000);
-    // 5000ms — Nova typing 2
-    show("nt2", 5000);
+    // 4500ms — Daniel 2
+    show("d2", 4500);
+    // 5300ms — Nova typing 2
+    show("nt2", 5300);
     // 7000ms — Nova reply + card
     hide("nt2", 7000);
     show("n2", 7000);
     show("n2card", 7500);
-    show("n2btns", 8500);
-    // 9500ms — button auto-highlight
-    const t1 = setTimeout(() => { setBtnClicked(true); setBtnLoading(true); }, 9500);
-    timers.current.push(t1);
-    const t2 = setTimeout(() => setBtnLoading(false), 10100);
-    timers.current.push(t2);
-    // 10500ms — Nova confirmation
-    show("n3", 10500);
-    // 13000ms — Emma
-    show("e1", 13000);
-    // 14000ms — Nova typing
-    show("nt3", 14000);
-    // 15500ms — Nova reply
-    hide("nt3", 15500);
-    show("n4", 15500);
+    // 10000ms — Nova 3
+    show("n3", 10000);
+    // 12000ms — Emma
+    show("e1", 12000);
+    // 13500ms — Nova typing 3
+    show("nt3", 13500);
+    // 15000ms — Nova reply 4
+    hide("nt3", 15000);
+    show("n4", 15000);
     // 17000ms — James
     show("j1", 17000);
-    // 19000ms — Nova final
-    show("n5", 19000);
-    // 21000ms — reset
+    // 20000ms — reset
     const t3 = setTimeout(() => {
       setVis({});
       setBtnClicked(false);
       setBtnLoading(false);
       const t4 = setTimeout(runSequence, 800);
       timers.current.push(t4);
-    }, 21000);
+    }, 20000);
     timers.current.push(t3);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show, hide]);
@@ -277,7 +269,7 @@ function SlackMockup() {
                 <DanielInitial className={styles.msgAvatar} />
                 <div className={styles.msgContent}>
                   <div className={styles.msgMeta}><span className={styles.msgName}>Daniel</span><span className={styles.msgTime}>10:14 AM</span></div>
-                  <p className={styles.msgText}>Morning Nova — can you help me set up a monthly payment for Green Leaf Nursery?</p>
+                  <p className={styles.msgText}>@Nova Can you check who still hasn&apos;t paid this week?</p>
                 </div>
               </div>
 
@@ -288,8 +280,10 @@ function SlackMockup() {
                 <NovaAvatarImg className={styles.msgAvatar} />
                 <div className={styles.msgContent}>
                   <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>10:14 AM</span></div>
-                  <p className={styles.msgText}>Morning, Daniel. Of course.</p>
-                  <p className={styles.msgText}>What amount would you like to collect, and when should the first payment go out?</p>
+                  <p className={styles.msgText}>Three outstanding payments.</p>
+                  <p className={styles.msgText}>Oakwood Care. £820. Reminder opened, not completed.</p>
+                  <p className={styles.msgText}>Green Leaf Nursery. £240. Retry scheduled for tomorrow.</p>
+                  <p className={styles.msgText}>Bright Dental. £1,240. Payment request expires in three days.</p>
                 </div>
               </div>
 
@@ -298,7 +292,7 @@ function SlackMockup() {
                 <DanielInitial className={styles.msgAvatar} />
                 <div className={styles.msgContent}>
                   <div className={styles.msgMeta}><span className={styles.msgName}>Daniel</span><span className={styles.msgTime}>10:15 AM</span></div>
-                  <p className={styles.msgText}>£240 a month. Starting 1 August.</p>
+                  <p className={styles.msgText}>Send Bright Dental another reminder.</p>
                 </div>
               </div>
 
@@ -309,27 +303,8 @@ function SlackMockup() {
                 <NovaAvatarImg className={styles.msgAvatar} />
                 <div className={styles.msgContent}>
                   <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>10:15 AM</span></div>
-                  <p className={styles.msgText}>Perfect — I&apos;ve put everything together.</p>
+                  <p className={styles.msgText}>Done. I&apos;ll let you know when they&apos;ve viewed it.</p>
                   <RichCard visible={!!vis["n2card"]} />
-                  <p className={styles.msgText}>Would you like me to send the payment request directly to Green Leaf Nursery?</p>
-                  {vis["n2btns"] && (
-                    <div className={`${styles.actionButtons} ${styles.msgVisible}`}>
-                      <button
-                        className={`${styles.btnPrimary} ${btnClicked ? styles.btnClicked : ""}`}
-                        disabled={btnClicked}
-                        type="button"
-                      >
-                        {btnLoading ? <span className={styles.btnSpinner} aria-hidden /> : "Send to customer"}
-                      </button>
-                      <button
-                        className={styles.btnGhost}
-                        disabled={btnClicked}
-                        type="button"
-                      >
-                        I&apos;ll share it myself
-                      </button>
-                    </div>
-                  )}
                 </div>
               </div>
 
@@ -337,8 +312,8 @@ function SlackMockup() {
               <div className={`${styles.msgRow} ${vis["n3"] ? styles.msgVisible : ""}`}>
                 <NovaAvatarImg className={styles.msgAvatar} />
                 <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>10:16 AM</span></div>
-                  <p className={styles.msgText}>Done. I&apos;ve emailed the request to Green Leaf Nursery. I&apos;ll keep you updated on their progress.</p>
+                  <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>10:18 AM</span></div>
+                  <p className={styles.msgText}>Bright Dental has opened the reminder.</p>
                 </div>
               </div>
 
@@ -346,8 +321,8 @@ function SlackMockup() {
               <div className={`${styles.msgRow} ${vis["e1"] ? styles.msgVisible : ""}`}>
                 <EmmaInitial className={styles.msgAvatar} />
                 <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>Emma</span><span className={styles.msgTime}>10:24 AM</span></div>
-                  <p className={styles.msgText}>Any update on Oakwood Care?</p>
+                  <div className={styles.msgMeta}><span className={styles.msgName}>Emma</span><span className={styles.msgTime}>10:20 AM</span></div>
+                  <p className={styles.msgText}>Brilliant. One less thing to chase.</p>
                 </div>
               </div>
 
@@ -358,7 +333,7 @@ function SlackMockup() {
                 <NovaAvatarImg className={styles.msgAvatar} />
                 <div className={styles.msgContent}>
                   <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>10:24 AM</span></div>
-                  <p className={styles.msgText}>Not yet — they&apos;ve viewed the request but haven&apos;t completed authorisation. I&apos;ve scheduled a nudge for tomorrow morning.</p>
+                  <p className={styles.msgText}>Good news. Bright Dental has paid. £1,240 collected. Settlement expected Friday.</p>
                 </div>
               </div>
 
@@ -367,16 +342,7 @@ function SlackMockup() {
                 <JamesInitial className={styles.msgAvatar} />
                 <div className={styles.msgContent}>
                   <div className={styles.msgMeta}><span className={styles.msgName}>James</span><span className={styles.msgTime}>10:25 AM</span></div>
-                  <p className={styles.msgText}>Brilliant. One less thing to chase.</p>
-                </div>
-              </div>
-
-              {/* Nova 5 */}
-              <div className={`${styles.msgRow} ${vis["n5"] ? styles.msgVisible : ""}`}>
-                <NovaAvatarImg className={styles.msgAvatar} />
-                <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>10:31 AM</span></div>
-                  <p className={styles.msgText}>Update: Green Leaf Nursery has completed the authorisation. First collection scheduled for 1 August. 🎉</p>
+                  <p className={styles.msgText}>That&apos;s everything sorted. Thanks Nova.</p>
                 </div>
               </div>
             </div>
@@ -493,7 +459,7 @@ function TeamsMockup() {
                 <EmmaInitial className={styles.msgAvatar} />
                 <div className={styles.msgContent}>
                   <div className={styles.msgMeta}><span className={styles.msgName}>Emma</span><span className={styles.msgTime}>Yesterday 9:02 AM</span></div>
-                  <p className={styles.msgText}>Has Oakwood Care completed their Direct Debit yet?</p>
+                  <p className={styles.msgText}>Morning everyone. Has Oakwood Care completed their direct debit yet?</p>
                 </div>
               </div>
 
@@ -503,7 +469,7 @@ function TeamsMockup() {
                 <NovaAvatarImg className={styles.msgAvatar} />
                 <div className={styles.msgContent}>
                   <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>9:03 AM</span></div>
-                  <p className={styles.msgText}>Not yet — they&apos;ve viewed the request but haven&apos;t completed it. I&apos;ve scheduled a reminder for tomorrow morning.</p>
+                  <p className={styles.msgText}>Not yet. They viewed the request yesterday but haven&apos;t authorised. I&apos;ve scheduled a reminder for this morning.</p>
                 </div>
               </div>
 
@@ -521,7 +487,7 @@ function TeamsMockup() {
                 <NovaAvatarImg className={styles.msgAvatar} />
                 <div className={styles.msgContent}>
                   <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>9:41 AM</span></div>
-                  <p className={styles.msgText}>Quick update — Oakwood Care has now completed the authorisation. Their first collection is scheduled for Monday.</p>
+                  <p className={styles.msgText}>Update. Oakwood Care has completed the authorisation. First collection scheduled for Monday.</p>
                 </div>
               </div>
 
@@ -537,7 +503,7 @@ function TeamsMockup() {
                 <NovaAvatarImg className={styles.msgAvatar} />
                 <div className={styles.msgContent}>
                   <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>9:42 AM</span></div>
-                  <p className={styles.msgText}>Exactly. I&apos;ll notify the team once the payment settles.</p>
+                  <p className={styles.msgText}>I&apos;ll notify the team once the payment settles.</p>
                 </div>
               </div>
             </div>
@@ -557,6 +523,7 @@ function TeamsMockup() {
 function WhatsAppMockup() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [vis, setVis] = useState<VisibleSet>({});
+  const [btnClicked, setBtnClicked] = useState<string | null>(null);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const started = useRef(false);
 
@@ -570,23 +537,62 @@ function WhatsAppMockup() {
     timers.current.push(t);
   }, []);
 
+  const hide = useCallback((id: string, delay: number) => {
+    const t = setTimeout(() => setVis((p) => ({ ...p, [id]: false })), delay);
+    timers.current.push(t);
+  }, []);
+
   const runSequence = useCallback(() => {
     setVis({});
+    setBtnClicked(null);
+    // Step 1 (0ms) — Daniel
     show("d1", 0);
-    show("n1", 1200);
-    show("d2", 3500);
-    show("n2", 4800);
-    show("n3", 8500);
-    show("d3", 10000);
-    show("n4", 11500);
-    const t = setTimeout(() => {
+    // Step 2 (1200ms) — Nova typing
+    show("nt1", 1200);
+    // Step 3 (2800ms) — Nova reply
+    hide("nt1", 2800);
+    show("n1", 2800);
+    // Step 4 (4200ms) — Daniel
+    show("d2", 4200);
+    // Step 5 (5200ms) — Nova typing
+    show("nt2", 5200);
+    // Step 6 (7000ms) — Nova 2 bubbles staggered
+    hide("nt2", 7000);
+    show("n2a", 7000);
+    show("n2b", 7400);
+    // Step 7 (8500ms) — action buttons
+    show("wabtns", 8500);
+    // Step 8 (9800ms) — "Copy link" clicked + spinner
+    const t1 = setTimeout(() => setBtnClicked("copy"), 9800);
+    timers.current.push(t1);
+    // Step 9 (10800ms) — Nova confirmation
+    show("n3", 10800);
+    // Step 10 (13500ms) — Daniel
+    show("d3", 13500);
+    // Step 11 (14500ms) — Nova typing
+    show("nt3", 14500);
+    // Step 12 (16000ms) — Nova reply
+    hide("nt3", 16000);
+    show("n4", 16000);
+    // Step 13 (17500ms) — buttons
+    show("wabtns2", 17500);
+    // Step 14 (19000ms) — "Yes, remind them" auto-clicks
+    const t2 = setTimeout(() => setBtnClicked("remind"), 19000);
+    timers.current.push(t2);
+    // Step 15 (20000ms) — Nova confirmation
+    show("n5", 20000);
+    // Step 16 (23000ms) — Nova proactive update
+    show("n6", 23000);
+    // Step 17 (26000ms) — reset
+    const t3 = setTimeout(() => {
       setVis({});
-      const t2 = setTimeout(runSequence, 800);
-      timers.current.push(t2);
-    }, 18000);
-    timers.current.push(t);
+      setBtnClicked(null);
+      const t4 = setTimeout(runSequence, 800);
+      timers.current.push(t4);
+    }, 26000);
+    timers.current.push(t3);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [show]);
+  }, [show, hide]);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -631,56 +637,164 @@ function WhatsAppMockup() {
 
         {/* Chat area */}
         <div className={styles.waChat} ref={scrollRef}>
-          {/* Daniel (right) */}
+          {/* Step 1 — Daniel */}
           <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${vis["d1"] ? styles.msgVisible : ""}`}>
             <div className={`${styles.waBubble} ${styles.waBubbleOut}`}>
-              Morning Nova. Anything I should know about?
+              Morning Nova. Can you create a payment link for our new client?
             </div>
           </div>
 
-          {/* Nova (left) */}
+          {/* Step 2 — Nova typing */}
+          {vis["nt1"] && (
+            <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft}`}>
+              <NovaAvatarImg className={styles.waAvatar} />
+              <div className={styles.typingBubble}>
+                <span className={styles.dots}>
+                  <span className={styles.dot} />
+                  <span className={styles.dot} />
+                  <span className={styles.dot} />
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Step 3 — Nova */}
           <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n1"] ? styles.msgVisible : ""}`}>
             <NovaAvatarImg className={styles.waAvatar} />
-            <div>
-              <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
-                Morning 👋
-              </div>
-              <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
-                Quiet start today — everything collected overnight except one payment from Bramble Design. I&apos;ve already scheduled another attempt for tomorrow based on their usual payment history.
-              </div>
+            <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
+              Of course. How much would you like to collect?
             </div>
           </div>
 
+          {/* Step 4 — Daniel */}
           <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${vis["d2"] ? styles.msgVisible : ""}`}>
             <div className={`${styles.waBubble} ${styles.waBubbleOut}`}>
-              Amazing. Thanks for sorting it.
+              £850.
             </div>
           </div>
 
-          <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n2"] ? styles.msgVisible : ""}`}>
+          {/* Step 5 — Nova typing */}
+          {vis["nt2"] && (
+            <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft}`}>
+              <NovaAvatarImg className={styles.waAvatar} />
+              <div className={styles.typingBubble}>
+                <span className={styles.dots}>
+                  <span className={styles.dot} />
+                  <span className={styles.dot} />
+                  <span className={styles.dot} />
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Step 6 — Nova 2 bubbles staggered */}
+          <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n2a"] ? styles.msgVisible : ""}`}>
             <NovaAvatarImg className={styles.waAvatar} />
             <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
-              Always. Enjoy your morning — I&apos;ll message you if anything needs your attention.
+              Done. I&apos;ve created the payment link.
+            </div>
+          </div>
+          <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n2b"] ? styles.msgVisible : ""}`}>
+            <NovaAvatarImg className={styles.waAvatar} />
+            <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
+              Would you like me to send it to the customer, or copy the link?
             </div>
           </div>
 
+          {/* Step 7 — Action buttons */}
+          {vis["wabtns"] && (
+            <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${styles.msgVisible}`}>
+              <div className={styles.actionButtons}>
+                <button
+                  className={styles.btnGhost}
+                  disabled={btnClicked === "copy"}
+                  type="button"
+                >
+                  Send to customer
+                </button>
+                <button
+                  className={`${styles.btnPrimary} ${btnClicked === "copy" ? styles.btnClicked : ""}`}
+                  disabled={btnClicked === "copy"}
+                  type="button"
+                >
+                  {btnClicked === "copy" ? <span className={styles.btnSpinner} aria-hidden /> : "Copy link"}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 9 — Nova confirmation */}
           <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n3"] ? styles.msgVisible : ""}`}>
             <NovaAvatarImg className={styles.waAvatar} />
             <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
-              Quick update — Bramble Design&apos;s payment came through on the retry. You&apos;re all caught up.
+              Copied. The payment page stays active for 30 days.
             </div>
           </div>
 
+          {/* Step 10 — Daniel */}
           <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${vis["d3"] ? styles.msgVisible : ""}`}>
             <div className={`${styles.waBubble} ${styles.waBubbleOut}`}>
-              You&apos;re a lifesaver. Cheers Nova.
+              Has Oakwood Care paid yet?
             </div>
           </div>
 
+          {/* Step 11 — Nova typing */}
+          {vis["nt3"] && (
+            <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft}`}>
+              <NovaAvatarImg className={styles.waAvatar} />
+              <div className={styles.typingBubble}>
+                <span className={styles.dots}>
+                  <span className={styles.dot} />
+                  <span className={styles.dot} />
+                  <span className={styles.dot} />
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Step 12 — Nova */}
           <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n4"] ? styles.msgVisible : ""}`}>
             <NovaAvatarImg className={styles.waAvatar} />
             <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
-              Happy to help 😊
+              Not yet. They opened the payment page 12 minutes ago but haven&apos;t completed it. Want me to send a reminder this afternoon?
+            </div>
+          </div>
+
+          {/* Step 13 — Buttons */}
+          {vis["wabtns2"] && (
+            <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${styles.msgVisible}`}>
+              <div className={styles.actionButtons}>
+                <button
+                  className={`${styles.btnPrimary} ${btnClicked === "remind" ? styles.btnClicked : ""}`}
+                  disabled={btnClicked === "remind"}
+                  type="button"
+                >
+                  Yes, remind them
+                </button>
+                <button
+                  className={styles.btnGhost}
+                  disabled={btnClicked === "remind"}
+                  type="button"
+                >
+                  Not now
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 15 — Nova */}
+          <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n5"] ? styles.msgVisible : ""}`}>
+            <NovaAvatarImg className={styles.waAvatar} />
+            <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
+              Done. I&apos;ll let you know when they&apos;ve viewed it.
+            </div>
+          </div>
+
+          {/* Step 16 — Nova proactive update */}
+          <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n6"] ? styles.msgVisible : ""}`}>
+            <NovaAvatarImg className={styles.waAvatar} />
+            <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
+              Good news. Oakwood Care has completed payment. £850 received. Expected settlement: Thursday.
             </div>
           </div>
         </div>
@@ -851,7 +965,7 @@ export function NovaDemoSection() {
           <h2 id="nova-heading" className={styles.heading}>Meet Nova.</h2>
           <p className={styles.subtext}>Your AI teammate for payment operations.</p>
           <p className={styles.body}>
-            Nova works wherever your team works. Ask questions, automate tasks and get updates — without leaving the tools you already use.
+            Nova works wherever your team works. Ask questions, automate tasks and get updates, without leaving the tools you already use.
           </p>
 
           {/* Platform tabs */}
