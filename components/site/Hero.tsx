@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { site } from "@/config/site";
 import styles from "./hero.module.css";
@@ -17,6 +18,54 @@ const fadeUp = {
     },
   }),
 };
+
+function EmailCapture() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const trimmed = email.trim();
+    if (!trimmed) {
+      setError("Please enter your email address.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    setError("");
+    const params = new URLSearchParams({ email: trimmed });
+    router.push(`/contact-sales?${params.toString()}`);
+  }
+
+  return (
+    <div className={styles.captureWrap}>
+      <form className={styles.captureForm} onSubmit={handleSubmit} noValidate>
+        <input
+          type="email"
+          className={styles.captureInput}
+          placeholder="Enter your email address"
+          value={email}
+          onChange={(e) => { setEmail(e.target.value); setError(""); }}
+          aria-label="Email address"
+          autoComplete="email"
+        />
+        <button type="submit" className={styles.captureBtn}>
+          Book a demo
+        </button>
+      </form>
+      {error ? (
+        <p className={styles.captureError}>{error}</p>
+      ) : (
+        <p className={styles.captureReassurance}>
+          No spam. Just a quick way to book your personalised demo.
+        </p>
+      )}
+    </div>
+  );
+}
 
 export function Hero() {
   const { hero } = site;
@@ -53,9 +102,7 @@ export function Hero() {
           animate="visible"
           custom={2}
         >
-          <Link href={hero.primaryCta.href} className={styles.primaryCta}>
-            {hero.primaryCta.label}
-          </Link>
+          <EmailCapture />
         </motion.div>
       </div>
     </section>

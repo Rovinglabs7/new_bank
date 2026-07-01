@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactElement } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import { site } from "@/config/site";
 import styles from "./resources-menu.module.css";
 
@@ -74,57 +75,75 @@ export function ResourcesMenu() {
         onClick={() => setOpen((v) => !v)}
       >
         Resources
+        <motion.svg
+          className={styles.chevron}
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          aria-hidden
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </motion.svg>
       </button>
 
-      {open && (
-        <div
-          id="resources-menu-panel"
-          role="menu"
-          aria-label="Resources"
-          className={styles.panel}
-          style={{ top: panelTop }}
-        >
-          <div className={styles.inner}>
-            <div className={styles.grid}>
-              {columns.map((col) => (
-                <div className={styles.col} key={col.heading}>
-                  <div className={styles.colHeading}>
-                    <span className={styles.colIcon}>{COLUMN_ICONS[col.heading]}</span>
-                    <p className={styles.heading}>{col.heading}</p>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="resources-menu-panel"
+            role="menu"
+            aria-label="Resources"
+            className={styles.panel}
+            style={{ top: panelTop }}
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className={styles.inner}>
+              <div className={styles.grid}>
+                {columns.map((col) => (
+                  <div className={styles.col} key={col.heading}>
+                    <div className={styles.colHeading}>
+                      <span className={styles.colIcon}>{COLUMN_ICONS[col.heading]}</span>
+                      <p className={styles.heading}>{col.heading}</p>
+                    </div>
+                    <ul className={styles.list}>
+                      {col.items.map((item) => (
+                        <li key={item.title} role="none">
+                          <Link role="menuitem" href={item.href} onClick={() => setOpen(false)}>
+                            <span className={styles.title}>{item.title}</span>
+                            <span className={styles.subtext}>{item.subtext}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <ul className={styles.list}>
-                    {col.items.map((item) => (
-                      <li key={item.title} role="none">
-                        <Link role="menuitem" href={item.href} onClick={() => setOpen(false)}>
-                          <span className={styles.title}>{item.title}</span>
-                          <span className={styles.subtext}>{item.subtext}</span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+                ))}
 
-              <div className={styles.featuredCol}>
-                <Link
-                  role="menuitem"
-                  href={featured.href}
-                  className={styles.featuredCard}
-                  onClick={() => setOpen(false)}
-                >
-                  <span className={styles.featuredIcon}>{FEATURED_ICON}</span>
-                  <p className={styles.featuredHeading}>{featured.heading}</p>
-                  <p className={styles.featuredBody}>{featured.body}</p>
-                  <span className={styles.featuredCta}>
-                    {featured.ctaLabel}
-                    <span aria-hidden> →</span>
-                  </span>
-                </Link>
+                <div className={styles.featuredCol}>
+                  <Link
+                    role="menuitem"
+                    href={featured.href}
+                    className={styles.featuredCard}
+                    onClick={() => setOpen(false)}
+                  >
+                    <span className={styles.featuredIcon}>{FEATURED_ICON}</span>
+                    <p className={styles.featuredHeading}>{featured.heading}</p>
+                    <p className={styles.featuredBody}>{featured.body}</p>
+                    <span className={styles.featuredCta}>
+                      {featured.ctaLabel}
+                      <span aria-hidden> →</span>
+                    </span>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
