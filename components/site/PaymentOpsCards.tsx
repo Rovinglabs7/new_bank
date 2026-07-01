@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring, animate } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import styles from "./payment-ops-cards.module.css";
 
 // ─── CARD ONE: Automation Workflow ───────────────────────────────────────────
@@ -206,178 +206,193 @@ function WorkflowCard() {
 // ─── CARD TWO: Globe ─────────────────────────────────────────────────────────
 
 const LOCATIONS = [
-  { id: "london",    name: "London",    currency: "GBP", symbol: "£", amount: 8420,  angle: 30,  settlement: "Tomorrow" },
-  { id: "amsterdam", name: "Amsterdam", currency: "EUR", symbol: "€", amount: 4860,  angle: 110, settlement: "Today" },
-  { id: "new-york",  name: "New York",  currency: "USD", symbol: "$", amount: 12300, angle: 200, settlement: "Tomorrow" },
-  { id: "sydney",    name: "Sydney",    currency: "AUD", symbol: "A$", amount: 6210, angle: 310, settlement: "Today" },
+  { id: "london",    name: "London",    flag: "🇬🇧", rail: "Direct Debit", currency: "GBP", symbol: "£",  amount: 8420,  lat: 51.5,  lng: -0.1  },
+  { id: "amsterdam", name: "Amsterdam", flag: "🇳🇱", rail: "SEPA",         currency: "EUR", symbol: "€",  amount: 4860,  lat: 52.4,  lng: 4.9   },
+  { id: "new-york",  name: "New York",  flag: "🇺🇸", rail: "ACH",          currency: "USD", symbol: "$",  amount: 12300, lat: 40.7,  lng: -74.0 },
+  { id: "sydney",    name: "Sydney",    flag: "🇦🇺", rail: "BECS",         currency: "AUD", symbol: "A$", amount: 6210,  lat: -33.9, lng: 151.2 },
 ];
 
-function useCountUp(target: number, active: boolean, duration = 1.4) {
+// Fibonacci sphere — even dot distribution
+const GLOBE_DOTS: [number, number][] = (() => {
+  const dots: [number, number][] = [];
+  const n = 560;
+  const golden = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 0; i < n; i++) {
+    const y = 1 - (i / (n - 1)) * 2;
+    const theta = golden * i;
+    const lat = (Math.asin(y) * 180) / Math.PI;
+    const lng = (((theta * 180) / Math.PI) % 360 + 360) % 360 - 180;
+    dots.push([lat, lng]);
+  }
+  return dots;
+})();
+
+function project3D(lat: number, lng: number, rotDeg: number, cx: number, cy: number, r: number) {
+  const latR = (lat * Math.PI) / 180;
+  const lngR = ((lng + rotDeg) * Math.PI) / 180;
+  const x3 = Math.cos(latR) * Math.sin(lngR);
+  const y3 = Math.sin(latR);
+  const z3 = Math.cos(latR) * Math.cos(lngR);
+  return { x: cx + r * x3, y: cy - r * y3, depth: z3 };
+}
+
+function useCountUp(target: number, active: boolean, duration = 1.5) {
   const [value, setValue] = useState(0);
   const counted = useRef(false);
-
   useEffect(() => {
     if (!active || counted.current) return;
     counted.current = true;
     const start = performance.now();
     const tick = (now: number) => {
-      const progress = Math.min((now - start) / (duration * 1000), 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.round(eased * target));
-      if (progress < 1) requestAnimationFrame(tick);
+      const p = Math.min((now - start) / (duration * 1000), 1);
+      setValue(Math.round((1 - Math.pow(1 - p, 3)) * target));
+      if (p < 1) requestAnimationFrame(tick);
       else setValue(target);
     };
     requestAnimationFrame(tick);
   }, [active, target, duration]);
-
   return value;
 }
 
-function GlobePoint({ loc, rotation, hovered, onHover, onLeave }: {
-  loc: typeof LOCATIONS[0];
-  rotation: number;
-  hovered: string | null;
-  onHover: (id: string) => void;
-  onLeave: () => void;
-}) {
-  const angle = (loc.angle + rotation) % 360;
-  const rad = (angle * Math.PI) / 180;
-  const cx = 50;
-  const cy = 50;
-  const rx = 38;
-  const ry = 16;
-  // Elliptical orbit
-  const x = cx + rx * Math.sin(rad);
-  const y = cy + ry * Math.sin(rad) * Math.cos(0.4) - 10 * Math.cos(rad);
-  const depth = Math.cos(rad);
-  const visible = depth > -0.3;
-  const opacity = visible ? Math.max(0.3, (depth + 0.3) / 1.3) : 0;
-  const isHovered = hovered === loc.id;
-  const counted = useCountUp(loc.amount, visible && opacity > 0.6);
+interface LocPos {
+  loc: (typeof LOCATIONS)[0];
+  x: number;
+  y: number;
+  depth: number;
+}
+
+function GlobeLocationLabel({ lp }: { lp: LocPos }) {
+  const visible = lp.depth > 0.12;
+  const opacity = visible ? Math.min(1, (lp.depth - 0.12) / 0.35) : 0;
+  const counted = useCountUp(lp.loc.amount, lp.depth > 0.45);
 
   return (
-    <motion.div
+    <div
       className={styles.globeLabel}
       style={{
-        left: `${x}%`,
-        top: `${y}%`,
+        left: lp.x,
+        top: lp.y,
         opacity,
-        zIndex: Math.round((depth + 1) * 10),
+        zIndex: Math.round((lp.depth + 1) * 10),
         pointerEvents: visible ? "auto" : "none",
       }}
-      onMouseEnter={() => onHover(loc.id)}
-      onMouseLeave={onLeave}
     >
-      <motion.div
-        className={styles.globeLabelInner}
-        animate={{ scale: isHovered ? 1.06 : 1 }}
-        transition={{ duration: 0.2 }}
-      >
-        <div className={styles.globeDot} />
+      <div className={styles.globeLabelInner}>
+        <span className={styles.globeFlag}>{lp.loc.flag}</span>
         <div>
-          <div className={styles.globeCity}>{loc.name}</div>
+          <div className={styles.globeCityRow}>
+            <span className={styles.globeCity}>{lp.loc.name}</span>
+            <span className={styles.globeRail}>{lp.loc.rail}</span>
+          </div>
           <div className={styles.globeAmount}>
-            {loc.symbol}{counted.toLocaleString()} collected
+            {lp.loc.symbol}{counted.toLocaleString()} collected
           </div>
         </div>
-      </motion.div>
-
-      <AnimatePresence>
-        {isHovered && (
-          <motion.div
-            className={styles.globeTooltip}
-            initial={{ opacity: 0, y: 6, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 6, scale: 0.95 }}
-            transition={{ duration: 0.18 }}
-          >
-            <div className={styles.tooltipRow}>
-              <span className={styles.tooltipKey}>Settlement</span>
-              <span className={styles.tooltipVal}>{loc.settlement}</span>
-            </div>
-            <div className={styles.tooltipRow}>
-              <span className={styles.tooltipKey}>Currency</span>
-              <span className={styles.tooltipVal}>{loc.currency}</span>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+      </div>
+    </div>
   );
 }
 
 function GlobeCard() {
-  const [rotation, setRotation] = useState(0);
-  const [hovered, setHovered] = useState<string | null>(null);
-  const rafRef = useRef<number>(0);
-  const lastRef = useRef<number>(0);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const rotRef = useRef(0);
+  const lastRef = useRef(0);
+  const pausedRef = useRef(false);
+  const sizeRef = useRef({ w: 0, h: 0 });
+  const [labelPositions, setLabelPositions] = useState<LocPos[]>([]);
 
   useEffect(() => {
-    const tick = (now: number) => {
-      if (lastRef.current) {
-        const delta = now - lastRef.current;
-        if (!hovered) {
-          setRotation((r) => (r + delta * 0.018) % 360);
-        }
+    const canvas = canvasRef.current;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    let raf: number;
+
+    const draw = (now: number) => {
+      if (lastRef.current && !pausedRef.current) {
+        rotRef.current = (rotRef.current + (now - lastRef.current) * 0.016) % 360;
       }
       lastRef.current = now;
-      rafRef.current = requestAnimationFrame(tick);
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = container.getBoundingClientRect();
+      const W = rect.width;
+      const H = rect.height;
+
+      if (W !== sizeRef.current.w || H !== sizeRef.current.h) {
+        canvas.width = W * dpr;
+        canvas.height = H * dpr;
+        canvas.style.width = W + "px";
+        canvas.style.height = H + "px";
+        ctx.scale(dpr, dpr);
+        sizeRef.current = { w: W, h: H };
+      }
+
+      ctx.clearRect(0, 0, W, H);
+
+      const cx = W * 0.52;
+      const cy = H * 0.5;
+      const r = Math.min(W, H) * 0.37;
+      const rot = rotRef.current;
+
+      // Draw globe dots with depth-based lighting
+      for (const [lat, lng] of GLOBE_DOTS) {
+        const { x, y, depth } = project3D(lat, lng, rot, cx, cy, r);
+        if (depth < -0.05) continue;
+        // Lighting: brighter on front, fade at edges
+        const lit = Math.max(0, depth);
+        const alpha = 0.055 + lit * 0.22;
+        const dotR = 0.85 + lit * 0.7;
+        ctx.beginPath();
+        ctx.arc(x, y, dotR, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(40,30,21,${alpha.toFixed(3)})`;
+        ctx.fill();
+      }
+
+      // Draw connection lines from label anchor to globe surface
+      const positions: LocPos[] = LOCATIONS.map((loc) => {
+        const { x, y, depth } = project3D(loc.lat, loc.lng, rot, cx, cy, r);
+
+        // Draw pulse dot on globe surface
+        if (depth > 0.12) {
+          const pulseAlpha = Math.min(1, (depth - 0.12) / 0.35) * 0.7;
+          // Outer pulse ring
+          ctx.beginPath();
+          ctx.arc(x, y, 4.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(40,30,21,${(pulseAlpha * 0.18).toFixed(3)})`;
+          ctx.fill();
+          // Inner dot
+          ctx.beginPath();
+          ctx.arc(x, y, 2.2, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(40,30,21,${(pulseAlpha * 0.65).toFixed(3)})`;
+          ctx.fill();
+        }
+
+        return { loc, x, y, depth };
+      });
+
+      setLabelPositions(positions);
+      raf = requestAnimationFrame(draw);
     };
-    rafRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [hovered]);
+
+    raf = requestAnimationFrame(draw);
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   return (
     <div className={styles.card}>
-      <div className={styles.cardMedia}>
-        <div className={styles.globeContainer}>
-          {/* SVG globe base */}
-          <svg className={styles.globeSvg} viewBox="0 0 100 100" fill="none">
-            {/* Main ellipse */}
-            <ellipse cx="50" cy="50" rx="38" ry="38" stroke="rgba(40,30,21,0.08)" strokeWidth="0.5" />
-            {/* Latitude lines */}
-            {[-20, 0, 20].map((offset, i) => (
-              <ellipse key={i} cx="50" cy={50 + offset} rx="38" ry="10" stroke="rgba(40,30,21,0.05)" strokeWidth="0.4" />
-            ))}
-            {/* Longitude arcs (simplified) */}
-            {[0, 45, 90, 135].map((a, i) => {
-              const r = (a * Math.PI) / 180;
-              return (
-                <line
-                  key={i}
-                  x1={50 + 38 * Math.cos(r)}
-                  y1={50 - 38 * Math.sin(r)}
-                  x2={50 - 38 * Math.cos(r)}
-                  y2={50 + 38 * Math.sin(r)}
-                  stroke="rgba(40,30,21,0.05)"
-                  strokeWidth="0.4"
-                />
-              );
-            })}
-            {/* Dot pattern */}
-            {Array.from({ length: 200 }).map((_, i) => {
-              const lat = (i * 137.508) % 180 - 90;
-              const lng = (i * 222.5) % 360 - 180;
-              const latR = (lat * Math.PI) / 180;
-              const lngR = (lng * Math.PI) / 180;
-              const x = 50 + 36 * Math.cos(latR) * Math.sin(lngR);
-              const y = 50 - 36 * Math.sin(latR) * 0.42;
-              return <circle key={i} cx={x} cy={y} r="0.55" fill="rgba(40,30,21,0.18)" />;
-            })}
-          </svg>
-
-          {/* Location labels */}
-          {LOCATIONS.map((loc) => (
-            <GlobePoint
-              key={loc.id}
-              loc={loc}
-              rotation={rotation}
-              hovered={hovered}
-              onHover={setHovered}
-              onLeave={() => setHovered(null)}
-            />
-          ))}
-        </div>
+      <div
+        className={styles.cardMedia}
+        ref={containerRef}
+        onMouseEnter={() => { pausedRef.current = true; }}
+        onMouseLeave={() => { pausedRef.current = false; }}
+      >
+        <canvas ref={canvasRef} className={styles.globeCanvas} />
+        {labelPositions.map((lp) => (
+          <GlobeLocationLabel key={lp.loc.id} lp={lp} />
+        ))}
       </div>
 
       <div className={styles.cardContent}>
