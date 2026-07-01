@@ -131,25 +131,26 @@
   background: #292524;
 }
 
-/* Section 2 — 7-column link grid */
+/* Section 2 — 6-column link grid */
 
 .linkGrid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 32px;
-  padding: 48px 0;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 24px 40px;
+  padding: 56px 0 52px;
 }
 
 .colHeading {
   background: none;
   border: none;
   padding: 0;
-  margin: 0 0 16px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  margin: 0 0 22px;
+  font-family: var(--font-inter);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #78716c;
+  color: #5c5652;
   text-align: left;
   width: 100%;
   cursor: default;
@@ -161,81 +162,108 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .colLinks a {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
-  color: #d6d3d1;
-  transition: color 0.2s;
+  font-family: var(--font-inter);
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: #a8a29e;
+  text-decoration: none;
+  transition: color 0.18s ease;
+  position: relative;
+}
+
+.colLinks a::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.35);
+  transition: width 0.22s ease;
 }
 
 .colLinks a:hover {
-  color: #d97706;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.colLinks a:hover::after {
+  width: 100%;
+}
+
+.colLinks a:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.4);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 .badge {
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 500;
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #a8a29e;
+  background: rgba(255, 255, 255, 0.08);
+  color: #78716c;
   white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Section 3 — Ask AI + country selector */
 
 .askAiRow {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 32px;
-  padding: 32px 0 0;
+  padding: 24px 0 28px;
   border-top: 1px solid #292524;
   flex-wrap: wrap;
 }
 
 .askAiBlock {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
 .askAiIcons {
   display: flex;
-  gap: 12px;
+  gap: 8px;
 }
 
 .askAiIconButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  border: 1px solid #44403c;
-  background: #1c1917;
-  transition: border-color 0.2s, background 0.2s;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  border: 1px solid #3a3633;
+  background: transparent;
+  transition: border-color 0.18s ease, background 0.18s ease;
 }
 
 .askAiIconButton:hover {
-  border-color: #d97706;
-  background: #292524;
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .askAiIcon {
   display: inline-block;
-  width: 18px;
-  height: 18px;
-  color: #d6d3d1;
-  transition: color 0.2s;
+  width: 16px;
+  height: 16px;
+  color: #78716c;
+  transition: color 0.18s ease;
 }
 
 .askAiIconButton:hover .askAiIcon {
-  color: #d97706;
+  color: #d6d3d1;
 }
 
 .countrySelector {
@@ -246,27 +274,36 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 40px;
-  padding: 0 16px;
+  height: 38px;
+  padding: 0 14px;
   border-radius: 9999px;
-  border: 1px solid #44403c;
-  background: #292524;
-  color: var(--color-white);
-  font-size: 14px;
+  border: 1px solid #3a3633;
+  background: transparent;
+  color: #a8a29e;
+  font-family: var(--font-inter);
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+
+.countryButton:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .flagIcon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1;
 }
 
 .chevron {
-  font-size: 11px;
-  color: #a8a29e;
+  font-size: 10px;
+  color: #5c5652;
+  margin-left: 2px;
 }
 
 .countryList {
@@ -276,31 +313,35 @@
   min-width: 200px;
   list-style: none;
   margin: 0;
-  padding: 8px;
+  padding: 6px;
   border-radius: 12px;
-  border: 1px solid #44403c;
+  border: 1px solid #3a3633;
   background: #1c1917;
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
   z-index: 10;
 }
 
 .countryOption {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   width: 100%;
   padding: 8px 10px;
   border: none;
   background: none;
-  border-radius: 8px;
-  color: var(--color-white);
-  font-size: 14px;
+  border-radius: 7px;
+  color: #a8a29e;
+  font-family: var(--font-inter);
+  font-size: 13px;
+  font-weight: 500;
   text-align: left;
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .countryOption:hover {
   background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* Section 3 — bottom legal + waitlist section */
@@ -482,9 +523,10 @@
   white-space: nowrap;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
   .linkGrid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 40px;
   }
 }
 
@@ -503,20 +545,27 @@
     padding: 32px 0;
   }
 
+  .navCol {
+    border-bottom: 1px solid #292524;
+  }
+
   .colHeading {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 0;
+    padding: 18px 0;
     margin: 0;
     cursor: pointer;
+    font-size: 11px;
   }
 
   .colHeading::after {
     content: "+";
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.3);
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
   }
 
   .open .colHeading::after {
@@ -526,16 +575,21 @@
   .colLinks {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .open .colLinks {
-    max-height: 400px;
-    padding-bottom: 16px;
+    max-height: 600px;
+    padding-bottom: 20px;
+  }
+
+  .askAiBlock {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 
   .askAiRow {
-    flex-direction: column;
     align-items: flex-start;
   }
 
