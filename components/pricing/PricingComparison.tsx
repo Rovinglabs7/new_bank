@@ -74,7 +74,7 @@ export function PricingComparison() {
                       <th className={styles.featureCell} scope="row">
                         <span className={styles.featureLabelRow}>
                           <span className={styles.featureLabel}>{row.label}</span>
-                          {row.tooltip ? (
+                          {"tooltip" in row && row.tooltip ? (
                             <span className={styles.tooltipWrapper}>
                               <InfoIcon />
                               <span className={styles.tooltipText} role="tooltip">
