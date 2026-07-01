@@ -127,8 +127,8 @@
 .rightCol {
   flex: 1 1 0;
   display: flex;
+  align-items: flex-start;
   justify-content: center;
-  align-items: center;
   min-width: 0;
 }
 
@@ -161,8 +161,8 @@
 }
 
 .initialAvatar {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 6px;
   flex-shrink: 0;
   display: flex;
@@ -175,19 +175,10 @@
 }
 
 .avatarDaniel { background: #1e3a5f; }
-.avatarEmma   { background: #5a2d82; }
-.avatarJames  { background: #1a5e3a; }
+.avatarEmma   { background: #7B83EB; }
+.avatarJames  { background: #2EB67D; }
 
 /* ─── Shared message primitives ────────────────────────────────────────────── */
-
-.msgRow {
-  display: flex;
-  gap: 10px;
-  padding: 5px 0;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
-}
 
 .msgVisible {
   opacity: 1 !important;
@@ -195,7 +186,11 @@
 }
 
 .msgAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   flex-shrink: 0;
+  object-fit: cover;
   margin-top: 2px;
 }
 
@@ -213,23 +208,28 @@
 
 .msgName {
   font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
-  color: #1d1c1d;
+  color: #1a1d21;
+}
+
+.msgNameNova {
+  color: #3f0e40;
 }
 
 .msgTime {
   font-family: var(--font-inter, "Inter", sans-serif);
   font-size: 11px;
-  color: #888;
+  color: #8a8a8a;
+  margin-left: 6px;
 }
 
 .msgText {
-  margin: 0 0 2px;
+  margin: 2px 0;
   font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.5;
-  color: #1d1c1d;
+  color: #1a1d21;
 }
 
 /* ─── Typing indicator ────────────────────────────────────────────────────── */
@@ -246,8 +246,8 @@
 }
 
 .typingAvatar {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
@@ -294,21 +294,20 @@
   30%           { transform: translateY(-4px); opacity: 1; }
 }
 
-/* ─── Rich card ───────────────────────────────────────────────────────────── */
+/* ─── Rich card (Slack unfurl style) ─────────────────────────────────────── */
 
 .richCard {
   display: flex;
-  gap: 12px;
-  margin: 6px 0 4px;
-  padding: 12px 16px;
-  background: #ffffff;
-  border-left: 4px solid #6366f1;
-  border-radius: 0 6px 6px 0;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  gap: 0;
+  margin: 8px 0;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #e8e8e8;
+  background: white;
+  max-width: 280px;
   opacity: 0;
-  transform: scale(0.97);
+  transform: scale(0.96);
   transition: opacity 0.35s ease, transform 0.35s ease;
-  max-width: 300px;
 }
 
 .richCardVisible {
@@ -316,55 +315,70 @@
   transform: scale(1);
 }
 
-.richCardIcon {
-  font-size: 18px;
-  line-height: 1;
+.richCardAccent {
+  width: 4px;
+  background: #6366f1;
   flex-shrink: 0;
-  margin-top: 1px;
 }
 
 .richCardBody {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  padding: 10px 14px;
+  flex: 1;
+}
+
+.richCardLabel {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .richCardTitle {
   font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  color: #1d1c1d;
+  color: #1a1d21;
+  margin-bottom: 6px;
 }
 
-.richCardName {
+.richCardRow {
+  display: flex;
+  justify-content: space-between;
   font-family: var(--font-inter, "Inter", sans-serif);
   font-size: 12px;
-  color: #1d1c1d;
-  font-weight: 600;
-}
-
-.richCardDetails {
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 11px;
-  color: #616061;
+  color: #666;
+  margin: 3px 0;
 }
 
 .richCardStatus {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 11px;
-  color: #888;
-  margin-top: 4px;
+  color: #2BAC76;
+  font-weight: 500;
 }
 
-.statusDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #f0a500;
-  flex-shrink: 0;
+/* ─── Reactions ──────────────────────────────────────────────────────────── */
+
+.reactions {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.reactionsVisible {
+  opacity: 1;
+}
+
+.reaction {
+  background: #f8f8f8;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 12px;
+  cursor: default;
 }
 
 /* ─── Action buttons ─────────────────────────────────────────────────────── */
@@ -433,7 +447,493 @@
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ─── MacBook frame ────────────────────────────────────────────────────────── */
+/* ─── Slack window (floating app, no bezel) ──────────────────────────────── */
+
+.slackWindow {
+  display: flex;
+  width: 100%;
+  max-width: 640px;
+  height: 520px;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+/* ─── Slack sidebar ──────────────────────────────────────────────────────── */
+
+.slackSidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: #3f0e40;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+  overflow: hidden;
+}
+
+.slackWorkspace {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 8px;
+}
+
+.slackWorkspaceName {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.slackWorkspaceChevron {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.slackSidebarSection {
+  margin-bottom: 4px;
+}
+
+.slackSidebarLabel {
+  padding: 8px 16px 4px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.slackChannel {
+  padding: 4px 16px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: default;
+  border-radius: 4px;
+}
+
+.slackChannelActive {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-weight: 700;
+  margin: 0 6px;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.slackMember {
+  padding: 4px 16px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: default;
+}
+
+.slackPresenceDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2BAC76;
+  flex-shrink: 0;
+}
+
+.slackPresenceAway {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Slack main area ────────────────────────────────────────────────────── */
+
+.slackMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  min-width: 0;
+}
+
+.slackHeader {
+  height: 48px;
+  border-bottom: 1px solid #e8e8e8;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.slackHeaderChannel {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1d21;
+}
+
+.slackHeaderMembers {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 12px;
+  color: #616061;
+  margin-left: auto;
+}
+
+.slackFeed {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  scroll-behavior: smooth;
+}
+
+/* ─── Slack message groups ───────────────────────────────────────────────── */
+
+.slackMsgGroup {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.slackMsgContinuation {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 4px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.msgContinuationSpacer {
+  width: 36px;
+  flex-shrink: 0;
+}
+
+/* ─── Slack composer ─────────────────────────────────────────────────────── */
+
+.slackComposer {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin: 0 12px 10px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.slackComposerInner {
+  flex: 1;
+  padding: 9px 12px;
+}
+
+.slackComposerPlaceholder {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  color: #aaa;
+}
+
+.slackComposerActions {
+  display: flex;
+  gap: 2px;
+  padding: 0 8px;
+}
+
+.slackComposerIcon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* ─── Teams window (floating app, no bezel) ──────────────────────────────── */
+
+.teamsWindow {
+  display: flex;
+  width: 100%;
+  max-width: 640px;
+  height: 520px;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+/* ─── Teams left rail ────────────────────────────────────────────────────── */
+
+.teamsRail {
+  width: 48px;
+  flex-shrink: 0;
+  background: #2d2c2c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0;
+  gap: 4px;
+}
+
+.teamsRailAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #7B83EB;
+  color: white;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.teamsRailIcon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: default;
+}
+
+.teamsRailIconActive {
+  background: #7B83EB;
+  color: #ffffff;
+}
+
+/* ─── Teams panel ────────────────────────────────────────────────────────── */
+
+.teamsPanel {
+  width: 220px;
+  flex-shrink: 0;
+  background: #292828;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.teamsPanelHeader {
+  padding: 12px 14px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.teamsTeam {
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: default;
+}
+
+.teamsTeamChevron {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.teamsTeamName {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+}
+
+.teamsChannelList {
+  display: flex;
+  flex-direction: column;
+}
+
+.teamsChannelItem {
+  padding: 5px 14px 5px 26px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  cursor: default;
+}
+
+.teamsChannelItemActive {
+  color: #ffffff;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ─── Teams main area ────────────────────────────────────────────────────── */
+
+.teamsMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f5f5f5;
+  min-width: 0;
+}
+
+.teamsHeader {
+  background: #ffffff;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 10px 16px;
+  flex-shrink: 0;
+}
+
+.teamsHeaderTitle {
+  display: block;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: #242424;
+}
+
+.teamsHeaderSub {
+  display: block;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 12px;
+  color: #616161;
+  margin-top: 2px;
+}
+
+.teamsFeed {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  scroll-behavior: smooth;
+}
+
+/* ─── Teams message groups ───────────────────────────────────────────────── */
+
+.teamsMsgGroup {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.teamsAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.teamsAvatarEmma {
+  background: #7B83EB;
+}
+
+.teamsAvatarJames {
+  background: #2EB67D;
+}
+
+.teamsAvatarNovaImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.teamsMsgContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.teamsMsgMeta {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.teamsMsgName {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: #242424;
+}
+
+.teamsMsgNameNova {
+  color: #5059C9;
+}
+
+.teamsMsgTime {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 11px;
+  color: #616161;
+}
+
+.teamsMsgText {
+  margin: 0;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 14px;
+  color: #242424;
+  line-height: 1.5;
+}
+
+.teamsMsgLikeBar {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 11px;
+  color: #616161;
+  cursor: default;
+}
+
+/* ─── Teams composer ─────────────────────────────────────────────────────── */
+
+.teamsComposer {
+  background: #ffffff;
+  border-top: 1px solid #e8e8e8;
+  padding: 8px 12px;
+  flex-shrink: 0;
+}
+
+.teamsComposerBar {
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  color: #bbb;
+}
+
+.teamsComposerPlaceholder {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  color: #bbb;
+}
+
+.teamsComposerToolbar {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  color: #888;
+  cursor: default;
+}
+
+/* ─── MacBook frame (Dashboard only) ────────────────────────────────────── */
 
 .macbookFrame {
   width: 100%;
@@ -484,310 +984,8 @@
   border-radius: 0 0 4px 4px;
 }
 
-/* ─── Slack layout ─────────────────────────────────────────────────────────── */
-
-.slackLayout {
-  display: flex;
-  height: 420px;
-  background: #ffffff;
-}
-
-.slackSidebar {
-  width: 220px;
-  flex-shrink: 0;
-  background: #3f0e40;
-  display: flex;
-  flex-direction: column;
-  padding: 12px 0;
-  overflow: hidden;
-}
-
-.slackWorkspace {
-  padding: 0 16px 12px;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 14px;
-  font-weight: 800;
-  color: #ffffff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 8px;
-}
-
-.slackChannels {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  margin-bottom: 12px;
-}
-
-.slackChannel {
-  padding: 3px 16px;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
-  cursor: default;
-}
-
-.slackChannelActive {
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-  font-weight: 700;
-  border-radius: 4px;
-  margin: 0 6px;
-  padding: 3px 10px;
-}
-
-.slackSidebarSection {
-  padding: 6px 16px 3px;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 11px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.5);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.slackMember {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 16px;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.slackMemberDot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #2bac76;
-  flex-shrink: 0;
-}
-
-.slackMain {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.slackHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  height: 49px;
-  border-bottom: 1px solid #e8e8e8;
-  flex-shrink: 0;
-}
-
-.slackHeaderChannel {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 14px;
-  font-weight: 700;
-  color: #1d1c1d;
-}
-
-.hashIcon {
-  font-size: 14px;
-  font-weight: 400;
-  opacity: 0.5;
-}
-
-.slackHeaderMeta {
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 12px;
-  color: #616061;
-}
-
-.slackMessages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 12px 16px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  scroll-behavior: smooth;
-}
-
-.slackInputBar {
-  height: 40px;
-  border-top: 1px solid #e8e8e8;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  margin: 0 12px 10px;
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  flex-shrink: 0;
-}
-
-.slackInputPlaceholder {
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
-  color: #aaa;
-}
-
-/* ─── Teams frame ──────────────────────────────────────────────────────────── */
-
-.tabletFrame {
-  width: 100%;
-  max-width: 620px;
-  background: #1a1a1e;
-  border-radius: 14px;
-  border: 6px solid #2a2a2e;
-  overflow: hidden;
-  transform: perspective(1200px) rotateY(-3deg);
-  transform-origin: center center;
-  filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.2));
-}
-
-.tabletScreen {
-  width: 100%;
-  background: #ffffff;
-  overflow: hidden;
-}
-
-.teamsLayout {
-  display: flex;
-  height: 420px;
-}
-
-.teamsRail {
-  width: 56px;
-  flex-shrink: 0;
-  background: #1f1f2e;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px 0;
-  gap: 8px;
-}
-
-.teamsRailIcon {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: default;
-  transition: background 0.15s;
-}
-
-.teamsRailIcon:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.teamsChannelList {
-  width: 200px;
-  flex-shrink: 0;
-  background: #f5f5f5;
-  border-right: 1px solid #e0e0e0;
-  display: flex;
-  flex-direction: column;
-  padding: 12px 0;
-  overflow: hidden;
-}
-
-.teamsTeamName {
-  padding: 4px 16px 10px;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
-  font-weight: 700;
-  color: #1d1c1d;
-  border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 6px;
-}
-
-.teamsChannelItem {
-  padding: 5px 16px;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
-  color: #444;
-  cursor: default;
-  border-radius: 4px;
-  margin: 0 6px;
-}
-
-.teamsChannelActive {
-  background: #e8e8f0;
-  color: #5059C9;
-  font-weight: 600;
-}
-
-.teamsMain {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.teamsHeader {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  padding: 12px 16px 10px;
-  border-bottom: 1px solid #e0e0e0;
-  flex-shrink: 0;
-}
-
-.teamsHeaderTitle {
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 15px;
-  font-weight: 700;
-  color: #1d1c1d;
-}
-
-.teamsHeaderSub {
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 12px;
-  color: #888;
-}
-
-.teamsMessages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 12px 16px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  scroll-behavior: smooth;
-}
-
-.teamsMsgRow {
-  display: flex;
-  gap: 10px;
-  padding: 5px 0;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
-}
-
-.teamsInputBar {
-  height: 38px;
-  border: 1px solid #d0d0d0;
-  border-radius: 6px;
-  margin: 0 12px 10px;
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  flex-shrink: 0;
-}
-
-.teamsInputPlaceholder {
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
-  color: #aaa;
-}
-
 /* ─── Phone frame (WhatsApp) ───────────────────────────────────────────────── */
 
-/* iPad Pro portrait proportions ~3:4 ratio */
 .phoneFrame {
   width: 380px;
   height: 500px;
@@ -902,7 +1100,7 @@
   flex-direction: column;
   gap: 4px;
   scroll-behavior: smooth;
-  background: #ece5dd url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3C/svg%3E");
+  background: #ece5dd;
 }
 
 .waBubbleRow {
@@ -1080,7 +1278,7 @@
 .dashChipPending { background: #fff3cd; color: #856404; }
 .dashChipFailed  { background: #f8d7da; color: #842029; }
 
-/* ─── Nova panel (dashboard) ────────────────────────────────────────────────── */
+/* ─── Nova panel (dashboard) ─────────────────────────────────────────────── */
 
 .dashNovaPanel {
   width: 220px;
@@ -1172,7 +1370,7 @@
   color: #bbb;
 }
 
-/* ─── Responsive ────────────────────────────────────────────────────────────── */
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
 
 @media (max-width: 1024px) {
   .heading {
@@ -1233,15 +1431,20 @@
     width: 100%;
   }
 
-  .macbookFrame,
-  .tabletFrame {
+  .slackWindow,
+  .teamsWindow {
     max-width: 100%;
+    height: 440px;
   }
 
   .phoneFrame {
     width: 100%;
     height: auto;
     aspect-ratio: 3 / 4;
+  }
+
+  .macbookFrame {
+    max-width: 100%;
   }
 }
 
@@ -1251,8 +1454,13 @@
   }
 
   .teamsRail,
-  .teamsChannelList {
+  .teamsPanel {
     display: none;
+  }
+
+  .slackWindow,
+  .teamsWindow {
+    height: 400px;
   }
 
   .macbookBase {
@@ -1261,10 +1469,6 @@
 
   .macbookScreen {
     border-radius: 8px;
-  }
-
-  .tabletFrame {
-    transform: none;
   }
 
   .phoneFrame {

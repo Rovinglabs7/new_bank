@@ -122,32 +122,12 @@ function TypingIndicator({ platform }: { platform?: "slack" | "teams" }) {
   );
 }
 
-// ─── Rich card ────────────────────────────────────────────────────────────────
-
-function RichCard({ visible }: { visible: boolean }) {
-  return (
-    <div className={`${styles.richCard} ${visible ? styles.richCardVisible : ""}`}>
-      <div className={styles.richCardIcon}>📨</div>
-      <div className={styles.richCardBody}>
-        <div className={styles.richCardTitle}>Payment Reminder Sent</div>
-        <div className={styles.richCardName}>Bright Dental</div>
-        <div className={styles.richCardDetails}>£1,240 due · Expires in 3 days</div>
-        <div className={styles.richCardStatus}>
-          <span className={styles.statusDot} />
-          Reminder delivered
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ─── SLACK mockup ─────────────────────────────────────────────────────────────
 
 function SlackMockup() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [vis, setVis] = useState<VisibleSet>({});
   const [btnClicked, setBtnClicked] = useState(false);
-  const [btnLoading, setBtnLoading] = useState(false);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const started = useRef(false);
 
@@ -168,44 +148,48 @@ function SlackMockup() {
 
   const runSequence = useCallback(() => {
     setBtnClicked(false);
-    setBtnLoading(false);
     setVis({});
 
-    // 0ms — Daniel
+    // 0ms — Daniel first message
     show("d1", 0);
     // 800ms — Nova typing
     show("nt1", 800);
     // 2500ms — Nova reply
     hide("nt1", 2500);
     show("n1", 2500);
-    // 4500ms — Daniel 2
-    show("d2", 4500);
-    // 5300ms — Nova typing 2
-    show("nt2", 5300);
-    // 7000ms — Nova reply + card
+    // 4000ms — Daniel 2
+    show("d2", 4000);
+    // 5000ms — Nova typing
+    show("nt2", 5000);
+    // 7000ms — Nova reply + card + buttons
     hide("nt2", 7000);
     show("n2", 7000);
-    show("n2card", 7500);
-    // 10000ms — Nova 3
-    show("n3", 10000);
-    // 12000ms — Emma
-    show("e1", 12000);
-    // 13500ms — Nova typing 3
-    show("nt3", 13500);
-    // 15000ms — Nova reply 4
-    hide("nt3", 15000);
-    show("n4", 15000);
-    // 17000ms — James
-    show("j1", 17000);
-    // 20000ms — reset
-    const t3 = setTimeout(() => {
+    show("n2card", 7800);
+    show("n2btns", 8800);
+    // 10000ms — auto-click "Send to customer"
+    const tClick = setTimeout(() => setBtnClicked(true), 10000);
+    timers.current.push(tClick);
+    // 11000ms — Nova continuation
+    show("n3", 11000);
+    // 13500ms — Emma
+    show("e1", 13500);
+    // 15000ms — Nova typing
+    show("nt3", 15000);
+    // 16500ms — Nova update
+    hide("nt3", 16500);
+    show("n4", 16500);
+    show("r1", 16800);
+    // 19000ms — Nova continuation
+    show("n5", 19000);
+    show("r2", 19300);
+    // 22000ms — reset
+    const tReset = setTimeout(() => {
       setVis({});
       setBtnClicked(false);
-      setBtnLoading(false);
-      const t4 = setTimeout(runSequence, 800);
-      timers.current.push(t4);
-    }, 20000);
-    timers.current.push(t3);
+      const tRestart = setTimeout(runSequence, 800);
+      timers.current.push(tRestart);
+    }, 22000);
+    timers.current.push(tReset);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show, hide]);
 
@@ -231,131 +215,199 @@ function SlackMockup() {
   }, [runSequence]);
 
   return (
-    <div className={styles.macbookFrame}>
-      <div className={styles.macbookScreen}>
-        <div className={styles.slackLayout}>
-          {/* Slack sidebar */}
-          <div className={styles.slackSidebar}>
-            <div className={styles.slackWorkspace}>Praevor HQ</div>
-            <div className={styles.slackChannels}>
-              <div className={styles.slackChannel}># general</div>
-              <div className={`${styles.slackChannel} ${styles.slackChannelActive}`}># payments-ops</div>
-              <div className={styles.slackChannel}># finance</div>
-              <div className={styles.slackChannel}># ops</div>
-            </div>
-            <div className={styles.slackSidebarSection}>Members</div>
-            <div className={styles.slackMember}>
-              <span className={styles.slackMemberDot} />
-              Nova
-            </div>
-            <div className={styles.slackMember}>
-              <span className={styles.slackMemberDot} />
-              Daniel
-            </div>
+    <div className={styles.slackWindow}>
+      {/* Sidebar */}
+      <div className={styles.slackSidebar}>
+        <div className={styles.slackWorkspace}>
+          <span className={styles.slackWorkspaceName}>Praevor HQ</span>
+          <span className={styles.slackWorkspaceChevron}>&#x25BE;</span>
+        </div>
+        <div className={styles.slackSidebarSection}>
+          <div className={styles.slackSidebarLabel}>Channels</div>
+          <div className={styles.slackChannel}># general</div>
+          <div className={`${styles.slackChannel} ${styles.slackChannelActive}`}># payments-ops</div>
+          <div className={styles.slackChannel}># finance</div>
+          <div className={styles.slackChannel}># ops</div>
+        </div>
+        <div className={styles.slackSidebarSection}>
+          <div className={styles.slackSidebarLabel}>Members</div>
+          <div className={styles.slackMember}>
+            <span className={styles.slackPresenceDot} />
+            Nova
           </div>
-
-          {/* Slack main */}
-          <div className={styles.slackMain}>
-            <div className={styles.slackHeader}>
-              <div className={styles.slackHeaderChannel}>
-                <span className={styles.hashIcon}>#</span> payments-ops
-              </div>
-              <div className={styles.slackHeaderMeta}>Nova, Emma, Daniel, James +2</div>
-            </div>
-
-            <div className={styles.slackMessages} ref={scrollRef}>
-              {/* Daniel 1 */}
-              <div className={`${styles.msgRow} ${vis["d1"] ? styles.msgVisible : ""}`}>
-                <DanielInitial className={styles.msgAvatar} />
-                <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>Daniel</span><span className={styles.msgTime}>10:14 AM</span></div>
-                  <p className={styles.msgText}>@Nova Can you check who still hasn&apos;t paid this week?</p>
-                </div>
-              </div>
-
-              {vis["nt1"] && <TypingIndicator platform="slack" />}
-
-              {/* Nova 1 */}
-              <div className={`${styles.msgRow} ${vis["n1"] ? styles.msgVisible : ""}`}>
-                <NovaAvatarImg className={styles.msgAvatar} />
-                <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>10:14 AM</span></div>
-                  <p className={styles.msgText}>Three outstanding payments.</p>
-                  <p className={styles.msgText}>Oakwood Care. £820. Reminder opened, not completed.</p>
-                  <p className={styles.msgText}>Green Leaf Nursery. £240. Retry scheduled for tomorrow.</p>
-                  <p className={styles.msgText}>Bright Dental. £1,240. Payment request expires in three days.</p>
-                </div>
-              </div>
-
-              {/* Daniel 2 */}
-              <div className={`${styles.msgRow} ${vis["d2"] ? styles.msgVisible : ""}`}>
-                <DanielInitial className={styles.msgAvatar} />
-                <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>Daniel</span><span className={styles.msgTime}>10:15 AM</span></div>
-                  <p className={styles.msgText}>Send Bright Dental another reminder.</p>
-                </div>
-              </div>
-
-              {vis["nt2"] && <TypingIndicator platform="slack" />}
-
-              {/* Nova 2 */}
-              <div className={`${styles.msgRow} ${vis["n2"] ? styles.msgVisible : ""}`}>
-                <NovaAvatarImg className={styles.msgAvatar} />
-                <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>10:15 AM</span></div>
-                  <p className={styles.msgText}>Done. I&apos;ll let you know when they&apos;ve viewed it.</p>
-                  <RichCard visible={!!vis["n2card"]} />
-                </div>
-              </div>
-
-              {/* Nova 3 */}
-              <div className={`${styles.msgRow} ${vis["n3"] ? styles.msgVisible : ""}`}>
-                <NovaAvatarImg className={styles.msgAvatar} />
-                <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>10:18 AM</span></div>
-                  <p className={styles.msgText}>Bright Dental has opened the reminder.</p>
-                </div>
-              </div>
-
-              {/* Emma */}
-              <div className={`${styles.msgRow} ${vis["e1"] ? styles.msgVisible : ""}`}>
-                <EmmaInitial className={styles.msgAvatar} />
-                <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>Emma</span><span className={styles.msgTime}>10:20 AM</span></div>
-                  <p className={styles.msgText}>Brilliant. One less thing to chase.</p>
-                </div>
-              </div>
-
-              {vis["nt3"] && <TypingIndicator platform="slack" />}
-
-              {/* Nova 4 */}
-              <div className={`${styles.msgRow} ${vis["n4"] ? styles.msgVisible : ""}`}>
-                <NovaAvatarImg className={styles.msgAvatar} />
-                <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>10:24 AM</span></div>
-                  <p className={styles.msgText}>Good news. Bright Dental has paid. £1,240 collected. Settlement expected Friday.</p>
-                </div>
-              </div>
-
-              {/* James */}
-              <div className={`${styles.msgRow} ${vis["j1"] ? styles.msgVisible : ""}`}>
-                <JamesInitial className={styles.msgAvatar} />
-                <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>James</span><span className={styles.msgTime}>10:25 AM</span></div>
-                  <p className={styles.msgText}>That&apos;s everything sorted. Thanks Nova.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Input bar */}
-            <div className={styles.slackInputBar}>
-              <span className={styles.slackInputPlaceholder}>Message #payments-ops</span>
-            </div>
+          <div className={styles.slackMember}>
+            <span className={styles.slackPresenceDot} />
+            Daniel
+          </div>
+          <div className={styles.slackMember}>
+            <span className={styles.slackPresenceDot} />
+            Emma
+          </div>
+          <div className={styles.slackMember}>
+            <span className={`${styles.slackPresenceDot} ${styles.slackPresenceAway}`} />
+            James
           </div>
         </div>
       </div>
-      <div className={styles.macbookBase}>
-        <div className={styles.macbookNotch} />
+
+      {/* Main area */}
+      <div className={styles.slackMain}>
+        <div className={styles.slackHeader}>
+          <span className={styles.slackHeaderChannel}># payments-ops</span>
+          <span className={styles.slackHeaderMembers}>Nova, Emma, Daniel, James +2</span>
+        </div>
+
+        <div className={styles.slackFeed} ref={scrollRef}>
+
+          {/* Daniel — first message group */}
+          <div className={`${styles.slackMsgGroup} ${vis["d1"] ? styles.msgVisible : ""}`}>
+            <DanielInitial className={styles.msgAvatar} />
+            <div className={styles.msgContent}>
+              <div className={styles.msgMeta}>
+                <span className={styles.msgName}>Daniel</span>
+                <span className={styles.msgTime}>10:14 AM</span>
+              </div>
+              <p className={styles.msgText}>Morning everyone. We&apos;ve just signed Green Leaf Nursery.</p>
+              <p className={styles.msgText}>@Nova can you get their monthly recurring payment ready?</p>
+            </div>
+          </div>
+
+          {vis["nt1"] && <TypingIndicator platform="slack" />}
+
+          {/* Nova — reply */}
+          <div className={`${styles.slackMsgGroup} ${vis["n1"] ? styles.msgVisible : ""}`}>
+            <NovaAvatarImg className={styles.msgAvatar} />
+            <div className={styles.msgContent}>
+              <div className={styles.msgMeta}>
+                <span className={`${styles.msgName} ${styles.msgNameNova}`}>Nova</span>
+                <span className={styles.msgTime}>10:14 AM</span>
+              </div>
+              <p className={styles.msgText}>Happy to. What&apos;s the monthly amount, and when should the first collection go out?</p>
+            </div>
+          </div>
+
+          {/* Daniel — second message group */}
+          <div className={`${styles.slackMsgGroup} ${vis["d2"] ? styles.msgVisible : ""}`}>
+            <DanielInitial className={styles.msgAvatar} />
+            <div className={styles.msgContent}>
+              <div className={styles.msgMeta}>
+                <span className={styles.msgName}>Daniel</span>
+                <span className={styles.msgTime}>10:15 AM</span>
+              </div>
+              <p className={styles.msgText}>&pound;240 a month. Starts 1 August.</p>
+            </div>
+          </div>
+
+          {vis["nt2"] && <TypingIndicator platform="slack" />}
+
+          {/* Nova — with rich card + action buttons */}
+          <div className={`${styles.slackMsgGroup} ${vis["n2"] ? styles.msgVisible : ""}`}>
+            <NovaAvatarImg className={styles.msgAvatar} />
+            <div className={styles.msgContent}>
+              <div className={styles.msgMeta}>
+                <span className={`${styles.msgName} ${styles.msgNameNova}`}>Nova</span>
+                <span className={styles.msgTime}>10:15 AM</span>
+              </div>
+              <p className={styles.msgText}>Perfect. Everything is ready.</p>
+
+              {/* Rich card */}
+              <div className={`${styles.richCard} ${vis["n2card"] ? styles.richCardVisible : ""}`}>
+                <div className={styles.richCardAccent} />
+                <div className={styles.richCardBody}>
+                  <div className={styles.richCardLabel}>Recurring Payment</div>
+                  <div className={styles.richCardTitle}>Green Leaf Nursery</div>
+                  <div className={styles.richCardRow}><span>Amount</span><span>&pound;240 / month</span></div>
+                  <div className={styles.richCardRow}><span>Starts</span><span>1 August</span></div>
+                  <div className={styles.richCardRow}><span>Status</span><span className={styles.richCardStatus}>Ready to send</span></div>
+                </div>
+              </div>
+
+              <p className={styles.msgText}>Would you like me to send the payment request directly to Green Leaf Nursery?</p>
+
+              {/* Action buttons */}
+              {vis["n2btns"] && (
+                <div className={styles.actionButtons}>
+                  <button
+                    className={`${styles.btnPrimary} ${btnClicked ? styles.btnClicked : ""}`}
+                    disabled={btnClicked}
+                    type="button"
+                  >
+                    Send to customer
+                  </button>
+                  <button
+                    className={styles.btnGhost}
+                    disabled={btnClicked}
+                    type="button"
+                  >
+                    Review first
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Nova — continuation (no avatar) */}
+          <div className={`${styles.slackMsgContinuation} ${vis["n3"] ? styles.msgVisible : ""}`}>
+            <div className={styles.msgContinuationSpacer} />
+            <div className={styles.msgContent}>
+              <p className={styles.msgText}>Done. The payment request has been sent. I&apos;ll keep this channel updated.</p>
+            </div>
+          </div>
+
+          {/* Emma */}
+          <div className={`${styles.slackMsgGroup} ${vis["e1"] ? styles.msgVisible : ""}`}>
+            <EmmaInitial className={styles.msgAvatar} />
+            <div className={styles.msgContent}>
+              <div className={styles.msgMeta}>
+                <span className={styles.msgName}>Emma</span>
+                <span className={styles.msgTime}>10:16 AM</span>
+              </div>
+              <p className={styles.msgText}>&#128077;</p>
+            </div>
+          </div>
+
+          {vis["nt3"] && <TypingIndicator platform="slack" />}
+
+          {/* Nova — update */}
+          <div className={`${styles.slackMsgGroup} ${vis["n4"] ? styles.msgVisible : ""}`}>
+            <NovaAvatarImg className={styles.msgAvatar} />
+            <div className={styles.msgContent}>
+              <div className={styles.msgMeta}>
+                <span className={`${styles.msgName} ${styles.msgNameNova}`}>Nova</span>
+                <span className={styles.msgTime}>10:22 AM</span>
+              </div>
+              <p className={styles.msgText}>Update. Green Leaf Nursery has opened the payment request.</p>
+              <div className={`${styles.reactions} ${vis["r1"] ? styles.reactionsVisible : ""}`}>
+                <span className={styles.reaction}>&#128064; 2</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Nova — continuation */}
+          <div className={`${styles.slackMsgContinuation} ${vis["n5"] ? styles.msgVisible : ""}`}>
+            <div className={styles.msgContinuationSpacer} />
+            <div className={styles.msgContent}>
+              <p className={styles.msgText}>The Direct Debit mandate has been completed. First collection scheduled for 1 August.</p>
+              <div className={`${styles.reactions} ${vis["r2"] ? styles.reactionsVisible : ""}`}>
+                <span className={styles.reaction}>&#127881; 3</span>
+                <span className={styles.reaction}>&#10084;&#65039; 2</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Composer */}
+        <div className={styles.slackComposer}>
+          <div className={styles.slackComposerInner}>
+            <span className={styles.slackComposerPlaceholder}>Message #payments-ops</span>
+          </div>
+          <div className={styles.slackComposerActions}>
+            <span className={styles.slackComposerIcon}>&#128522;</span>
+            <span className={styles.slackComposerIcon}>&#128206;</span>
+            <span className={styles.slackComposerIcon}>&#9993;</span>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -427,90 +479,171 @@ function TeamsMockup() {
   }, [runSequence]);
 
   return (
-    <div className={styles.tabletFrame}>
-      <div className={styles.tabletScreen}>
-        <div className={styles.teamsLayout}>
-          {/* Icons rail */}
-          <div className={styles.teamsRail}>
-            <div className={styles.teamsRailIcon}>💬</div>
-            <div className={styles.teamsRailIcon}>👥</div>
-            <div className={styles.teamsRailIcon}>📅</div>
-            <div className={styles.teamsRailIcon}>📁</div>
+    <div className={styles.teamsWindow}>
+      {/* Left icon rail */}
+      <div className={styles.teamsRail}>
+        <div className={styles.teamsRailAvatar}>E</div>
+        <div className={styles.teamsRailIcon} title="Activity">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+        <div className={styles.teamsRailIcon} title="Chat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+        <div className={`${styles.teamsRailIcon} ${styles.teamsRailIconActive}`} title="Teams">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+        <div className={styles.teamsRailIcon} title="Calendar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+            <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+            <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+          </svg>
+        </div>
+        <div className={styles.teamsRailIcon} title="Files">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      {/* Teams/channel panel */}
+      <div className={styles.teamsPanel}>
+        <div className={styles.teamsPanelHeader}>Teams</div>
+        <div className={styles.teamsTeam}>
+          <span className={styles.teamsTeamChevron}>&#x25BE;</span>
+          <span className={styles.teamsTeamName}>Operations</span>
+        </div>
+        <div className={styles.teamsChannelList}>
+          <div className={styles.teamsChannelItem}>General</div>
+          <div className={`${styles.teamsChannelItem} ${styles.teamsChannelItemActive}`}>Payments</div>
+          <div className={styles.teamsChannelItem}>Finance</div>
+        </div>
+      </div>
+
+      {/* Main conversation */}
+      <div className={styles.teamsMain}>
+        <div className={styles.teamsHeader}>
+          <span className={styles.teamsHeaderTitle}>Payments</span>
+          <span className={styles.teamsHeaderSub}>Operations &middot; 4 members</span>
+        </div>
+
+        <div className={styles.teamsFeed} ref={scrollRef}>
+
+          <div className={`${styles.teamsMsgGroup} ${vis["e1"] ? styles.msgVisible : ""}`}>
+            <div className={`${styles.teamsAvatar} ${styles.teamsAvatarEmma}`}>E</div>
+            <div className={styles.teamsMsgContent}>
+              <div className={styles.teamsMsgMeta}>
+                <span className={styles.teamsMsgName}>Emma</span>
+                <span className={styles.teamsMsgTime}>Yesterday 9:02 AM</span>
+              </div>
+              <p className={styles.teamsMsgText}>Morning everyone. Has Oakwood Care completed their direct debit yet?</p>
+              <div className={styles.teamsMsgLikeBar}>
+                <span>&#128077; Like</span>
+                <span>Reply</span>
+              </div>
+            </div>
           </div>
 
-          {/* Channel list */}
-          <div className={styles.teamsChannelList}>
-            <div className={styles.teamsTeamName}>Operations Team</div>
-            <div className={styles.teamsChannelItem}>General</div>
-            <div className={`${styles.teamsChannelItem} ${styles.teamsChannelActive}`}>Payments</div>
-            <div className={styles.teamsChannelItem}>Finance</div>
-            <div className={styles.teamsChannelItem}>Announcements</div>
+          {vis["nt1"] && <TypingIndicator platform="teams" />}
+
+          <div className={`${styles.teamsMsgGroup} ${vis["n1"] ? styles.msgVisible : ""}`}>
+            <NovaAvatarImg className={styles.teamsAvatarNovaImg} />
+            <div className={styles.teamsMsgContent}>
+              <div className={styles.teamsMsgMeta}>
+                <span className={`${styles.teamsMsgName} ${styles.teamsMsgNameNova}`}>Nova</span>
+                <span className={styles.teamsMsgTime}>9:03 AM</span>
+              </div>
+              <p className={styles.teamsMsgText}>Not yet. They viewed the request yesterday but haven&apos;t authorised. I&apos;ve scheduled a reminder for this morning.</p>
+              <div className={styles.teamsMsgLikeBar}>
+                <span>&#128077; Like</span>
+                <span>Reply</span>
+              </div>
+            </div>
           </div>
 
-          {/* Main chat */}
-          <div className={styles.teamsMain}>
-            <div className={styles.teamsHeader}>
-              <span className={styles.teamsHeaderTitle}>Payments</span>
-              <span className={styles.teamsHeaderSub}>Operations Team</span>
-            </div>
-
-            <div className={styles.teamsMessages} ref={scrollRef}>
-              <div className={`${styles.teamsMsgRow} ${vis["e1"] ? styles.msgVisible : ""}`}>
-                <EmmaInitial className={styles.msgAvatar} />
-                <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>Emma</span><span className={styles.msgTime}>Yesterday 9:02 AM</span></div>
-                  <p className={styles.msgText}>Morning everyone. Has Oakwood Care completed their direct debit yet?</p>
-                </div>
+          <div className={`${styles.teamsMsgGroup} ${vis["e2"] ? styles.msgVisible : ""}`}>
+            <div className={`${styles.teamsAvatar} ${styles.teamsAvatarEmma}`}>E</div>
+            <div className={styles.teamsMsgContent}>
+              <div className={styles.teamsMsgMeta}>
+                <span className={styles.teamsMsgName}>Emma</span>
+                <span className={styles.teamsMsgTime}>9:04 AM</span>
               </div>
-
-              {vis["nt1"] && <TypingIndicator platform="teams" />}
-
-              <div className={`${styles.teamsMsgRow} ${vis["n1"] ? styles.msgVisible : ""}`}>
-                <NovaAvatarImg className={styles.msgAvatar} />
-                <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>9:03 AM</span></div>
-                  <p className={styles.msgText}>Not yet. They viewed the request yesterday but haven&apos;t authorised. I&apos;ve scheduled a reminder for this morning.</p>
-                </div>
-              </div>
-
-              <div className={`${styles.teamsMsgRow} ${vis["e2"] ? styles.msgVisible : ""}`}>
-                <EmmaInitial className={styles.msgAvatar} />
-                <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>Emma</span><span className={styles.msgTime}>9:04 AM</span></div>
-                  <p className={styles.msgText}>Perfect. Thanks for keeping an eye on it.</p>
-                </div>
-              </div>
-
-              {vis["nt2"] && <TypingIndicator platform="teams" />}
-
-              <div className={`${styles.teamsMsgRow} ${vis["n2"] ? styles.msgVisible : ""}`}>
-                <NovaAvatarImg className={styles.msgAvatar} />
-                <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>9:41 AM</span></div>
-                  <p className={styles.msgText}>Update. Oakwood Care has completed the authorisation. First collection scheduled for Monday.</p>
-                </div>
-              </div>
-
-              <div className={`${styles.teamsMsgRow} ${vis["j1"] ? styles.msgVisible : ""}`}>
-                <JamesInitial className={styles.msgAvatar} />
-                <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>James</span><span className={styles.msgTime}>9:42 AM</span></div>
-                  <p className={styles.msgText}>Brilliant. That&apos;s one less thing to chase.</p>
-                </div>
-              </div>
-
-              <div className={`${styles.teamsMsgRow} ${vis["n3"] ? styles.msgVisible : ""}`}>
-                <NovaAvatarImg className={styles.msgAvatar} />
-                <div className={styles.msgContent}>
-                  <div className={styles.msgMeta}><span className={styles.msgName}>Nova</span><span className={styles.msgTime}>9:42 AM</span></div>
-                  <p className={styles.msgText}>I&apos;ll notify the team once the payment settles.</p>
-                </div>
+              <p className={styles.teamsMsgText}>Perfect. Thanks for keeping an eye on it.</p>
+              <div className={styles.teamsMsgLikeBar}>
+                <span>&#128077; Like</span>
+                <span>Reply</span>
               </div>
             </div>
+          </div>
 
-            <div className={styles.teamsInputBar}>
-              <span className={styles.teamsInputPlaceholder}>Type a new message</span>
+          {vis["nt2"] && <TypingIndicator platform="teams" />}
+
+          <div className={`${styles.teamsMsgGroup} ${vis["n2"] ? styles.msgVisible : ""}`}>
+            <NovaAvatarImg className={styles.teamsAvatarNovaImg} />
+            <div className={styles.teamsMsgContent}>
+              <div className={styles.teamsMsgMeta}>
+                <span className={`${styles.teamsMsgName} ${styles.teamsMsgNameNova}`}>Nova</span>
+                <span className={styles.teamsMsgTime}>9:41 AM</span>
+              </div>
+              <p className={styles.teamsMsgText}>Update. Oakwood Care has now completed the authorisation. First collection is scheduled for Monday.</p>
+              <div className={styles.teamsMsgLikeBar}>
+                <span>&#128077; Like</span>
+                <span>Reply</span>
+              </div>
             </div>
+          </div>
+
+          <div className={`${styles.teamsMsgGroup} ${vis["j1"] ? styles.msgVisible : ""}`}>
+            <div className={`${styles.teamsAvatar} ${styles.teamsAvatarJames}`}>J</div>
+            <div className={styles.teamsMsgContent}>
+              <div className={styles.teamsMsgMeta}>
+                <span className={styles.teamsMsgName}>James</span>
+                <span className={styles.teamsMsgTime}>9:42 AM</span>
+              </div>
+              <p className={styles.teamsMsgText}>Brilliant. One less thing to chase.</p>
+              <div className={styles.teamsMsgLikeBar}>
+                <span>&#128077; Like</span>
+                <span>Reply</span>
+              </div>
+            </div>
+          </div>
+
+          <div className={`${styles.teamsMsgGroup} ${vis["n3"] ? styles.msgVisible : ""}`}>
+            <NovaAvatarImg className={styles.teamsAvatarNovaImg} />
+            <div className={styles.teamsMsgContent}>
+              <div className={styles.teamsMsgMeta}>
+                <span className={`${styles.teamsMsgName} ${styles.teamsMsgNameNova}`}>Nova</span>
+                <span className={styles.teamsMsgTime}>9:42 AM</span>
+              </div>
+              <p className={styles.teamsMsgText}>I&apos;ll notify the team once the payment settles.</p>
+              <div className={styles.teamsMsgLikeBar}>
+                <span>&#128077; Like</span>
+                <span>Reply</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Composer */}
+        <div className={styles.teamsComposer}>
+          <div className={styles.teamsComposerBar}>
+            <span className={styles.teamsComposerPlaceholder}>Start a new conversation</span>
+          </div>
+          <div className={styles.teamsComposerToolbar}>
+            <span>A</span>
+            <span>&#128522;</span>
+            <span>&#128206;</span>
+            <span>&#8230;</span>
           </div>
         </div>
       </div>
@@ -545,45 +678,28 @@ function WhatsAppMockup() {
   const runSequence = useCallback(() => {
     setVis({});
     setBtnClicked(null);
-    // Step 1 (0ms) — Daniel
     show("d1", 0);
-    // Step 2 (1200ms) — Nova typing
     show("nt1", 1200);
-    // Step 3 (2800ms) — Nova reply
     hide("nt1", 2800);
     show("n1", 2800);
-    // Step 4 (4200ms) — Daniel
     show("d2", 4200);
-    // Step 5 (5200ms) — Nova typing
     show("nt2", 5200);
-    // Step 6 (7000ms) — Nova 2 bubbles staggered
     hide("nt2", 7000);
     show("n2a", 7000);
     show("n2b", 7400);
-    // Step 7 (8500ms) — action buttons
     show("wabtns", 8500);
-    // Step 8 (9800ms) — "Copy link" clicked + spinner
     const t1 = setTimeout(() => setBtnClicked("copy"), 9800);
     timers.current.push(t1);
-    // Step 9 (10800ms) — Nova confirmation
     show("n3", 10800);
-    // Step 10 (13500ms) — Daniel
     show("d3", 13500);
-    // Step 11 (14500ms) — Nova typing
     show("nt3", 14500);
-    // Step 12 (16000ms) — Nova reply
     hide("nt3", 16000);
     show("n4", 16000);
-    // Step 13 (17500ms) — buttons
     show("wabtns2", 17500);
-    // Step 14 (19000ms) — "Yes, remind them" auto-clicks
     const t2 = setTimeout(() => setBtnClicked("remind"), 19000);
     timers.current.push(t2);
-    // Step 15 (20000ms) — Nova confirmation
     show("n5", 20000);
-    // Step 16 (23000ms) — Nova proactive update
     show("n6", 23000);
-    // Step 17 (26000ms) — reset
     const t3 = setTimeout(() => {
       setVis({});
       setBtnClicked(null);
@@ -619,7 +735,6 @@ function WhatsAppMockup() {
     <div className={styles.phoneFrame}>
       <div className={styles.phoneDynamicIsland} />
       <div className={styles.phoneScreen}>
-        {/* WhatsApp header */}
         <div className={styles.waHeader}>
           <NovaAvatarImg className={styles.waHeaderAvatar} />
           <div className={styles.waHeaderInfo}>
@@ -630,21 +745,18 @@ function WhatsAppMockup() {
             </span>
           </div>
           <div className={styles.waHeaderIcons}>
-            <span className={styles.waHeaderIcon}>📹</span>
-            <span className={styles.waHeaderIcon}>📞</span>
+            <span className={styles.waHeaderIcon}>&#128249;</span>
+            <span className={styles.waHeaderIcon}>&#128222;</span>
           </div>
         </div>
 
-        {/* Chat area */}
         <div className={styles.waChat} ref={scrollRef}>
-          {/* Step 1 — Daniel */}
           <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${vis["d1"] ? styles.msgVisible : ""}`}>
             <div className={`${styles.waBubble} ${styles.waBubbleOut}`}>
               Morning Nova. Can you create a payment link for our new client?
             </div>
           </div>
 
-          {/* Step 2 — Nova typing */}
           {vis["nt1"] && (
             <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft}`}>
               <NovaAvatarImg className={styles.waAvatar} />
@@ -658,7 +770,6 @@ function WhatsAppMockup() {
             </div>
           )}
 
-          {/* Step 3 — Nova */}
           <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n1"] ? styles.msgVisible : ""}`}>
             <NovaAvatarImg className={styles.waAvatar} />
             <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
@@ -666,14 +777,12 @@ function WhatsAppMockup() {
             </div>
           </div>
 
-          {/* Step 4 — Daniel */}
           <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${vis["d2"] ? styles.msgVisible : ""}`}>
             <div className={`${styles.waBubble} ${styles.waBubbleOut}`}>
-              £850.
+              &pound;850.
             </div>
           </div>
 
-          {/* Step 5 — Nova typing */}
           {vis["nt2"] && (
             <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft}`}>
               <NovaAvatarImg className={styles.waAvatar} />
@@ -687,7 +796,6 @@ function WhatsAppMockup() {
             </div>
           )}
 
-          {/* Step 6 — Nova 2 bubbles staggered */}
           <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n2a"] ? styles.msgVisible : ""}`}>
             <NovaAvatarImg className={styles.waAvatar} />
             <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
@@ -701,7 +809,6 @@ function WhatsAppMockup() {
             </div>
           </div>
 
-          {/* Step 7 — Action buttons */}
           {vis["wabtns"] && (
             <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${styles.msgVisible}`}>
               <div className={styles.actionButtons}>
@@ -723,7 +830,6 @@ function WhatsAppMockup() {
             </div>
           )}
 
-          {/* Step 9 — Nova confirmation */}
           <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n3"] ? styles.msgVisible : ""}`}>
             <NovaAvatarImg className={styles.waAvatar} />
             <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
@@ -731,14 +837,12 @@ function WhatsAppMockup() {
             </div>
           </div>
 
-          {/* Step 10 — Daniel */}
           <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${vis["d3"] ? styles.msgVisible : ""}`}>
             <div className={`${styles.waBubble} ${styles.waBubbleOut}`}>
               Has Oakwood Care paid yet?
             </div>
           </div>
 
-          {/* Step 11 — Nova typing */}
           {vis["nt3"] && (
             <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft}`}>
               <NovaAvatarImg className={styles.waAvatar} />
@@ -752,7 +856,6 @@ function WhatsAppMockup() {
             </div>
           )}
 
-          {/* Step 12 — Nova */}
           <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n4"] ? styles.msgVisible : ""}`}>
             <NovaAvatarImg className={styles.waAvatar} />
             <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
@@ -760,7 +863,6 @@ function WhatsAppMockup() {
             </div>
           </div>
 
-          {/* Step 13 — Buttons */}
           {vis["wabtns2"] && (
             <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${styles.msgVisible}`}>
               <div className={styles.actionButtons}>
@@ -782,7 +884,6 @@ function WhatsAppMockup() {
             </div>
           )}
 
-          {/* Step 15 — Nova */}
           <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n5"] ? styles.msgVisible : ""}`}>
             <NovaAvatarImg className={styles.waAvatar} />
             <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
@@ -790,16 +891,14 @@ function WhatsAppMockup() {
             </div>
           </div>
 
-          {/* Step 16 — Nova proactive update */}
           <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n6"] ? styles.msgVisible : ""}`}>
             <NovaAvatarImg className={styles.waAvatar} />
             <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
-              Good news. Oakwood Care has completed payment. £850 received. Expected settlement: Thursday.
+              Good news. Oakwood Care has completed payment. &pound;850 received. Expected settlement: Thursday.
             </div>
           </div>
         </div>
 
-        {/* Input bar */}
         <div className={styles.waInputBar}>
           <span className={styles.waInputPlaceholder}>Message</span>
         </div>
@@ -816,17 +915,16 @@ function DashboardMockup() {
     <div className={styles.macbookFrame}>
       <div className={styles.macbookScreen}>
         <div className={styles.dashLayout}>
-          {/* Dashboard left */}
           <div className={styles.dashMain}>
             <div className={styles.dashGreeting}>Good morning, Daniel</div>
             <div className={styles.dashMetrics}>
               <div className={styles.dashMetricCard}>
                 <div className={styles.dashMetricLabel}>Today&apos;s collections</div>
-                <div className={styles.dashMetricValue}>£12,450</div>
+                <div className={styles.dashMetricValue}>&pound;12,450</div>
               </div>
               <div className={styles.dashMetricCard}>
                 <div className={styles.dashMetricLabel}>Pending</div>
-                <div className={styles.dashMetricValue}>£3,200</div>
+                <div className={styles.dashMetricValue}>&pound;3,200</div>
               </div>
               <div className={styles.dashMetricCard}>
                 <div className={styles.dashMetricLabel}>Failed</div>
@@ -843,32 +941,31 @@ function DashboardMockup() {
               </div>
               <div className={styles.dashTableRow}>
                 <span>Green Leaf Nursery</span>
-                <span>£240.00</span>
+                <span>&pound;240.00</span>
                 <span className={`${styles.dashChip} ${styles.dashChipSuccess}`}>Collected</span>
                 <span>Today</span>
               </div>
               <div className={styles.dashTableRow}>
                 <span>Oakwood Care</span>
-                <span>£1,200.00</span>
+                <span>&pound;1,200.00</span>
                 <span className={`${styles.dashChip} ${styles.dashChipPending}`}>Pending</span>
                 <span>Today</span>
               </div>
               <div className={styles.dashTableRow}>
                 <span>Bramble Design</span>
-                <span>£580.00</span>
+                <span>&pound;580.00</span>
                 <span className={`${styles.dashChip} ${styles.dashChipSuccess}`}>Collected</span>
                 <span>Today</span>
               </div>
               <div className={styles.dashTableRow}>
                 <span>Fern &amp; Fox Co.</span>
-                <span>£320.00</span>
+                <span>&pound;320.00</span>
                 <span className={`${styles.dashChip} ${styles.dashChipFailed}`}>Failed</span>
                 <span>Today</span>
               </div>
             </div>
           </div>
 
-          {/* Nova chat sidebar */}
           <div className={styles.dashNovaPanel}>
             <div className={styles.dashNovaPanelHeader}>
               <NovaAvatarImg className={styles.dashNovaAvatar} />
@@ -921,7 +1018,7 @@ const platformTabs: { id: Platform; label: string; Icon: () => React.ReactElemen
     id: "teams",
     label: "Microsoft Teams",
     Icon: TeamsIcon,
-    caption: "Keep operations visible across the whole team.",
+    caption: "Nova keeps your whole operations team informed.",
   },
   {
     id: "dashboard",
@@ -968,7 +1065,6 @@ export function NovaDemoSection() {
             Nova works wherever your team works. Ask questions, automate tasks and get updates, without leaving the tools you already use.
           </p>
 
-          {/* Platform tabs */}
           <div className={styles.tabs} role="tablist" aria-label="Platform">
             {platformTabs.map(({ id, label, Icon }) => (
               <button
