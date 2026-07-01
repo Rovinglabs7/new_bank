@@ -15,11 +15,11 @@ type LeadResponse = {
 };
 
 const waitlistSchema = z.object({
-  email: z.string().email("Enter a valid work email"),
+  email: z.string().email("Enter a valid email address"),
 });
 
 const demoSchema = z.object({
-  email: z.string().email("Enter a valid work email"),
+  email: z.string().email("Enter a valid email address"),
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   company: z.string().min(1, "Company name is required"),
@@ -31,7 +31,7 @@ const demoSchema = z.object({
 
 const partnerSchema = z.object({
   fullName: z.string().min(1, "Full name is required"),
-  workEmail: z.string().email("Enter a valid work email"),
+  workEmail: z.string().email("Enter a valid email address"),
   companyName: z.string().min(1, "Company name is required"),
   companyWebsite: z.string().min(1, "Company website is required"),
   integration: z.string().min(1, "Tell us what you want to integrate"),

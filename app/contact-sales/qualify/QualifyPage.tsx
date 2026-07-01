@@ -126,13 +126,13 @@ export function QualifyPage() {
 
                 {/* Email prefilled */}
                 <label className={styles.field}>
-                  <span className={styles.label}>Work email</span>
+                  <span className={styles.label}>Email address</span>
                   <input
                     type="email"
                     className={styles.input}
                     value={form.email}
                     onChange={(e) => set("email", e.target.value)}
-                    placeholder="you@company.com"
+                    placeholder="you@example.com"
                     autoComplete="email"
                     required
                   />

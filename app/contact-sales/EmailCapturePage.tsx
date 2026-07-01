@@ -27,7 +27,7 @@ export function EmailCapturePage() {
     e.preventDefault();
     const trimmed = email.trim();
     if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
-      setError("Please enter a valid work email address.");
+      setError("Please enter a valid email address.");
       return;
     }
     setError("");
@@ -58,12 +58,12 @@ export function EmailCapturePage() {
               ) : null}
 
               <label className={styles.field}>
-                <span className={styles.label}>Work email</span>
+                <span className={styles.label}>Email address</span>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@company.com"
+                  placeholder="you@example.com"
                   className={styles.input}
                   autoComplete="email"
                   autoFocus
