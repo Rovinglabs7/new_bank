@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { site } from "@/config/site";
+import { NovaWidget } from "./NovaWidget";
 import styles from "./hero.module.css";
 
 const fadeUp = {
@@ -57,6 +58,11 @@ export function Hero() {
             {hero.primaryCta.label}
           </Link>
         </motion.div>
+      </div>
+
+      {/* Nova widget — floats at hero bottom, overlaps next section */}
+      <div className={styles.widgetAnchor}>
+        <NovaWidget />
       </div>
     </section>
   );

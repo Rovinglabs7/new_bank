@@ -9,13 +9,11 @@ import { Integration } from "@/components/site/Integration";
 import { CustomerStory } from "@/components/site/CustomerStory";
 import { WhoPraevorWorksFor } from "@/components/site/WhoSproutWorksFor";
 import { WhoPraevorMarquee } from "@/components/site/WhoSproutMarquee";
-import { NovaAskSection } from "@/components/site/NovaAskSection";
 import { Footer } from "@/components/site/Footer";
 import { RampMotion } from "@/components/ramp/RampMotion";
 import {
   RampPlatformBackOffice,
   RampFinanceIntelligence,
-  RampStackBanner,
 } from "@/components/ramp/sections";
 import { PaymentOpsCards } from "@/components/site/PaymentOpsCards";
 
@@ -35,12 +33,10 @@ export default function HomePage() {
       <main className="ramp-home">
         <RampPlatformBackOffice />
         <RampFinanceIntelligence />
-        <RampStackBanner />
       </main>
       <PaymentOpsCards />
       <WhoPraevorWorksFor />
       <WhoPraevorMarquee />
-      <NovaAskSection />
       <Footer />
     </div>
   );
