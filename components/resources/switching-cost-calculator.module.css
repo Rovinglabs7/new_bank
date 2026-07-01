@@ -1,0 +1,814 @@
+/* ─── Hero ─────────────────────────────────────────────────────────────────── */
+
+.hero {
+  background: var(--color-ink);
+  padding: 140px 40px 96px;
+}
+
+.heroInner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 20px;
+}
+
+.heroHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 24px;
+  line-height: 1.15;
+}
+
+.heroBody {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+  max-width: 640px;
+}
+
+/* ─── Calculator section ───────────────────────────────────────────────────── */
+
+.calculatorSection {
+  background: #f7f5f2;
+  padding: 80px 0 96px;
+}
+
+.calculatorInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.calculatorCard {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid rgba(40, 30, 21, 0.08);
+  box-shadow: 0 2px 16px rgba(40, 30, 21, 0.08);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* ─── Steps ────────────────────────────────────────────────────────────────── */
+
+.step {
+  display: flex;
+  flex-direction: column;
+}
+
+.stepLabel {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(40, 30, 21, 0.4);
+  margin-bottom: 20px;
+}
+
+.stepGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* ─── Inputs ───────────────────────────────────────────────────────────────── */
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink);
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+.prefixWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.prefix {
+  position: absolute;
+  left: 14px;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 15px;
+  color: var(--color-ink);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  border: 1px solid rgba(40, 30, 21, 0.18);
+  border-radius: 12px;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 15px;
+  color: var(--color-ink);
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.15s ease;
+  -moz-appearance: textfield;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input:focus {
+  border-color: var(--color-ink);
+}
+
+.inputPrefixed {
+  padding-left: 28px;
+}
+
+.select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  border: 1px solid rgba(40, 30, 21, 0.18);
+  border-radius: 12px;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 15px;
+  color: var(--color-ink);
+  background: #ffffff;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23281e15' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  transition: border-color 0.15s ease;
+}
+
+.select:focus {
+  border-color: var(--color-ink);
+}
+
+/* ─── Checkboxes ───────────────────────────────────────────────────────────── */
+
+.checkboxGroupLabel {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  color: var(--color-ink-muted);
+  margin: 0 0 16px;
+}
+
+.checkboxGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  color: var(--color-ink);
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1.5px solid rgba(40, 30, 21, 0.3);
+  accent-color: var(--color-ink);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ─── Results ──────────────────────────────────────────────────────────────── */
+
+.resultsSection {
+  margin-top: 56px;
+}
+
+.resultsSectionHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0 0 24px;
+}
+
+/* ─── Operational Profile (3-col grid) ────────────────────────────────────── */
+
+.profileGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.profileCard {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px;
+  border: 1px solid rgba(40, 30, 21, 0.08);
+  box-shadow: 0 2px 16px rgba(40, 30, 21, 0.08);
+}
+
+.profileValue {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 32px;
+  color: var(--color-ink);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.profileLabel {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--color-ink-muted);
+  line-height: 1.4;
+}
+
+/* ─── Hidden cost metrics (2-col dark cards) ───────────────────────────────── */
+
+.hiddenCostGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.hiddenCostCard {
+  background: var(--color-ink);
+  border-radius: 20px;
+  padding: 28px;
+}
+
+.hiddenCostTotal {
+  background: #1a120b;
+}
+
+.hiddenCostLabel {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 12px;
+}
+
+.hiddenCostValue {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 36px;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+/* ─── Maturity score ───────────────────────────────────────────────────────── */
+
+.maturityCard {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid rgba(40, 30, 21, 0.08);
+  box-shadow: 0 2px 16px rgba(40, 30, 21, 0.08);
+  padding: 40px;
+  margin-bottom: 24px;
+}
+
+.maturityHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+
+.maturityTitle {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin-bottom: 4px;
+}
+
+.maturitySubtitle {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--color-ink-muted);
+}
+
+.maturityNumber {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 56px;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.maturityMax {
+  font-size: 22px;
+  opacity: 0.5;
+}
+
+.gaugeTrack {
+  height: 12px;
+  background: rgba(40, 30, 21, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.gaugeBar {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease, background 0.4s ease;
+}
+
+.gaugeLabels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 11px;
+  margin-bottom: 32px;
+}
+
+.gaugeLabelRed {
+  color: #ef4444;
+}
+
+.gaugeLabelAmber {
+  color: #f59e0b;
+  text-align: center;
+}
+
+.gaugeLabelGreen {
+  color: #22c55e;
+  text-align: right;
+}
+
+.pillGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.pill {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
+}
+
+.pillGreen {
+  background: rgba(34, 197, 94, 0.1);
+  color: #15803d;
+}
+
+.pillAmber {
+  background: rgba(245, 158, 11, 0.1);
+  color: #b45309;
+}
+
+.pillRed {
+  background: rgba(239, 68, 68, 0.1);
+  color: #b91c1c;
+}
+
+.pillName {
+  font-weight: 500;
+}
+
+.pillScore {
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* ─── Recommendations ──────────────────────────────────────────────────────── */
+
+.recommendationsCard {
+  background: #faf6f1;
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.recHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin-bottom: 14px;
+}
+
+.recProviderMessage {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-ink);
+  margin: 0 0 12px;
+}
+
+.recProaevorMessage {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-ink-muted);
+  margin: 0;
+  border-left: 3px solid rgba(40, 30, 21, 0.15);
+  padding-left: 16px;
+}
+
+/* ─── Opportunity card ─────────────────────────────────────────────────────── */
+
+.opportunityCard {
+  background: var(--color-ink);
+  border-radius: 24px;
+  padding: 44px;
+  color: #ffffff;
+}
+
+.opportunityEyebrow {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 28px;
+}
+
+.opportunityGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.opportunityMetric {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.opportunityValue {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 40px;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.opportunityLabel {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.4;
+}
+
+/* ─── Educational ──────────────────────────────────────────────────────────── */
+
+.eduSection {
+  background: #f7f5f2;
+  padding: 96px 40px;
+}
+
+.eduInner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.eduHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  font-weight: 400;
+  color: var(--color-ink);
+  text-align: center;
+  margin: 0 0 48px;
+}
+
+.eduGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.eduItem {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 32px;
+  border: 1px solid rgba(40, 30, 21, 0.06);
+}
+
+.eduItemHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0 0 14px;
+}
+
+.eduItemBody {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-ink-muted);
+  margin: 0;
+}
+
+/* ─── FAQ ──────────────────────────────────────────────────────────────────── */
+
+.faqSection {
+  padding: 96px 40px;
+  background: #ffffff;
+}
+
+.faqInner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.faqHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0 0 48px;
+  text-align: center;
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+}
+
+.faqItem {
+  border-bottom: 1px solid rgba(40, 30, 21, 0.1);
+}
+
+.faqItem:first-of-type {
+  border-top: 1px solid rgba(40, 30, 21, 0.1);
+}
+
+.faqSummary {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-ink);
+  padding: 24px 32px 24px 0;
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+  line-height: 1.4;
+}
+
+.faqSummary::-webkit-details-marker {
+  display: none;
+}
+
+.faqSummary::after {
+  content: "+";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-weight: 300;
+  color: var(--color-ink-muted);
+  transition: transform 0.2s ease;
+}
+
+.faqItem[open] .faqSummary::after {
+  content: "−";
+}
+
+.faqAnswer {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-ink-muted);
+  margin: 0;
+  padding-bottom: 24px;
+}
+
+/* ─── CTA ──────────────────────────────────────────────────────────────────── */
+
+.ctaSection {
+  background: var(--color-ink);
+  padding: 120px 40px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.ctaInner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.ctaHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 20px;
+  line-height: 1.2;
+}
+
+.ctaBody {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+}
+
+.ctaButtons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
+.primaryBtn {
+  background: #ffffff;
+  color: var(--color-ink);
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 16px;
+  font-weight: 400;
+  border: none;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.primaryBtn:hover {
+  opacity: 0.9;
+}
+
+.secondaryBtn {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.secondaryBtn:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .stepGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .profileGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .opportunityGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pillGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .calculatorCard {
+    padding: 32px 24px;
+  }
+
+  .hiddenCostGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .eduGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .checkboxGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 100px 24px 72px;
+  }
+
+  .calculatorSection {
+    padding: 48px 0 72px;
+  }
+
+  .calculatorInner {
+    padding: 0 20px;
+  }
+
+  .calculatorCard {
+    padding: 28px 20px;
+    gap: 36px;
+  }
+
+  .stepGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .profileGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hiddenCostValue {
+    font-size: 28px;
+  }
+
+  .pillGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .maturityNumber {
+    font-size: 40px;
+  }
+
+  .opportunityGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .opportunityValue {
+    font-size: 32px;
+  }
+
+  .opportunityCard {
+    padding: 32px 24px;
+  }
+
+  .maturityCard {
+    padding: 28px 20px;
+  }
+
+  .maturityHeader {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .eduSection {
+    padding: 72px 20px;
+  }
+
+  .eduGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .faqSection {
+    padding: 72px 20px;
+  }
+
+  .ctaSection {
+    padding: 80px 24px;
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+}

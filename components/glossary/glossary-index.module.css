@@ -1,0 +1,370 @@
+/* ─── Hero ─────────────────────────────────────────────────────────────────── */
+
+.hero {
+  background: var(--color-ink);
+  padding: 140px 40px 96px;
+}
+
+.heroInner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0 0 20px;
+}
+
+.heroHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 24px;
+  line-height: 1.15;
+}
+
+.heroBody {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+  max-width: 560px;
+}
+
+/* ─── Controls ─────────────────────────────────────────────────────────────── */
+
+.controls {
+  background: #ffffff;
+  border-bottom: 1px solid rgba(40, 30, 21, 0.1);
+  padding: 28px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.controlsInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.searchWrap {
+  position: relative;
+  max-width: 480px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(40, 30, 21, 0.4);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 16px 11px 40px;
+  border: 1px solid rgba(40, 30, 21, 0.18);
+  border-radius: 999px;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  color: var(--color-ink);
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.searchInput::placeholder {
+  color: rgba(40, 30, 21, 0.4);
+}
+
+.searchInput:focus {
+  border-color: var(--color-ink);
+}
+
+/* ─── Category pills ───────────────────────────────────────────────────────── */
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(40, 30, 21, 0.18);
+  background: transparent;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.pill:hover {
+  border-color: var(--color-ink);
+  background: rgba(40, 30, 21, 0.04);
+}
+
+.pillActive {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: #ffffff;
+}
+
+.pillActive:hover {
+  background: var(--color-ink);
+  color: #ffffff;
+}
+
+/* ─── A-Z nav ──────────────────────────────────────────────────────────────── */
+
+.azNav {
+  background: #f7f5f2;
+  border-bottom: 1px solid rgba(40, 30, 21, 0.08);
+  padding: 10px 40px;
+}
+
+.azNavInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.azLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.azLink:hover {
+  background: var(--color-ink);
+  color: #ffffff;
+}
+
+.azLinkDisabled {
+  color: rgba(40, 30, 21, 0.25);
+  pointer-events: none;
+}
+
+/* ─── Main content ─────────────────────────────────────────────────────────── */
+
+.main {
+  background: #ffffff;
+  padding: 64px 40px 120px;
+}
+
+.mainInner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ─── Letter group ─────────────────────────────────────────────────────────── */
+
+.letterGroup {
+  margin-bottom: 64px;
+}
+
+.letterHeading {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--color-ink);
+  margin: 0 0 24px;
+  border-bottom: 2px solid rgba(40, 30, 21, 0.1);
+  padding-bottom: 12px;
+  line-height: 1;
+}
+
+.termsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* ─── Term card ────────────────────────────────────────────────────────────── */
+
+.termCard {
+  border: 1px solid rgba(40, 30, 21, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.termCard:hover {
+  border-color: rgba(40, 30, 21, 0.3);
+  box-shadow: 0 4px 20px rgba(40, 30, 21, 0.06);
+}
+
+.termCardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.termName {
+  font-family: var(--font-season), "Season Mix Regular", serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-ink);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.categoryBadge {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.termDefinition {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-ink-muted);
+  margin: 0;
+  flex: 1;
+}
+
+.readMore {
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink);
+  letter-spacing: 0.01em;
+}
+
+/* ─── No results ───────────────────────────────────────────────────────────── */
+
+.noResults {
+  text-align: center;
+  padding: 80px 0;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 16px;
+  color: var(--color-ink-muted);
+}
+
+/* ─── Category badge colours ───────────────────────────────────────────────── */
+
+.cat-direct-debit {
+  background: #e8f0fe;
+  color: #1a56db;
+}
+
+.cat-open-banking {
+  background: #def7ec;
+  color: #046c4e;
+}
+
+.cat-settlement {
+  background: #fdf6b2;
+  color: #723b13;
+}
+
+.cat-compliance {
+  background: #fde8e8;
+  color: #9b1c1c;
+}
+
+.cat-payments {
+  background: #edebfe;
+  color: #5521b5;
+}
+
+.cat-disputes {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.cat-reconciliation {
+  background: #e1effe;
+  color: #1e429f;
+}
+
+.cat-infrastructure {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .termsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 100px 24px 72px;
+  }
+
+  .controls {
+    padding: 20px 24px;
+  }
+
+  .azNav {
+    padding: 10px 24px;
+  }
+
+  .main {
+    padding: 48px 24px 80px;
+  }
+
+  .termsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 80px 20px 56px;
+  }
+
+  .controls {
+    padding: 16px 20px;
+  }
+
+  .main {
+    padding: 40px 20px 64px;
+  }
+}

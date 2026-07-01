@@ -645,7 +645,7 @@ export function SettlementCalculator() {
         <div className={styles.eduInner}>
           <h2 className={styles.eduHeading}>What affects settlement time?</h2>
           <p className={styles.eduSubtext}>
-            Settlement isn't instant. Understanding the factors that influence
+            Settlement isn&apos;t instant. Understanding the factors that influence
             timing helps you plan collections more effectively.
           </p>
           <div className={styles.eduGrid}>
