@@ -2,6 +2,7 @@ import { AnnouncementBar } from "@/components/site/AnnouncementBar";
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import { ProductShowcase } from "@/components/site/ProductShowcase";
+import { NovaDemoSection } from "@/components/site/NovaDemoSection";
 import { Solutions } from "@/components/site/Solutions";
 import { BrandStory } from "@/components/site/BrandStory";
 import { Integration } from "@/components/site/Integration";
@@ -28,6 +29,7 @@ export default function HomePage() {
       <Header />
       <Hero />
       <ProductShowcase />
+      <NovaDemoSection />
       <Solutions />
       <BrandStory />
       <Integration />

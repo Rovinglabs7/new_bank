@@ -1,0 +1,533 @@
+/* ─── Section layout ──────────────────────────────────────────────────────── */
+
+.section {
+  background: #ffffff;
+  padding: 120px 0;
+}
+
+.inner {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  gap: 64px;
+}
+
+/* ─── Left column ─────────────────────────────────────────────────────────── */
+
+.textCol {
+  flex: 0 0 45%;
+  max-width: 45%;
+}
+
+.eyebrow {
+  margin: 0 0 20px;
+  font-family: var(--font-season);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted, #7a6a5c);
+}
+
+.heading {
+  margin: 0 0 16px;
+  font-family: var(--font-season);
+  font-size: clamp(2.4rem, 4vw, 3.25rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--color-ink);
+}
+
+.subtext {
+  margin: 0 0 20px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-ink-muted, #7a6a5c);
+}
+
+.body {
+  margin: 0 0 32px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--color-ink-muted, #7a6a5c);
+}
+
+/* Platform pills */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(40, 30, 21, 0.15);
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-ink);
+  background: transparent;
+  white-space: nowrap;
+}
+
+/* ─── Right column ────────────────────────────────────────────────────────── */
+
+.chatCol {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* ─── Slack window chrome ─────────────────────────────────────────────────── */
+
+.slackWindow {
+  width: 100%;
+  max-width: 520px;
+  border-radius: 12px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  min-height: 480px;
+}
+
+/* Header bar */
+.slackHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 49px;
+  background: #1a1d21;
+  flex-shrink: 0;
+}
+
+.slackChannel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.hashIcon {
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 0.7;
+  margin-right: 1px;
+}
+
+.slackHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.onlineDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2bac76;
+  flex-shrink: 0;
+}
+
+.headerNova {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.memberCount {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ─── Message area ────────────────────────────────────────────────────────── */
+
+.messageArea {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  scroll-behavior: smooth;
+}
+
+/* ─── Message group ───────────────────────────────────────────────────────── */
+
+.messageGroup {
+  display: flex;
+  gap: 10px;
+  padding: 6px 0;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.messageVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.messageContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.messageMeta {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.senderName {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: #1d1c1d;
+}
+
+.messageTime {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 11px;
+  color: #616061;
+}
+
+.messageBubbles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ─── Avatars ─────────────────────────────────────────────────────────────── */
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 2px;
+}
+
+.avatarDaniel {
+  background: #1e3a5f;
+}
+
+.avatarNova {
+  background: var(--color-ink, #281e15);
+}
+
+/* ─── Bubbles ─────────────────────────────────────────────────────────────── */
+
+.bubble {
+  margin: 0;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1d1c1d;
+}
+
+.bubbleList {
+  padding-left: 20px;
+  list-style: disc;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bubbleList li {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1d1c1d;
+}
+
+.bubbleLink {
+  color: #1264a3;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.bubbleQuestion {
+  margin-top: 4px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+}
+
+.bubbleVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.bubbleSuccess {
+  color: #2bac76;
+  font-weight: 500;
+}
+
+/* ─── Typing indicator ────────────────────────────────────────────────────── */
+
+.typingRow {
+  display: flex;
+  gap: 10px;
+  padding: 6px 0;
+  align-items: flex-start;
+}
+
+.typingBubble {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: #f8f8f8;
+  border-radius: 8px;
+  margin-top: 2px;
+}
+
+.typingText {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 12px;
+  color: #616061;
+  font-style: italic;
+}
+
+.dots {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #616061;
+  animation: dotBounce 1.2s ease-in-out infinite;
+}
+
+.dot:nth-child(1) {
+  animation-delay: 0ms;
+}
+.dot:nth-child(2) {
+  animation-delay: 150ms;
+}
+.dot:nth-child(3) {
+  animation-delay: 300ms;
+}
+
+@keyframes dotBounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+/* ─── Rich card (link unfurl) ─────────────────────────────────────────────── */
+
+.richCard {
+  display: flex;
+  gap: 12px;
+  margin: 6px 0 4px;
+  padding: 12px 14px;
+  background: #ffffff;
+  border-left: 3px solid #6366f1;
+  border-radius: 0 6px 6px 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  max-width: 320px;
+}
+
+.richCardVisible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.richCardIcon {
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.richCardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.richCardTitle {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  color: #1d1c1d;
+}
+
+.richCardName {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  color: #1d1c1d;
+}
+
+.richCardDetails {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 12px;
+  color: #616061;
+}
+
+.richCardStatus {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 12px;
+  color: #616061;
+  margin-top: 4px;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f0a500;
+  flex-shrink: 0;
+}
+
+/* ─── Action buttons ─────────────────────────────────────────────────────────*/
+
+.actionButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 4px;
+  border: none;
+  background: #007a5a;
+  color: #ffffff;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease, background 0.2s ease;
+  min-width: 120px;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background: #006647;
+}
+
+.btnPrimary:disabled {
+  cursor: default;
+}
+
+.btnClicked {
+  opacity: 0.55;
+  background: #007a5a;
+}
+
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 4px;
+  border: 1px solid rgba(29, 28, 29, 0.3);
+  background: transparent;
+  color: #1d1c1d;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.btnGhost:hover:not(:disabled) {
+  background: rgba(29, 28, 29, 0.06);
+}
+
+.btnGhost:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Spinner inside primary button */
+.btnSpinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .section {
+    padding: 80px 0;
+  }
+
+  .inner {
+    flex-direction: column;
+    gap: 48px;
+    padding: 0 20px;
+  }
+
+  .textCol {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .chatCol {
+    width: 100%;
+  }
+
+  .slackWindow {
+    max-width: 100%;
+  }
+}
