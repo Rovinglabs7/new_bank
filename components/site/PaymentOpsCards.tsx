@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { motion, AnimatePresence } from "framer-motion";
@@ -412,6 +413,52 @@ function GlobeCard() {
   );
 }
 
+// ─── EMAIL CAPTURE ────────────────────────────────────────────────────────────
+
+function EmailCapture() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const trimmed = email.trim();
+    if (!trimmed) { setError("Please enter your email address."); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    setError("");
+    router.push(`/contact-sales?email=${encodeURIComponent(trimmed)}`);
+  }
+
+  return (
+    <div className={styles.captureWrap}>
+      <form className={styles.captureForm} onSubmit={handleSubmit} noValidate>
+        <input
+          type="email"
+          className={styles.captureInput}
+          placeholder="Enter your email address"
+          value={email}
+          onChange={(e) => { setEmail(e.target.value); setError(""); }}
+          aria-label="Email address"
+          autoComplete="email"
+        />
+        <button type="submit" className={styles.captureBtn}>
+          Book a demo
+        </button>
+      </form>
+      {error ? (
+        <p className={styles.captureError}>{error}</p>
+      ) : (
+        <p className={styles.captureReassurance}>
+          No spam. Just a quick way to book your personalised demo.
+        </p>
+      )}
+    </div>
+  );
+}
+
 // ─── SECTION SHELL ────────────────────────────────────────────────────────────
 
 export function PaymentOpsCards() {
@@ -431,6 +478,20 @@ export function PaymentOpsCards() {
           <WorkflowCard />
           <GlobeCard />
         </div>
+
+        <motion.div
+          className={styles.ctaBlock}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <h3 className={styles.ctaHeading}>Ready to grow? So are we.</h3>
+          <p className={styles.ctaBody}>
+            Praevor is built to grow with your business, making every payment simpler, every collection smoother and every day a little easier.
+          </p>
+          <EmailCapture />
+        </motion.div>
       </div>
     </section>
   );

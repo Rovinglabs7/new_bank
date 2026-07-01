@@ -1,13 +1,13 @@
 .hero {
   position: relative;
-  overflow: hidden;
+  overflow: visible; /* allow widget to overlap next section */
   background: linear-gradient(
     180deg,
     var(--color-hero-top) 0%,
     var(--color-hero-bottom) 100%
   );
   color: var(--color-cream);
-  padding: 140px 0 88px;
+  padding: 140px 0 0;
 }
 
 .glow {
@@ -27,7 +27,7 @@
   z-index: 1;
   max-width: 880px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 40px 72px;
   text-align: center;
 }
 
@@ -75,19 +75,35 @@
   transform: translateY(-1px);
 }
 
+/* ─── Widget anchor ───────────────────────────────────────────────────────── */
+
+.widgetAnchor {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  padding: 0 24px;
+  /* overlap into next section by 50px */
+  margin-bottom: -50px;
+}
+
 @media (max-width: 768px) {
   .hero {
-    padding: 120px 0 72px;
+    padding-top: 120px;
+  }
+
+  .inner {
+    padding-bottom: 56px;
   }
 }
 
 @media (max-width: 600px) {
   .hero {
-    padding: 108px 0 56px;
+    padding-top: 108px;
   }
 
   .inner {
-    padding: 0 20px;
+    padding: 0 20px 48px;
   }
 
   .headline {
@@ -109,5 +125,10 @@
   .primaryCta {
     min-height: 52px;
     font-size: 15px;
+  }
+
+  .widgetAnchor {
+    padding: 0 16px;
+    margin-bottom: -40px;
   }
 }

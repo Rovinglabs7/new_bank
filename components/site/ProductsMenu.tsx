@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactElement } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import { site } from "@/config/site";
 import styles from "./products-menu.module.css";
 
@@ -70,59 +71,77 @@ export function ProductsMenu() {
         onClick={() => setOpen((v) => !v)}
       >
         Products
+        <motion.svg
+          className={styles.chevron}
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          aria-hidden
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </motion.svg>
       </button>
 
-      {open && (
-        <div
-          id="products-menu-panel"
-          role="menu"
-          aria-label="Products"
-          className={styles.panel}
-          style={{ top: panelTop }}
-        >
-          <div className={styles.inner}>
-            <div className={styles.grid}>
-              {columns.map((col) => (
-                <div className={styles.col} key={col.heading}>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="products-menu-panel"
+            role="menu"
+            aria-label="Products"
+            className={styles.panel}
+            style={{ top: panelTop }}
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className={styles.inner}>
+              <div className={styles.grid}>
+                {columns.map((col) => (
+                  <div className={styles.col} key={col.heading}>
+                    <div className={styles.colHeading}>
+                      <span className={styles.colIcon}>{COLUMN_ICONS[col.heading]}</span>
+                      <p className={styles.heading}>{col.heading}</p>
+                    </div>
+                    <ul className={styles.list}>
+                      {col.items.map((item) => (
+                        <li key={item.title} role="none">
+                          <Link role="menuitem" href={item.href} onClick={() => setOpen(false)}>
+                            <span className={styles.title}>{item.title}</span>
+                            <span className={styles.subtext}>{item.subtext}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+
+                <div className={styles.col}>
                   <div className={styles.colHeading}>
-                    <span className={styles.colIcon}>{COLUMN_ICONS[col.heading]}</span>
-                    <p className={styles.heading}>{col.heading}</p>
+                    <span className={styles.colIcon}>{COLUMN_ICONS.More}</span>
+                    <p className={styles.heading}>More</p>
                   </div>
                   <ul className={styles.list}>
-                    {col.items.map((item) => (
-                      <li key={item.title} role="none">
-                        <Link role="menuitem" href={item.href} onClick={() => setOpen(false)}>
-                          <span className={styles.title}>{item.title}</span>
-                          <span className={styles.subtext}>{item.subtext}</span>
-                        </Link>
-                      </li>
-                    ))}
+                    <li role="none">
+                      <Link
+                        role="menuitem"
+                        href={switching.href}
+                        className={styles.moreLink}
+                        onClick={() => setOpen(false)}
+                      >
+                        {switching.label}
+                      </Link>
+                    </li>
                   </ul>
                 </div>
-              ))}
-
-              <div className={styles.col}>
-                <div className={styles.colHeading}>
-                  <span className={styles.colIcon}>{COLUMN_ICONS.More}</span>
-                  <p className={styles.heading}>More</p>
-                </div>
-                <ul className={styles.list}>
-                  <li role="none">
-                    <Link
-                      role="menuitem"
-                      href={switching.href}
-                      className={styles.moreLink}
-                      onClick={() => setOpen(false)}
-                    >
-                      {switching.label}
-                    </Link>
-                  </li>
-                </ul>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

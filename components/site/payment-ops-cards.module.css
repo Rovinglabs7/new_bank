@@ -69,6 +69,132 @@
   gap: 20px;
 }
 
+/* ─── CTA block ─────────────────────────────────────────────────────────────── */
+
+.ctaBlock {
+  margin-top: 80px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.ctaHeading {
+  margin: 0;
+  font-family: var(--font-season);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 420;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--color-ink);
+}
+
+.ctaBody {
+  margin: 0;
+  max-width: 520px;
+  font-family: var(--font-inter);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-ink-muted);
+}
+
+/* ─── Email capture ─────────────────────────────────────────────────────────── */
+
+.captureWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 560px;
+  margin-top: 8px;
+}
+
+.captureForm {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 58px;
+  background: #ffffff;
+  border: 1px solid rgba(40, 30, 21, 0.12);
+  border-radius: 999px;
+  box-shadow:
+    0 1px 2px rgba(40, 30, 21, 0.04),
+    0 4px 16px rgba(40, 30, 21, 0.06);
+  overflow: hidden;
+  transition: box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.captureForm:focus-within {
+  border-color: rgba(40, 30, 21, 0.3);
+  box-shadow:
+    0 1px 2px rgba(40, 30, 21, 0.04),
+    0 6px 24px rgba(40, 30, 21, 0.1);
+}
+
+.captureInput {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 20px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-inter);
+  font-size: 15px;
+  color: var(--color-ink);
+  outline: none;
+  caret-color: var(--color-ink);
+}
+
+.captureInput::placeholder {
+  color: rgba(40, 30, 21, 0.35);
+}
+
+.captureBtn {
+  flex-shrink: 0;
+  height: 46px;
+  margin: 0 6px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: #ffffff;
+  font-family: var(--font-inter);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.captureBtn:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.captureBtn:active {
+  transform: translateY(0);
+}
+
+.captureReassurance {
+  margin: 0;
+  font-family: var(--font-inter);
+  font-size: 12.5px;
+  color: var(--color-ink-muted);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.captureError {
+  margin: 0;
+  font-family: var(--font-inter);
+  font-size: 12.5px;
+  color: #dc2626;
+  text-align: center;
+}
+
 /* ─── Card ─────────────────────────────────────────────────────────────────── */
 
 .card {
@@ -361,6 +487,38 @@
   }
 
   .sectionSub {
+    font-size: 15px;
+  }
+
+  .ctaBlock {
+    margin-top: 56px;
+    gap: 12px;
+  }
+
+  .ctaBody {
+    font-size: 15px;
+  }
+
+  .captureForm {
+    flex-direction: column;
+    height: auto;
+    border-radius: 16px;
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .captureInput {
+    height: 44px;
+    padding: 0 14px;
+    font-size: 16px;
+    border-radius: 10px;
+  }
+
+  .captureBtn {
+    width: 100%;
+    height: 44px;
+    margin: 0;
+    border-radius: 10px;
     font-size: 15px;
   }
 }

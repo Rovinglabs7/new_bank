@@ -13,11 +13,25 @@
   color: rgba(250, 248, 246, 0.88);
   cursor: pointer;
   transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .trigger:hover,
 .trigger[aria-expanded="true"] {
   color: var(--color-cream);
+}
+
+.chevron {
+  display: block;
+  color: rgba(250, 248, 246, 0.55);
+  flex-shrink: 0;
+}
+
+.trigger:hover .chevron,
+.trigger[aria-expanded="true"] .chevron {
+  color: rgba(250, 248, 246, 0.88);
 }
 
 .panel {

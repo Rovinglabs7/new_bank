@@ -14,7 +14,6 @@ import { RampMotion } from "@/components/ramp/RampMotion";
 import {
   RampPlatformBackOffice,
   RampFinanceIntelligence,
-  RampStackBanner,
 } from "@/components/ramp/sections";
 import { PaymentOpsCards } from "@/components/site/PaymentOpsCards";
 
@@ -34,7 +33,6 @@ export default function HomePage() {
       <main className="ramp-home">
         <RampPlatformBackOffice />
         <RampFinanceIntelligence />
-        <RampStackBanner />
       </main>
       <PaymentOpsCards />
       <WhoPraevorWorksFor />
