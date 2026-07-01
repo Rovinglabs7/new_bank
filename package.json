@@ -19,11 +19,15 @@
   },
   "dependencies": {
     "@lottiefiles/dotlottie-web": "^0.75.0",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@types/three": "^0.185.0",
     "framer-motion": "^12.42.0",
     "jose": "^6.0.11",
     "next": "^15.3.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "three": "^0.185.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {
