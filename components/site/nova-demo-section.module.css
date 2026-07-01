@@ -1575,8 +1575,440 @@
   border-radius: 0 0 4px 4px;
 }
 
-/* ─── Phone frame (WhatsApp) ───────────────────────────────────────────────── */
+/* ─── WhatsApp Web UI ──────────────────────────────────────────────────────── */
 
+.waWindow {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 664px;
+  height: 520px;
+  max-height: 520px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 0 2px rgba(0, 0, 0, 0.08),
+    0 8px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  background: #ffffff;
+  font-family: "Segoe UI", Helvetica, Arial, var(--font-inter, "Inter", sans-serif);
+}
+
+.waBody {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.waLeftPanel {
+  display: flex;
+  flex-shrink: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-right: 1px solid #e9edef;
+}
+
+/* Left nav rail — matches WhatsApp Web chatlist-header navbar */
+.waRail {
+  width: 59px;
+  flex-shrink: 0;
+  background: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0 12px;
+  min-height: 0;
+  align-self: stretch;
+}
+
+.waRailPrimary,
+.waRailFooter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+}
+
+.waRailItem {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #54656f;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.waRailItemActive {
+  color: #008069;
+}
+
+.waRailBadge {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: #25d366;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 18px;
+  text-align: center;
+}
+
+.waRailDivider {
+  width: 36px;
+  height: 1px;
+  margin: 6px 0;
+  border: none;
+  background: #d1d7db;
+  flex-shrink: 0;
+}
+
+.waRailMetaAi {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, #a855f7 0%, #6366f1 45%, #3b82f6 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+.waRailProfileAvatar {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  font-size: 12px !important;
+}
+
+/* Chat list panel */
+.waChatList {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.waChatListHeader {
+  height: 60px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f0f2f5;
+  flex-shrink: 0;
+}
+
+.waChatListTitle {
+  font-size: 20px;
+  font-weight: 400;
+  color: #111b21;
+}
+
+.waChatListHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.waIconBtn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #54656f;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.waSearchBox {
+  margin: 0 12px 8px;
+  height: 35px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f0f2f5;
+  border-radius: 8px;
+  color: #667781;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.waSearchBox svg {
+  flex-shrink: 0;
+  color: #54656f;
+}
+
+.waSearchBox span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.waFilters {
+  display: flex;
+  gap: 8px;
+  padding: 0 12px 8px;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+.waFilter {
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+  color: #54656f;
+  background: #f0f2f5;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.waFilterActive {
+  background: #e7fce3;
+  color: #008069;
+}
+
+.waChatListItems {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.waChatItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  cursor: default;
+}
+
+.waChatItemActive {
+  background: #f0f2f5;
+}
+
+.waChatItemAvatar {
+  width: 49px !important;
+  height: 49px !important;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.waChatItemAvatarPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #dfe5e7;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.waChatItemBody {
+  flex: 1;
+  min-width: 0;
+  border-bottom: 1px solid #f0f2f5;
+  padding-bottom: 10px;
+}
+
+.waChatItem:last-child .waChatItemBody {
+  border-bottom: none;
+}
+
+.waChatItemTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.waChatItemName {
+  font-size: 16px;
+  color: #111b21;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.waChatItemTime {
+  font-size: 12px;
+  color: #667781;
+  flex-shrink: 0;
+}
+
+.waChatItemPreview {
+  font-size: 14px;
+  color: #667781;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Conversation panel */
+.waConversation {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #efeae2;
+}
+
+.waConvHeader {
+  height: 60px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f0f2f5;
+  border-bottom: 1px solid #e9edef;
+  flex-shrink: 0;
+}
+
+.waConvHeaderAvatar {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50%;
+}
+
+.waConvHeaderInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.waConvHeaderName {
+  font-size: 16px;
+  color: #111b21;
+}
+
+.waConvHeaderStatus {
+  font-size: 13px;
+  color: #667781;
+}
+
+.waConvHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.waChat {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  background-color: #efeae2;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4cfc6' fill-opacity='0.35'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.waChatMessages {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2px;
+  padding: 12px 24px;
+}
+
+.waBubbleRow {
+  display: none;
+  align-items: flex-end;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.waBubbleRow.msgVisible {
+  display: flex;
+}
+
+.waBubbleRight {
+  justify-content: flex-end;
+}
+
+.waBubbleLeft {
+  justify-content: flex-start;
+}
+
+.waBubble {
+  max-width: 65%;
+  padding: 6px 9px 8px;
+  font-size: 14.2px;
+  line-height: 19px;
+  word-break: break-word;
+  box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);
+}
+
+.waBubbleOut {
+  background: #d9fdd3;
+  color: #111b21;
+  border-radius: 7.5px;
+  border-top-right-radius: 0;
+}
+
+.waBubbleIn {
+  background: #ffffff;
+  color: #111b21;
+  border-radius: 7.5px;
+  border-top-left-radius: 0;
+}
+
+.waFooter {
+  min-height: 62px;
+  padding: 5px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f0f2f5;
+  flex-shrink: 0;
+}
+
+.waFooterIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #54656f;
+  flex-shrink: 0;
+}
+
+.waFooterInput {
+  flex: 1;
+  min-height: 42px;
+  padding: 9px 12px;
+  background: #ffffff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.waInputPlaceholder {
+  font-size: 15px;
+  color: #667781;
+}
+
+/* Legacy phone frame (unused) */
 .phoneFrame {
   width: 380px;
   height: 500px;
@@ -1622,142 +2054,6 @@
   height: 4px;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 2px;
-}
-
-/* ─── WhatsApp UI ──────────────────────────────────────────────────────────── */
-
-.waHeader {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: #075e54;
-  flex-shrink: 0;
-}
-
-.waHeaderAvatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.waHeaderInfo {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.waHeaderName {
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.waHeaderStatus {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.waOnlineDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #25d366;
-}
-
-.waHeaderIcons {
-  display: flex;
-  gap: 8px;
-  font-size: 14px;
-}
-
-.waHeaderIcon {
-  cursor: default;
-  opacity: 0.85;
-}
-
-.waChat {
-  flex: 1;
-  overflow-y: auto;
-  padding: 10px 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  scroll-behavior: smooth;
-  background: #ece5dd;
-}
-
-.waBubbleRow {
-  display: flex;
-  align-items: flex-end;
-  gap: 4px;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.waBubbleRight {
-  justify-content: flex-end;
-}
-
-.waBubbleLeft {
-  justify-content: flex-start;
-}
-
-.waAvatar {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.waBubble {
-  max-width: 75%;
-  padding: 7px 10px;
-  border-radius: 8px;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 12px;
-  line-height: 1.45;
-  word-break: break-word;
-  margin-bottom: 2px;
-}
-
-.waBubbleOut {
-  background: #dcf8c6;
-  color: #1d1c1d;
-  border-radius: 8px 8px 0 8px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
-}
-
-.waBubbleIn {
-  background: #ffffff;
-  color: #1d1c1d;
-  border-radius: 8px 8px 8px 0;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
-}
-
-.waInputBar {
-  height: 38px;
-  background: #f0f0f0;
-  border-top: 1px solid #d0d0d0;
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  flex-shrink: 0;
-}
-
-.waInputPlaceholder {
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 12px;
-  color: #aaa;
 }
 
 /* ─── Dashboard UI ─────────────────────────────────────────────────────────── */
@@ -2023,7 +2319,8 @@
   }
 
   .slackWindow,
-  .teamsWindow {
+  .teamsWindow,
+  .waWindow {
     max-width: 100%;
     height: 440px;
   }
@@ -2032,6 +2329,10 @@
     width: 100%;
     height: auto;
     aspect-ratio: 3 / 4;
+  }
+
+  .waChatMessages {
+    padding: 12px 16px;
   }
 
   .macbookFrame {
@@ -2045,12 +2346,14 @@
   }
 
   .teamsRail,
-  .teamsPanel {
+  .teamsPanel,
+  .waLeftPanel {
     display: none;
   }
 
   .slackWindow,
-  .teamsWindow {
+  .teamsWindow,
+  .waWindow {
     height: 400px;
   }
 

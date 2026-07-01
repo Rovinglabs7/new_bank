@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, useCallback } from "react";
 import styles from "./nova-demo-section.module.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -973,12 +973,18 @@ function WhatsAppMockup() {
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const started = useRef(false);
 
+  const scrollToBottom = useCallback(() => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = scrollRef.current;
+        if (el) el.scrollTop = el.scrollHeight;
+      });
+    });
+  }, []);
+
   const show = useCallback((id: string, delay: number) => {
     const t = setTimeout(() => {
       setVis((p) => ({ ...p, [id]: true }));
-      requestAnimationFrame(() => {
-        if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-      });
     }, delay);
     timers.current.push(t);
   }, []);
@@ -1023,6 +1029,12 @@ function WhatsAppMockup() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show, hide]);
 
+  useLayoutEffect(() => {
+    scrollToBottom();
+    const t = setTimeout(scrollToBottom, 360);
+    return () => clearTimeout(t);
+  }, [vis, btnClicked, scrollToBottom]);
+
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -1045,178 +1057,313 @@ function WhatsAppMockup() {
   }, [runSequence]);
 
   return (
-    <div className={styles.phoneFrame}>
-      <div className={styles.phoneDynamicIsland} />
-      <div className={styles.phoneScreen}>
-        <div className={styles.waHeader}>
-          <NovaAvatarImg className={styles.waHeaderAvatar} />
-          <div className={styles.waHeaderInfo}>
-            <span className={styles.waHeaderName}>Nova</span>
-            <span className={styles.waHeaderStatus}>
-              <span className={styles.waOnlineDot} />
-              online
+    <div className={styles.waWindow}>
+      <div className={styles.waBody}>
+        <div className={styles.waLeftPanel}>
+          <header className={styles.waRail} aria-hidden>
+            <div className={styles.waRailPrimary}>
+              <span className={`${styles.waRailItem} ${styles.waRailItemActive}`} title="Chats">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden>
+                  <path fillRule="evenodd" d="M22 6.67C22 5.19 20.8 4 19.33 4H1.8a1 1 0 0 0-.85 1.53L3 9v8.33C3 18.81 4.2 20 5.67 20h13.66c1.48 0 2.67-1.2 2.67-2.67V6.67ZM7 10a1 1 0 0 1 1-1h9a1 1 0 1 1 0 2H8a1 1 0 0 1-1-1Zm1 3a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H8Z" clipRule="evenodd" />
+                </svg>
+                <span className={styles.waRailBadge}>2</span>
+              </span>
+              <span className={styles.waRailItem} title="Status">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden>
+                  <path d="M13.56 3.14c.1-.55.62-.92 1.15-.77a10 10 0 0 1 6.98 12.1.91.91 0 0 1-1.23.6c-.52-.18-.78-.75-.66-1.3a8 8 0 0 0-5.44-9.41c-.53-.17-.9-.68-.8-1.22Zm5.34 14.65c.42.35.48.98.08 1.37a10 10 0 0 1-13.96 0c-.4-.39-.34-1.02.08-1.38a1.11 1.11 0 0 1 1.46.09 8 8 0 0 0 10.88 0c.4-.38 1.03-.44 1.45-.09ZM3.54 15.08c-.52.19-1.1-.08-1.23-.62A10 10 0 0 1 9.29 2.37c.53-.15 1.05.22 1.15.77.1.54-.27 1.05-.8 1.22a8 8 0 0 0-5.44 9.42c.12.54-.14 1.1-.66 1.3Z" />
+                  <path fillRule="evenodd" d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" clipRule="evenodd" />
+                </svg>
+              </span>
+              <span className={styles.waRailItem} title="Channels">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden>
+                  <path fillRule="evenodd" d="M15.83 8.63A1 1 0 0 1 17.2 9a5.98 5.98 0 0 1 0 6 1 1 0 0 1-1.73-1 3.98 3.98 0 0 0 0-4 1 1 0 0 1 .36-1.37Zm-7.66 0A1 1 0 0 1 8.53 10a3.98 3.98 0 0 0 0 4 1 1 0 0 1-1.73 1 5.98 5.98 0 0 1 0-6 1 1 0 0 1 1.37-.37Z" clipRule="evenodd" />
+                  <path d="M13.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                  <path fillRule="evenodd" d="m5.33 16.48-.23.8c-.24.77-.48 1.6-.68 2.3.7-.2 1.53-.44 2.3-.68l.8-.23.72.39a8 8 0 1 0-3.3-3.3l.4.72Zm-2.15.22A48.91 48.91 0 0 0 2 21a1 1 0 0 0 1 1c.31 0 2.46-.63 4.3-1.18a10 10 0 1 0-4.12-4.12Z" clipRule="evenodd" />
+                </svg>
+              </span>
+              <span className={styles.waRailItem} title="Communities">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden>
+                  <path fillRule="evenodd" d="M6.37 18.67a1.81 1.81 0 0 1-.58-1.24c-.01-.5-.03-1.5.03-1.94a2.7 2.7 0 0 1 .4-1.1 2.84 2.84 0 0 1 .9-.82c.46-.28.98-.46 1.4-.58A12.2 12.2 0 0 1 12 12.5a12.69 12.69 0 0 1 3.47.49 5.76 5.76 0 0 1 1.52.65c.28.19.56.44.78.76a2.41 2.41 0 0 1 .41 1.1c.06.43.04 1.43.03 1.93a1.9 1.9 0 0 1-.58 1.24c-.22.2-.48.33-.75.33H7.12c-.27 0-.53-.13-.75-.33Zm13.6-3.27c.04.6.03.86.02 1.6v.49a4.58 4.58 0 0 1-.3 1.51h2.97c.72 0 1.31-1.85 1.33-2.58.01-.4.02-.13-.02-.46a2.34 2.34 0 0 0-.95-1.6 4.27 4.27 0 0 0-1.41-.68h-.02v-.01a7.72 7.72 0 0 0-2.35-.27 4.18 4.18 0 0 1 .72 2Zm-2.04-3.95a2.65 2.65 0 0 0 3.16.06 2.67 2.67 0 1 0-3.16-.06ZM14.9 9.62A3.54 3.54 0 0 0 15.5 7a3.56 3.56 0 1 0-.61 2.62Zm-7.88.4a2.67 2.67 0 1 0-5.16-1.38 2.67 2.67 0 0 0 5.16 1.38Zm-4.42 3.6-.18.05h-.03a4.3 4.3 0 0 0-1.41.69 2.3 2.3 0 0 0-.95 1.6c-.04.33-.03 1.06-.02 1.46.02.73.61 1.58 1.33 1.58H4.3a4.58 4.58 0 0 1-.3-1.51V17c-.01-.74-.02-1 .03-1.6 0-.05 0-.1.02-.15a4.48 4.48 0 0 1 .7-1.85 7.22 7.22 0 0 0-2.16.22Zm9.4.88c-1.21 0-2.22.2-2.92.4-.37.12-.68.23-.91.38-.23.13-.3.25-.34.34a.7.7 0 0 0-.03.14s0-.01 0 0L7.79 17h8.42v-1.24c-.01-.01 0 .01 0 0a.7.7 0 0 0-.04-.14c-.03-.09-.11-.2-.34-.34a3.84 3.84 0 0 0-.91-.37c-.7-.2-1.7-.41-2.92-.41ZM12 6a1.55 1.55 0 1 0 0 3.11c.86 0 1.56-.7 1.56-1.55C13.56 6.7 12.86 6 12 6Z" clipRule="evenodd" />
+                </svg>
+              </span>
+              <hr className={styles.waRailDivider} />
+              <span className={styles.waRailItem} title="Meta AI">
+                <span className={styles.waRailMetaAi} aria-hidden />
+              </span>
+            </div>
+            <div className={styles.waRailFooter}>
+              <span className={styles.waRailItem} title="Media">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden>
+                  <path d="M13.25 12.5 12.1 11a.48.48 0 0 0-.4-.2c-.17 0-.3.07-.4.2l-1.68 2.2a.47.47 0 0 0-.06.53c.1.18.25.27.46.27h7.96c.21 0 .37-.1.46-.28.09-.18.07-.35-.07-.52l-2.42-3.17a.48.48 0 0 0-.4-.2c-.17 0-.3.06-.4.2l-1.9 2.47ZM8 18c-.55 0-1.02-.2-1.41-.59-.4-.39-.59-.86-.59-1.41V4c0-.55.2-1.02.59-1.41C6.98 2.19 7.45 2 8 2h12c.55 0 1.02.2 1.41.59.4.39.59.86.59 1.41v12c0 .55-.2 1.02-.59 1.41-.39.4-.86.59-1.41.59H8Zm0-2h12V4H8v12Zm-4 6c-.55 0-1.02-.2-1.41-.59-.4-.39-.59-.86-.59-1.41V7c0-.28.1-.52.29-.71.19-.2.43-.29.71-.29.28 0 .52.1.71.29.2.19.29.43.29.71v13h13c.28 0 .52.1.71.29.2.19.29.43.29.71 0 .28-.1.52-.29.71A.94.94 0 0 1 17 22H4Z" />
+                </svg>
+              </span>
+              <span className={styles.waRailItem} title="You">
+                <DanielInitial className={styles.waRailProfileAvatar} />
+              </span>
+            </div>
+          </header>
+
+          <aside className={styles.waChatList}>
+          <header className={styles.waChatListHeader}>
+            <span className={styles.waChatListTitle}>WhatsApp</span>
+            <div className={styles.waChatListHeaderActions}>
+              <span className={styles.waIconBtn} aria-hidden>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                  <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 000-1.42l-2.34-2.34a1.003 1.003 0 00-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z" />
+                </svg>
+              </span>
+              <span className={styles.waIconBtn} aria-hidden>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                  <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                </svg>
+              </span>
+            </div>
+          </header>
+
+          <div className={styles.waSearchBox}>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden>
+              <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+            </svg>
+            <span>Search or start a new chat</span>
+          </div>
+
+          <div className={styles.waFilters}>
+            <span className={`${styles.waFilter} ${styles.waFilterActive}`}>All</span>
+            <span className={styles.waFilter}>Unread</span>
+            <span className={styles.waFilter}>Favorites</span>
+            <span className={styles.waFilter}>Groups</span>
+          </div>
+
+          <div className={styles.waChatListItems}>
+            <div className={`${styles.waChatItem} ${styles.waChatItemActive}`}>
+              <NovaAvatarImg className={styles.waChatItemAvatar} />
+              <div className={styles.waChatItemBody}>
+                <div className={styles.waChatItemTop}>
+                  <span className={styles.waChatItemName}>Nova</span>
+                  <span className={styles.waChatItemTime}>10:24</span>
+                </div>
+                <div className={styles.waChatItemPreview}>
+                  <span>Good news. Oakwood Care has completed payment.</span>
+                </div>
+              </div>
+            </div>
+            <div className={styles.waChatItem}>
+              <div className={`${styles.waChatItemAvatar} ${styles.waChatItemAvatarPlaceholder}`}>O</div>
+              <div className={styles.waChatItemBody}>
+                <div className={styles.waChatItemTop}>
+                  <span className={styles.waChatItemName}>Oakwood Care</span>
+                  <span className={styles.waChatItemTime}>Yesterday</span>
+                </div>
+                <div className={styles.waChatItemPreview}>
+                  <span>Payment reminder sent</span>
+                </div>
+              </div>
+            </div>
+            <div className={styles.waChatItem}>
+              <div className={`${styles.waChatItemAvatar} ${styles.waChatItemAvatarPlaceholder}`}>G</div>
+              <div className={styles.waChatItemBody}>
+                <div className={styles.waChatItemTop}>
+                  <span className={styles.waChatItemName}>Green Leaf Nursery</span>
+                  <span className={styles.waChatItemTime}>Mon</span>
+                </div>
+                <div className={styles.waChatItemPreview}>
+                  <span>Thanks for the payment link</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+        </div>
+
+        <main className={styles.waConversation}>
+          <header className={styles.waConvHeader}>
+            <NovaAvatarImg className={styles.waConvHeaderAvatar} />
+            <div className={styles.waConvHeaderInfo}>
+              <span className={styles.waConvHeaderName}>Nova</span>
+              <span className={styles.waConvHeaderStatus}>online</span>
+            </div>
+            <div className={styles.waConvHeaderActions}>
+              <span className={styles.waIconBtn} aria-hidden>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                  <path d="M17 10.5V7a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1v-3.5l4 4v-11l-4 4z" />
+                </svg>
+              </span>
+              <span className={styles.waIconBtn} aria-hidden>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                  <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                </svg>
+              </span>
+              <span className={styles.waIconBtn} aria-hidden>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                  <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                </svg>
+              </span>
+            </div>
+          </header>
+
+          <div className={styles.waChat} ref={scrollRef}>
+            <div className={styles.waChatMessages}>
+            <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${vis["d1"] ? styles.msgVisible : ""}`}>
+              <div className={`${styles.waBubble} ${styles.waBubbleOut}`}>
+                Morning Nova. Can you create a payment link for our new client?
+              </div>
+            </div>
+
+            {vis["nt1"] && (
+              <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${styles.msgVisible}`}>
+                <div className={styles.typingBubble}>
+                  <span className={styles.dots}>
+                    <span className={styles.dot} />
+                    <span className={styles.dot} />
+                    <span className={styles.dot} />
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n1"] ? styles.msgVisible : ""}`}>
+              <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
+                Of course. How much would you like to collect?
+              </div>
+            </div>
+
+            <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${vis["d2"] ? styles.msgVisible : ""}`}>
+              <div className={`${styles.waBubble} ${styles.waBubbleOut}`}>
+                &pound;850.
+              </div>
+            </div>
+
+            {vis["nt2"] && (
+              <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${styles.msgVisible}`}>
+                <div className={styles.typingBubble}>
+                  <span className={styles.dots}>
+                    <span className={styles.dot} />
+                    <span className={styles.dot} />
+                    <span className={styles.dot} />
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n2a"] ? styles.msgVisible : ""}`}>
+              <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
+                Done. I&apos;ve created the payment link.
+              </div>
+            </div>
+            <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n2b"] ? styles.msgVisible : ""}`}>
+              <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
+                Would you like me to send it to the customer, or copy the link?
+              </div>
+            </div>
+
+            {vis["wabtns"] && (
+              <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${styles.msgVisible}`}>
+                <div className={styles.actionButtons}>
+                  <button
+                    className={styles.btnGhost}
+                    disabled={btnClicked === "copy"}
+                    type="button"
+                  >
+                    Send to customer
+                  </button>
+                  <button
+                    className={`${styles.btnPrimary} ${btnClicked === "copy" ? styles.btnClicked : ""}`}
+                    disabled={btnClicked === "copy"}
+                    type="button"
+                  >
+                    {btnClicked === "copy" ? <span className={styles.btnSpinner} aria-hidden /> : "Copy link"}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n3"] ? styles.msgVisible : ""}`}>
+              <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
+                Copied. The payment page stays active for 30 days.
+              </div>
+            </div>
+
+            <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${vis["d3"] ? styles.msgVisible : ""}`}>
+              <div className={`${styles.waBubble} ${styles.waBubbleOut}`}>
+                Has Oakwood Care paid yet?
+              </div>
+            </div>
+
+            {vis["nt3"] && (
+              <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${styles.msgVisible}`}>
+                <div className={styles.typingBubble}>
+                  <span className={styles.dots}>
+                    <span className={styles.dot} />
+                    <span className={styles.dot} />
+                    <span className={styles.dot} />
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n4"] ? styles.msgVisible : ""}`}>
+              <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
+                Not yet. They opened the payment page 12 minutes ago but haven&apos;t completed it. Want me to send a reminder this afternoon?
+              </div>
+            </div>
+
+            {vis["wabtns2"] && (
+              <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${styles.msgVisible}`}>
+                <div className={styles.actionButtons}>
+                  <button
+                    className={`${styles.btnPrimary} ${btnClicked === "remind" ? styles.btnClicked : ""}`}
+                    disabled={btnClicked === "remind"}
+                    type="button"
+                  >
+                    Yes, remind them
+                  </button>
+                  <button
+                    className={styles.btnGhost}
+                    disabled={btnClicked === "remind"}
+                    type="button"
+                  >
+                    Not now
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n5"] ? styles.msgVisible : ""}`}>
+              <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
+                Done. I&apos;ll let you know when they&apos;ve viewed it.
+              </div>
+            </div>
+
+            <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n6"] ? styles.msgVisible : ""}`}>
+              <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
+                Good news. Oakwood Care has completed payment. &pound;850 received. Expected settlement: Thursday.
+              </div>
+            </div>
+            </div>
+          </div>
+
+          <footer className={styles.waFooter}>
+            <span className={styles.waFooterIcon} aria-hidden>
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM8.5 8C9.33 8 10 8.67 10 9.5S9.33 11 8.5 11 7 10.33 7 9.5 7.67 8 8.5 8zm7 0c.83 0 1.5.67 1.5 1.5S16.33 11 15.5 11 14 10.33 14 9.5 14.67 8 15.5 8zm-3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
+              </svg>
             </span>
-          </div>
-          <div className={styles.waHeaderIcons}>
-            <span className={styles.waHeaderIcon}>&#128249;</span>
-            <span className={styles.waHeaderIcon}>&#128222;</span>
-          </div>
-        </div>
-
-        <div className={styles.waChat} ref={scrollRef}>
-          <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${vis["d1"] ? styles.msgVisible : ""}`}>
-            <div className={`${styles.waBubble} ${styles.waBubbleOut}`}>
-              Morning Nova. Can you create a payment link for our new client?
+            <span className={styles.waFooterIcon} aria-hidden>
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5a2.5 2.5 0 015 0v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5a2.5 2.5 0 005 0V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z" />
+              </svg>
+            </span>
+            <div className={styles.waFooterInput}>
+              <span className={styles.waInputPlaceholder}>Type a message</span>
             </div>
-          </div>
-
-          {vis["nt1"] && (
-            <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft}`}>
-              <NovaAvatarImg className={styles.waAvatar} />
-              <div className={styles.typingBubble}>
-                <span className={styles.dots}>
-                  <span className={styles.dot} />
-                  <span className={styles.dot} />
-                  <span className={styles.dot} />
-                </span>
-              </div>
-            </div>
-          )}
-
-          <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n1"] ? styles.msgVisible : ""}`}>
-            <NovaAvatarImg className={styles.waAvatar} />
-            <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
-              Of course. How much would you like to collect?
-            </div>
-          </div>
-
-          <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${vis["d2"] ? styles.msgVisible : ""}`}>
-            <div className={`${styles.waBubble} ${styles.waBubbleOut}`}>
-              &pound;850.
-            </div>
-          </div>
-
-          {vis["nt2"] && (
-            <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft}`}>
-              <NovaAvatarImg className={styles.waAvatar} />
-              <div className={styles.typingBubble}>
-                <span className={styles.dots}>
-                  <span className={styles.dot} />
-                  <span className={styles.dot} />
-                  <span className={styles.dot} />
-                </span>
-              </div>
-            </div>
-          )}
-
-          <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n2a"] ? styles.msgVisible : ""}`}>
-            <NovaAvatarImg className={styles.waAvatar} />
-            <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
-              Done. I&apos;ve created the payment link.
-            </div>
-          </div>
-          <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n2b"] ? styles.msgVisible : ""}`}>
-            <NovaAvatarImg className={styles.waAvatar} />
-            <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
-              Would you like me to send it to the customer, or copy the link?
-            </div>
-          </div>
-
-          {vis["wabtns"] && (
-            <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${styles.msgVisible}`}>
-              <div className={styles.actionButtons}>
-                <button
-                  className={styles.btnGhost}
-                  disabled={btnClicked === "copy"}
-                  type="button"
-                >
-                  Send to customer
-                </button>
-                <button
-                  className={`${styles.btnPrimary} ${btnClicked === "copy" ? styles.btnClicked : ""}`}
-                  disabled={btnClicked === "copy"}
-                  type="button"
-                >
-                  {btnClicked === "copy" ? <span className={styles.btnSpinner} aria-hidden /> : "Copy link"}
-                </button>
-              </div>
-            </div>
-          )}
-
-          <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n3"] ? styles.msgVisible : ""}`}>
-            <NovaAvatarImg className={styles.waAvatar} />
-            <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
-              Copied. The payment page stays active for 30 days.
-            </div>
-          </div>
-
-          <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${vis["d3"] ? styles.msgVisible : ""}`}>
-            <div className={`${styles.waBubble} ${styles.waBubbleOut}`}>
-              Has Oakwood Care paid yet?
-            </div>
-          </div>
-
-          {vis["nt3"] && (
-            <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft}`}>
-              <NovaAvatarImg className={styles.waAvatar} />
-              <div className={styles.typingBubble}>
-                <span className={styles.dots}>
-                  <span className={styles.dot} />
-                  <span className={styles.dot} />
-                  <span className={styles.dot} />
-                </span>
-              </div>
-            </div>
-          )}
-
-          <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n4"] ? styles.msgVisible : ""}`}>
-            <NovaAvatarImg className={styles.waAvatar} />
-            <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
-              Not yet. They opened the payment page 12 minutes ago but haven&apos;t completed it. Want me to send a reminder this afternoon?
-            </div>
-          </div>
-
-          {vis["wabtns2"] && (
-            <div className={`${styles.waBubbleRow} ${styles.waBubbleRight} ${styles.msgVisible}`}>
-              <div className={styles.actionButtons}>
-                <button
-                  className={`${styles.btnPrimary} ${btnClicked === "remind" ? styles.btnClicked : ""}`}
-                  disabled={btnClicked === "remind"}
-                  type="button"
-                >
-                  Yes, remind them
-                </button>
-                <button
-                  className={styles.btnGhost}
-                  disabled={btnClicked === "remind"}
-                  type="button"
-                >
-                  Not now
-                </button>
-              </div>
-            </div>
-          )}
-
-          <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n5"] ? styles.msgVisible : ""}`}>
-            <NovaAvatarImg className={styles.waAvatar} />
-            <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
-              Done. I&apos;ll let you know when they&apos;ve viewed it.
-            </div>
-          </div>
-
-          <div className={`${styles.waBubbleRow} ${styles.waBubbleLeft} ${vis["n6"] ? styles.msgVisible : ""}`}>
-            <NovaAvatarImg className={styles.waAvatar} />
-            <div className={`${styles.waBubble} ${styles.waBubbleIn}`}>
-              Good news. Oakwood Care has completed payment. &pound;850 received. Expected settlement: Thursday.
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.waInputBar}>
-          <span className={styles.waInputPlaceholder}>Message</span>
-        </div>
+            <span className={styles.waFooterIcon} aria-hidden>
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.2 14.47 16 12 16s-4.52-1.8-4.93-4.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z" />
+              </svg>
+            </span>
+          </footer>
+        </main>
       </div>
-      <div className={styles.phoneHomeBar} />
     </div>
   );
 }
