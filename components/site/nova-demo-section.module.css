@@ -6,24 +6,24 @@
 }
 
 .inner {
-  max-width: var(--page-max);
+  max-width: var(--page-max, 1280px);
   margin: 0 auto;
   padding: 0 40px;
   display: flex;
   align-items: center;
-  gap: 64px;
+  gap: 80px;
 }
 
 /* ─── Left column ─────────────────────────────────────────────────────────── */
 
-.textCol {
-  flex: 0 0 45%;
-  max-width: 45%;
+.leftCol {
+  flex: 0 0 40%;
+  max-width: 40%;
 }
 
 .eyebrow {
   margin: 0 0 20px;
-  font-family: var(--font-season);
+  font-family: var(--font-season, "Season Mix Regular", serif);
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.12em;
@@ -33,193 +33,134 @@
 
 .heading {
   margin: 0 0 16px;
-  font-family: var(--font-season);
+  font-family: var(--font-season, "Season Mix Regular", serif);
   font-size: clamp(2.4rem, 4vw, 3.25rem);
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: -0.025em;
-  color: var(--color-ink);
+  color: var(--color-ink, #281e15);
 }
 
 .subtext {
-  margin: 0 0 20px;
+  margin: 0 0 16px;
   font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
   line-height: 1.4;
   color: var(--color-ink-muted, #7a6a5c);
 }
 
 .body {
-  margin: 0 0 32px;
+  margin: 0 0 36px;
   font-family: var(--font-inter, "Inter", sans-serif);
   font-size: 16px;
   line-height: 1.65;
   color: var(--color-ink-muted, #7a6a5c);
+  max-width: 380px;
 }
 
-/* Platform pills */
-.pills {
+/* ─── Platform tabs ────────────────────────────────────────────────────────── */
+
+.tabs {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 20px;
 }
 
-.pill {
-  display: inline-flex;
+.tab {
+  display: flex;
   align-items: center;
-  gap: 6px;
-  height: 28px;
-  padding: 0 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(40, 30, 21, 0.15);
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-ink);
+  gap: 12px;
+  padding: 12px 20px;
+  width: 100%;
   background: transparent;
-  white-space: nowrap;
+  border: none;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 0 6px 6px 0;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-ink-muted, #7a6a5c);
+}
+
+.tab:hover {
+  background: rgba(40, 30, 21, 0.04);
+  color: var(--color-ink, #281e15);
+}
+
+.tabActive {
+  border-left-color: var(--color-ink, #281e15);
+  background: rgba(40, 30, 21, 0.05);
+  color: var(--color-ink, #281e15);
+}
+
+.tabIcon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.tabLabel {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tabCaption {
+  margin: 0;
+  padding-left: 23px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  color: var(--color-ink-muted, #7a6a5c);
+  line-height: 1.5;
 }
 
 /* ─── Right column ────────────────────────────────────────────────────────── */
 
-.chatCol {
+.rightCol {
   flex: 1 1 0;
   display: flex;
   justify-content: center;
-}
-
-/* ─── Slack window chrome ─────────────────────────────────────────────────── */
-
-.slackWindow {
-  width: 100%;
-  max-width: 520px;
-  border-radius: 12px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  background: #ffffff;
-  min-height: 480px;
-}
-
-/* Header bar */
-.slackHeader {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  height: 49px;
-  background: #1a1d21;
-  flex-shrink: 0;
-}
-
-.slackChannel {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 15px;
-  font-weight: 700;
-  color: #ffffff;
-}
-
-.hashIcon {
-  font-size: 16px;
-  font-weight: 400;
-  opacity: 0.7;
-  margin-right: 1px;
-}
-
-.slackHeaderRight {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.onlineDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #2bac76;
-  flex-shrink: 0;
-}
-
-.headerNova {
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.memberCount {
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.55);
-}
-
-/* ─── Message area ────────────────────────────────────────────────────────── */
-
-.messageArea {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px 16px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  scroll-behavior: smooth;
-}
-
-/* ─── Message group ───────────────────────────────────────────────────────── */
-
-.messageGroup {
-  display: flex;
-  gap: 10px;
-  padding: 6px 0;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
-}
-
-.messageVisible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.messageContent {
-  flex: 1;
   min-width: 0;
 }
 
-.messageMeta {
+.deviceWrap {
+  width: 100%;
   display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 4px;
+  justify-content: center;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.senderName {
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 14px;
-  font-weight: 700;
-  color: #1d1c1d;
+.deviceVisible {
+  opacity: 1;
+  transform: translateX(0);
 }
 
-.messageTime {
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 11px;
-  color: #616061;
+.deviceHidden {
+  opacity: 0;
+  transform: translateX(10px);
+  pointer-events: none;
 }
 
-.messageBubbles {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+/* ─── Shared avatar styles ────────────────────────────────────────────────── */
+
+.novaAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
-/* ─── Avatars ─────────────────────────────────────────────────────────────── */
-
-.avatar {
+.initialAvatar {
   width: 32px;
   height: 32px;
   border-radius: 6px;
@@ -231,63 +172,64 @@
   font-size: 14px;
   font-weight: 700;
   color: #ffffff;
+}
+
+.avatarDaniel { background: #1e3a5f; }
+.avatarEmma   { background: #5a2d82; }
+.avatarJames  { background: #1a5e3a; }
+
+/* ─── Shared message primitives ────────────────────────────────────────────── */
+
+.msgRow {
+  display: flex;
+  gap: 10px;
+  padding: 5px 0;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.msgVisible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.msgAvatar {
+  flex-shrink: 0;
   margin-top: 2px;
 }
 
-.avatarDaniel {
-  background: #1e3a5f;
+.msgContent {
+  flex: 1;
+  min-width: 0;
 }
 
-.avatarNova {
-  background: var(--color-ink, #281e15);
-}
-
-/* ─── Bubbles ─────────────────────────────────────────────────────────────── */
-
-.bubble {
-  margin: 0;
-  font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 14px;
-  line-height: 1.5;
-  color: #1d1c1d;
-}
-
-.bubbleList {
-  padding-left: 20px;
-  list-style: disc;
+.msgMeta {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 3px;
 }
 
-.bubbleList li {
+.msgName {
   font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 13px;
+  font-weight: 700;
   color: #1d1c1d;
 }
 
-.bubbleLink {
-  color: #1264a3;
-  text-decoration: underline;
-  cursor: pointer;
+.msgTime {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 11px;
+  color: #888;
 }
 
-.bubbleQuestion {
-  margin-top: 4px;
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
-}
-
-.bubbleVisible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.bubbleSuccess {
-  color: #2bac76;
-  font-weight: 500;
+.msgText {
+  margin: 0 0 2px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  line-height: 1.5;
+  color: #1d1c1d;
 }
 
 /* ─── Typing indicator ────────────────────────────────────────────────────── */
@@ -295,8 +237,21 @@
 .typingRow {
   display: flex;
   gap: 10px;
-  padding: 6px 0;
+  padding: 5px 0;
   align-items: flex-start;
+}
+
+.typingRowTeams {
+  padding: 5px 0;
+}
+
+.typingAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .typingBubble {
@@ -304,15 +259,15 @@
   align-items: center;
   gap: 6px;
   padding: 6px 10px;
-  background: #f8f8f8;
+  background: #f0f0f0;
   border-radius: 8px;
   margin-top: 2px;
 }
 
 .typingText {
   font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 12px;
-  color: #616061;
+  font-size: 11px;
+  color: #888;
   font-style: italic;
 }
 
@@ -326,46 +281,34 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #616061;
+  background: #888;
   animation: dotBounce 1.2s ease-in-out infinite;
 }
 
-.dot:nth-child(1) {
-  animation-delay: 0ms;
-}
-.dot:nth-child(2) {
-  animation-delay: 150ms;
-}
-.dot:nth-child(3) {
-  animation-delay: 300ms;
-}
+.dot:nth-child(1) { animation-delay: 0ms; }
+.dot:nth-child(2) { animation-delay: 150ms; }
+.dot:nth-child(3) { animation-delay: 300ms; }
 
 @keyframes dotBounce {
-  0%, 60%, 100% {
-    transform: translateY(0);
-    opacity: 0.4;
-  }
-  30% {
-    transform: translateY(-4px);
-    opacity: 1;
-  }
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30%           { transform: translateY(-4px); opacity: 1; }
 }
 
-/* ─── Rich card (link unfurl) ─────────────────────────────────────────────── */
+/* ─── Rich card ───────────────────────────────────────────────────────────── */
 
 .richCard {
   display: flex;
   gap: 12px;
   margin: 6px 0 4px;
-  padding: 12px 14px;
+  padding: 12px 16px;
   background: #ffffff;
-  border-left: 3px solid #6366f1;
+  border-left: 4px solid #6366f1;
   border-radius: 0 6px 6px 0;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
   opacity: 0;
   transform: scale(0.97);
   transition: opacity 0.35s ease, transform 0.35s ease;
-  max-width: 320px;
+  max-width: 300px;
 }
 
 .richCardVisible {
@@ -388,20 +331,21 @@
 
 .richCardTitle {
   font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: #1d1c1d;
 }
 
 .richCardName {
   font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
+  font-size: 12px;
   color: #1d1c1d;
+  font-weight: 600;
 }
 
 .richCardDetails {
   font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 12px;
+  font-size: 11px;
   color: #616061;
 }
 
@@ -410,8 +354,8 @@
   align-items: center;
   gap: 5px;
   font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 12px;
-  color: #616061;
+  font-size: 11px;
+  color: #888;
   margin-top: 4px;
 }
 
@@ -423,7 +367,7 @@
   flex-shrink: 0;
 }
 
-/* ─── Action buttons ─────────────────────────────────────────────────────────*/
+/* ─── Action buttons ─────────────────────────────────────────────────────── */
 
 .actionButtons {
   display: flex;
@@ -443,24 +387,18 @@
   background: #007a5a;
   color: #ffffff;
   font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
   transition: opacity 0.2s ease, background 0.2s ease;
-  min-width: 120px;
+  min-width: 110px;
 }
 
-.btnPrimary:hover:not(:disabled) {
-  background: #006647;
-}
-
-.btnPrimary:disabled {
-  cursor: default;
-}
+.btnPrimary:hover:not(:disabled) { background: #006647; }
+.btnPrimary:disabled { cursor: default; }
 
 .btnClicked {
   opacity: 0.55;
-  background: #007a5a;
 }
 
 .btnGhost {
@@ -474,22 +412,15 @@
   background: transparent;
   color: #1d1c1d;
   font-family: var(--font-inter, "Inter", sans-serif);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
   transition: background 0.2s ease, opacity 0.2s ease;
 }
 
-.btnGhost:hover:not(:disabled) {
-  background: rgba(29, 28, 29, 0.06);
-}
+.btnGhost:hover:not(:disabled) { background: rgba(29, 28, 29, 0.06); }
+.btnGhost:disabled { opacity: 0.4; cursor: default; }
 
-.btnGhost:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-/* Spinner inside primary button */
 .btnSpinner {
   display: inline-block;
   width: 12px;
@@ -500,11 +431,762 @@
   animation: spin 0.6s linear infinite;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── MacBook frame ────────────────────────────────────────────────────────── */
+
+.macbookFrame {
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.18));
 }
 
-/* ─── Responsive ──────────────────────────────────────────────────────────── */
+.macbookScreen {
+  width: 100%;
+  background: #1a1a1e;
+  border-radius: 12px 12px 0 0;
+  border: 6px solid #2a2a2e;
+  overflow: hidden;
+  position: relative;
+}
+
+.macbookScreen::before {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: #3a3a3e;
+  border-radius: 50%;
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.macbookBase {
+  width: 105%;
+  height: 14px;
+  background: linear-gradient(180deg, #c8c8c8 0%, #b0b0b0 100%);
+  border-radius: 0 0 8px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.macbookNotch {
+  width: 60px;
+  height: 5px;
+  background: #a0a0a0;
+  border-radius: 0 0 4px 4px;
+}
+
+/* ─── Slack layout ─────────────────────────────────────────────────────────── */
+
+.slackLayout {
+  display: flex;
+  height: 420px;
+  background: #ffffff;
+}
+
+.slackSidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: #3f0e40;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  overflow: hidden;
+}
+
+.slackWorkspace {
+  padding: 0 16px 12px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 14px;
+  font-weight: 800;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 8px;
+}
+
+.slackChannels {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-bottom: 12px;
+}
+
+.slackChannel {
+  padding: 3px 16px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: default;
+}
+
+.slackChannelActive {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 4px;
+  margin: 0 6px;
+  padding: 3px 10px;
+}
+
+.slackSidebarSection {
+  padding: 6px 16px 3px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.slackMember {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 16px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.slackMemberDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2bac76;
+  flex-shrink: 0;
+}
+
+.slackMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.slackHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 49px;
+  border-bottom: 1px solid #e8e8e8;
+  flex-shrink: 0;
+}
+
+.slackHeaderChannel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: #1d1c1d;
+}
+
+.hashIcon {
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 0.5;
+}
+
+.slackHeaderMeta {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 12px;
+  color: #616061;
+}
+
+.slackMessages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  scroll-behavior: smooth;
+}
+
+.slackInputBar {
+  height: 40px;
+  border-top: 1px solid #e8e8e8;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin: 0 12px 10px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  flex-shrink: 0;
+}
+
+.slackInputPlaceholder {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  color: #aaa;
+}
+
+/* ─── Teams frame ──────────────────────────────────────────────────────────── */
+
+.tabletFrame {
+  width: 100%;
+  max-width: 620px;
+  background: #1a1a1e;
+  border-radius: 14px;
+  border: 6px solid #2a2a2e;
+  overflow: hidden;
+  transform: perspective(1200px) rotateY(-3deg);
+  transform-origin: center center;
+  filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.2));
+}
+
+.tabletScreen {
+  width: 100%;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.teamsLayout {
+  display: flex;
+  height: 420px;
+}
+
+.teamsRail {
+  width: 56px;
+  flex-shrink: 0;
+  background: #1f1f2e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0;
+  gap: 8px;
+}
+
+.teamsRailIcon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: default;
+  transition: background 0.15s;
+}
+
+.teamsRailIcon:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.teamsChannelList {
+  width: 200px;
+  flex-shrink: 0;
+  background: #f5f5f5;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  overflow: hidden;
+}
+
+.teamsTeamName {
+  padding: 4px 16px 10px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  color: #1d1c1d;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 6px;
+}
+
+.teamsChannelItem {
+  padding: 5px 16px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  color: #444;
+  cursor: default;
+  border-radius: 4px;
+  margin: 0 6px;
+}
+
+.teamsChannelActive {
+  background: #e8e8f0;
+  color: #5059C9;
+  font-weight: 600;
+}
+
+.teamsMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.teamsHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 12px 16px 10px;
+  border-bottom: 1px solid #e0e0e0;
+  flex-shrink: 0;
+}
+
+.teamsHeaderTitle {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: #1d1c1d;
+}
+
+.teamsHeaderSub {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 12px;
+  color: #888;
+}
+
+.teamsMessages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  scroll-behavior: smooth;
+}
+
+.teamsMsgRow {
+  display: flex;
+  gap: 10px;
+  padding: 5px 0;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.teamsInputBar {
+  height: 38px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  margin: 0 12px 10px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  flex-shrink: 0;
+}
+
+.teamsInputPlaceholder {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  color: #aaa;
+}
+
+/* ─── Phone frame (WhatsApp) ───────────────────────────────────────────────── */
+
+.phoneFrame {
+  width: 240px;
+  background: #1a1a1e;
+  border-radius: 50px;
+  border: 6px solid #2a2a2e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0 0;
+  filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.2));
+  overflow: hidden;
+}
+
+.phoneDynamicIsland {
+  width: 80px;
+  height: 26px;
+  background: #1a1a1e;
+  border-radius: 20px;
+  margin-bottom: 6px;
+  flex-shrink: 0;
+}
+
+.phoneScreen {
+  width: 100%;
+  flex: 1;
+  background: #ece5dd;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 480px;
+}
+
+.phoneHomeBar {
+  width: 100%;
+  height: 20px;
+  background: #1a1a1e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.phoneHomeBar::after {
+  content: "";
+  width: 80px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+/* ─── WhatsApp UI ──────────────────────────────────────────────────────────── */
+
+.waHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #075e54;
+  flex-shrink: 0;
+}
+
+.waHeaderAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.waHeaderInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.waHeaderName {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.waHeaderStatus {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.waOnlineDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #25d366;
+}
+
+.waHeaderIcons {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.waHeaderIcon {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.waChat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  scroll-behavior: smooth;
+  background: #ece5dd url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3C/svg%3E");
+}
+
+.waBubbleRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.waBubbleRight {
+  justify-content: flex-end;
+}
+
+.waBubbleLeft {
+  justify-content: flex-start;
+}
+
+.waAvatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.waBubble {
+  max-width: 75%;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 12px;
+  line-height: 1.45;
+  word-break: break-word;
+  margin-bottom: 2px;
+}
+
+.waBubbleOut {
+  background: #dcf8c6;
+  color: #1d1c1d;
+  border-radius: 8px 8px 0 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.waBubbleIn {
+  background: #ffffff;
+  color: #1d1c1d;
+  border-radius: 8px 8px 8px 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.waInputBar {
+  height: 38px;
+  background: #f0f0f0;
+  border-top: 1px solid #d0d0d0;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  flex-shrink: 0;
+}
+
+.waInputPlaceholder {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* ─── Dashboard UI ─────────────────────────────────────────────────────────── */
+
+.dashLayout {
+  display: flex;
+  height: 420px;
+  background: #f8f7f5;
+}
+
+.dashMain {
+  flex: 1;
+  padding: 20px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.dashGreeting {
+  font-family: var(--font-season, "Season Mix Regular", serif);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-ink, #281e15);
+}
+
+.dashMetrics {
+  display: flex;
+  gap: 10px;
+}
+
+.dashMetricCard {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.dashMetricLabel {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 10px;
+  color: var(--color-ink-muted, #7a6a5c);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.dashMetricValue {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-ink, #281e15);
+}
+
+.dashMetricFailed {
+  color: #c0392b;
+}
+
+.dashTableWrap {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+.dashTableHeader {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #f5f5f3;
+  border-bottom: 1px solid #e8e8e8;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dashTableRow {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 12px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 12px;
+  color: #1d1c1d;
+  align-items: center;
+}
+
+.dashTableRow:last-child {
+  border-bottom: none;
+}
+
+.dashChip {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  white-space: nowrap;
+}
+
+.dashChipSuccess { background: #d4f5e2; color: #1a6e47; }
+.dashChipPending { background: #fff3cd; color: #856404; }
+.dashChipFailed  { background: #f8d7da; color: #842029; }
+
+/* ─── Nova panel (dashboard) ────────────────────────────────────────────────── */
+
+.dashNovaPanel {
+  width: 220px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border-left: 1px solid #e8e8e8;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashNovaPanelHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e8e8e8;
+  flex-shrink: 0;
+}
+
+.dashNovaAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dashNovaPanelName {
+  flex: 1;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  color: #1d1c1d;
+}
+
+.dashNovaOnlineDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2bac76;
+  flex-shrink: 0;
+}
+
+.dashNovaMsgs {
+  flex: 1;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.dashNovaMsg {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.dashNovaMsgAvatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.dashNovaMsgBubble {
+  background: #f4f4f4;
+  border-radius: 0 8px 8px 8px;
+  padding: 7px 9px;
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 11px;
+  line-height: 1.5;
+  color: #1d1c1d;
+}
+
+.dashNovaInput {
+  height: 36px;
+  border-top: 1px solid #e8e8e8;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  flex-shrink: 0;
+}
+
+.dashNovaInputPlaceholder {
+  font-family: var(--font-inter, "Inter", sans-serif);
+  font-size: 11px;
+  color: #bbb;
+}
+
+/* ─── Responsive ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .heading {
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+  }
+  .subtext {
+    font-size: 16px;
+  }
+  .inner {
+    gap: 48px;
+  }
+}
 
 @media (max-width: 900px) {
   .section {
@@ -517,17 +1199,75 @@
     padding: 0 20px;
   }
 
-  .textCol {
+  .leftCol {
     flex: none;
     max-width: 100%;
     width: 100%;
   }
 
-  .chatCol {
+  .body {
+    max-width: 100%;
+  }
+
+  .tabs {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tab {
+    flex: 0 0 auto;
+    width: auto;
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 20px;
+    padding: 8px 14px;
+    background: rgba(40, 30, 21, 0.05);
+  }
+
+  .tabActive {
+    border-bottom-color: var(--color-ink, #281e15);
+    background: rgba(40, 30, 21, 0.1);
+    border-left: none;
+  }
+
+  .rightCol {
     width: 100%;
   }
 
-  .slackWindow {
+  .macbookFrame,
+  .tabletFrame {
     max-width: 100%;
+  }
+
+  .phoneFrame {
+    width: 200px;
+  }
+}
+
+@media (max-width: 640px) {
+  .slackSidebar {
+    display: none;
+  }
+
+  .teamsRail,
+  .teamsChannelList {
+    display: none;
+  }
+
+  .macbookBase {
+    display: none;
+  }
+
+  .macbookScreen {
+    border-radius: 8px;
+  }
+
+  .tabletFrame {
+    transform: none;
+  }
+
+  .phoneFrame {
+    width: 180px;
   }
 }
