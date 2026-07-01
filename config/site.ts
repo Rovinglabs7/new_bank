@@ -320,7 +320,6 @@ export const site = {
           { label: "Accounting Partners", href: "/partners/accounting-firms" },
           { label: "Technology Partners", href: "/partners/technology" },
           { label: "Banking & Open Banking", href: "/partners/banking-infrastructure" },
-          { label: "Partner Directory", href: "/partners/directory", badge: "Coming soon" },
         ],
       },
       {
