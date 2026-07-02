@@ -1,16 +1,16 @@
 /* ── Base ─────────────────────────────────────────────────────────────────────
-   Inter variable font, antialiased, feature-rich rendering
+   SF Pro Text for UI, SF Pro Display for large headings via -apple-system.
+   On non-Apple: Segoe UI (Windows) then system-ui as final fallback.
    ─────────────────────────────────────────────────────────────────────────── */
 
 .shell {
   display: flex;
   min-height: 100vh;
   background: #ffffff;
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  font-feature-settings: "cv11", "ss01", "ss03";
   color: #111111;
 }
 

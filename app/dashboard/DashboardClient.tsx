@@ -143,7 +143,7 @@ function NovaCard({ onClick }: { onClick?: () => void }) {
         <img src="/nova-avatar.jpg" alt="Nova" className={styles.novaCardAvatar} />
         <div className={styles.novaCardInfo}>
           <span className={styles.novaCardName}>Nova</span>
-          <span className={styles.novaCardSub}>Payment Operations Partner</span>
+          <span className={styles.novaCardSub}>Your AI Payment Operations Partner</span>
           <span className={styles.novaCardStatus}>
             <span className={styles.novaStatusDot} />
             Online

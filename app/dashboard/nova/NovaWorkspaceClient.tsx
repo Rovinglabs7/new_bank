@@ -254,14 +254,14 @@ const NAV = [
 // ── Animated typing placeholder ───────────────────────────────────────────────
 
 const PLACEHOLDER_SEQUENCE = [
-  "Tell Nova what to do",
-  "Ask Nova a question",
-  "Give Nova a task",
-  "Find overdue payments",
-  "Create a payment link",
-  "Review my subscriptions",
-  "Show failed payments",
-  "Explain this payout",
+  "Tell Nova what needs attention today.",
+  "Ask Nova why a payment failed.",
+  "Show today's settlements.",
+  "Find overdue customers.",
+  "Create a payment link.",
+  "Prepare this week's revenue summary.",
+  "Help me reconcile today's payments.",
+  "Show failed collections.",
 ];
 
 function useTypingPlaceholder() {
@@ -343,7 +343,7 @@ function Sidebar() {
             <img src="/nova-avatar.jpg" alt="Nova" className={dashStyles.novaCardAvatar} />
             <div className={dashStyles.novaCardInfo}>
               <span className={dashStyles.novaCardName}>Nova</span>
-              <span className={dashStyles.novaCardSub}>Payment Operations Partner</span>
+              <span className={dashStyles.novaCardSub}>Your AI Payment Operations Partner</span>
               <span className={dashStyles.novaCardStatus}>
                 <span className={dashStyles.novaStatusDot} />
                 Online
@@ -406,6 +406,13 @@ function TopBar({ email, onSettingsOpen }: { email: string; onSettingsOpen: () =
 
 // ── Main workspace ────────────────────────────────────────────────────────────
 
+function getTimeGreeting(firstName: string) {
+  const hour = new Date().getHours();
+  if (hour < 12) return `Good morning, ${firstName}.`;
+  if (hour < 17) return `Good afternoon, ${firstName}.`;
+  return `Good evening, ${firstName}.`;
+}
+
 function NovaWorkspace({ email }: { email: string }) {
   const placeholder = useTypingPlaceholder();
   const [inputValue, setInputValue] = useState("");
@@ -433,10 +440,9 @@ function NovaWorkspace({ email }: { email: string }) {
 
       {/* Welcome */}
       <div className={styles.welcomeSection}>
-        <h1 className={styles.welcomeHeading}>Nice to see you again, {firstName}.</h1>
+        <h1 className={styles.welcomeHeading}>{getTimeGreeting(firstName)}</h1>
         <p className={styles.welcomeSub}>
-          Ask Nova anything about your payments, customers, collections or business.<br />
-          Nova can help you understand your data, automate operations and answer questions instantly.
+          Ask Nova anything about your payments, customers or collections.
         </p>
       </div>
 
