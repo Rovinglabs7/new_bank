@@ -133,7 +133,7 @@
   bottom: 0;
   z-index: 49;
   overflow-y: auto;
-  background: #153E90;
+  background: var(--color-ink);
   -webkit-overflow-scrolling: touch;
 }
 
