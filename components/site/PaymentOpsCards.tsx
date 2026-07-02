@@ -185,35 +185,42 @@ function WorkflowCard() {
 
 // ─── CARD TWO: Globe ─────────────────────────────────────────────────────────
 
+// Each city has its own fixed geographic anchor on the globe card.
+// ax/ay = % position on the card media area.
+// tx/ty = CSS transform to keep the card within bounds (left/right/center anchor).
 const LOCATIONS = [
-  { id: "new-york",   name: "New York",     flag: "🇺🇸", rail: "ACH",          currency: "USD", symbol: "$",    amount: 48240,  lat: 40.7,  lng: -74.0 },
-  { id: "san-fran",   name: "San Francisco",flag: "🇺🇸", rail: "ACH",          currency: "USD", symbol: "$",    amount: 18420,  lat: 37.8,  lng: -122.4},
-  { id: "chicago",    name: "Chicago",      flag: "🇺🇸", rail: "ACH",          currency: "USD", symbol: "$",    amount: 31860,  lat: 41.9,  lng: -87.6 },
-  { id: "london",     name: "London",       flag: "🇬🇧", rail: "Direct Debit", currency: "GBP", symbol: "£",    amount: 26840,  lat: 51.5,  lng: -0.1  },
-  { id: "amsterdam",  name: "Amsterdam",    flag: "🇳🇱", rail: "SEPA",         currency: "EUR", symbol: "€",    amount: 19420,  lat: 52.4,  lng: 4.9   },
-  { id: "berlin",     name: "Berlin",       flag: "🇩🇪", rail: "SEPA",         currency: "EUR", symbol: "€",    amount: 33560,  lat: 52.5,  lng: 13.4  },
-  { id: "paris",      name: "Paris",        flag: "🇫🇷", rail: "SEPA",         currency: "EUR", symbol: "€",    amount: 22780,  lat: 48.9,  lng: 2.3   },
-  { id: "dublin",     name: "Dublin",       flag: "🇮🇪", rail: "SEPA",         currency: "EUR", symbol: "€",    amount: 14920,  lat: 53.3,  lng: -6.3  },
-  { id: "zurich",     name: "Zurich",       flag: "🇨🇭", rail: "SEPA",         currency: "CHF", symbol: "CHF ", amount: 41200,  lat: 47.4,  lng: 8.5   },
-  { id: "stockholm",  name: "Stockholm",    flag: "🇸🇪", rail: "SEPA",         currency: "SEK", symbol: "kr ",  amount: 284000, lat: 59.3,  lng: 18.1  },
+  // North America — left side of globe
+  { id: "new-york",   name: "New York",      flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 48240,
+    ax: "16%", ay: "36%", tx: "0",     ty: "-50%" },
+  { id: "san-fran",   name: "San Francisco", flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 18420,
+    ax: "6%",  ay: "52%", tx: "0",     ty: "-50%" },
+  { id: "chicago",    name: "Chicago",       flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 31860,
+    ax: "24%", ay: "48%", tx: "0",     ty: "-100%" },
+
+  // British Isles — left-centre
+  { id: "dublin",     name: "Dublin",        flag: "🇮🇪", rail: "SEPA",         symbol: "€",    amount: 14920,
+    ax: "46%", ay: "24%", tx: "-50%",  ty: "0"    },
+  { id: "london",     name: "London",        flag: "🇬🇧", rail: "Direct Debit", symbol: "£",    amount: 26840,
+    ax: "58%", ay: "30%", tx: "-100%", ty: "0"    },
+
+  // Northern Europe — top right
+  { id: "stockholm",  name: "Stockholm",     flag: "🇸🇪", rail: "SEPA",         symbol: "kr ",  amount: 284000,
+    ax: "80%", ay: "14%", tx: "-100%", ty: "0"    },
+
+  // Continental Europe — right side
+  { id: "amsterdam",  name: "Amsterdam",     flag: "🇳🇱", rail: "SEPA",         symbol: "€",    amount: 19420,
+    ax: "72%", ay: "34%", tx: "-100%", ty: "-50%" },
+  { id: "berlin",     name: "Berlin",        flag: "🇩🇪", rail: "SEPA",         symbol: "€",    amount: 33560,
+    ax: "80%", ay: "38%", tx: "-100%", ty: "-50%" },
+  { id: "paris",      name: "Paris",         flag: "🇫🇷", rail: "SEPA",         symbol: "€",    amount: 22780,
+    ax: "62%", ay: "50%", tx: "-100%", ty: "-100%" },
+  { id: "zurich",     name: "Zurich",        flag: "🇨🇭", rail: "SEPA",         symbol: "CHF ", amount: 41200,
+    ax: "74%", ay: "58%", tx: "-100%", ty: "-100%" },
 ];
 
-// Predefined anchor slots around the globe — never overlap
-// Values are percentages of the card media area (top/left)
-const SLOTS = [
-  { id: "top-left",     top: "8%",  left: "6%",   tx: "0",     ty: "0"    },
-  { id: "top-right",    top: "8%",  left: "94%",  tx: "-100%", ty: "0"    },
-  { id: "mid-left",     top: "42%", left: "4%",   tx: "0",     ty: "-50%" },
-  { id: "mid-right",    top: "42%", left: "96%",  tx: "-100%", ty: "-50%" },
-  { id: "bot-left",     top: "78%", left: "6%",   tx: "0",     ty: "-100%"},
-  { id: "bot-right",    top: "78%", left: "94%",  tx: "-100%", ty: "-100%"},
-  { id: "top-centre",   top: "5%",  left: "50%",  tx: "-50%",  ty: "0"    },
-  { id: "bot-centre",   top: "92%", left: "50%",  tx: "-50%",  ty: "-100%"},
-];
-
-// Max visible at once — pick 3 non-adjacent slots
+// Show 3 cities at once, cycling one at a time
 const VISIBLE_COUNT = 3;
-const CYCLE_INTERVAL = 3200;
+const CYCLE_INTERVAL = 3400;
 
 const GLOBE_R = 1.0;
 const TILT_X = (20 * Math.PI) / 180;
@@ -315,30 +322,29 @@ function useCountUp(target: number, active: boolean, duration = 1.2) {
   return value;
 }
 
-interface SlotNotif {
-  slotId: string;
+// Each active notification is just a locId + a unique key so AnimatePresence
+// remounts the component (triggering count-up) whenever the city changes.
+interface ActiveNotif {
   locId: string;
-  key: number; // unique key per appearance so AnimatePresence remounts
+  key: number;
 }
 
-function GlobeNotif({ notif }: { notif: SlotNotif }) {
-  const slot = SLOTS.find((s) => s.id === notif.slotId)!;
-  const loc = LOCATIONS.find((l) => l.id === notif.locId)!;
+function GlobeNotif({ locId }: { locId: string }) {
+  const loc = LOCATIONS.find((l) => l.id === locId)!;
   const counted = useCountUp(loc.amount, true);
 
   return (
     <motion.div
-      key={notif.key}
       className={styles.globeLabel}
       style={{
-        top: slot.top,
-        left: slot.left,
-        transform: `translate(${slot.tx}, ${slot.ty})`,
+        top: loc.ay,
+        left: loc.ax,
+        transform: `translate(${loc.tx}, ${loc.ty})`,
         pointerEvents: "none",
       }}
-      initial={{ opacity: 0, scale: 0.92, y: 6 }}
+      initial={{ opacity: 0, scale: 0.9, y: 8 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.92, y: -4 }}
+      exit={{ opacity: 0, scale: 0.9, y: -6 }}
       transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className={styles.globeLabelInner}>
@@ -357,46 +363,46 @@ function GlobeNotif({ notif }: { notif: SlotNotif }) {
   );
 }
 
-// Pick VISIBLE_COUNT non-adjacent slot indices with good spread
-const INITIAL_SLOT_INDICES = [0, 3, 4]; // top-left, mid-right, bot-left
+// Start with 3 geographically spread cities: New York, London, Stockholm
+const INITIAL_IDS = ["new-york", "london", "stockholm"];
 
 function GlobeCard() {
   const [paused, setPaused] = useState(false);
-  const [notifs, setNotifs] = useState<SlotNotif[]>(() =>
-    INITIAL_SLOT_INDICES.map((si, i) => ({
-      slotId: SLOTS[si].id,
-      locId: LOCATIONS[i].id,
-      key: i,
-    }))
+  // activeNotifs: array of {locId, key} — max VISIBLE_COUNT entries, one per city
+  const [activeNotifs, setActiveNotifs] = useState<ActiveNotif[]>(() =>
+    INITIAL_IDS.map((id, i) => ({ locId: id, key: i }))
   );
   const keyRef = useRef(100);
-  const tickRef = useRef(0);
+  const replaceIdxRef = useRef(0); // which slot to replace next (round-robin)
+  const locIdxRef = useRef(INITIAL_IDS.length); // next location index in rotation
+
+  // Build a deterministic rotation order: spread across regions
+  const ROTATION = [
+    "san-fran", "amsterdam", "paris", "chicago", "zurich",
+    "dublin", "berlin", "new-york", "stockholm", "london",
+  ];
 
   useEffect(() => {
-    // Every CYCLE_INTERVAL, swap out one notification in a random occupied slot
     const t = setInterval(() => {
-      tickRef.current += 1;
-      const tick = tickRef.current;
-      setNotifs((prev) => {
-        // pick a random slot position to replace
-        const replaceIdx = tick % prev.length;
-        // pick the next location
-        const currentLocIds = prev.map((n) => n.locId);
-        const nextLoc = LOCATIONS.find((l) => !currentLocIds.includes(l.id));
-        if (!nextLoc) {
-          // rotate: replace with one that's not currently visible
-          const allOtherLocs = LOCATIONS.filter((l) => l.id !== prev[replaceIdx].locId);
-          const newLoc = allOtherLocs[tick % allOtherLocs.length];
-          return prev.map((n, i) =>
-            i === replaceIdx
-              ? { ...n, locId: newLoc.id, key: ++keyRef.current }
-              : n
-          );
+      setActiveNotifs((prev) => {
+        // which slot (0..2) to replace
+        const ri = replaceIdxRef.current % VISIBLE_COUNT;
+        replaceIdxRef.current += 1;
+
+        // find the next city from ROTATION that isn't already visible
+        const currentIds = prev.map((n) => n.locId);
+        let nextId: string | undefined;
+        let attempts = 0;
+        while (!nextId && attempts < ROTATION.length) {
+          const candidate = ROTATION[locIdxRef.current % ROTATION.length];
+          locIdxRef.current += 1;
+          attempts += 1;
+          if (!currentIds.includes(candidate)) nextId = candidate;
         }
+        if (!nextId) return prev; // safety — shouldn't happen
+
         return prev.map((n, i) =>
-          i === replaceIdx
-            ? { ...n, locId: nextLoc.id, key: ++keyRef.current }
-            : n
+          i === ri ? { locId: nextId!, key: ++keyRef.current } : n
         );
       });
     }, CYCLE_INTERVAL);
@@ -422,10 +428,10 @@ function GlobeCard() {
         {/* Atmospheric glow overlay */}
         <div className={styles.globeGlow} aria-hidden />
 
-        {/* Slot-based notifications */}
+        {/* City-anchored notifications — each city has its own fixed position */}
         <AnimatePresence>
-          {notifs.map((n) => (
-            <GlobeNotif key={n.key} notif={n} />
+          {activeNotifs.map((n) => (
+            <GlobeNotif key={n.key} locId={n.locId} />
           ))}
         </AnimatePresence>
       </div>
