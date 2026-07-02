@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { site } from "@/config/site";
@@ -34,25 +33,20 @@ function HeroEmailCapture() {
   }
 
   return (
-    <div className={styles.emailCapture}>
-      <div className={styles.emailForm}>
-        <input
-          type="email"
-          className={styles.emailInput}
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onKeyDown={handleKey}
-          aria-label="Email address"
-          autoComplete="email"
-        />
-        <button type="button" className={styles.emailSubmit} onClick={submit}>
-          Submit
-        </button>
-      </div>
-      <Link href="/contact-sales" className={styles.demoLink}>
-        Book a demo
-      </Link>
+    <div className={styles.emailForm}>
+      <input
+        type="email"
+        className={styles.emailInput}
+        placeholder="Enter your email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        onKeyDown={handleKey}
+        aria-label="Email address"
+        autoComplete="email"
+      />
+      <button type="button" className={styles.emailSubmit} onClick={submit}>
+        Submit
+      </button>
     </div>
   );
 }
