@@ -24,6 +24,7 @@
     "@types/three": "^0.185.0",
     "framer-motion": "^12.42.0",
     "jose": "^6.0.11",
+    "lucide-react": "^1.23.0",
     "next": "^15.3.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

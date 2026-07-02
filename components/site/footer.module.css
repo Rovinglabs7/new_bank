@@ -1,7 +1,7 @@
 /* ─── Foundation ──────────────────────────────────────────────────────────── */
 
 .footer {
-  background-color: #215E41;
+  background-color: #1E5B3E;
   width: 100%;
   color: rgba(255, 255, 255, 0.85);
 }
@@ -18,7 +18,7 @@
   display: grid;
   grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
   gap: 48px;
-  padding: 80px 0 72px;
+  padding: 88px 0 80px;
   align-items: start;
 }
 
@@ -34,27 +34,29 @@
   display: block;
   font-family: var(--font-season);
   font-size: clamp(28px, 3vw, 38px);
-  font-weight: 420;
+  font-weight: 500;
   letter-spacing: -0.02em;
   color: #ffffff;
   line-height: 1;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .tagline {
   margin: 0 0 16px;
   font-family: var(--font-inter);
-  font-size: 14px;
-  line-height: 1.65;
-  color: rgba(255, 255, 255, 0.75);
-  max-width: 240px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 260px;
 }
 
 .location {
   margin: 0;
   font-family: var(--font-inter);
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.45);
   letter-spacing: 0.01em;
 }
 
@@ -66,11 +68,11 @@
 }
 
 .colHeading {
-  margin: 0 0 20px;
+  margin: 0 0 24px;
   font-family: var(--font-inter);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #ffffff;
 }
@@ -81,17 +83,18 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .colLink {
   font-family: var(--font-inter);
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 15px;
+  font-weight: 500;
   color: rgba(255, 255, 255, 0.72);
   text-decoration: none;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color 0.18s ease;
+  line-height: 1.4;
 }
 
 .colLink:hover {
@@ -108,7 +111,7 @@
 
 .divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.10);
 }
 
 /* ─── Bottom bar ──────────────────────────────────────────────────────────── */
@@ -118,7 +121,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 28px 0;
+  padding: 32px 0;
   flex-wrap: wrap;
 }
 
@@ -126,7 +129,8 @@
   margin: 0;
   font-family: var(--font-inter);
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.55);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.50);
   flex-shrink: 0;
 }
 
@@ -140,10 +144,11 @@
 .bottomLink {
   font-family: var(--font-inter);
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.60);
   text-decoration: none;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color 0.18s ease;
 }
 
 .bottomLink:hover {
@@ -161,7 +166,7 @@
 .socials {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   flex-shrink: 0;
 }
 
@@ -169,18 +174,20 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.7);
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
   text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
   cursor: pointer;
 }
 
 .socialBtn:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.35);
   color: #ffffff;
   transform: translateY(-2px);
 }
@@ -193,17 +200,16 @@
 /* ─── Legal disclosure ────────────────────────────────────────────────────── */
 
 .legal {
-  padding: 0 0 64px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 32px;
+  padding: 48px 0 72px;
 }
 
 .legalPara {
-  margin: 0 0 12px;
+  margin: 0 0 24px;
   font-family: var(--font-inter);
-  font-size: 12px;
-  line-height: 1.75;
-  color: rgba(255, 255, 255, 0.45);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.50);
 }
 
 .legalPara:last-child {
@@ -235,7 +241,7 @@
   .mainGrid {
     grid-template-columns: 1fr 1fr;
     gap: 40px 32px;
-    padding: 56px 0 48px;
+    padding: 64px 0 56px;
   }
 
   .brandCol {
@@ -250,8 +256,8 @@
 
   .mainGrid {
     grid-template-columns: 1fr;
-    gap: 36px;
-    padding: 48px 0 40px;
+    gap: 40px;
+    padding: 56px 0 48px;
   }
 
   .brandCol {
