@@ -9,7 +9,7 @@ import { SESSION_COOKIE } from "@/lib/auth/session";
 
 const registerSchema = z.object({
   businessName: z.string().min(1, "Business name is required").max(200),
-  email: z.string().email("Enter a valid work email"),
+  email: z.string().email("Enter a valid email address"),
   country: z.string().length(2, "Select your country"),
   password: z
     .string()

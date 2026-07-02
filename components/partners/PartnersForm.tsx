@@ -81,14 +81,14 @@ export function PartnersForm() {
 
             <div className={styles.field}>
               <label className={styles.label} htmlFor="partners-work-email">
-                Work email
+                Email address
               </label>
               <input
                 id="partners-work-email"
                 name="workEmail"
                 type="email"
                 required
-                placeholder="you@company.com"
+                placeholder="you@example.com"
                 className={styles.input}
               />
             </div>
