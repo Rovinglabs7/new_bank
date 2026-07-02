@@ -76,16 +76,7 @@ interface Customer {
   added: string;
 }
 
-const MOCK_CUSTOMERS: Customer[] = [
-  { id: "1", name: "Meridian Property Group",   email: "finance@meridianpg.co.uk",       status: "Active",   method: "Direct Debit", subs: 3, lastPayment: "2 Jul 2026",  lastAmount: 4200, collected: 51200, added: "12 Jan 2025" },
-  { id: "2", name: "Oakfield Dental Practice",   email: "admin@oakfielddental.co.uk",     status: "Active",   method: "Direct Debit", subs: 1, lastPayment: "1 Jul 2026",  lastAmount: 899,  collected: 10788, added: "18 Feb 2025" },
-  { id: "3", name: "Huxley & Partners LLP",      email: "billing@huxleypartners.co.uk",   status: "Active",   method: "Direct Debit", subs: 2, lastPayment: "28 Jun 2026", lastAmount: 2400, collected: 28800, added: "3 Mar 2025"  },
-  { id: "4", name: "Thornbridge Logistics",      email: "accounts@thornbridge.co.uk",     status: "Paused",   method: "Direct Debit", subs: 1, lastPayment: "15 May 2026", lastAmount: 650,  collected: 7800,  added: "21 Mar 2025" },
-  { id: "5", name: "Clearview Media Ltd",        email: "finance@clearviewmedia.co.uk",   status: "Active",   method: "Direct Debit", subs: 4, lastPayment: "30 Jun 2026", lastAmount: 1800, collected: 21600, added: "9 Apr 2025"  },
-  { id: "6", name: "Stratton Advisory Group",    email: "payments@strattonadvisory.co.uk",status: "Pending",  method: "—",            subs: 0, lastPayment: "—",           lastAmount: null, collected: 0,     added: "18 Jun 2026" },
-  { id: "7", name: "Nova Fitness Studio",        email: "studio@novafitness.co.uk",       status: "Active",   method: "Direct Debit", subs: 1, lastPayment: "1 Jul 2026",  lastAmount: 299,  collected: 3588,  added: "2 May 2025"  },
-  { id: "8", name: "Bramble & Co.",              email: "accounts@brambleandco.co.uk",    status: "Invited",  method: "—",            subs: 0, lastPayment: "—",           lastAmount: null, collected: 0,     added: "28 Jun 2026" },
-];
+const MOCK_CUSTOMERS: Customer[] = [];
 
 const FILTER_OPTIONS: { label: string; key: CustomerStatus | "All" }[] = [
   { label: "All",      key: "All" },

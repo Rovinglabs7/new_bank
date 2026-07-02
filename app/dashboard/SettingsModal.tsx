@@ -255,22 +255,13 @@ function SecurityPage() {
       </Card>
 
       <Card label="Active Sessions">
-        {[
-          { device: "MacBook Pro · Chrome", location: "London, UK", time: "Active now", current: true },
-          { device: "iPhone 15 · Safari",   location: "London, UK", time: "2 hours ago",  current: false },
-          { device: "iPad · Safari",        location: "Manchester, UK", time: "3 days ago", current: false },
-        ].map((s, i, arr) => (
-          <div key={s.device} className={`${styles.sessionRow} ${i < arr.length - 1 ? styles.sessionRowBorder : ""}`}>
-            <div className={styles.sessionLeft}>
-              <p className={styles.sessionDevice}>{s.device}</p>
-              <p className={styles.sessionMeta}>{s.location} · {s.time}</p>
-            </div>
-            {s.current
-              ? <Badge label="This device" color="green" />
-              : <button className={styles.revokeBtn}>Revoke</button>
-            }
+        <div className={styles.sessionRow}>
+          <div className={styles.sessionLeft}>
+            <p className={styles.sessionDevice}>Current device</p>
+            <p className={styles.sessionMeta}>Active now</p>
           </div>
-        ))}
+          <Badge label="This device" color="green" />
+        </div>
       </Card>
     </div>
   );
@@ -343,12 +334,11 @@ function AppearancePage() {
   );
 }
 
-function TeamPage() {
-  const members = [
-    { name: "Daniel Bamidele", email: "danielbamidele042@gmail.com", role: "Owner",           lastActive: "Now" },
-    { name: "Charlotte Evans", email: "charlotte@praevortech.com",   role: "Admin",            lastActive: "1h ago" },
-    { name: "James Okafor",    email: "james@praevortech.com",       role: "Finance Manager",  lastActive: "Yesterday" },
-  ];
+function TeamPage({ email }: { email: string }) {
+  const localPart = email.split("@")[0].replace(/[^a-zA-Z]/g, " ").trim();
+  const words = localPart.split(" ").filter(Boolean);
+  const displayName = words.map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ") || email;
+  const initials = words.slice(0, 2).map((w) => w[0].toUpperCase()).join("") || email[0].toUpperCase();
 
   return (
     <div className={styles.pageContent}>
@@ -362,41 +352,24 @@ function TeamPage() {
       </div>
 
       <Card>
-        {members.map((m, i) => (
-          <button key={m.email} className={`${styles.memberRow} ${i < members.length - 1 ? styles.memberRowBorder : ""}`}>
-            <div className={styles.memberAvatar}>{m.name.split(" ").map(w=>w[0]).join("").slice(0,2)}</div>
-            <div className={styles.memberInfo}>
-              <p className={styles.memberName}>{m.name}</p>
-              <p className={styles.memberEmail}>{m.email}</p>
-            </div>
-            <div className={styles.memberRight}>
-              <Badge label={m.role} color={m.role==="Owner" ? "blue" : "grey"} />
-              <span className={styles.memberTime}>{m.lastActive}</span>
-              <span className={styles.rowChevron}>{I.Chevron(14)}</span>
-            </div>
-          </button>
-        ))}
+        <button className={styles.memberRow}>
+          <div className={styles.memberAvatar}>{initials}</div>
+          <div className={styles.memberInfo}>
+            <p className={styles.memberName}>{displayName}</p>
+            <p className={styles.memberEmail}>{email}</p>
+          </div>
+          <div className={styles.memberRight}>
+            <Badge label="Owner" color="blue" />
+            <span className={styles.memberTime}>Now</span>
+            <span className={styles.rowChevron}>{I.Chevron(14)}</span>
+          </div>
+        </button>
       </Card>
     </div>
   );
 }
 
 function ApiKeysPage() {
-  const [showLive, setShowLive] = useState(false);
-  const [copied, setCopied]     = useState<string|null>(null);
-
-  function copy(val: string, id: string) {
-    navigator.clipboard.writeText(val).catch(()=>{});
-    setCopied(id);
-    setTimeout(() => setCopied(null), 1800);
-  }
-
-  const keys = [
-    { id: "live", label: "Live secret key",  key: "sk_live_praevor_4xT9mK2nL8pQr3sU", hint: "sk_live_••••••••••••••••••" },
-    { id: "test", label: "Test secret key",  key: "sk_test_praevor_7bN1vW5hJ6qXc2dE", hint: "sk_test_••••••••••••••••••" },
-    { id: "pub",  label: "Publishable key",  key: "pk_live_praevor_6eR2tY4fG9wZ1aB",  hint: "pk_live_••••••••••••••••••" },
-  ];
-
   return (
     <div className={styles.pageContent}>
       <PageHeader title="API Keys" description="Manage your live and test API credentials." />
@@ -406,24 +379,9 @@ function ApiKeysPage() {
       </div>
 
       <Card label="Secret Keys">
-        {keys.map((k, i) => (
-          <div key={k.id} className={`${styles.keyRow} ${i < keys.length - 1 ? styles.keyRowBorder : ""}`}>
-            <div className={styles.keyLeft}>
-              <p className={styles.keyLabel}>{k.label}</p>
-              <code className={styles.keyValue}>{showLive && k.id==="live" ? k.key : k.hint}</code>
-            </div>
-            <div className={styles.keyActions}>
-              {k.id==="live" && (
-                <button className={styles.iconBtn} onClick={() => setShowLive(!showLive)}>
-                  {showLive ? I.EyeOff(15) : I.Eye(15)}
-                </button>
-              )}
-              <button className={styles.iconBtn} onClick={() => copy(k.key, k.id)}>
-                {copied===k.id ? I.Check(15) : I.Copy(15)}
-              </button>
-            </div>
-          </div>
-        ))}
+        <div className={styles.placeholderRow}>
+          <p className={styles.placeholderText}>No API keys yet. Create one to get started.</p>
+        </div>
       </Card>
 
       <Card label="Security">
@@ -438,37 +396,14 @@ function BillingPage() {
     <div className={styles.pageContent}>
       <PageHeader title="Plan & Billing" description="Manage your subscription, usage and payment details." />
 
-      <div className={styles.planBlock}>
-        <div className={styles.planLeft}>
-          <span className={styles.planBadge}>Current plan</span>
-          <p className={styles.planName}>Praevor Growth</p>
-          <p className={styles.planPrice}>£149<span className={styles.planPer}>/month</span></p>
-          <p className={styles.planDesc}>Unlimited payments · 3 team members · Priority support</p>
-        </div>
-        <button className={styles.primaryBtn}>Upgrade plan</button>
-      </div>
-
-      <SectionDivider />
-
       <Card label="Payment Method">
-        <Row label="Visa ending in 4242" description="Expires 12/2027" value="Update" noBorder />
+        <Row label="No payment method added" description="Add a card to activate your Praevor subscription." value="Add card" noBorder />
       </Card>
 
       <Card label="Recent Invoices">
-        {[
-          { date: "1 Jul 2026", amount: "£149.00", status: "Paid" },
-          { date: "1 Jun 2026", amount: "£149.00", status: "Paid" },
-          { date: "1 May 2026", amount: "£149.00", status: "Paid" },
-        ].map((inv, i, arr) => (
-          <div key={inv.date} className={`${styles.invoiceRow} ${i < arr.length-1 ? styles.invoiceRowBorder : ""}`}>
-            <span className={styles.rowLabel}>{inv.date}</span>
-            <div className={styles.invoiceRight}>
-              <Badge label={inv.status} color="green" />
-              <span className={styles.rowValue}>{inv.amount}</span>
-              <button className={styles.iconBtn}>{I.Download(15)}</button>
-            </div>
-          </div>
-        ))}
+        <div className={styles.placeholderRow}>
+          <p className={styles.placeholderText}>No invoices yet.</p>
+        </div>
       </Card>
     </div>
   );
@@ -479,18 +414,18 @@ function CompanyProfilePage() {
     <div className={styles.pageContent}>
       <PageHeader title="Company Profile" description="Your registered business details and public information." />
       <Card label="Business Details">
-        <Row label="Company name"        value="Praevor Ltd" />
-        <Row label="Trading name"        value="Praevor" />
-        <Row label="Company number"      value="14823901" />
+        <Row label="Company name"        empty="Not added" />
+        <Row label="Trading name"        empty="Not added" />
+        <Row label="Company number"      empty="Not added" />
         <Row label="VAT number"          empty="Not added" />
-        <Row label="Industry"            value="Financial Services" noBorder />
+        <Row label="Industry"            empty="Not selected" noBorder />
       </Card>
       <Card label="Address">
-        <Row label="Registered address"  value="1 Canada Square, London E14 5AB" />
-        <Row label="Business address"    value="Same as registered" noBorder />
+        <Row label="Registered address"  empty="Not added" />
+        <Row label="Business address"    empty="Not added" noBorder />
       </Card>
       <Card label="Online">
-        <Row label="Website" value="praevortech.com" noBorder />
+        <Row label="Website" empty="Not added" noBorder />
       </Card>
     </div>
   );
@@ -533,18 +468,9 @@ function BankAccountsPage() {
         <button className={styles.primaryBtn}><span>{I.Plus(14)}</span>Connect account</button>
       </div>
       <Card>
-        <button className={styles.bankRow}>
-          <div className={styles.bankIcon}>{I.Bank(20)}</div>
-          <div className={styles.bankInfo}>
-            <p className={styles.bankName}>Barclays Business</p>
-            <p className={styles.bankDetail}>Sort code 20-00-00 · Account ••••4821</p>
-          </div>
-          <div className={styles.bankRight}>
-            <Badge label="Settlement account" color="blue" />
-            <Badge label="Verified" color="green" />
-            <span className={styles.rowChevron}>{I.Chevron(14)}</span>
-          </div>
-        </button>
+        <div className={styles.placeholderRow}>
+          <p className={styles.placeholderText}>No bank accounts connected yet.</p>
+        </div>
       </Card>
     </div>
   );
@@ -555,17 +481,6 @@ function SupportPage() {
     <div className={styles.pageContent}>
       <PageHeader title="Help Centre" description="Get support, view documentation and contact the Praevor team." />
 
-      <div className={styles.rmBlock}>
-        <img src="/pexels-alena-shekhovtcova-8067887.jpg" alt="Charlotte Evans" className={styles.rmPhoto} />
-        <div className={styles.rmInfo}>
-          <p className={styles.rmName}>Charlotte Evans</p>
-          <p className={styles.rmRole}>Relationship Manager, Praevor</p>
-          <p className={styles.rmEmail}>charlotte@praevortech.com</p>
-        </div>
-        <button className={styles.primaryBtn}>Contact Charlotte</button>
-      </div>
-
-      <SectionDivider />
 
       <Card>
         <Row label="Help Centre"         description="Guides, tutorials and API documentation."        value="Visit" />
@@ -601,7 +516,7 @@ function renderPage(id: string, email: string) {
     case "company-profile": return <CompanyProfilePage />;
     case "verification":    return <PlaceholderPage title="Business Verification" description="KYB status, identity documents and compliance checks." />;
     case "branding":        return <PlaceholderPage title="Branding" description="Upload your logo and set your accent colour." />;
-    case "team":            return <TeamPage />;
+    case "team":            return <TeamPage email={email} />;
     case "roles":           return <RolesPage />;
     case "approvals":       return <PlaceholderPage title="Approval Workflows" description="Set up multi-step approval chains for payments and refunds." />;
     case "bank-accounts":   return <BankAccountsPage />;
