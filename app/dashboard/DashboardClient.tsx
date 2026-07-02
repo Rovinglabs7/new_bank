@@ -219,6 +219,102 @@ function TopBar({ email }: { email: string }) {
   );
 }
 
+// ── Quick Actions icons ────────────────────────────────────────────────────────
+
+function IconLink({ size = 17 }) {
+  return (
+    <Svg size={size}>
+      <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" />
+      <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" />
+    </Svg>
+  );
+}
+function IconUserPlus({ size = 17 }) {
+  return (
+    <Svg size={size}>
+      <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M19 8v6M22 11h-6" />
+    </Svg>
+  );
+}
+function IconCreditCard({ size = 17 }) {
+  return (
+    <Svg size={size}>
+      <rect x="2" y="5" width="20" height="14" rx="2" />
+      <path d="M2 10h20" />
+    </Svg>
+  );
+}
+function IconRepeat({ size = 17 }) {
+  return (
+    <Svg size={size}>
+      <path d="M17 1l4 4-4 4" />
+      <path d="M3 11V9a4 4 0 014-4h14" />
+      <path d="M7 23l-4-4 4-4" />
+      <path d="M21 13v2a4 4 0 01-4 4H3" />
+    </Svg>
+  );
+}
+function IconDownload({ size = 17 }) {
+  return (
+    <Svg size={size}>
+      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+      <polyline points="7 10 12 15 17 10" />
+      <line x1="12" y1="15" x2="12" y2="3" />
+    </Svg>
+  );
+}
+function IconBarChart({ size = 17 }) {
+  return (
+    <Svg size={size}>
+      <line x1="18" y1="20" x2="18" y2="10" />
+      <line x1="12" y1="20" x2="12" y2="4" />
+      <line x1="6"  y1="20" x2="6"  y2="14" />
+    </Svg>
+  );
+}
+function IconChevronRight({ size = 14 }) {
+  return (
+    <Svg size={size}>
+      <polyline points="9 18 15 12 9 6" />
+    </Svg>
+  );
+}
+
+const QUICK_ACTIONS = [
+  { label: "Create payment link",        Icon: IconLink },
+  { label: "Add customer",               Icon: IconUserPlus },
+  { label: "Collect one-off payment",    Icon: IconCreditCard },
+  { label: "Create recurring collection",Icon: IconRepeat },
+  { label: "Export payments",            Icon: IconDownload },
+  { label: "View reports",               Icon: IconBarChart },
+];
+
+// ── Quick Actions Card ─────────────────────────────────────────────────────────
+
+function QuickActionsCard() {
+  return (
+    <div className={styles.qaCard}>
+      <div className={styles.qaHeader}>
+        <p className={styles.qaTitle}>Quick Actions</p>
+        <p className={styles.qaSub}>Complete your most common payment tasks without leaving your dashboard.</p>
+      </div>
+      <ul className={styles.qaList}>
+        {QUICK_ACTIONS.map(({ label, Icon }, i) => (
+          <li key={label} className={`${styles.qaItem} ${i < QUICK_ACTIONS.length - 1 ? styles.qaItemDivided : ""}`}>
+            <button className={styles.qaBtn}>
+              <span className={styles.qaIcon}><Icon size={17} /></span>
+              <span className={styles.qaLabel}>{label}</span>
+              <span className={styles.qaChevron}><IconChevronRight size={14} /></span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 // ── Relationship Manager Card ──────────────────────────────────────────────────
 
 function RelationshipManagerCard() {
@@ -262,6 +358,7 @@ export function DashboardClient({ email }: { email: string }) {
             <div className={styles.canvasMain} />
             <aside className={styles.canvasSidebar}>
               <RelationshipManagerCard />
+              <QuickActionsCard />
             </aside>
           </div>
         </div>

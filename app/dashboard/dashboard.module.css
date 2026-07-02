@@ -11,7 +11,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   font-feature-settings: "cv11", "ss01", "ss03";
-  color: #1a1a1a;
+  color: #111111;
 }
 
 /* ── Sidebar ─────────────────────────────────────────────────────────────────── */
@@ -65,9 +65,9 @@
 
 .logoText {
   font-size: 17px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.025em;
-  color: #1a1a1a;
+  color: #111111;
 }
 
 .sidebarNav {
@@ -87,10 +87,10 @@
   border-radius: 10px;
   border: none;
   background: transparent;
-  color: #5a5a5a;
+  color: #555555;
   font-family: inherit;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: -0.01em;
   text-align: left;
   cursor: pointer;
@@ -100,13 +100,13 @@
 
 .navItem:hover {
   background: #f5f5f5;
-  color: #1a1a1a;
+  color: #111111;
 }
 
 .navItemActive {
   background: #f0f0f0;
-  color: #1a1a1a;
-  font-weight: 500;
+  color: #111111;
+  font-weight: 600;
 }
 
 .navItemIcon {
@@ -277,9 +277,9 @@
 
 .userName {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.01em;
-  color: #1a1a1a;
+  color: #111111;
   white-space: nowrap;
   line-height: 1.25;
 }
@@ -287,7 +287,7 @@
 .userOrg {
   font-size: 12px;
   font-weight: 400;
-  color: #888888;
+  color: #777777;
   white-space: nowrap;
   line-height: 1.25;
 }
@@ -396,9 +396,9 @@
 .rmName {
   margin: 0;
   font-size: 19px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.02em;
-  color: #1a1a1a;
+  color: #111111;
   line-height: 1.2;
 }
 
@@ -406,7 +406,7 @@
   margin: 7px 0 0;
   font-size: 13.5px;
   font-weight: 400;
-  color: #888888;
+  color: #777777;
   letter-spacing: -0.005em;
   line-height: 1.4;
 }
@@ -430,6 +430,115 @@
 .rmBtn:hover {
   background: #f7f7f7;
   border-color: #d0d0d0;
+}
+
+/* ── Quick Actions Card ───────────────────────────────────────────────────────── */
+
+.qaCard {
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.qaHeader {
+  padding: 22px 24px 0;
+}
+
+.qaTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #111111;
+  line-height: 1.2;
+}
+
+.qaSub {
+  margin: 6px 0 0;
+  font-size: 13px;
+  font-weight: 400;
+  color: #888888;
+  line-height: 1.5;
+  max-width: 88%;
+}
+
+.qaList {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+}
+
+.qaItem {
+  position: relative;
+}
+
+.qaItemDivided::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 24px;
+  right: 24px;
+  height: 1px;
+  background: #f0f0f0;
+}
+
+.qaBtn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 50px;
+  padding: 0 20px 0 24px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #222222;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.qaBtn:hover {
+  background: #faf8f6;
+}
+
+.qaBtn:hover .qaChevron {
+  transform: translateX(2px);
+}
+
+.qaIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  flex-shrink: 0;
+  color: #666666;
+}
+
+.qaLabel {
+  flex: 1;
+}
+
+.qaChevron {
+  display: flex;
+  align-items: center;
+  color: #aaaaaa;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+/* bottom padding inside the last row */
+.qaList .qaItem:last-child .qaBtn {
+  padding-bottom: 6px;
+}
+
+.qaCard .qaList {
+  padding-bottom: 6px;
 }
 
 /* ── Responsive ──────────────────────────────────────────────────────────────── */
