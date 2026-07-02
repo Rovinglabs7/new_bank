@@ -185,42 +185,78 @@ function WorkflowCard() {
 
 // ─── CARD TWO: Globe ─────────────────────────────────────────────────────────
 
-// Each city has its own fixed geographic anchor on the globe card.
-// ax/ay = % position on the card media area.
-// tx/ty = CSS transform to keep the card within bounds (left/right/center anchor).
+// Each city carries its own fixed geographic anchor on the globe card.
+// ax/ay = % position in the card media area.
+// tx/ty = CSS transform so the card stays within bounds.
+// region: "eu" | "us" — controls weighting.
 const LOCATIONS = [
-  // North America — left side of globe
-  { id: "new-york",   name: "New York",      flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 48240,
-    ax: "16%", ay: "36%", tx: "0",     ty: "-50%" },
-  { id: "san-fran",   name: "San Francisco", flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 18420,
-    ax: "6%",  ay: "52%", tx: "0",     ty: "-50%" },
-  { id: "chicago",    name: "Chicago",       flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 31860,
-    ax: "24%", ay: "48%", tx: "0",     ty: "-100%" },
-
-  // British Isles — left-centre
-  { id: "dublin",     name: "Dublin",        flag: "🇮🇪", rail: "SEPA",         symbol: "€",    amount: 14920,
-    ax: "46%", ay: "24%", tx: "-50%",  ty: "0"    },
-  { id: "london",     name: "London",        flag: "🇬🇧", rail: "Direct Debit", symbol: "£",    amount: 26840,
-    ax: "58%", ay: "30%", tx: "-100%", ty: "0"    },
-
-  // Northern Europe — top right
-  { id: "stockholm",  name: "Stockholm",     flag: "🇸🇪", rail: "SEPA",         symbol: "kr ",  amount: 284000,
-    ax: "80%", ay: "14%", tx: "-100%", ty: "0"    },
-
-  // Continental Europe — right side
-  { id: "amsterdam",  name: "Amsterdam",     flag: "🇳🇱", rail: "SEPA",         symbol: "€",    amount: 19420,
-    ax: "72%", ay: "34%", tx: "-100%", ty: "-50%" },
-  { id: "berlin",     name: "Berlin",        flag: "🇩🇪", rail: "SEPA",         symbol: "€",    amount: 33560,
-    ax: "80%", ay: "38%", tx: "-100%", ty: "-50%" },
-  { id: "paris",      name: "Paris",         flag: "🇫🇷", rail: "SEPA",         symbol: "€",    amount: 22780,
-    ax: "62%", ay: "50%", tx: "-100%", ty: "-100%" },
-  { id: "zurich",     name: "Zurich",        flag: "🇨🇭", rail: "SEPA",         symbol: "CHF ", amount: 41200,
+  // ── Europe (right-centre of globe) ──────────────────────────────────────────
+  { id: "london",     name: "London",        flag: "🇬🇧", rail: "Direct Debit", symbol: "£",    amount: 26840,  region: "eu",
+    ax: "60%", ay: "28%", tx: "-100%", ty: "0"     },
+  { id: "amsterdam",  name: "Amsterdam",     flag: "🇳🇱", rail: "SEPA",         symbol: "€",    amount: 19420,  region: "eu",
+    ax: "72%", ay: "32%", tx: "-100%", ty: "-50%"  },
+  { id: "paris",      name: "Paris",         flag: "🇫🇷", rail: "SEPA",         symbol: "€",    amount: 22780,  region: "eu",
+    ax: "63%", ay: "48%", tx: "-100%", ty: "-100%" },
+  { id: "berlin",     name: "Berlin",        flag: "🇩🇪", rail: "SEPA",         symbol: "€",    amount: 33560,  region: "eu",
+    ax: "80%", ay: "36%", tx: "-100%", ty: "-50%"  },
+  { id: "zurich",     name: "Zurich",        flag: "🇨🇭", rail: "SEPA",         symbol: "CHF ", amount: 41200,  region: "eu",
+    ax: "76%", ay: "52%", tx: "-100%", ty: "-100%" },
+  { id: "dublin",     name: "Dublin",        flag: "🇮🇪", rail: "SEPA",         symbol: "€",    amount: 14920,  region: "eu",
+    ax: "47%", ay: "22%", tx: "-50%",  ty: "0"     },
+  { id: "stockholm",  name: "Stockholm",     flag: "🇸🇪", rail: "SEPA",         symbol: "kr ",  amount: 284000, region: "eu",
+    ax: "82%", ay: "13%", tx: "-100%", ty: "0"     },
+  { id: "madrid",     name: "Madrid",        flag: "🇪🇸", rail: "SEPA",         symbol: "€",    amount: 17340,  region: "eu",
+    ax: "57%", ay: "62%", tx: "-100%", ty: "-100%" },
+  { id: "milan",      name: "Milan",         flag: "🇮🇹", rail: "SEPA",         symbol: "€",    amount: 29180,  region: "eu",
     ax: "74%", ay: "58%", tx: "-100%", ty: "-100%" },
+
+  // ── North America (left side of globe) ──────────────────────────────────────
+  { id: "new-york",   name: "New York",      flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 48240,  region: "us",
+    ax: "18%", ay: "34%", tx: "0",     ty: "-50%"  },
+  { id: "chicago",    name: "Chicago",       flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 31860,  region: "us",
+    ax: "26%", ay: "46%", tx: "0",     ty: "-100%" },
+  { id: "san-fran",   name: "San Francisco", flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 18420,  region: "us",
+    ax: "6%",  ay: "50%", tx: "0",     ty: "-50%"  },
+  { id: "boston",     name: "Boston",        flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 22640,  region: "us",
+    ax: "22%", ay: "26%", tx: "0",     ty: "0"     },
+  { id: "austin",     name: "Austin",        flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 15980,  region: "us",
+    ax: "20%", ay: "58%", tx: "0",     ty: "-100%" },
+  { id: "seattle",    name: "Seattle",       flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 27460,  region: "us",
+    ax: "8%",  ay: "34%", tx: "0",     ty: "0"     },
 ];
 
-// Show 3 cities at once, cycling one at a time
+// Show 3 cities at once, one swapped per interval
 const VISIBLE_COUNT = 3;
-const CYCLE_INTERVAL = 3400;
+const CYCLE_INTERVAL = 3600;
+
+// Europe-first opening sequence — first 3 visible cities
+const INITIAL_IDS = ["london", "amsterdam", "paris"];
+
+// Weighted pool: ~70% EU, ~30% US.
+// Each entry is a city id that will be drawn from in order (cycling).
+// Constructed so that on average 7 of every 10 draws are EU cities.
+const EU_IDS  = ["london","amsterdam","paris","berlin","zurich","dublin","stockholm","madrid","milan"];
+const US_IDS  = ["new-york","chicago","san-fran","boston","austin","seattle"];
+
+// Build a weighted rotation list: EU EU EU EU EU EU EU US US US (repeat)
+// We interleave to keep the distribution smooth rather than front-loading one region.
+function buildRotation(): string[] {
+  const out: string[] = [];
+  let ei = 0, ui = 0;
+  // 10-slot pattern: 7 EU + 3 US, interleaved
+  const pattern = ["eu","eu","eu","us","eu","eu","eu","us","eu","us"];
+  for (let i = 0; i < pattern.length * 3; i++) { // ~30 entries total
+    if (pattern[i % pattern.length] === "eu") {
+      out.push(EU_IDS[ei % EU_IDS.length]);
+      ei++;
+    } else {
+      out.push(US_IDS[ui % US_IDS.length]);
+      ui++;
+    }
+  }
+  return out;
+}
+const ROTATION = buildRotation();
 
 const GLOBE_R = 1.0;
 const TILT_X = (20 * Math.PI) / 180;
@@ -363,43 +399,31 @@ function GlobeNotif({ locId }: { locId: string }) {
   );
 }
 
-// Start with 3 geographically spread cities: New York, London, Stockholm
-const INITIAL_IDS = ["new-york", "london", "stockholm"];
-
 function GlobeCard() {
   const [paused, setPaused] = useState(false);
-  // activeNotifs: array of {locId, key} — max VISIBLE_COUNT entries, one per city
   const [activeNotifs, setActiveNotifs] = useState<ActiveNotif[]>(() =>
     INITIAL_IDS.map((id, i) => ({ locId: id, key: i }))
   );
   const keyRef = useRef(100);
-  const replaceIdxRef = useRef(0); // which slot to replace next (round-robin)
-  const locIdxRef = useRef(INITIAL_IDS.length); // next location index in rotation
-
-  // Build a deterministic rotation order: spread across regions
-  const ROTATION = [
-    "san-fran", "amsterdam", "paris", "chicago", "zurich",
-    "dublin", "berlin", "new-york", "stockholm", "london",
-  ];
+  const replaceIdxRef = useRef(0);
+  const rotIdxRef = useRef(0); // index into ROTATION
 
   useEffect(() => {
     const t = setInterval(() => {
       setActiveNotifs((prev) => {
-        // which slot (0..2) to replace
         const ri = replaceIdxRef.current % VISIBLE_COUNT;
         replaceIdxRef.current += 1;
 
-        // find the next city from ROTATION that isn't already visible
         const currentIds = prev.map((n) => n.locId);
         let nextId: string | undefined;
         let attempts = 0;
         while (!nextId && attempts < ROTATION.length) {
-          const candidate = ROTATION[locIdxRef.current % ROTATION.length];
-          locIdxRef.current += 1;
+          const candidate = ROTATION[rotIdxRef.current % ROTATION.length];
+          rotIdxRef.current += 1;
           attempts += 1;
           if (!currentIds.includes(candidate)) nextId = candidate;
         }
-        if (!nextId) return prev; // safety — shouldn't happen
+        if (!nextId) return prev;
 
         return prev.map((n, i) =>
           i === ri ? { locId: nextId!, key: ++keyRef.current } : n
