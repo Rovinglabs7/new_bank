@@ -62,6 +62,24 @@ function unfixStatsTicker(html) {
     );
 }
 
+function rewriteExternalAnchors(html) {
+  return html.replace(/href="(https?:\/\/[^"]+)"/g, (_, url) => {
+    if (/\/customers(\/|$)/.test(url) || url.includes("customer")) {
+      return 'href="/customers"';
+    }
+    if (url.includes("/blog/")) {
+      return 'href="/press"';
+    }
+    if (url.includes("/integrations")) {
+      return 'href="/integrations"';
+    }
+    if (url.includes("/enterprise")) {
+      return 'href="/contact-sales"';
+    }
+    return 'href="/contact-sales"';
+  });
+}
+
 function rewriteHtml(html) {
   let out = html.replace(/&quot;/g, '"');
   out = repairDoubleCdn(out);
@@ -144,6 +162,8 @@ function rewriteHtml(html) {
     /<img([^>]*?)\ssrc="(https?:\/\/[^"]+)"([^>]*?)\ssrcset="[^"]*"([^>]*)>/g,
     '<img$1 src="$2"$3 srcset="$2"$4>'
   );
+
+  out = rewriteExternalAnchors(out);
 
   return repairDoubleCdn(out);
 }

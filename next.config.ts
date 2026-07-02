@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: true,
       },
+      {
+        source: "/BOND_files/BOND.html",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
   async rewrites() {

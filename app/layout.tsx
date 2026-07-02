@@ -3,6 +3,7 @@ import { site } from "@/config/site";
 import { AmbientMusicToggle } from "@/components/site/AmbientMusicToggle";
 import { MockModeBanner } from "@/components/site/MockModeBanner";
 import { CookieBanner } from "@/components/site/CookieBanner";
+import { ExternalLinkGuard } from "@/components/site/ExternalLinkGuard";
 import { RAMP_STYLESHEETS } from "@/lib/ramp-sections.manifest";
 import "./globals.css";
 
@@ -28,6 +29,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <ExternalLinkGuard />
         {children}
         <AmbientMusicToggle />
         <MockModeBanner />
