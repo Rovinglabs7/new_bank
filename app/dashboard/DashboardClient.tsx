@@ -101,14 +101,11 @@ function IconMessage({ size = 16 }) {
   );
 }
 
-function IconGift({ size = 16 }) {
+function IconBell({ size = 16 }) {
   return (
     <Svg size={size}>
-      <polyline points="20 12 20 22 4 22 4 12" />
-      <rect x="2" y="7" width="20" height="5" rx="1" />
-      <path d="M12 22V7" />
-      <path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z" />
-      <path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z" />
+      <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+      <path d="M13.73 21a2 2 0 01-3.46 0" />
     </Svg>
   );
 }
@@ -161,10 +158,20 @@ function Sidebar() {
   );
 }
 
+// ── Search icon ────────────────────────────────────────────────────────────────
+
+function IconSearch({ size = 15 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="11" cy="11" r="8" />
+      <path d="M21 21l-4.35-4.35" />
+    </svg>
+  );
+}
+
 // ── Top bar ────────────────────────────────────────────────────────────────────
 
 function TopBar({ email }: { email: string }) {
-  // Derive initials and display name from email
   const localPart = email.split("@")[0].replace(/[^a-zA-Z]/g, " ").trim();
   const words = localPart.split(" ").filter(Boolean);
   const initials = words.slice(0, 2).map((w) => w[0].toUpperCase()).join("") || email[0].toUpperCase();
@@ -172,35 +179,39 @@ function TopBar({ email }: { email: string }) {
 
   return (
     <header className={styles.topBar}>
-      <div className={styles.topBarLeft} />
 
+      {/* LEFT — search bar */}
+      <div className={styles.topBarLeft}>
+        <div className={styles.searchBar}>
+          <span className={styles.searchIcon}><IconSearch size={14} /></span>
+          <span className={styles.searchPlaceholder}>Search</span>
+          <kbd className={styles.searchKbd}>⌘K</kbd>
+        </div>
+      </div>
+
+      {/* RIGHT — icons + profile */}
       <div className={styles.topBarRight}>
-        {/* Utility icons */}
         <div className={styles.topBarIcons}>
           <button className={styles.topBarIconBtn} aria-label="Messages">
             <IconMessage size={16} />
           </button>
-          <button className={styles.topBarIconBtn} aria-label="Rewards">
-            <IconGift size={16} />
+          <button className={styles.topBarIconBtn} aria-label="Notifications">
+            <IconBell size={16} />
           </button>
           <button className={styles.topBarIconBtn} aria-label="Settings">
             <IconSettings size={16} />
           </button>
         </div>
 
-        {/* Divider */}
         <div className={styles.topBarDivider} />
 
-        {/* User profile block */}
         <form action={signOut}>
           <button type="submit" className={styles.userBlock}>
             <div className={styles.userInfo}>
               <span className={styles.userName}>{displayName}</span>
               <span className={styles.userOrg}>Praevor Ltd</span>
             </div>
-            <div className={styles.userAvatar}>
-              {initials}
-            </div>
+            <div className={styles.userAvatar}>{initials}</div>
           </button>
         </form>
       </div>
