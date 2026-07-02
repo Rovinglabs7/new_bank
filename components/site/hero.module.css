@@ -135,19 +135,19 @@
   padding: 0 24px;
   border: none;
   border-radius: 999px;
-  background: var(--color-ink);
+  background: #1E4DB7;
   color: #ffffff;
   font-family: var(--font-season);
   font-size: 14.5px;
   font-weight: 420;
   letter-spacing: 0.01em;
   cursor: pointer;
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition: background 0.18s ease, transform 0.18s ease;
   white-space: nowrap;
 }
 
 .emailSubmit:hover {
-  opacity: 0.85;
+  background: #1a43a0;
   transform: translateY(-1px);
 }
 
