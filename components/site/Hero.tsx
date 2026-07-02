@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { site } from "@/config/site";
 import styles from "./hero.module.css";
@@ -17,6 +19,43 @@ const fadeUp = {
     },
   }),
 };
+
+function HeroEmailCapture() {
+  const [email, setEmail] = useState("");
+  const router = useRouter();
+
+  function submit() {
+    if (!email.trim()) return;
+    router.push(`/contact-sales?email=${encodeURIComponent(email.trim())}`);
+  }
+
+  function handleKey(e: React.KeyboardEvent) {
+    if (e.key === "Enter") { e.preventDefault(); submit(); }
+  }
+
+  return (
+    <div className={styles.emailCapture}>
+      <div className={styles.emailForm}>
+        <input
+          type="email"
+          className={styles.emailInput}
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={handleKey}
+          aria-label="Email address"
+          autoComplete="email"
+        />
+        <button type="button" className={styles.emailSubmit} onClick={submit}>
+          Submit
+        </button>
+      </div>
+      <Link href="/contact-sales" className={styles.demoLink}>
+        Book a demo
+      </Link>
+    </div>
+  );
+}
 
 export function Hero() {
   const { hero } = site;
@@ -53,9 +92,7 @@ export function Hero() {
           animate="visible"
           custom={2}
         >
-          <Link href={hero.primaryCta.href} className={styles.primaryCta}>
-            {hero.primaryCta.label}
-          </Link>
+          <HeroEmailCapture />
         </motion.div>
       </div>
     </section>
