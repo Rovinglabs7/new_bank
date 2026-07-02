@@ -151,7 +151,7 @@ function Sidebar() {
             className={`${styles.navItem} ${active ? styles.navItemActive : ""}`}
           >
             <span className={styles.navItemIcon}>
-              <Icon size={15} />
+              <Icon size={16} />
             </span>
             <span className={styles.navItemLabel}>{label}</span>
           </button>
@@ -178,13 +178,13 @@ function TopBar({ email }: { email: string }) {
         {/* Utility icons */}
         <div className={styles.topBarIcons}>
           <button className={styles.topBarIconBtn} aria-label="Messages">
-            <IconMessage size={15} />
+            <IconMessage size={16} />
           </button>
           <button className={styles.topBarIconBtn} aria-label="Rewards">
-            <IconGift size={15} />
+            <IconGift size={16} />
           </button>
           <button className={styles.topBarIconBtn} aria-label="Settings">
-            <IconSettings size={15} />
+            <IconSettings size={16} />
           </button>
         </div>
 
