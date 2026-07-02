@@ -219,6 +219,36 @@ function TopBar({ email }: { email: string }) {
   );
 }
 
+// ── Relationship Manager Card ──────────────────────────────────────────────────
+
+function RelationshipManagerCard() {
+  return (
+    <div className={styles.rmCard}>
+      {/* Brown header */}
+      <div className={styles.rmHeader}>
+        <span className={styles.rmHeaderLogo}>Praevor</span>
+      </div>
+
+      {/* Avatar — overlaps header */}
+      <div className={styles.rmAvatarWrap}>
+        <img
+          src="/pexels-rdne-7414009.jpg"
+          alt="Charlotte Evans"
+          className={styles.rmAvatar}
+        />
+      </div>
+
+      {/* Body */}
+      <div className={styles.rmBody}>
+        <p className={styles.rmName}>Charlotte Evans</p>
+        <p className={styles.rmTitle}>Your Relationship Manager</p>
+
+        <button className={styles.rmBtn}>Contact Charlotte</button>
+      </div>
+    </div>
+  );
+}
+
 // ── Main ───────────────────────────────────────────────────────────────────────
 
 export function DashboardClient({ email }: { email: string }) {
@@ -227,7 +257,14 @@ export function DashboardClient({ email }: { email: string }) {
       <Sidebar />
       <div className={styles.main}>
         <TopBar email={email} />
-        <div className={styles.canvas} />
+        <div className={styles.canvas}>
+          <div className={styles.canvasLayout}>
+            <div className={styles.canvasMain} />
+            <aside className={styles.canvasSidebar}>
+              <RelationshipManagerCard />
+            </aside>
+          </div>
+        </div>
       </div>
     </div>
   );

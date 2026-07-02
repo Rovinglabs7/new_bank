@@ -307,11 +307,128 @@
   line-height: 1;
 }
 
-/* ── Canvas — intentionally empty ─────────────────────────────────────────────── */
+/* ── Canvas ──────────────────────────────────────────────────────────────────── */
 
 .canvas {
   flex: 1;
   background: #ffffff;
+  padding: 28px 28px 40px;
+}
+
+.canvasLayout {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  height: 100%;
+}
+
+.canvasMain {
+  flex: 1;
+  min-width: 0;
+}
+
+.canvasSidebar {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Relationship Manager Card ────────────────────────────────────────────────── */
+
+.rmCard {
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Brown premium header */
+.rmHeader {
+  height: 130px;
+  background: #281e15;
+  display: flex;
+  align-items: flex-start;
+  padding: 22px 24px;
+}
+
+.rmHeaderLogo {
+  font-family: var(--font-season, "Georgia", serif);
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: -0.01em;
+}
+
+/* Circular photo — overlaps the header/body seam */
+.rmAvatarWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: -46px;
+  position: relative;
+  z-index: 1;
+}
+
+.rmAvatar {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 4px solid #ffffff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  display: block;
+}
+
+/* Text body */
+.rmBody {
+  padding: 20px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.rmName {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #1a1a1a;
+  line-height: 1.2;
+}
+
+.rmTitle {
+  margin: 7px 0 0;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: #888888;
+  letter-spacing: -0.005em;
+  line-height: 1.4;
+}
+
+.rmBtn {
+  margin-top: 28px;
+  width: 100%;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid #e2e2e2;
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.rmBtn:hover {
+  background: #f7f7f7;
+  border-color: #d0d0d0;
 }
 
 /* ── Responsive ──────────────────────────────────────────────────────────────── */
