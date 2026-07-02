@@ -131,6 +131,33 @@ const NAV = [
   { label: "Integrations", Icon: IconIntegrations },
 ];
 
+// ── Nova sidebar card ──────────────────────────────────────────────────────────
+
+function NovaCard() {
+  return (
+    <div className={styles.novaCard}>
+      <div className={styles.novaCardProfile}>
+        <img src="/nova-avatar.jpg" alt="Nova" className={styles.novaCardAvatar} />
+        <div className={styles.novaCardInfo}>
+          <span className={styles.novaCardName}>Nova</span>
+          <span className={styles.novaCardSub}>Payment Operations Partner</span>
+          <span className={styles.novaCardStatus}>
+            <span className={styles.novaStatusDot} />
+            Online
+          </span>
+        </div>
+      </div>
+      <p className={styles.novaCardBody}>
+        Helping you collect payments, resolve issues and keep your operations running smoothly.
+      </p>
+      <button className={styles.novaCardCta}>
+        Ask Nova
+        <span className={styles.novaCtaArrow}>→</span>
+      </button>
+    </div>
+  );
+}
+
 // ── Sidebar ────────────────────────────────────────────────────────────────────
 
 function Sidebar() {
@@ -154,6 +181,10 @@ function Sidebar() {
           </button>
         ))}
       </nav>
+
+      <div className={styles.sidebarBottom}>
+        <NovaCard />
+      </div>
     </aside>
   );
 }
