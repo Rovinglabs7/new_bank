@@ -198,9 +198,22 @@ const LOCATIONS = [
   { id: "stockholm",  name: "Stockholm",    flag: "🇸🇪", rail: "SEPA",         currency: "SEK", symbol: "kr ",  amount: 284000, lat: 59.3,  lng: 18.1  },
 ];
 
-// Show max 4 at a time, cycling through all locations
-const VISIBLE_COUNT = 4;
-const CYCLE_INTERVAL = 3800;
+// Predefined anchor slots around the globe — never overlap
+// Values are percentages of the card media area (top/left)
+const SLOTS = [
+  { id: "top-left",     top: "8%",  left: "6%",   tx: "0",     ty: "0"    },
+  { id: "top-right",    top: "8%",  left: "94%",  tx: "-100%", ty: "0"    },
+  { id: "mid-left",     top: "42%", left: "4%",   tx: "0",     ty: "-50%" },
+  { id: "mid-right",    top: "42%", left: "96%",  tx: "-100%", ty: "-50%" },
+  { id: "bot-left",     top: "78%", left: "6%",   tx: "0",     ty: "-100%"},
+  { id: "bot-right",    top: "78%", left: "94%",  tx: "-100%", ty: "-100%"},
+  { id: "top-centre",   top: "5%",  left: "50%",  tx: "-50%",  ty: "0"    },
+  { id: "bot-centre",   top: "92%", left: "50%",  tx: "-50%",  ty: "-100%"},
+];
+
+// Max visible at once — pick 3 non-adjacent slots
+const VISIBLE_COUNT = 3;
+const CYCLE_INTERVAL = 3200;
 
 const GLOBE_R = 1.0;
 const TILT_X = (20 * Math.PI) / 180;
@@ -249,22 +262,13 @@ function buildGlobeGeo(count: number) {
   return geo;
 }
 
-interface LabelPos {
-  id: string;
-  x: number;
-  y: number;
-  depth: number;
-}
-
 interface GlobeSceneProps {
-  onLabels: (labels: LabelPos[]) => void;
   paused: boolean;
-  activeIds: string[];
 }
 
-function GlobeScene({ onLabels, paused, activeIds }: GlobeSceneProps) {
+function GlobeScene({ paused }: GlobeSceneProps) {
   const groupRef = useRef<THREE.Group>(null);
-  const { camera, size } = useThree();
+  useThree();
 
   const geometry = useMemo(() => buildGlobeGeo(2200), []);
   const material = useMemo(
@@ -279,45 +283,10 @@ function GlobeScene({ onLabels, paused, activeIds }: GlobeSceneProps) {
     []
   );
 
-  const activeLocations = useMemo(
-    () => LOCATIONS.filter((l) => activeIds.includes(l.id)),
-    [activeIds]
-  );
-
-  const cityLocal = useMemo(
-    () =>
-      activeLocations.map((loc) => {
-        const latR = (loc.lat * Math.PI) / 180;
-        const lngR = (loc.lng * Math.PI) / 180;
-        return new THREE.Vector3(
-          Math.cos(latR) * Math.sin(lngR) * GLOBE_R,
-          Math.sin(latR) * GLOBE_R,
-          Math.cos(latR) * Math.cos(lngR) * GLOBE_R
-        );
-      }),
-    [activeLocations]
-  );
-
-  const tmpV3 = useMemo(() => new THREE.Vector3(), []);
-
   useFrame((_, delta) => {
     const grp = groupRef.current;
     if (!grp) return;
     if (!paused) grp.rotation.y += delta * 0.18;
-
-    const labels: LabelPos[] = activeLocations.map((loc, i) => {
-      tmpV3.copy(cityLocal[i]).applyMatrix4(grp.matrixWorld);
-      const depth = tmpV3.clone().normalize().z;
-      const ndc = tmpV3.clone().project(camera);
-      return {
-        id: loc.id,
-        x: ((ndc.x + 1) / 2) * size.width,
-        y: ((-ndc.y + 1) / 2) * size.height,
-        depth,
-      };
-    });
-
-    onLabels(labels);
   });
 
   return (
@@ -327,11 +296,12 @@ function GlobeScene({ onLabels, paused, activeIds }: GlobeSceneProps) {
   );
 }
 
-function useCountUp(target: number, active: boolean, duration = 1.4) {
+function useCountUp(target: number, active: boolean, duration = 1.2) {
   const [value, setValue] = useState(0);
   const counted = useRef(false);
   useEffect(() => {
-    if (!active || counted.current) return;
+    if (!active) { counted.current = false; setValue(0); return; }
+    if (counted.current) return;
     counted.current = true;
     const start = performance.now();
     const tick = (now: number) => {
@@ -345,21 +315,31 @@ function useCountUp(target: number, active: boolean, duration = 1.4) {
   return value;
 }
 
-function GlobeLabel({ lp }: { lp: LabelPos }) {
-  const loc = LOCATIONS.find((l) => l.id === lp.id)!;
-  const opacity = lp.depth > 0.1 ? Math.min(1, (lp.depth - 0.1) / 0.3) : 0;
-  const counted = useCountUp(loc.amount, lp.depth > 0.45);
+interface SlotNotif {
+  slotId: string;
+  locId: string;
+  key: number; // unique key per appearance so AnimatePresence remounts
+}
+
+function GlobeNotif({ notif }: { notif: SlotNotif }) {
+  const slot = SLOTS.find((s) => s.id === notif.slotId)!;
+  const loc = LOCATIONS.find((l) => l.id === notif.locId)!;
+  const counted = useCountUp(loc.amount, true);
 
   return (
-    <div
+    <motion.div
+      key={notif.key}
       className={styles.globeLabel}
       style={{
-        left: lp.x,
-        top: lp.y,
-        opacity,
-        zIndex: Math.round((lp.depth + 1) * 10),
-        pointerEvents: opacity > 0.3 ? "auto" : "none",
+        top: slot.top,
+        left: slot.left,
+        transform: `translate(${slot.tx}, ${slot.ty})`,
+        pointerEvents: "none",
       }}
+      initial={{ opacity: 0, scale: 0.92, y: 6 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.92, y: -4 }}
+      transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className={styles.globeLabelInner}>
         <span className={styles.globeFlag}>{loc.flag}</span>
@@ -373,32 +353,54 @@ function GlobeLabel({ lp }: { lp: LabelPos }) {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
+// Pick VISIBLE_COUNT non-adjacent slot indices with good spread
+const INITIAL_SLOT_INDICES = [0, 3, 4]; // top-left, mid-right, bot-left
+
 function GlobeCard() {
-  const [labels, setLabels] = useState<LabelPos[]>([]);
   const [paused, setPaused] = useState(false);
-  const [activeIds, setActiveIds] = useState<string[]>(
-    LOCATIONS.slice(0, VISIBLE_COUNT).map((l) => l.id)
+  const [notifs, setNotifs] = useState<SlotNotif[]>(() =>
+    INITIAL_SLOT_INDICES.map((si, i) => ({
+      slotId: SLOTS[si].id,
+      locId: LOCATIONS[i].id,
+      key: i,
+    }))
   );
-  const offsetRef = useRef(0);
+  const keyRef = useRef(100);
+  const tickRef = useRef(0);
 
   useEffect(() => {
+    // Every CYCLE_INTERVAL, swap out one notification in a random occupied slot
     const t = setInterval(() => {
-      offsetRef.current = (offsetRef.current + 1) % LOCATIONS.length;
-      const next: string[] = [];
-      for (let i = 0; i < VISIBLE_COUNT; i++) {
-        next.push(LOCATIONS[(offsetRef.current + i) % LOCATIONS.length].id);
-      }
-      setActiveIds(next);
+      tickRef.current += 1;
+      const tick = tickRef.current;
+      setNotifs((prev) => {
+        // pick a random slot position to replace
+        const replaceIdx = tick % prev.length;
+        // pick the next location
+        const currentLocIds = prev.map((n) => n.locId);
+        const nextLoc = LOCATIONS.find((l) => !currentLocIds.includes(l.id));
+        if (!nextLoc) {
+          // rotate: replace with one that's not currently visible
+          const allOtherLocs = LOCATIONS.filter((l) => l.id !== prev[replaceIdx].locId);
+          const newLoc = allOtherLocs[tick % allOtherLocs.length];
+          return prev.map((n, i) =>
+            i === replaceIdx
+              ? { ...n, locId: newLoc.id, key: ++keyRef.current }
+              : n
+          );
+        }
+        return prev.map((n, i) =>
+          i === replaceIdx
+            ? { ...n, locId: nextLoc.id, key: ++keyRef.current }
+            : n
+        );
+      });
     }, CYCLE_INTERVAL);
     return () => clearInterval(t);
-  }, []);
-
-  const handleLabels = useCallback((next: LabelPos[]) => {
-    setLabels(next);
   }, []);
 
   return (
@@ -414,16 +416,18 @@ function GlobeCard() {
           dpr={[1, 2]}
           gl={{ antialias: true, alpha: true }}
         >
-          <GlobeScene onLabels={handleLabels} paused={paused} activeIds={activeIds} />
+          <GlobeScene paused={paused} />
         </Canvas>
 
         {/* Atmospheric glow overlay */}
         <div className={styles.globeGlow} aria-hidden />
 
-        {/* DOM labels */}
-        {labels.map((lp) => (
-          <GlobeLabel key={lp.id} lp={lp} />
-        ))}
+        {/* Slot-based notifications */}
+        <AnimatePresence>
+          {notifs.map((n) => (
+            <GlobeNotif key={n.key} notif={n} />
+          ))}
+        </AnimatePresence>
       </div>
 
       <div className={styles.cardContent}>

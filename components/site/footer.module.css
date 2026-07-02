@@ -401,7 +401,8 @@
 }
 
 .bottomLegalParagraphs {
-  max-width: 720px;
+  max-width: var(--page-max);
+  width: 100%;
   margin: 24px 0 0;
 }
 
