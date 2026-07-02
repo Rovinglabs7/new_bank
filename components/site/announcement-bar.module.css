@@ -3,8 +3,8 @@
   z-index: 51;
   width: 100%;
   height: var(--announcement-height);
-  background: var(--color-ink);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: #163D84;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
   display: flex;
   align-items: center;
 }
