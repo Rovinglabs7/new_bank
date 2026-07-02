@@ -58,51 +58,8 @@ const ICONS = {
   check:       "M20 6L9 17l-5-5",
   refresh:     "M23 4v6h-6 M1 20v-6h6 M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15",
   trendUp:     "M23 6l-9.5 9.5-5-5L1 18 M17 6h6v6",
+  inbox2:      "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
 };
-
-// ── Mock data ──────────────────────────────────────────────────────────────────
-
-const RECENT_COLLECTIONS = [
-  { id: "COL-8841", customer: "Hartwell Group",      amount: "£4,200.00",  method: "Direct Debit", status: "collected",  date: "Today, 10:35",    ref: "DD-20241" },
-  { id: "COL-8840", customer: "Meridian Retail Ltd", amount: "£12,800.00", method: "SEPA Credit",  status: "collected",  date: "Today, 09:14",    ref: "SC-10882" },
-  { id: "COL-8839", customer: "Oakwood Care",        amount: "£2,150.00",  method: "Direct Debit", status: "pending",    date: "Today, 08:52",    ref: "DD-20240" },
-  { id: "COL-8838", customer: "Thornfield Advisory", amount: "£9,450.00",  method: "Direct Debit", status: "collected",  date: "Yesterday",       ref: "DD-20239" },
-  { id: "COL-8837", customer: "Green Leaf Nursery",  amount: "£875.00",    method: "Payment Link", status: "failed",     date: "Yesterday",       ref: "PL-00412" },
-  { id: "COL-8836", customer: "Luminos Consulting",  amount: "£6,300.00",  method: "Direct Debit", status: "collected",  date: "Yesterday",       ref: "DD-20238" },
-  { id: "COL-8835", customer: "Apex Logistics",      amount: "£3,600.00",  method: "SEPA Credit",  status: "processing", date: "2 days ago",      ref: "SC-10881" },
-];
-
-const ACTIVITY = [
-  { icon: "check",    label: "Hartwell Group paid INV-2847", sub: "£4,200 · Direct Debit", time: "10:35 AM", color: "#2bac76" },
-  { icon: "send",     label: "Payment link created for Acme Ltd", sub: "£850 · Payment Link", time: "10:12 AM", color: "#d97706" },
-  { icon: "failed",   label: "Green Leaf Nursery collection failed", sub: "£875 · Insufficient funds", time: "09:58 AM", color: "#dc2626" },
-  { icon: "refresh",  label: "3 failed payments queued for retry", sub: "Nova AI · Automated", time: "09:30 AM", color: "#6366f1" },
-  { icon: "customers","label": "New customer added: Thornfield Advisory", sub: "Via API · Self-serve", time: "Yesterday", color: "#d97706" },
-  { icon: "settlements","label": "Settlement processed to Barclays ••4892", sub: "£48,240 · Next-day", time: "Yesterday", color: "#2bac76" },
-];
-
-const UPCOMING = [
-  { customer: "Luminos Consulting",  amount: "£6,300", due: "Today",     method: "Direct Debit" },
-  { customer: "Apex Logistics",      amount: "£3,600", due: "Today",     method: "SEPA Credit" },
-  { customer: "Hartwell Group",      amount: "£4,200", due: "Tomorrow",  method: "Direct Debit" },
-  { customer: "Meridian Retail Ltd", amount: "£12,800",due: "Tomorrow",  method: "Direct Debit" },
-  { customer: "Oakwood Care",        amount: "£2,150", due: "Thu 4 Jul", method: "Direct Debit" },
-  { customer: "Summit Analytics",    amount: "£8,000", due: "Fri 5 Jul", method: "SEPA Credit" },
-];
-
-const FAILED = [
-  { customer: "Green Leaf Nursery",  amount: "£875",   reason: "Insufficient funds",  retryOn: "Tomorrow",    risk: "low" },
-  { customer: "Kestrel Media Group", amount: "£2,400", reason: "Account closed",       retryOn: "Manual review",risk: "high" },
-  { customer: "Birch Street Gym",    amount: "£340",   reason: "Refer to payer",       retryOn: "In 3 days",   risk: "medium" },
-];
-
-const NOVA_SUGGESTIONS = [
-  "What happened to failed payments today?",
-  "Retry all low-risk failed collections",
-  "Summarise today's settlements",
-  "Who hasn't paid this month?",
-  "Create payment link for Acme Ltd",
-];
 
 // ── Nav structure ──────────────────────────────────────────────────────────────
 
@@ -112,7 +69,7 @@ const NAV = [
     items: [
       { label: "Dashboard",    icon: "home",        active: true },
       { label: "Activity",     icon: "activity"     },
-      { label: "Inbox",        icon: "inbox",       badge: 4 },
+      { label: "Inbox",        icon: "inbox" },
     ],
   },
   {
@@ -122,7 +79,7 @@ const NAV = [
       { label: "Payment Links",     icon: "link" },
       { label: "Recurring",         icon: "recurring" },
       { label: "Invoices",          icon: "invoices" },
-      { label: "Failed Payments",   icon: "failed",   badge: 3 },
+      { label: "Failed Payments",   icon: "failed" },
       { label: "Mandates",          icon: "mandates" },
     ],
   },
@@ -139,7 +96,7 @@ const NAV = [
     items: [
       { label: "Nova AI",      icon: "nova",      badge: "AI" },
       { label: "Automations",  icon: "automation" },
-      { label: "Approvals",    icon: "approvals", badge: 2 },
+      { label: "Approvals",    icon: "approvals" },
       { label: "Workflows",    icon: "workflows" },
       { label: "Notifications",icon: "notifs" },
     ],
@@ -176,17 +133,18 @@ const NAV = [
   },
 ];
 
-// ── Status chip ────────────────────────────────────────────────────────────────
+// ── Empty state component ──────────────────────────────────────────────────────
 
-function StatusChip({ status }: { status: string }) {
-  const map: Record<string, { label: string; cls: string }> = {
-    collected:  { label: "Collected",  cls: styles.chipSuccess },
-    pending:    { label: "Pending",    cls: styles.chipPending },
-    failed:     { label: "Failed",     cls: styles.chipFailed },
-    processing: { label: "Processing", cls: styles.chipProcessing },
-  };
-  const { label, cls } = map[status] ?? { label: status, cls: styles.chipPending };
-  return <span className={`${styles.chip} ${cls}`}>{label}</span>;
+function EmptyState({ icon, title, body }: { icon: string; title: string; body: string }) {
+  return (
+    <div className={styles.emptyState}>
+      <div className={styles.emptyIcon}>
+        <Icon d={ICONS[icon as keyof typeof ICONS] ?? ICONS.activity} size={22} />
+      </div>
+      <p className={styles.emptyTitle}>{title}</p>
+      <p className={styles.emptyBody}>{body}</p>
+    </div>
+  );
 }
 
 // ── Sidebar ────────────────────────────────────────────────────────────────────
@@ -194,7 +152,6 @@ function StatusChip({ status }: { status: string }) {
 function Sidebar({ collapsed, onToggle, email }: { collapsed: boolean; onToggle: () => void; email: string }) {
   return (
     <aside className={`${styles.sidebar} ${collapsed ? styles.sidebarCollapsed : ""}`}>
-      {/* Logo */}
       <div className={styles.sidebarLogo}>
         <span className={styles.logoMark} />
         {!collapsed && <span className={styles.logoText}>Praevor</span>}
@@ -203,7 +160,6 @@ function Sidebar({ collapsed, onToggle, email }: { collapsed: boolean; onToggle:
         </button>
       </div>
 
-      {/* Search */}
       {!collapsed && (
         <div className={styles.sidebarSearch}>
           <Icon d={ICONS.search} size={14} />
@@ -212,7 +168,6 @@ function Sidebar({ collapsed, onToggle, email }: { collapsed: boolean; onToggle:
         </div>
       )}
 
-      {/* Nav */}
       <nav className={styles.sidebarNav}>
         {NAV.map((section) => (
           <div key={section.group} className={styles.navGroup}>
@@ -231,7 +186,7 @@ function Sidebar({ collapsed, onToggle, email }: { collapsed: boolean; onToggle:
                 {!collapsed && (
                   <>
                     <span className={styles.navItemLabel}>{item.label}</span>
-                    {item.badge !== undefined && (
+                    {"badge" in item && item.badge !== undefined && (
                       <span className={`${styles.navBadge} ${typeof item.badge === "string" ? styles.navBadgeAi : ""}`}>
                         {item.badge}
                       </span>
@@ -244,7 +199,6 @@ function Sidebar({ collapsed, onToggle, email }: { collapsed: boolean; onToggle:
         ))}
       </nav>
 
-      {/* Footer */}
       <div className={styles.sidebarFooter}>
         {!collapsed && (
           <div className={styles.sidebarUser}>
@@ -272,7 +226,7 @@ function Sidebar({ collapsed, onToggle, email }: { collapsed: boolean; onToggle:
 
 // ── Top bar ────────────────────────────────────────────────────────────────────
 
-function TopBar() {
+function TopBar({ email }: { email: string }) {
   return (
     <header className={styles.topBar}>
       <div className={styles.topBarLeft}>
@@ -285,14 +239,13 @@ function TopBar() {
         </div>
         <button className={styles.topBarIcon} aria-label="Notifications">
           <Icon d={ICONS.bell} size={17} />
-          <span className={styles.topBarDot} />
         </button>
         <button className={styles.topBarIcon} aria-label="Help">
           <Icon d={ICONS.help} size={17} />
         </button>
         <div className={styles.topBarOrg}>
           <span className={styles.topBarOrgDot} />
-          <span>Praevor Demo</span>
+          <span>Praevor</span>
           <Icon d={ICONS.chevronDown} size={13} />
         </div>
       </div>
@@ -302,17 +255,11 @@ function TopBar() {
 
 // ── KPI card ───────────────────────────────────────────────────────────────────
 
-function KpiCard({ label, value, trend, trendUp, sub }: { label: string; value: string; trend?: string; trendUp?: boolean; sub?: string }) {
+function KpiCard({ label, sub }: { label: string; sub?: string }) {
   return (
     <div className={styles.kpiCard}>
       <span className={styles.kpiLabel}>{label}</span>
-      <span className={styles.kpiValue}>{value}</span>
-      {trend && (
-        <span className={`${styles.kpiTrend} ${trendUp ? styles.kpiTrendUp : styles.kpiTrendDown}`}>
-          <Icon d={trendUp ? ICONS.trendUp : ICONS.arrowRight} size={11} />
-          {trend}
-        </span>
-      )}
+      <span className={`${styles.kpiValue} ${styles.kpiValueEmpty}`}>—</span>
       {sub && <span className={styles.kpiSub}>{sub}</span>}
     </div>
   );
@@ -326,7 +273,7 @@ function NovaInput() {
     <div className={styles.novaInputWrap}>
       <input
         className={styles.novaInput}
-        placeholder="Ask Nova anything…"
+        placeholder="Ask Nova anything about your payments, customers or settlements…"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
@@ -351,7 +298,7 @@ export function DashboardClient({ email }: { email: string }) {
       />
 
       <div className={styles.main}>
-        <TopBar />
+        <TopBar email={email} />
 
         <div className={styles.content}>
 
@@ -359,22 +306,20 @@ export function DashboardClient({ email }: { email: string }) {
           <section className={styles.hero}>
             <div className={styles.heroLeft}>
               <p className={styles.heroEyebrow}>Total Collections</p>
-              <h1 className={styles.heroAmount}>£4,826,192.18</h1>
-              <div className={styles.heroTrend}>
-                <Icon d={ICONS.trendUp} size={13} />
-                <span>+18.6% this month</span>
-                <span className={styles.heroTrendSub}>vs £4,066,123 last month</span>
-              </div>
+              <h1 className={styles.heroAmountEmpty}>No collections yet</h1>
+              <p className={styles.heroEmptyHint}>
+                Once your business starts collecting payments, your totals will appear here.
+              </p>
             </div>
             <div className={styles.heroActions}>
               <p className={styles.heroActionsLabel}>Quick actions</p>
               <div className={styles.heroActionGrid}>
                 {[
-                  { label: "Collect Payment",        icon: "collections" },
-                  { label: "Create Payment Link",    icon: "link" },
-                  { label: "Bank Authorisation",     icon: "mandates" },
-                  { label: "Create Subscription",    icon: "recurring" },
-                  { label: "Invite Team Member",     icon: "team" },
+                  { label: "Collect Payment",     icon: "collections" },
+                  { label: "Create Payment Link",  icon: "link" },
+                  { label: "Bank Authorisation",   icon: "mandates" },
+                  { label: "Create Subscription",  icon: "recurring" },
+                  { label: "Invite Team Member",   icon: "team" },
                 ].map((a) => (
                   <button key={a.label} className={styles.heroAction}>
                     <Icon d={ICONS[a.icon as keyof typeof ICONS] ?? ICONS.plus} size={15} />
@@ -387,12 +332,12 @@ export function DashboardClient({ email }: { email: string }) {
 
           {/* KPI row */}
           <section className={styles.kpiRow}>
-            <KpiCard label="Collections Today"   value="£84,240"   trend="+12.4%"  trendUp />
-            <KpiCard label="Recurring Revenue"   value="£312,800"  trend="+5.2%"   trendUp />
-            <KpiCard label="Settlement Balance"  value="£48,192"   sub="Next payout Thu" />
-            <KpiCard label="Success Rate"        value="97.3%"      trend="+0.8pp"  trendUp />
-            <KpiCard label="Avg Collection Time" value="1.4 days"   trend="-0.2d"   trendUp />
-            <KpiCard label="Failed Payments"     value="3"          trend="+1"      trendUp={false} />
+            <KpiCard label="Collections Today"   sub="Waiting for first payment" />
+            <KpiCard label="Recurring Revenue"   sub="Set up a subscription to track" />
+            <KpiCard label="Settlement Balance"  sub="Settlements appear after collection" />
+            <KpiCard label="Success Rate"        sub="Calculated after first payment" />
+            <KpiCard label="Avg Collection Time" sub="Tracked from your first collection" />
+            <KpiCard label="Failed Payments"     sub="Nothing to recover right now" />
           </section>
 
           {/* Row 2: Collections table + Settlement overview */}
@@ -401,61 +346,26 @@ export function DashboardClient({ email }: { email: string }) {
               <div className={styles.cardHeader}>
                 <div>
                   <h2 className={styles.cardTitle}>Recent Collections</h2>
-                  <p className={styles.cardSub}>Last 7 collections across all channels</p>
+                  <p className={styles.cardSub}>Your latest collections will appear here</p>
                 </div>
                 <button className={styles.cardAction}>View all</button>
               </div>
-              <div className={styles.tableWrap}>
-                <table className={styles.table}>
-                  <thead>
-                    <tr>
-                      <th>Customer</th>
-                      <th>Amount</th>
-                      <th>Method</th>
-                      <th>Status</th>
-                      <th>Date</th>
-                      <th>Reference</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {RECENT_COLLECTIONS.map((c) => (
-                      <tr key={c.id}>
-                        <td><span className={styles.tablePrimary}>{c.customer}</span></td>
-                        <td><span className={styles.tableAmount}>{c.amount}</span></td>
-                        <td><span className={styles.tableMuted}>{c.method}</span></td>
-                        <td><StatusChip status={c.status} /></td>
-                        <td><span className={styles.tableMuted}>{c.date}</span></td>
-                        <td><span className={styles.tableRef}>{c.ref}</span></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <EmptyState
+                icon="collections"
+                title="No collections yet."
+                body="Once your business starts collecting payments they'll appear here."
+              />
             </div>
 
             <div className={`${styles.card} ${styles.settlementCard}`}>
               <div className={styles.cardHeader}>
                 <h2 className={styles.cardTitle}>Settlement Overview</h2>
               </div>
-              <div className={styles.settlementRows}>
-                {[
-                  { label: "Current balance",    value: "£48,192.00", highlight: true },
-                  { label: "Next payout",         value: "£48,192.00", sub: "Thu 4 Jul" },
-                  { label: "Pending settlements", value: "£12,840.00" },
-                  { label: "Available funds",     value: "£35,352.00" },
-                  { label: "In transit",          value: "£8,200.00" },
-                  { label: "Reserved",            value: "£1,200.00" },
-                ].map((r) => (
-                  <div key={r.label} className={`${styles.settlementRow} ${r.highlight ? styles.settlementRowHL : ""}`}>
-                    <span className={styles.settlementLabel}>{r.label}</span>
-                    <div className={styles.settlementRight}>
-                      <span className={styles.settlementValue}>{r.value}</span>
-                      {r.sub && <span className={styles.settlementSub}>{r.sub}</span>}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <button className={styles.settlementBtn}>Request payout</button>
+              <EmptyState
+                icon="settlements"
+                title="No settlements yet."
+                body="Settlements will appear after your first successful payment."
+              />
             </div>
           </div>
 
@@ -469,18 +379,11 @@ export function DashboardClient({ email }: { email: string }) {
                 </div>
                 <div>
                   <h2 className={styles.novaTitle}>Nova <span className={styles.novaAiBadge}>AI</span></h2>
-                  <p className={styles.novaSub}>Your payment operations copilot</p>
+                  <p className={styles.novaSub}>Your AI payment operations assistant</p>
                 </div>
               </div>
               <div className={styles.novaCardRight}>
-                <div className={styles.novaSuggestions}>
-                  {NOVA_SUGGESTIONS.map((s) => (
-                    <button key={s} className={styles.novaSuggestion}>
-                      <Icon d={ICONS.arrowRight} size={12} />
-                      {s}
-                    </button>
-                  ))}
-                </div>
+                <p className={styles.novaWelcome}>How can I help today?</p>
                 <NovaInput />
               </div>
             </div>
@@ -496,18 +399,11 @@ export function DashboardClient({ email }: { email: string }) {
                 </div>
                 <button className={styles.cardAction}>View calendar</button>
               </div>
-              <div className={styles.upcomingList}>
-                {UPCOMING.map((u, i) => (
-                  <div key={i} className={styles.upcomingRow}>
-                    <div className={styles.upcomingDueBadge} data-due={u.due.toLowerCase().startsWith("today") ? "today" : u.due.toLowerCase().startsWith("tomorrow") ? "tomorrow" : "future"}>
-                      {u.due}
-                    </div>
-                    <span className={styles.upcomingCustomer}>{u.customer}</span>
-                    <span className={styles.upcomingMethod}>{u.method}</span>
-                    <span className={styles.upcomingAmount}>{u.amount}</span>
-                  </div>
-                ))}
-              </div>
+              <EmptyState
+                icon="recurring"
+                title="No upcoming collections."
+                body="Create your first recurring payment or mandate to schedule collections."
+              />
             </div>
 
             <div className={styles.card}>
@@ -516,23 +412,12 @@ export function DashboardClient({ email }: { email: string }) {
                   <h2 className={styles.cardTitle}>Failed Payments</h2>
                   <p className={styles.cardSub}>Recovery recommendations</p>
                 </div>
-                <button className={`${styles.cardAction} ${styles.cardActionDanger}`}>Retry all</button>
               </div>
-              <div className={styles.failedList}>
-                {FAILED.map((f, i) => (
-                  <div key={i} className={styles.failedRow}>
-                    <div className={styles.failedInfo}>
-                      <span className={styles.failedCustomer}>{f.customer}</span>
-                      <span className={styles.failedReason}>{f.reason}</span>
-                    </div>
-                    <div className={styles.failedRight}>
-                      <span className={styles.failedAmount}>{f.amount}</span>
-                      <span className={`${styles.failedRisk} ${styles[`risk_${f.risk}`]}`}>{f.risk} risk</span>
-                      <span className={styles.failedRetry}>Retry {f.retryOn}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <EmptyState
+                icon="check"
+                title="No failed payments."
+                body="Any collections that fail will appear here with recovery options."
+              />
             </div>
           </div>
 
@@ -545,24 +430,15 @@ export function DashboardClient({ email }: { email: string }) {
               </div>
               <button className={styles.cardAction}>View all</button>
             </div>
-            <div className={styles.activityList}>
-              {ACTIVITY.map((a, i) => (
-                <div key={i} className={styles.activityRow}>
-                  <div className={styles.activityIcon} style={{ color: a.color, background: `${a.color}18` }}>
-                    <Icon d={ICONS[a.icon as keyof typeof ICONS] ?? ICONS.activity} size={14} />
-                  </div>
-                  <div className={styles.activityInfo}>
-                    <span className={styles.activityLabel}>{a.label}</span>
-                    <span className={styles.activitySub}>{a.sub}</span>
-                  </div>
-                  <span className={styles.activityTime}>{a.time}</span>
-                </div>
-              ))}
-            </div>
+            <EmptyState
+              icon="activity"
+              title="Nothing to show."
+              body="Your latest account activity will appear here."
+            />
           </div>
 
-        </div>{/* /content */}
-      </div>{/* /main */}
+        </div>
+      </div>
     </div>
   );
 }
