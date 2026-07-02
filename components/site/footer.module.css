@@ -361,16 +361,7 @@
 }
 
 .bottomLeft {
-  width: 75%;
-}
-
-.bottomRight {
-  width: fit-content;
-  max-width: 40%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  text-align: right;
+  width: 100%;
 }
 
 .legalLinkRow {
@@ -627,14 +618,8 @@
     gap: 32px;
   }
 
-  .bottomLeft,
-  .bottomRight {
+  .bottomLeft {
     width: 100%;
-  }
-
-  .bottomRight {
-    align-items: center;
-    text-align: center;
   }
 
   .waitlistBlock,
