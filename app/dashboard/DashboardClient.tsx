@@ -178,6 +178,9 @@ function Sidebar() {
           <button
             key={label}
             className={`${styles.navItem} ${active ? styles.navItemActive : ""}`}
+            onClick={() => {
+              if (label === "Customers") router.push("/dashboard/customers");
+            }}
           >
             <span className={styles.navItemIcon}>
               <Icon size={17} />
