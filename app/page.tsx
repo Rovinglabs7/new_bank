@@ -16,6 +16,7 @@ import {
   RampFinanceIntelligence,
 } from "@/components/ramp/sections";
 import { PaymentOpsCards } from "@/components/site/PaymentOpsCards";
+import { NovaLauncher } from "@/components/site/NovaLauncher";
 
 export default function HomePage() {
   return (
@@ -38,6 +39,7 @@ export default function HomePage() {
       <WhoPraevorWorksFor />
       <WhoPraevorMarquee />
       <Footer />
+      <NovaLauncher />
     </div>
   );
 }
