@@ -223,6 +223,7 @@ function TypingIndicator({ platform }: { platform?: "slack" | "teams" }) {
 }
 
 // ─── SLACK mockup ─────────────────────────────────────────────────────────────
+// DM-style: Sarah messages Nova directly. Nova responds with payment details.
 
 function SlackMockup() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -256,45 +257,27 @@ function SlackMockup() {
     setBtnClicked(false);
     setVis({});
 
-    // 0ms — Daniel first message
-    show("d1", 0);
-    // 800ms — Nova typing
-    show("nt1", 800);
-    // 2500ms — Nova reply
-    hide("nt1", 2500);
-    show("n1", 2500);
-    // 4000ms — Daniel 2
-    show("d2", 4000);
-    // 5000ms — Nova typing
-    show("nt2", 5000);
-    // 7000ms — Nova reply + card + buttons
-    hide("nt2", 7000);
-    show("n2", 7000);
-    show("n2card", 7800);
-    show("n2btns", 8800);
-    // 10000ms — auto-click "Send to customer"
-    const tClick = setTimeout(() => setBtnClicked(true), 10000);
+    show("s1", 0);           // Sarah's question
+    show("nt1", 900);        // Nova thinking
+    hide("nt1", 2800);
+    show("n1", 2800);        // Nova status reply
+    show("n1card", 3600);    // Rich card
+    show("n1btns", 4600);    // Action buttons
+    const tClick = setTimeout(() => setBtnClicked(true), 6200);
     timers.current.push(tClick);
-    // 11000ms — Nova continuation
-    show("n3", 11000);
-    // 13500ms — Emma
-    show("e1", 13500);
-    // 15000ms — Nova typing
-    show("nt3", 15000);
-    // 16500ms — Nova update
-    hide("nt3", 16500);
-    show("n4", 16500);
-    show("r1", 16800);
-    // 19000ms — Nova continuation
-    show("n5", 19000);
-    show("r2", 19300);
-    // 22000ms — reset
+    show("n2", 7200);        // Nova confirms retry
+    show("s2", 9400);        // Sarah's follow-up
+    show("nt2", 10200);
+    hide("nt2", 12000);
+    show("n3", 12000);       // Nova final update + reactions
+    show("r1", 12400);
+
     const tReset = setTimeout(() => {
       setVis({});
       setBtnClicked(false);
       const tRestart = setTimeout(runSequence, 800);
       timers.current.push(tRestart);
-    }, 22000);
+    }, 20000);
     timers.current.push(tReset);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show, hide]);
@@ -334,7 +317,7 @@ function SlackMockup() {
       <div className={styles.slackSidebar}>
         <div className={styles.slackWorkspace}>
           <div className={styles.slackWorkspaceLeft}>
-            <span className={styles.slackWorkspaceName}>Praevor HQ</span>
+            <span className={styles.slackWorkspaceName}>Meridian&nbsp;Retail</span>
             <span className={styles.slackWorkspaceChevron}><SlackChevronDown /></span>
           </div>
           <div className={styles.slackComposeBtn}>
@@ -368,17 +351,17 @@ function SlackMockup() {
             <span className={styles.slackChannelHash}>#</span>
             <span>general</span>
           </div>
-          <div className={`${styles.slackChannel} ${styles.slackChannelActive}`}>
+          <div className={styles.slackChannel}>
             <span className={styles.slackChannelHash}>#</span>
-            <span>payments-ops</span>
+            <span>engineering</span>
           </div>
           <div className={styles.slackChannel}>
             <span className={styles.slackChannelHash}>#</span>
-            <span>finance</span>
+            <span>design</span>
           </div>
           <div className={styles.slackChannel}>
             <span className={styles.slackChannelHash}>#</span>
-            <span>ops</span>
+            <span>product</span>
           </div>
         </div>
 
@@ -387,14 +370,7 @@ function SlackMockup() {
         <div className={styles.slackSidebarSection}>
           <div className={styles.slackSidebarLabel}>
             <SlackMembersIcon />
-            <span>Members</span>
-          </div>
-          <div className={styles.slackMember}>
-            <div className={styles.slackMemberAvatarWrap}>
-              <NovaAppAvatar className={styles.slackMemberAppAvatar} />
-              <span className={styles.slackPresenceDot} />
-            </div>
-            <span>Nova</span>
+            <span>Direct Messages</span>
           </div>
           <div className={styles.slackMember}>
             <div className={styles.slackMemberAvatarWrap}>
@@ -417,18 +393,26 @@ function SlackMockup() {
             </div>
             <span>James</span>
           </div>
+          {/* Nova — selected/active at bottom of DM list */}
+          <div className={`${styles.slackMember} ${styles.slackChannelActive}`}>
+            <div className={styles.slackMemberAvatarWrap}>
+              <NovaAppAvatar className={styles.slackMemberAppAvatar} />
+              <span className={styles.slackPresenceDot} />
+            </div>
+            <span>Nova</span>
+          </div>
         </div>
       </div>
 
-      {/* Main area */}
+      {/* Main area — DM with Nova */}
       <div className={styles.slackMain}>
         <div className={styles.slackHeader}>
           <div className={styles.slackHeaderLeft}>
-            <span className={styles.slackHeaderHash}>#</span>
-            <span className={styles.slackHeaderChannel}>payments-ops</span>
+            <NovaAppAvatar className={styles.slackMemberAppAvatar} />
+            <span className={styles.slackHeaderChannel}>Nova</span>
+            <span className={styles.msgAppBadge} style={{ marginLeft: 4 }}>App</span>
           </div>
           <div className={styles.slackHeaderRight}>
-            <span className={styles.slackHeaderMembers}>Nova, Emma, Daniel, James +2</span>
             <div className={styles.slackHeaderSearch}>
               <SlackSearchIcon />
             </div>
@@ -442,139 +426,101 @@ function SlackMockup() {
             <div className={styles.slackDateLine} />
           </div>
 
-          {/* Daniel — first message group */}
-          <div className={`${styles.slackMsgGroup} ${vis["d1"] ? styles.msgVisible : ""}`}>
-            <DanielInitial className={styles.msgAvatar} />
+          {/* Sarah's question */}
+          <div className={`${styles.slackMsgGroup} ${vis["s1"] ? styles.msgVisible : ""}`}>
+            <EmmaInitial className={styles.msgAvatar} />
             <div className={styles.msgContent}>
               <div className={styles.msgMeta}>
-                <span className={styles.msgName}>Daniel</span>
-                <span className={styles.msgTime}>10:14 AM</span>
+                <span className={styles.msgName}>Sarah</span>
+                <span className={styles.msgTime}>10:32 AM</span>
               </div>
-              <p className={styles.msgText}>Morning everyone. We&apos;ve just signed Green Leaf Nursery.</p>
-              <p className={styles.msgText}>@Nova can you get their monthly recurring payment ready?</p>
+              <p className={styles.msgText}>Has Hartwell Group paid this month? Their invoice has been outstanding for 12 days.</p>
             </div>
           </div>
 
           {vis["nt1"] && <TypingIndicator platform="slack" />}
 
-          {/* Nova — reply */}
+          {/* Nova — status + rich card */}
           <div className={`${styles.slackMsgGroup} ${vis["n1"] ? styles.msgVisible : ""}`}>
             <NovaAppAvatar className={styles.msgAvatar} />
             <div className={styles.msgContent}>
               <div className={styles.msgMeta}>
                 <span className={styles.msgName}>Nova</span>
                 <span className={styles.msgAppBadge}>App</span>
-                <span className={styles.msgTime}>10:14 AM</span>
+                <span className={styles.msgTime}>10:32 AM</span>
               </div>
-              <p className={styles.msgText}>Happy to. What&apos;s the monthly amount, and when should the first collection go out?</p>
-            </div>
-          </div>
+              <p className={styles.msgText}>Checked. Invoice INV-2847 for &pound;4,200 was due 20 June. No payment received. The last collection attempt failed on 18 June — insufficient funds.</p>
 
-          {/* Daniel — second message group */}
-          <div className={`${styles.slackMsgGroup} ${vis["d2"] ? styles.msgVisible : ""}`}>
-            <DanielInitial className={styles.msgAvatar} />
-            <div className={styles.msgContent}>
-              <div className={styles.msgMeta}>
-                <span className={styles.msgName}>Daniel</span>
-                <span className={styles.msgTime}>10:15 AM</span>
-              </div>
-              <p className={styles.msgText}>&pound;240 a month. Starts 1 August.</p>
-            </div>
-          </div>
-
-          {vis["nt2"] && <TypingIndicator platform="slack" />}
-
-          {/* Nova — with rich card + action buttons */}
-          <div className={`${styles.slackMsgGroup} ${vis["n2"] ? styles.msgVisible : ""}`}>
-            <NovaAppAvatar className={styles.msgAvatar} />
-            <div className={styles.msgContent}>
-              <div className={styles.msgMeta}>
-                <span className={styles.msgName}>Nova</span>
-                <span className={styles.msgAppBadge}>App</span>
-                <span className={styles.msgTime}>10:15 AM</span>
-              </div>
-              <p className={styles.msgText}>Perfect. Everything is ready.</p>
-
-              <div className={`${styles.richCard} ${vis["n2card"] ? styles.richCardVisible : ""}`}>
+              <div className={`${styles.richCard} ${vis["n1card"] ? styles.richCardVisible : ""}`}>
                 <div className={styles.richCardAccent} />
                 <div className={styles.richCardBody}>
-                  <div className={styles.richCardLabel}>Recurring Payment</div>
-                  <div className={styles.richCardTitle}>Green Leaf Nursery</div>
-                  <div className={styles.richCardRow}><span>Amount</span><span>&pound;240 / month</span></div>
-                  <div className={styles.richCardRow}><span>Starts</span><span>1 August</span></div>
-                  <div className={styles.richCardRow}><span>Status</span><span className={styles.richCardStatus}>Ready to send</span></div>
+                  <div className={styles.richCardLabel}>Outstanding Invoice</div>
+                  <div className={styles.richCardTitle}>Hartwell Group</div>
+                  <div className={styles.richCardRow}><span>Invoice</span><span>INV-2847</span></div>
+                  <div className={styles.richCardRow}><span>Amount</span><span>&pound;4,200</span></div>
+                  <div className={styles.richCardRow}><span>Due date</span><span>20 June</span></div>
+                  <div className={styles.richCardRow}><span>Status</span><span className={styles.richCardStatusFail}>Failed — retry available</span></div>
                 </div>
               </div>
 
-              <p className={styles.msgText}>Would you like me to send the payment request directly to Green Leaf Nursery?</p>
+              <p className={styles.msgText}>Would you like me to retry the collection now, or send a reminder email first?</p>
 
-              {vis["n2btns"] && (
+              {vis["n1btns"] && (
                 <div className={styles.actionButtons}>
                   <button
                     className={`${styles.btnPrimary} ${btnClicked ? styles.btnClicked : ""}`}
                     disabled={btnClicked}
                     type="button"
                   >
-                    Send to customer
+                    Retry now
                   </button>
                   <button
                     className={styles.btnGhost}
                     disabled={btnClicked}
                     type="button"
                   >
-                    Review first
+                    Send reminder
                   </button>
                 </div>
               )}
             </div>
           </div>
 
-          {/* Nova — continuation (no avatar) */}
-          <div className={`${styles.slackMsgContinuation} ${vis["n3"] ? styles.msgVisible : ""}`}>
+          {/* Nova confirmation after click */}
+          <div className={`${styles.slackMsgContinuation} ${vis["n2"] ? styles.msgVisible : ""}`}>
             <div className={styles.msgContinuationSpacer} />
             <div className={styles.msgContent}>
-              <p className={styles.msgText}>Done. The payment request has been sent. I&apos;ll keep this channel updated.</p>
+              <p className={styles.msgText}>Done. Retrying collection now. I&apos;ll update you as soon as it clears.</p>
             </div>
           </div>
 
-          {/* Emma */}
-          <div className={`${styles.slackMsgGroup} ${vis["e1"] ? styles.msgVisible : ""}`}>
+          {/* Sarah follow-up */}
+          <div className={`${styles.slackMsgGroup} ${vis["s2"] ? styles.msgVisible : ""}`}>
             <EmmaInitial className={styles.msgAvatar} />
             <div className={styles.msgContent}>
               <div className={styles.msgMeta}>
-                <span className={styles.msgName}>Emma</span>
-                <span className={styles.msgTime}>10:16 AM</span>
+                <span className={styles.msgName}>Sarah</span>
+                <span className={styles.msgTime}>10:33 AM</span>
               </div>
-              <p className={styles.msgText}>&#128077;</p>
+              <p className={styles.msgText}>Thanks Nova &#128079;</p>
             </div>
           </div>
 
-          {vis["nt3"] && <TypingIndicator platform="slack" />}
+          {vis["nt2"] && <TypingIndicator platform="slack" />}
 
-          {/* Nova — update */}
-          <div className={`${styles.slackMsgGroup} ${vis["n4"] ? styles.msgVisible : ""}`}>
+          {/* Nova — payment cleared */}
+          <div className={`${styles.slackMsgGroup} ${vis["n3"] ? styles.msgVisible : ""}`}>
             <NovaAppAvatar className={styles.msgAvatar} />
             <div className={styles.msgContent}>
               <div className={styles.msgMeta}>
                 <span className={styles.msgName}>Nova</span>
                 <span className={styles.msgAppBadge}>App</span>
-                <span className={styles.msgTime}>10:22 AM</span>
+                <span className={styles.msgTime}>10:35 AM</span>
               </div>
-              <p className={styles.msgText}>Update. Green Leaf Nursery has opened the payment request.</p>
+              <p className={styles.msgText}>&#10003; &pound;4,200 collected from Hartwell Group. Funds will settle in 2 business days.</p>
               <div className={`${styles.reactions} ${vis["r1"] ? styles.reactionsVisible : ""}`}>
-                <span className={styles.reaction}>&#128064; 2</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Nova — continuation */}
-          <div className={`${styles.slackMsgContinuation} ${vis["n5"] ? styles.msgVisible : ""}`}>
-            <div className={styles.msgContinuationSpacer} />
-            <div className={styles.msgContent}>
-              <p className={styles.msgText}>The Direct Debit mandate has been completed. First collection scheduled for 1 August.</p>
-              <div className={`${styles.reactions} ${vis["r2"] ? styles.reactionsVisible : ""}`}>
-                <span className={styles.reaction}>&#127881; 3</span>
-                <span className={styles.reaction}>&#10084;&#65039; 2</span>
+                <span className={styles.reaction}>&#127881; 2</span>
+                <span className={styles.reaction}>&#128079; 1</span>
               </div>
             </div>
           </div>
@@ -603,7 +549,7 @@ function SlackMockup() {
               </div>
             </div>
             <div className={styles.slackComposerInput}>
-              <span className={styles.slackComposerPlaceholder}>Message #payments-ops</span>
+              <span className={styles.slackComposerPlaceholder}>Message Nova</span>
             </div>
             <div className={styles.slackComposerFooter}>
               <div className={styles.slackComposerFooterLeft}>
