@@ -16,8 +16,8 @@
 
 .mainGrid {
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
-  gap: 48px;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 40px;
   padding: 88px 0 80px;
   align-items: start;
 }
@@ -52,11 +52,20 @@
 }
 
 .location {
-  margin: 0;
+  margin: 0 0 8px;
   font-family: var(--font-inter);
   font-size: 13px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.01em;
+}
+
+.builtWith {
+  margin: 0;
+  font-family: var(--font-inter);
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.35);
   letter-spacing: 0.01em;
 }
 
@@ -218,9 +227,9 @@
 
 /* ─── Responsive ──────────────────────────────────────────────────────────── */
 
-@media (max-width: 1100px) {
+@media (max-width: 1280px) {
   .mainGrid {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 40px;
   }
 
@@ -230,6 +239,18 @@
 
   .tagline {
     max-width: 400px;
+  }
+}
+
+@media (max-width: 900px) {
+  .mainGrid {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px 32px;
+    padding: 64px 0 56px;
+  }
+
+  .brandCol {
+    grid-column: 1 / -1;
   }
 }
 
