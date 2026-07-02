@@ -87,7 +87,7 @@
   padding: 0 22px;
   border: none;
   background: transparent;
-  font-family: var(--font-inter);
+  font-family: var(--font-season);
   font-size: 15px;
   color: var(--color-ink);
   outline: none;
@@ -107,9 +107,9 @@
   border-radius: 999px;
   background: var(--color-ink);
   color: #ffffff;
-  font-family: var(--font-inter);
+  font-family: var(--font-season);
   font-size: 14.5px;
-  font-weight: 600;
+  font-weight: 420;
   letter-spacing: 0.01em;
   cursor: pointer;
   transition: opacity 0.18s ease, transform 0.18s ease;
