@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { site } from "@/config/site";
@@ -19,9 +19,69 @@ const fadeUp = {
   }),
 };
 
+const PLACEHOLDER_EMAILS = [
+  "sarah@acmecorp.com",
+  "james@fintech.io",
+  "hello@startupco.com",
+  "finance@bigretail.co.uk",
+  "cfo@growthstage.com",
+];
+
 function HeroEmailCapture() {
   const [email, setEmail] = useState("");
+  const [typedPlaceholder, setTypedPlaceholder] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
   const router = useRouter();
+  const cycleRef = useRef(0);
+  const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  function clearAll() {
+    timeoutsRef.current.forEach(clearTimeout);
+    timeoutsRef.current = [];
+  }
+
+  function typePhrase(phrase: string, onDone: () => void) {
+    let i = 0;
+    function tick() {
+      i++;
+      setTypedPlaceholder(phrase.slice(0, i));
+      if (i < phrase.length) {
+        timeoutsRef.current.push(setTimeout(tick, 55 + Math.random() * 35));
+      } else {
+        timeoutsRef.current.push(setTimeout(onDone, 1800));
+      }
+    }
+    timeoutsRef.current.push(setTimeout(tick, 55));
+  }
+
+  function erasePhrase(phrase: string, onDone: () => void) {
+    let i = phrase.length;
+    function tick() {
+      i--;
+      setTypedPlaceholder(phrase.slice(0, i));
+      if (i > 0) {
+        timeoutsRef.current.push(setTimeout(tick, 30));
+      } else {
+        timeoutsRef.current.push(setTimeout(onDone, 400));
+      }
+    }
+    timeoutsRef.current.push(setTimeout(tick, 30));
+  }
+
+  function runCycle() {
+    const phrase = PLACEHOLDER_EMAILS[cycleRef.current % PLACEHOLDER_EMAILS.length];
+    cycleRef.current++;
+    typePhrase(phrase, () => {
+      erasePhrase(phrase, runCycle);
+    });
+  }
+
+  useEffect(() => {
+    const startDelay = setTimeout(runCycle, 900);
+    timeoutsRef.current.push(startDelay);
+    return clearAll;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function submit() {
     if (!email.trim()) return;
@@ -34,16 +94,25 @@ function HeroEmailCapture() {
 
   return (
     <div className={styles.emailForm}>
-      <input
-        type="email"
-        className={styles.emailInput}
-        placeholder="Enter your email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        onKeyDown={handleKey}
-        aria-label="Email address"
-        autoComplete="email"
-      />
+      <div className={styles.emailInputWrap}>
+        <input
+          type="email"
+          className={styles.emailInput}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={handleKey}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          aria-label="Email address"
+          autoComplete="email"
+        />
+        {!email && !isFocused && (
+          <span className={styles.animatedPlaceholder} aria-hidden>
+            {typedPlaceholder}
+            <span className={styles.cursor}>|</span>
+          </span>
+        )}
+      </div>
       <button type="button" className={styles.emailSubmit} onClick={submit}>
         Submit
       </button>

@@ -16,11 +16,13 @@ import {
   RampFinanceIntelligence,
 } from "@/components/ramp/sections";
 import { PaymentOpsCards } from "@/components/site/PaymentOpsCards";
+import { NovaLauncher } from "@/components/site/NovaLauncher";
 
 export default function HomePage() {
   return (
     <div className="site-shell">
       <RampMotion />
+      <NovaLauncher />
       <AnnouncementBar />
       <Header />
       <Hero />
