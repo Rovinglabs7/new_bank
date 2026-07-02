@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { signOut } from "@/lib/actions/auth";
 import styles from "./dashboard.module.css";
 
@@ -133,9 +134,10 @@ const NAV = [
 
 // ── Nova sidebar card ──────────────────────────────────────────────────────────
 
-function NovaCard() {
+function NovaCard({ onClick }: { onClick?: () => void }) {
   return (
-    <div className={styles.novaCard}>
+    <div className={styles.novaCard} onClick={onClick} role="button" tabIndex={0}
+      onKeyDown={(e) => e.key === "Enter" && onClick?.()}>
       <div className={styles.novaCardProfile}>
         <img src="/nova-avatar.jpg" alt="Nova" className={styles.novaCardAvatar} />
         <div className={styles.novaCardInfo}>
@@ -161,6 +163,8 @@ function NovaCard() {
 // ── Sidebar ────────────────────────────────────────────────────────────────────
 
 function Sidebar() {
+  const router = useRouter();
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.sidebarLogo}>
@@ -183,7 +187,7 @@ function Sidebar() {
       </nav>
 
       <div className={styles.sidebarBottom}>
-        <NovaCard />
+        <NovaCard onClick={() => router.push("/dashboard/nova")} />
       </div>
     </aside>
   );
