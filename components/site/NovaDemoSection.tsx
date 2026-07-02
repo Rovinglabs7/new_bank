@@ -442,7 +442,7 @@ function SlackMockup() {
 
           {/* Nova — status + rich card */}
           <div className={`${styles.slackMsgGroup} ${vis["n1"] ? styles.msgVisible : ""}`}>
-            <NovaAppAvatar className={styles.msgAvatar} />
+            <NovaAvatarImg className={styles.msgAvatar} />
             <div className={styles.msgContent}>
               <div className={styles.msgMeta}>
                 <span className={styles.msgName}>Nova</span>
@@ -510,7 +510,7 @@ function SlackMockup() {
 
           {/* Nova — payment cleared */}
           <div className={`${styles.slackMsgGroup} ${vis["n3"] ? styles.msgVisible : ""}`}>
-            <NovaAppAvatar className={styles.msgAvatar} />
+            <NovaAvatarImg className={styles.msgAvatar} />
             <div className={styles.msgContent}>
               <div className={styles.msgMeta}>
                 <span className={styles.msgName}>Nova</span>
