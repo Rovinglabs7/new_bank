@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { signOut } from "@/lib/actions/auth";
 import styles from "./nova.module.css";
 import dashStyles from "../dashboard.module.css";
+import { SettingsModal } from "../SettingsModal";
 
 // ── Shared SVG primitive ───────────────────────────────────────────────────────
 
@@ -364,7 +365,7 @@ function Sidebar() {
 
 // ── Top bar ───────────────────────────────────────────────────────────────────
 
-function TopBar({ email }: { email: string }) {
+function TopBar({ email, onSettingsOpen }: { email: string; onSettingsOpen: () => void }) {
   const localPart = email.split("@")[0].replace(/[^a-zA-Z]/g, " ").trim();
   const words = localPart.split(" ").filter(Boolean);
   const initials = words.slice(0, 2).map((w) => w[0].toUpperCase()).join("") || email[0].toUpperCase();
@@ -384,7 +385,7 @@ function TopBar({ email }: { email: string }) {
         <div className={dashStyles.topBarIcons}>
           <button className={dashStyles.topBarIconBtn} aria-label="Messages"><IconMessage size={16} /></button>
           <button className={dashStyles.topBarIconBtn} aria-label="Notifications"><IconBell size={16} /></button>
-          <button className={dashStyles.topBarIconBtn} aria-label="Settings"><IconSettings size={16} /></button>
+          <button className={dashStyles.topBarIconBtn} aria-label="Settings" onClick={onSettingsOpen}><IconSettings size={16} /></button>
         </div>
 
         <div className={dashStyles.topBarDivider} />
@@ -494,13 +495,16 @@ function NovaWorkspace({ email }: { email: string }) {
 // ── Root export ───────────────────────────────────────────────────────────────
 
 export function NovaWorkspaceClient({ email }: { email: string }) {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
   return (
     <div className={dashStyles.shell}>
       <Sidebar />
       <div className={dashStyles.main}>
-        <TopBar email={email} />
+        <TopBar email={email} onSettingsOpen={() => setSettingsOpen(true)} />
         <NovaWorkspace email={email} />
       </div>
+      <SettingsModal isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} email={email} />
     </div>
   );
 }

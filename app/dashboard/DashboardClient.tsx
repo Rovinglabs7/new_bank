@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signOut } from "@/lib/actions/auth";
 import styles from "./dashboard.module.css";
+import { SettingsModal } from "./SettingsModal";
 
 // ── Thin SVG icon primitives — 24px viewport, 1.5px stroke, round caps ─────────
 
@@ -206,7 +207,7 @@ function IconSearch({ size = 15 }: { size?: number }) {
 
 // ── Top bar ────────────────────────────────────────────────────────────────────
 
-function TopBar({ email }: { email: string }) {
+function TopBar({ email, onSettingsOpen }: { email: string; onSettingsOpen: () => void }) {
   const localPart = email.split("@")[0].replace(/[^a-zA-Z]/g, " ").trim();
   const words = localPart.split(" ").filter(Boolean);
   const initials = words.slice(0, 2).map((w) => w[0].toUpperCase()).join("") || email[0].toUpperCase();
@@ -233,7 +234,7 @@ function TopBar({ email }: { email: string }) {
           <button className={styles.topBarIconBtn} aria-label="Notifications">
             <IconBell size={16} />
           </button>
-          <button className={styles.topBarIconBtn} aria-label="Settings">
+          <button className={styles.topBarIconBtn} aria-label="Settings" onClick={onSettingsOpen}>
             <IconSettings size={16} />
           </button>
         </div>
@@ -383,11 +384,13 @@ function RelationshipManagerCard() {
 // ── Main ───────────────────────────────────────────────────────────────────────
 
 export function DashboardClient({ email }: { email: string }) {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
   return (
     <div className={styles.shell}>
       <Sidebar />
       <div className={styles.main}>
-        <TopBar email={email} />
+        <TopBar email={email} onSettingsOpen={() => setSettingsOpen(true)} />
         <div className={styles.canvas}>
           <div className={styles.canvasLayout}>
             <div className={styles.canvasMain} />
@@ -398,6 +401,7 @@ export function DashboardClient({ email }: { email: string }) {
           </div>
         </div>
       </div>
+      <SettingsModal isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} email={email} />
     </div>
   );
 }
