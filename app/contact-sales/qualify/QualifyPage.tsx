@@ -345,10 +345,10 @@ function ConfirmationPanel({ email }: { email: string }) {
         </p>
       </div>
 
-      {/* Calendly embed placeholder — replace src with live Calendly URL */}
+      {/* TODO: replace src with live Praevor Calendly/Cal.com URL before launch */}
       <div className={styles.calendlyWrap}>
         <iframe
-          src="https://calendly.com/d/demo"
+          src="about:blank"
           className={styles.calendlyFrame}
           title="Book a time with Praevor"
           frameBorder="0"
