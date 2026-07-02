@@ -126,7 +126,7 @@ export function QualifyPage() {
 
                 {/* Email prefilled */}
                 <label className={styles.field}>
-                  <span className={styles.label}>Email address</span>
+                  <span className={styles.label}>Email address <span className={styles.required}>*</span></span>
                   <input
                     type="email"
                     className={styles.input}
@@ -141,7 +141,7 @@ export function QualifyPage() {
                 {/* Name row */}
                 <div className={styles.fieldRow}>
                   <label className={styles.field}>
-                    <span className={styles.label}>First name</span>
+                    <span className={styles.label}>First name <span className={styles.required}>*</span></span>
                     <input
                       type="text"
                       className={styles.input}
@@ -152,7 +152,7 @@ export function QualifyPage() {
                     />
                   </label>
                   <label className={styles.field}>
-                    <span className={styles.label}>Last name</span>
+                    <span className={styles.label}>Last name <span className={styles.required}>*</span></span>
                     <input
                       type="text"
                       className={styles.input}
@@ -165,7 +165,7 @@ export function QualifyPage() {
                 </div>
 
                 <label className={styles.field}>
-                  <span className={styles.label}>Company name</span>
+                  <span className={styles.label}>Company name <span className={styles.required}>*</span></span>
                   <input
                     type="text"
                     className={styles.input}
@@ -192,7 +192,7 @@ export function QualifyPage() {
                 </label>
 
                 <label className={styles.field}>
-                  <span className={styles.label}>Business size</span>
+                  <span className={styles.label}>Business size <span className={styles.required}>*</span></span>
                   <select
                     className={styles.select}
                     value={form.size}
@@ -209,7 +209,7 @@ export function QualifyPage() {
                 </label>
 
                 <label className={styles.field}>
-                  <span className={styles.label}>Monthly payment volume</span>
+                  <span className={styles.label}>Monthly payment volume <span className={styles.required}>*</span></span>
                   <select
                     className={styles.select}
                     value={form.volume}
@@ -345,10 +345,10 @@ function ConfirmationPanel({ email }: { email: string }) {
         </p>
       </div>
 
-      {/* Calendly embed placeholder — replace src with live Calendly URL */}
+      {/* TODO: replace src with live Praevor Calendly/Cal.com URL before launch */}
       <div className={styles.calendlyWrap}>
         <iframe
-          src="https://calendly.com/d/demo"
+          src="about:blank"
           className={styles.calendlyFrame}
           title="Book a time with Praevor"
           frameBorder="0"

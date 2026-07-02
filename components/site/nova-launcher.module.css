@@ -1,0 +1,128 @@
+.launcher {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  width: min(560px, calc(100vw - 32px));
+  height: 56px;
+  padding: 0 10px 0 14px;
+
+  background: #ffffff;
+  border: 1px solid rgba(40, 30, 21, 0.1);
+  border-radius: 20px;
+  box-shadow:
+    0 1px 2px rgba(40, 30, 21, 0.04),
+    0 4px 16px rgba(40, 30, 21, 0.08),
+    0 16px 40px rgba(40, 30, 21, 0.07);
+
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.launcher:hover {
+  box-shadow:
+    0 1px 2px rgba(40, 30, 21, 0.04),
+    0 6px 20px rgba(40, 30, 21, 0.11),
+    0 20px 48px rgba(40, 30, 21, 0.09);
+}
+
+.launcher:focus-within {
+  border-color: rgba(40, 30, 21, 0.22);
+  box-shadow:
+    0 1px 2px rgba(40, 30, 21, 0.04),
+    0 6px 24px rgba(40, 30, 21, 0.12),
+    0 20px 48px rgba(40, 30, 21, 0.09);
+}
+
+/* ─── Avatar ──────────────────────────────────────────────────────────────── */
+
+.avatarWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatar {
+  display: block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.onlineDot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  border: 2px solid #ffffff;
+}
+
+/* ─── Input ───────────────────────────────────────────────────────────────── */
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  background: transparent;
+  font-family: var(--font-inter);
+  font-size: 14px;
+  color: var(--color-ink);
+  outline: none;
+  padding: 0;
+  caret-color: var(--color-ink);
+}
+
+.input::placeholder {
+  color: rgba(40, 30, 21, 0.32);
+}
+
+/* ─── Send button ─────────────────────────────────────────────────────────── */
+
+.sendBtn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(40, 30, 21, 0.06);
+  color: rgba(40, 30, 21, 0.28);
+  cursor: default;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.sendBtnActive {
+  background: var(--color-ink);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.sendBtnActive:hover {
+  transform: scale(1.06);
+}
+
+/* ─── Mobile ──────────────────────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .launcher {
+    bottom: 16px;
+    height: 52px;
+    border-radius: 16px;
+    gap: 8px;
+  }
+
+  .input {
+    font-size: 16px; /* prevent iOS zoom */
+  }
+}

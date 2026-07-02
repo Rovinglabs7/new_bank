@@ -95,6 +95,9 @@ export function Header() {
             <Link href={site.navActions.login.href} className={styles.login}>
               {site.navActions.login.label}
             </Link>
+            <Link href={site.navActions.demo.href} className={styles.demo}>
+              {site.navActions.demo.label}
+            </Link>
 
             {/* Hamburger — mobile only */}
             <button

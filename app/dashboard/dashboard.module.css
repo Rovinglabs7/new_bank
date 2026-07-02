@@ -1,66 +1,669 @@
-.page {
+/* ── Base ─────────────────────────────────────────────────────────────────────
+   SF Pro Text for UI, SF Pro Display for large headings via -apple-system.
+   On non-Apple: Segoe UI (Windows) then system-ui as final fallback.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.shell {
+  display: flex;
   min-height: 100vh;
-  background: #faf8f5;
+  background: #ffffff;
+  font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  color: #111111;
 }
 
-.header {
+/* ── Sidebar ─────────────────────────────────────────────────────────────────── */
+
+.sidebar {
+  width: 320px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border-right: 1px solid #ececec;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.sidebar::-webkit-scrollbar { display: none; }
+
+.sidebarLogo {
+  height: 68px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border-bottom: 1px solid #ececec;
+  flex-shrink: 0;
+}
+
+.logoMark {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #1a1a1a;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoMark::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 5px;
+  border: 1.5px solid #d97706;
+  border-radius: 2px;
+}
+
+.logoText {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: #111111;
+}
+
+.sidebarNav {
+  flex: 1;
+  padding: 14px 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Pinned bottom section */
+.sidebarBottom {
+  padding: 12px 12px 16px;
+  flex-shrink: 0;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: #555555;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+  min-height: 48px;
+}
+
+.navItem:hover {
+  background: #f5f5f5;
+  color: #111111;
+}
+
+.navItemActive {
+  background: #f0f0f0;
+  color: #111111;
+  font-weight: 600;
+}
+
+.navItemIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.navItemLabel {
+  flex: 1;
+  white-space: nowrap;
+}
+
+/* ── Main ─────────────────────────────────────────────────────────────────────── */
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+/* ── Top bar ─────────────────────────────────────────────────────────────────── */
+
+.topBar {
+  height: 68px;
+  background: #ffffff;
+  border-bottom: 1px solid #ececec;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 32px;
-  border-bottom: 1px solid rgba(40, 30, 21, 0.1);
+  padding: 0 24px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.topBarLeft {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Search bar ──────────────────────────────────────────────────────────────── */
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 380px;
+  height: 36px;
+  padding: 0 12px;
   background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  border-radius: 10px;
+  cursor: text;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
-.logo {
-  font-family: var(--font-season);
-  font-size: 24px;
+.searchBar:hover {
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.searchIcon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: #9ca3af;
+}
+
+.searchPlaceholder {
+  flex: 1;
+  font-size: 13.5px;
   font-weight: 500;
-  color: var(--color-ink);
+  color: #9ca3af;
+  letter-spacing: -0.01em;
+  user-select: none;
 }
 
-.signOut {
-  padding: 10px 16px;
-  border: 1px solid rgba(40, 30, 21, 0.18);
+.searchKbd {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #f5f5f5;
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #aaaaaa;
+  letter-spacing: 0;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.topBarRight {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Three icon buttons */
+.topBarIcons {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.topBarIconBtn {
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
-  background: #ffffff;
-  font-family: var(--font-inter);
-  font-size: 14px;
-  color: var(--color-ink);
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555555;
   cursor: pointer;
+  transition: background 0.1s, color 0.1s;
 }
 
-.signOut:hover {
-  background: rgba(40, 30, 21, 0.03);
+.topBarIconBtn:hover {
+  background: #f5f5f5;
+  color: #1a1a1a;
 }
 
-.content {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 64px 24px;
+/* Vertical divider between icons and profile */
+.topBarDivider {
+  width: 1px;
+  height: 22px;
+  background: #e5e5e5;
+  margin: 0 14px;
+  flex-shrink: 0;
 }
 
-.heading {
-  margin: 0;
-  font-family: var(--font-season);
-  font-size: clamp(2rem, 4vw, 2.75rem);
-  font-weight: 500;
-  color: var(--color-ink);
+/* User profile block — clickable as one unit */
+.userBlock {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 5px 8px 5px 8px;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.1s;
+  font-family: inherit;
+  text-align: left;
 }
 
-.subheading {
-  margin: 16px 0 0;
-  font-size: 16px;
-  color: var(--color-ink-muted);
+.userBlock:hover {
+  background: #f5f5f5;
 }
 
-.note {
-  margin: 32px 0 0;
-  padding: 20px;
-  border-radius: 12px;
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: right;
+}
+
+.userName {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #111111;
+  white-space: nowrap;
+  line-height: 1.25;
+}
+
+.userOrg {
+  font-size: 12px;
+  font-weight: 400;
+  color: #777777;
+  white-space: nowrap;
+  line-height: 1.25;
+}
+
+.userAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #d97706;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* ── Canvas ──────────────────────────────────────────────────────────────────── */
+
+.canvas {
+  flex: 1;
   background: #ffffff;
-  border: 1px solid rgba(40, 30, 21, 0.1);
+  padding: 28px 28px 40px;
+}
+
+.canvasLayout {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  height: 100%;
+}
+
+.canvasMain {
+  flex: 1;
+  min-width: 0;
+}
+
+.canvasSidebar {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Relationship Manager Card ────────────────────────────────────────────────── */
+
+.rmCard {
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Brown premium header */
+.rmHeader {
+  height: 130px;
+  background: #281e15;
+  display: flex;
+  align-items: flex-start;
+  padding: 22px 24px;
+}
+
+.rmHeaderLogo {
+  font-family: var(--font-season, "Georgia", serif);
   font-size: 15px;
-  line-height: 1.6;
-  color: var(--color-ink-muted);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: -0.01em;
+}
+
+/* Circular photo — overlaps the header/body seam */
+.rmAvatarWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: -46px;
+  position: relative;
+  z-index: 1;
+}
+
+.rmAvatar {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 4px solid #ffffff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  display: block;
+}
+
+/* Text body */
+.rmBody {
+  padding: 20px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.rmName {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #111111;
+  line-height: 1.2;
+}
+
+.rmTitle {
+  margin: 7px 0 0;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: #777777;
+  letter-spacing: -0.005em;
+  line-height: 1.4;
+}
+
+.rmBtn {
+  margin-top: 28px;
+  width: 100%;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid #e2e2e2;
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.rmBtn:hover {
+  background: #f7f7f7;
+  border-color: #d0d0d0;
+}
+
+/* ── Quick Actions Card ───────────────────────────────────────────────────────── */
+
+.qaCard {
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.qaHeader {
+  padding: 22px 24px 0;
+}
+
+.qaTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #111111;
+  line-height: 1.2;
+}
+
+.qaSub {
+  margin: 6px 0 0;
+  font-size: 13px;
+  font-weight: 400;
+  color: #888888;
+  line-height: 1.5;
+  max-width: 88%;
+}
+
+.qaList {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+}
+
+.qaItem {
+  position: relative;
+}
+
+.qaItemDivided::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 24px;
+  right: 24px;
+  height: 1px;
+  background: #f0f0f0;
+}
+
+.qaBtn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 50px;
+  padding: 0 20px 0 24px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #222222;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.qaBtn:hover {
+  background: #faf8f6;
+}
+
+.qaBtn:hover .qaChevron {
+  transform: translateX(2px);
+}
+
+.qaIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  flex-shrink: 0;
+  color: #666666;
+}
+
+.qaLabel {
+  flex: 1;
+}
+
+.qaChevron {
+  display: flex;
+  align-items: center;
+  color: #aaaaaa;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+/* bottom padding inside the last row */
+.qaList .qaItem:last-child .qaBtn {
+  padding-bottom: 6px;
+}
+
+.qaCard .qaList {
+  padding-bottom: 6px;
+}
+
+/* ── Nova sidebar card ────────────────────────────────────────────────────────── */
+
+.novaCard {
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 14px;
+  padding: 16px 18px 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.novaCard:hover {
+  border-color: #d0d0d0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+}
+
+.novaCardProfile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.novaCardAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  flex-shrink: 0;
+  border: 1.5px solid #ececec;
+}
+
+.novaCardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.novaCardName {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #111111;
+  line-height: 1.2;
+}
+
+.novaCardSub {
+  font-size: 12px;
+  font-weight: 400;
+  color: #888888;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.novaCardStatus {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 400;
+  color: #2bac76;
+  margin-top: 1px;
+  line-height: 1;
+}
+
+.novaStatusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2bac76;
+  flex-shrink: 0;
+}
+
+.novaCardBody {
+  margin: 0 0 14px;
+  font-size: 12.5px;
+  font-weight: 400;
+  color: #888888;
+  line-height: 1.55;
+}
+
+.novaCardCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #d97706;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.novaCardCta:hover {
+  color: #b45309;
+}
+
+.novaCtaArrow {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.novaCardCta:hover .novaCtaArrow {
+  transform: translateX(2px);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .topBar  { padding: 0 16px; }
 }

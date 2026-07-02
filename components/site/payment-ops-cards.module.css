@@ -362,7 +362,107 @@
   transform: translate(-2px, -2px);
 }
 
-/* ─── Globe ────────────────────────────────────────────────────────────────── */
+/* ─── Collections ──────────────────────────────────────────────────────────── */
+
+.collectionsGlobe {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  color: rgba(40, 30, 21, 0.1);
+}
+
+.collectionsGlobeSvg {
+  width: 90%;
+  height: 90%;
+}
+
+.collectionSlot {
+  position: absolute;
+  pointer-events: none;
+}
+
+.collectionCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(40, 30, 21, 0.1);
+  border-radius: 12px;
+  padding: 9px 14px;
+  box-shadow:
+    0 2px 12px rgba(40, 30, 21, 0.08),
+    0 1px 3px rgba(40, 30, 21, 0.05);
+  backdrop-filter: blur(8px);
+  white-space: nowrap;
+}
+
+.collectionFlag {
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.collectionInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.collectionCity {
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-ink);
+  line-height: 1.3;
+}
+
+.collectionAmount {
+  font-family: var(--font-inter);
+  font-size: 11px;
+  color: var(--color-ink-muted);
+  line-height: 1.3;
+}
+
+.liveIndicator {
+  position: absolute;
+  bottom: 12px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(40, 30, 21, 0.08);
+  border-radius: 999px;
+  padding: 4px 9px;
+  backdrop-filter: blur(6px);
+}
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #16a34a;
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.25);
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+.liveLabel {
+  font-family: var(--font-inter);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-ink);
+  letter-spacing: 0.04em;
+}
+
+@keyframes livePulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.25); }
+  50% { box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.1); }
+}
+
+/* ─── Globe (legacy — kept for reference) ──────────────────────────────────── */
 
 .globeCanvas {
   position: absolute;

@@ -255,9 +255,9 @@ export const site = {
     social: {
       heading: "Social",
       items: [
-        { label: "X", href: "https://x.com/sproutpay", icon: "x" },
-        { label: "Instagram", href: "https://instagram.com/sproutpay", icon: "instagram" },
-        { label: "LinkedIn", href: "https://linkedin.com/company/sproutpay", icon: "linkedin" },
+        { label: "X", href: "https://x.com/praevor", icon: "x" },
+        { label: "Instagram", href: "https://instagram.com/praevor", icon: "instagram" },
+        { label: "LinkedIn", href: "https://linkedin.com/company/praevor", icon: "linkedin" },
       ],
     },
 
@@ -381,7 +381,7 @@ export const site = {
       { code: "NL", label: "Netherlands", flag: "🇳🇱" },
     ],
 
-    wordmark: "Praevor AI",
+    wordmark: "Praevor",
 
     bottom: {
       legalLinks: [

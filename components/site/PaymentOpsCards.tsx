@@ -185,12 +185,78 @@ function WorkflowCard() {
 
 // ─── CARD TWO: Globe ─────────────────────────────────────────────────────────
 
+// Each city carries its own fixed geographic anchor on the globe card.
+// ax/ay = % position in the card media area.
+// tx/ty = CSS transform so the card stays within bounds.
+// region: "eu" | "us" — controls weighting.
 const LOCATIONS = [
-  { id: "london",    name: "London",    flag: "🇬🇧", rail: "Direct Debit", currency: "GBP", symbol: "£",  amount: 8420,  lat: 51.5,  lng: -0.1  },
-  { id: "amsterdam", name: "Amsterdam", flag: "🇳🇱", rail: "SEPA",         currency: "EUR", symbol: "€",  amount: 4860,  lat: 52.4,  lng: 4.9   },
-  { id: "new-york",  name: "New York",  flag: "🇺🇸", rail: "ACH",          currency: "USD", symbol: "$",  amount: 12300, lat: 40.7,  lng: -74.0 },
-  { id: "sydney",    name: "Sydney",    flag: "🇦🇺", rail: "BECS",         currency: "AUD", symbol: "A$", amount: 6210,  lat: -33.9, lng: 151.2 },
+  // ── Europe (right-centre of globe) ──────────────────────────────────────────
+  { id: "london",     name: "London",        flag: "🇬🇧", rail: "Direct Debit", symbol: "£",    amount: 26840,  region: "eu",
+    ax: "60%", ay: "28%", tx: "-100%", ty: "0"     },
+  { id: "amsterdam",  name: "Amsterdam",     flag: "🇳🇱", rail: "SEPA",         symbol: "€",    amount: 19420,  region: "eu",
+    ax: "72%", ay: "32%", tx: "-100%", ty: "-50%"  },
+  { id: "paris",      name: "Paris",         flag: "🇫🇷", rail: "SEPA",         symbol: "€",    amount: 22780,  region: "eu",
+    ax: "63%", ay: "48%", tx: "-100%", ty: "-100%" },
+  { id: "berlin",     name: "Berlin",        flag: "🇩🇪", rail: "SEPA",         symbol: "€",    amount: 33560,  region: "eu",
+    ax: "80%", ay: "36%", tx: "-100%", ty: "-50%"  },
+  { id: "zurich",     name: "Zurich",        flag: "🇨🇭", rail: "SEPA",         symbol: "CHF ", amount: 41200,  region: "eu",
+    ax: "76%", ay: "52%", tx: "-100%", ty: "-100%" },
+  { id: "dublin",     name: "Dublin",        flag: "🇮🇪", rail: "SEPA",         symbol: "€",    amount: 14920,  region: "eu",
+    ax: "47%", ay: "22%", tx: "-50%",  ty: "0"     },
+  { id: "stockholm",  name: "Stockholm",     flag: "🇸🇪", rail: "SEPA",         symbol: "kr ",  amount: 284000, region: "eu",
+    ax: "82%", ay: "13%", tx: "-100%", ty: "0"     },
+  { id: "madrid",     name: "Madrid",        flag: "🇪🇸", rail: "SEPA",         symbol: "€",    amount: 17340,  region: "eu",
+    ax: "57%", ay: "62%", tx: "-100%", ty: "-100%" },
+  { id: "milan",      name: "Milan",         flag: "🇮🇹", rail: "SEPA",         symbol: "€",    amount: 29180,  region: "eu",
+    ax: "74%", ay: "58%", tx: "-100%", ty: "-100%" },
+
+  // ── North America (left side of globe) ──────────────────────────────────────
+  { id: "new-york",   name: "New York",      flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 48240,  region: "us",
+    ax: "18%", ay: "34%", tx: "0",     ty: "-50%"  },
+  { id: "chicago",    name: "Chicago",       flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 31860,  region: "us",
+    ax: "26%", ay: "46%", tx: "0",     ty: "-100%" },
+  { id: "san-fran",   name: "San Francisco", flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 18420,  region: "us",
+    ax: "6%",  ay: "50%", tx: "0",     ty: "-50%"  },
+  { id: "boston",     name: "Boston",        flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 22640,  region: "us",
+    ax: "22%", ay: "26%", tx: "0",     ty: "0"     },
+  { id: "austin",     name: "Austin",        flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 15980,  region: "us",
+    ax: "20%", ay: "58%", tx: "0",     ty: "-100%" },
+  { id: "seattle",    name: "Seattle",       flag: "🇺🇸", rail: "ACH",          symbol: "$",    amount: 27460,  region: "us",
+    ax: "8%",  ay: "34%", tx: "0",     ty: "0"     },
 ];
+
+// Show 3 cities at once, one swapped per interval
+const VISIBLE_COUNT = 3;
+const CYCLE_INTERVAL = 3600;
+
+// Europe-first opening sequence — first 3 visible cities
+const INITIAL_IDS = ["london", "amsterdam", "paris"];
+
+// Weighted pool: ~70% EU, ~30% US.
+// Each entry is a city id that will be drawn from in order (cycling).
+// Constructed so that on average 7 of every 10 draws are EU cities.
+const EU_IDS  = ["london","amsterdam","paris","berlin","zurich","dublin","stockholm","madrid","milan"];
+const US_IDS  = ["new-york","chicago","san-fran","boston","austin","seattle"];
+
+// Build a weighted rotation list: EU EU EU EU EU EU EU US US US (repeat)
+// We interleave to keep the distribution smooth rather than front-loading one region.
+function buildRotation(): string[] {
+  const out: string[] = [];
+  let ei = 0, ui = 0;
+  // 10-slot pattern: 7 EU + 3 US, interleaved
+  const pattern = ["eu","eu","eu","us","eu","eu","eu","us","eu","us"];
+  for (let i = 0; i < pattern.length * 3; i++) { // ~30 entries total
+    if (pattern[i % pattern.length] === "eu") {
+      out.push(EU_IDS[ei % EU_IDS.length]);
+      ei++;
+    } else {
+      out.push(US_IDS[ui % US_IDS.length]);
+      ui++;
+    }
+  }
+  return out;
+}
+const ROTATION = buildRotation();
 
 const GLOBE_R = 1.0;
 const TILT_X = (20 * Math.PI) / 180;
@@ -239,21 +305,13 @@ function buildGlobeGeo(count: number) {
   return geo;
 }
 
-interface LabelPos {
-  id: string;
-  x: number;
-  y: number;
-  depth: number;
-}
-
 interface GlobeSceneProps {
-  onLabels: (labels: LabelPos[]) => void;
   paused: boolean;
 }
 
-function GlobeScene({ onLabels, paused }: GlobeSceneProps) {
+function GlobeScene({ paused }: GlobeSceneProps) {
   const groupRef = useRef<THREE.Group>(null);
-  const { camera, size } = useThree();
+  useThree();
 
   const geometry = useMemo(() => buildGlobeGeo(2200), []);
   const material = useMemo(
@@ -268,41 +326,10 @@ function GlobeScene({ onLabels, paused }: GlobeSceneProps) {
     []
   );
 
-  // City surface positions (local space)
-  const cityLocal = useMemo(
-    () =>
-      LOCATIONS.map((loc) => {
-        const latR = (loc.lat * Math.PI) / 180;
-        const lngR = (loc.lng * Math.PI) / 180;
-        return new THREE.Vector3(
-          Math.cos(latR) * Math.sin(lngR) * GLOBE_R,
-          Math.sin(latR) * GLOBE_R,
-          Math.cos(latR) * Math.cos(lngR) * GLOBE_R
-        );
-      }),
-    []
-  );
-
-  const tmpV3 = useMemo(() => new THREE.Vector3(), []);
-
   useFrame((_, delta) => {
     const grp = groupRef.current;
     if (!grp) return;
     if (!paused) grp.rotation.y += delta * 0.18;
-
-    const labels: LabelPos[] = LOCATIONS.map((loc, i) => {
-      tmpV3.copy(cityLocal[i]).applyMatrix4(grp.matrixWorld);
-      const depth = tmpV3.clone().normalize().z;
-      const ndc = tmpV3.clone().project(camera);
-      return {
-        id: loc.id,
-        x: ((ndc.x + 1) / 2) * size.width,
-        y: ((-ndc.y + 1) / 2) * size.height,
-        depth,
-      };
-    });
-
-    onLabels(labels);
   });
 
   return (
@@ -312,11 +339,12 @@ function GlobeScene({ onLabels, paused }: GlobeSceneProps) {
   );
 }
 
-function useCountUp(target: number, active: boolean, duration = 1.4) {
+function useCountUp(target: number, active: boolean, duration = 1.2) {
   const [value, setValue] = useState(0);
   const counted = useRef(false);
   useEffect(() => {
-    if (!active || counted.current) return;
+    if (!active) { counted.current = false; setValue(0); return; }
+    if (counted.current) return;
     counted.current = true;
     const start = performance.now();
     const tick = (now: number) => {
@@ -330,21 +358,30 @@ function useCountUp(target: number, active: boolean, duration = 1.4) {
   return value;
 }
 
-function GlobeLabel({ lp }: { lp: LabelPos }) {
-  const loc = LOCATIONS.find((l) => l.id === lp.id)!;
-  const opacity = lp.depth > 0.1 ? Math.min(1, (lp.depth - 0.1) / 0.3) : 0;
-  const counted = useCountUp(loc.amount, lp.depth > 0.45);
+// Each active notification is just a locId + a unique key so AnimatePresence
+// remounts the component (triggering count-up) whenever the city changes.
+interface ActiveNotif {
+  locId: string;
+  key: number;
+}
+
+function GlobeNotif({ locId }: { locId: string }) {
+  const loc = LOCATIONS.find((l) => l.id === locId)!;
+  const counted = useCountUp(loc.amount, true);
 
   return (
-    <div
+    <motion.div
       className={styles.globeLabel}
       style={{
-        left: lp.x,
-        top: lp.y,
-        opacity,
-        zIndex: Math.round((lp.depth + 1) * 10),
-        pointerEvents: opacity > 0.3 ? "auto" : "none",
+        top: loc.ay,
+        left: loc.ax,
+        transform: `translate(${loc.tx}, ${loc.ty})`,
+        pointerEvents: "none",
       }}
+      initial={{ opacity: 0, scale: 0.9, y: 8 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.9, y: -6 }}
+      transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className={styles.globeLabelInner}>
         <span className={styles.globeFlag}>{loc.flag}</span>
@@ -358,24 +395,48 @@ function GlobeLabel({ lp }: { lp: LabelPos }) {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 function GlobeCard() {
-  const [labels, setLabels] = useState<LabelPos[]>([]);
   const [paused, setPaused] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeNotifs, setActiveNotifs] = useState<ActiveNotif[]>(() =>
+    INITIAL_IDS.map((id, i) => ({ locId: id, key: i }))
+  );
+  const keyRef = useRef(100);
+  const replaceIdxRef = useRef(0);
+  const rotIdxRef = useRef(0); // index into ROTATION
 
-  const handleLabels = useCallback((next: LabelPos[]) => {
-    setLabels(next);
+  useEffect(() => {
+    const t = setInterval(() => {
+      setActiveNotifs((prev) => {
+        const ri = replaceIdxRef.current % VISIBLE_COUNT;
+        replaceIdxRef.current += 1;
+
+        const currentIds = prev.map((n) => n.locId);
+        let nextId: string | undefined;
+        let attempts = 0;
+        while (!nextId && attempts < ROTATION.length) {
+          const candidate = ROTATION[rotIdxRef.current % ROTATION.length];
+          rotIdxRef.current += 1;
+          attempts += 1;
+          if (!currentIds.includes(candidate)) nextId = candidate;
+        }
+        if (!nextId) return prev;
+
+        return prev.map((n, i) =>
+          i === ri ? { locId: nextId!, key: ++keyRef.current } : n
+        );
+      });
+    }, CYCLE_INTERVAL);
+    return () => clearInterval(t);
   }, []);
 
   return (
     <div className={styles.card}>
       <div
         className={styles.cardMedia}
-        ref={containerRef}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
@@ -385,16 +446,18 @@ function GlobeCard() {
           dpr={[1, 2]}
           gl={{ antialias: true, alpha: true }}
         >
-          <GlobeScene onLabels={handleLabels} paused={paused} />
+          <GlobeScene paused={paused} />
         </Canvas>
 
         {/* Atmospheric glow overlay */}
         <div className={styles.globeGlow} aria-hidden />
 
-        {/* DOM labels */}
-        {labels.map((lp) => (
-          <GlobeLabel key={lp.id} lp={lp} />
-        ))}
+        {/* City-anchored notifications — each city has its own fixed position */}
+        <AnimatePresence>
+          {activeNotifs.map((n) => (
+            <GlobeNotif key={n.key} locId={n.locId} />
+          ))}
+        </AnimatePresence>
       </div>
 
       <div className={styles.cardContent}>

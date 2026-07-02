@@ -1,0 +1,1339 @@
+/* ── Backdrop ────────────────────────────────────────────────────────────────── */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  padding: 32px;
+}
+
+.backdropVisible {
+  background: rgba(0, 0, 0, 0.38);
+}
+
+/* ── Modal ───────────────────────────────────────────────────────────────────── */
+
+.modal {
+  display: flex;
+  width: min(1180px, calc(100vw - 64px));
+  height: min(780px, calc(100vh - 64px));
+  background: #ffffff;
+  border-radius: 20px;
+  font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    0 32px 80px rgba(0, 0, 0, 0.10);
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.97) translateY(6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  will-change: transform, opacity;
+}
+
+.modalVisible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* ── Left panel ──────────────────────────────────────────────────────────────── */
+
+.leftPanel {
+  width: 268px;
+  flex-shrink: 0;
+  background: #f9f9f9;
+  border-right: 1px solid #ebebeb;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.leftPanelHeader {
+  height: 60px;
+  padding: 0 22px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ebebeb;
+  flex-shrink: 0;
+}
+
+.leftPanelTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111111;
+  letter-spacing: -0.01em;
+}
+
+.navScroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 10px 20px;
+  scrollbar-width: none;
+}
+
+.navScroll::-webkit-scrollbar { display: none; }
+
+.navSection {
+  margin-bottom: 4px;
+}
+
+.navSectionLabel {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #aaaaaa;
+  text-transform: uppercase;
+  padding: 14px 12px 6px;
+  margin: 0;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 36px;
+  padding: 0 12px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #555555;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.navItem:hover {
+  background: #f0f0f0;
+  color: #111111;
+}
+
+.navItemActive {
+  background: rgba(61, 41, 16, 0.09);
+  color: #3d2910;
+  font-weight: 600;
+}
+
+.navItemActive:hover {
+  background: rgba(61, 41, 16, 0.12);
+  color: #3d2910;
+}
+
+.navItemIcon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: inherit;
+  opacity: 0.75;
+}
+
+.navItemActive .navItemIcon {
+  opacity: 1;
+}
+
+.navItemLabel {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Right panel ─────────────────────────────────────────────────────────────── */
+
+.rightPanel {
+  flex: 1;
+  min-width: 0;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #999999;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.closeBtn:hover {
+  background: #f2f2f2;
+  color: #333333;
+}
+
+.rightScroll {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #e0e0e0 transparent;
+}
+
+.rightScroll::-webkit-scrollbar { width: 5px; }
+.rightScroll::-webkit-scrollbar-track { background: transparent; }
+.rightScroll::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 99px; }
+
+/* ── Page layout ─────────────────────────────────────────────────────────────── */
+
+.pageContent {
+  padding: 44px 52px 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 760px;
+}
+
+.pageHeader {
+  margin-bottom: 4px;
+}
+
+.pageTitle {
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #111111;
+  letter-spacing: -0.018em;
+  margin: 0 0 6px;
+}
+
+.pageDesc {
+  font-size: 14px;
+  color: #888888;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.pageActionBar {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -4px;
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────────────── */
+
+.card {
+  border: 1px solid #ebebeb;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.cardTitle {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #aaaaaa;
+  padding: 16px 22px 0;
+  margin: 0 0 2px;
+}
+
+/* ── Setting row ─────────────────────────────────────────────────────────────── */
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 22px;
+  border-bottom: 1px solid #f2f2f2;
+  min-height: 64px;
+}
+
+.rowNoBorder {
+  border-bottom: none;
+}
+
+.rowLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex: 1;
+}
+
+.rowLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111111;
+}
+
+.rowDesc {
+  font-size: 13px;
+  color: #888888;
+  line-height: 1.4;
+}
+
+.rowRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.rowValue {
+  font-size: 13.5px;
+  color: #555555;
+}
+
+/* ── Button ──────────────────────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.12s ease, box-shadow 0.12s ease, transform 0.12s ease;
+  white-space: nowrap;
+}
+
+.btnSecondary {
+  background: #f4f4f4;
+  color: #333333;
+  border: 1px solid #e4e4e4;
+}
+
+.btnSecondary:hover {
+  background: #efefef;
+  border-color: #d8d8d8;
+}
+
+.btnPrimary {
+  background: #3d2910;
+  color: #ffffff;
+  border: 1px solid transparent;
+}
+
+.btnPrimary:hover {
+  background: #2a1c0a;
+  box-shadow: 0 2px 8px rgba(61, 41, 16, 0.25);
+  transform: translateY(-1px);
+}
+
+.btnDanger {
+  background: #fff0f0;
+  color: #cc2200;
+  border: 1px solid #ffd0cc;
+}
+
+.btnDanger:hover {
+  background: #ffe4e0;
+  border-color: #ffb8b0;
+}
+
+.btnSizeSm {
+  height: 32px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.btnSizeMd {
+  height: 38px;
+  padding: 0 18px;
+  font-size: 14px;
+}
+
+.btnIcon {
+  display: flex;
+  align-items: center;
+}
+
+/* ── Toggle ──────────────────────────────────────────────────────────────────── */
+
+.toggle {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  background: #e0e0e0;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.toggleOn {
+  background: #3d2910;
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.20);
+  transition: transform 0.2s ease;
+}
+
+.toggleOn .toggleThumb {
+  transform: translateX(18px);
+}
+
+/* ── Badge ───────────────────────────────────────────────────────────────────── */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.badgeGrey  { background: #f0f0f0;          color: #555555; }
+.badgeGreen { background: #e8f8f0;          color: #1a7a44; }
+.badgeAmber { background: #fef3e2;          color: #8a5a00; }
+.badgeBlue  { background: #eff4ff;          color: #2952a3; }
+
+/* ── Icon button ─────────────────────────────────────────────────────────────── */
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  color: #aaaaaa;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.iconBtn:hover {
+  background: #f2f2f2;
+  color: #333333;
+}
+
+/* ── Profile hero ────────────────────────────────────────────────────────────── */
+
+.profileHero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 22px;
+}
+
+.profileAvatarWrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profileAvatar {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: #d97706;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.profileName {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111111;
+  margin: 0 0 3px;
+}
+
+.profileEmail {
+  font-size: 13.5px;
+  color: #888888;
+  margin: 0;
+}
+
+/* ── Session rows ────────────────────────────────────────────────────────────── */
+
+.sessionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 22px;
+}
+
+.sessionRowBorder {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.sessionLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sessionDevice {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #111111;
+}
+
+.sessionMeta {
+  font-size: 12.5px;
+  color: #999999;
+}
+
+/* ── Appearance ──────────────────────────────────────────────────────────────── */
+
+.themeGrid {
+  display: flex;
+  gap: 14px;
+  padding: 20px 22px;
+}
+
+.themeOption {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 12px 14px;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 12px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  position: relative;
+}
+
+.themeOption:hover {
+  border-color: #c8a882;
+  background: #fdf8f3;
+}
+
+.themeOptionActive {
+  border-color: #3d2910;
+  background: #fdf8f3;
+}
+
+.themePreview {
+  width: 100%;
+  height: 80px;
+  border-radius: 8px;
+  border: 1px solid #ebebeb;
+}
+
+.themePreviewLight  { background: #ffffff; }
+.themePreviewDark   { background: #1a1a1a; }
+.themePreviewSystem { background: linear-gradient(135deg, #ffffff 50%, #1a1a1a 50%); }
+
+.themeLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: #333333;
+}
+
+.themeCheck {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #3d2910;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.densityOptions {
+  display: flex;
+  flex-direction: column;
+}
+
+.densityOption {
+  padding: 16px 22px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  border-bottom: 1px solid #f2f2f2;
+  transition: background 0.12s ease;
+}
+
+.densityOption:last-child {
+  border-bottom: none;
+}
+
+.densityOption:hover {
+  background: #fafafa;
+}
+
+.densityOptionActive {
+  background: #fdf8f3;
+}
+
+.densityOptionInner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.densityRadio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid #cccccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.densityOptionActive .densityRadio {
+  border-color: #3d2910;
+}
+
+.densityRadioFill {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3d2910;
+}
+
+.densityLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111111;
+  margin: 0 0 3px;
+}
+
+.densityDesc {
+  font-size: 13px;
+  color: #888888;
+  margin: 0;
+}
+
+/* ── Team table ──────────────────────────────────────────────────────────────── */
+
+.tableHeader {
+  display: flex;
+  align-items: center;
+  padding: 10px 22px;
+  border-bottom: 1px solid #ebebeb;
+  background: #fafafa;
+}
+
+.tableCol {
+  flex: 1;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #aaaaaa;
+}
+
+.tableRow {
+  display: flex;
+  align-items: center;
+  padding: 14px 22px;
+}
+
+.tableRowBorder {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.tableCell {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.memberAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #d97706;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.memberName {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #111111;
+  margin: 0 0 2px;
+}
+
+.memberEmail {
+  font-size: 12.5px;
+  color: #999999;
+  margin: 0;
+}
+
+/* ── API keys ────────────────────────────────────────────────────────────────── */
+
+.keyRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 22px;
+}
+
+.keyRowBorder {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.keyLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.keyLabel {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #111111;
+}
+
+.keyValue {
+  font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", Menlo, monospace;
+  font-size: 12.5px;
+  color: #666666;
+  background: #f6f6f6;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.02em;
+}
+
+.keyActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* ── Billing ─────────────────────────────────────────────────────────────────── */
+
+.planCard {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 22px;
+}
+
+.planLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.planBadge {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #3d2910;
+  background: rgba(61, 41, 16, 0.08);
+  padding: 3px 8px;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.planName {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111111;
+  margin: 0;
+}
+
+.planPrice {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111111;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.planPricePer {
+  font-size: 15px;
+  font-weight: 400;
+  color: #888888;
+}
+
+.planDesc {
+  font-size: 13.5px;
+  color: #888888;
+  margin: 0;
+}
+
+.planActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.invoiceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 22px;
+}
+
+.invoiceRowBorder {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.invoiceRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── Roles ───────────────────────────────────────────────────────────────────── */
+
+.roleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 22px;
+}
+
+.roleRowBorder {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.roleLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.roleName {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111111;
+  margin: 0;
+}
+
+.roleDesc {
+  font-size: 13px;
+  color: #888888;
+  margin: 0;
+}
+
+.roleRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.roleMemberCount {
+  font-size: 13px;
+  color: #999999;
+}
+
+/* ── Bank accounts ───────────────────────────────────────────────────────────── */
+
+.bankRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 22px;
+}
+
+.bankLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.bankIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555555;
+  flex-shrink: 0;
+}
+
+.bankName {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111111;
+  margin: 0 0 4px;
+}
+
+.bankDetail {
+  font-size: 13px;
+  color: #888888;
+  margin: 0;
+}
+
+.bankRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ── Support / RM ─────────────────────────────────────────────────────────────── */
+
+.rmCard {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 22px;
+}
+
+.rmPhoto {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  flex-shrink: 0;
+}
+
+.rmInfo {
+  flex: 1;
+}
+
+.rmName {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111111;
+  margin: 0 0 3px;
+}
+
+.rmTitle {
+  font-size: 13px;
+  color: #888888;
+  margin: 0 0 2px;
+}
+
+.rmEmail {
+  font-size: 13px;
+  color: #888888;
+  margin: 0;
+}
+
+.rmActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ── Danger zone ─────────────────────────────────────────────────────────────── */
+
+.dangerCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 22px;
+  background: #fff8f8;
+  border-radius: 0 0 13px 13px;
+}
+
+.dangerLeft {
+  flex: 1;
+}
+
+.dangerTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #cc2200;
+  margin: 0 0 4px;
+}
+
+.dangerDesc {
+  font-size: 13px;
+  color: #aa4433;
+  margin: 0;
+}
+
+/* ── Placeholder ─────────────────────────────────────────────────────────────── */
+
+.placeholderBody {
+  padding: 32px 22px;
+  text-align: center;
+}
+
+.placeholderText {
+  font-size: 13.5px;
+  color: #aaaaaa;
+  margin: 0;
+}
+
+/* ── Identity block (Profile page) ──────────────────────────────────────────── */
+
+.identityBlock {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 4px 0 8px;
+}
+
+.identityAvatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(61, 41, 16, 0.10);
+  color: #3d2910;
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+.identityInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.identityName {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111111;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.identityEmail {
+  font-size: 13.5px;
+  color: #888888;
+  margin: 0;
+}
+
+.identityRole {
+  font-size: 12.5px;
+  color: #aaaaaa;
+  margin: 0;
+}
+
+.textBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: #3d2910;
+  cursor: pointer;
+  white-space: nowrap;
+  opacity: 0.8;
+  transition: opacity 0.12s ease;
+}
+
+.textBtn:hover { opacity: 1; }
+
+/* ── Section divider ─────────────────────────────────────────────────────────── */
+
+.sectionDivider {
+  height: 1px;
+  background: #f0f0f0;
+  margin: 4px 0;
+}
+
+/* ── Card label & rows container ─────────────────────────────────────────────── */
+
+.cardLabel {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #aaaaaa;
+  padding: 16px 22px 0;
+  margin: 0 0 2px;
+}
+
+.cardRows {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Clickable row (rowBtn) vs static row ────────────────────────────────────── */
+
+.rowBtn {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.10s ease;
+}
+
+.rowBtn:hover {
+  background: #fafafa;
+}
+
+.rowBtn:hover .rowChevron {
+  transform: translateX(3px);
+}
+
+.rowStatic {
+  background: transparent;
+}
+
+.rowChevron {
+  display: flex;
+  align-items: center;
+  color: #cccccc;
+  flex-shrink: 0;
+  transition: transform 0.18s ease, color 0.12s ease;
+}
+
+.rowBtn:hover .rowChevron {
+  color: #999999;
+}
+
+.rowEmpty {
+  font-size: 13.5px;
+  color: #cccccc;
+}
+
+.rowLabelDanger {
+  color: #cc2200;
+}
+
+.rowDanger:hover {
+  background: #fff8f8;
+}
+
+/* ── Revoke button (sessions) ────────────────────────────────────────────────── */
+
+.revokeBtn {
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid #e8e8e8;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #555555;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.12s ease, color 0.12s ease;
+}
+
+.revokeBtn:hover {
+  border-color: #cc2200;
+  color: #cc2200;
+}
+
+/* ── Member rows ─────────────────────────────────────────────────────────────── */
+
+.memberRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 22px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.10s ease;
+}
+
+.memberRow:hover { background: #fafafa; }
+
+.memberRowBorder {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.memberInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.memberRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.memberTime {
+  font-size: 12.5px;
+  color: #aaaaaa;
+}
+
+/* ── Role meta ───────────────────────────────────────────────────────────────── */
+
+.roleMeta {
+  font-size: 13px;
+  color: #999999;
+}
+
+/* ── Bank info ───────────────────────────────────────────────────────────────── */
+
+.bankInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+/* ── RM block ────────────────────────────────────────────────────────────────── */
+
+.rmBlock {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 4px 0 8px;
+}
+
+.rmRole {
+  font-size: 13px;
+  color: #888888;
+  margin: 0 0 2px;
+}
+
+/* ── Plan block ──────────────────────────────────────────────────────────────── */
+
+.planBlock {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 4px 0 8px;
+}
+
+.planPer {
+  font-size: 15px;
+  font-weight: 400;
+  color: #888888;
+}
+
+/* ── Page action bar ─────────────────────────────────────────────────────────── */
+
+.pageAction {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -4px;
+}
+
+/* ── Primary button ──────────────────────────────────────────────────────────── */
+
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 9px;
+  background: #3d2910;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.primaryBtn:hover {
+  background: #2a1c0a;
+  box-shadow: 0 2px 8px rgba(61, 41, 16, 0.25);
+  transform: translateY(-1px);
+}
+
+/* ── Density rows (Appearance page) ─────────────────────────────────────────── */
+
+.densityRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 22px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.12s ease;
+}
+
+.densityRow:hover { background: #fafafa; }
+
+.densityRowActive { background: #fdf8f3; }
+
+.densityRowBorder {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.densityRadioOn {
+  border-color: #3d2910;
+}
+
+.densityDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3d2910;
+}
+
+/* ── Placeholder row ─────────────────────────────────────────────────────────── */
+
+.placeholderRow {
+  padding: 32px 22px;
+  text-align: center;
+}

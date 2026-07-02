@@ -1,17 +1,17 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth/session";
 import { site } from "@/config/site";
-import { DashboardClient } from "./DashboardClient";
+import { NovaWorkspaceClient } from "./NovaWorkspaceClient";
 
 export const metadata = {
-  title: `Dashboard — ${site.brand}`,
+  title: `Nova — ${site.brand}`,
 };
 
-export default async function DashboardPage() {
+export default async function NovaPage() {
   const session = await getSession();
   if (!session) {
     redirect("/signin");
   }
 
-  return <DashboardClient email={session.email} />;
+  return <NovaWorkspaceClient email={session.email} />;
 }
