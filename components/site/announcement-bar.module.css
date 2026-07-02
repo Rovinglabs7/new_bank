@@ -21,6 +21,14 @@
   text-align: center;
 }
 
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex: 1;
+}
+
 .tag {
   flex-shrink: 0;
   display: inline-flex;
