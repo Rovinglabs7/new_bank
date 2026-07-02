@@ -381,7 +381,7 @@ export const site = {
       { code: "NL", label: "Netherlands", flag: "🇳🇱" },
     ],
 
-    wordmark: "Praevor AI",
+    wordmark: "Praevor",
 
     bottom: {
       legalLinks: [
