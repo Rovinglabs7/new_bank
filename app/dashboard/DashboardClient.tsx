@@ -148,7 +148,7 @@ function Sidebar() {
             className={`${styles.navItem} ${active ? styles.navItemActive : ""}`}
           >
             <span className={styles.navItemIcon}>
-              <Icon size={16} />
+              <Icon size={17} />
             </span>
             <span className={styles.navItemLabel}>{label}</span>
           </button>
