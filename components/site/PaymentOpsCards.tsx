@@ -1,20 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import * as THREE from "three";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./payment-ops-cards.module.css";
 
 // ─── CARD ONE: Automation Workflow ───────────────────────────────────────────
 
 const STEPS = [
-  { id: 1, label: "WHEN", value: "Customer completes checkout", icon: "⊙", color: "#281e15" },
-  { id: 2, label: "CREATE", value: "Recurring payment", icon: "＋", color: "#281e15" },
-  { id: 3, label: "SEND", value: "Secure payment request", icon: "→", color: "#281e15" },
-  { id: 4, label: "WAIT", value: "Customer authorisation", icon: "◷", color: "#281e15" },
-  { id: 5, label: "THEN", value: "Notify the team", icon: "✓", color: "#16a34a" },
+  { id: 1, label: "WHEN", value: "Customer completes checkout" },
+  { id: 2, label: "CREATE", value: "Recurring payment" },
+  { id: 3, label: "SEND", value: "Secure payment request" },
+  { id: 4, label: "WAIT", value: "Customer authorisation" },
+  { id: 5, label: "THEN", value: "Notify the team", accent: true },
 ];
 
 function WorkflowCard() {
@@ -36,48 +34,28 @@ function WorkflowCard() {
     setCursorVisible(false);
 
     const timings: ReturnType<typeof setTimeout>[] = [];
-
     const show = (stepIdx: number, delay: number) => {
-      const t = setTimeout(() => {
-        setVisibleSteps((prev) => [...prev, stepIdx]);
-      }, delay);
-      timings.push(t);
+      timings.push(setTimeout(() => setVisibleSteps((prev) => [...prev, stepIdx]), delay));
     };
-
     const showLine = (lineIdx: number, delay: number) => {
-      const t = setTimeout(() => {
-        setActiveLine((prev) => [...prev, lineIdx]);
-      }, delay);
-      timings.push(t);
+      timings.push(setTimeout(() => setActiveLine((prev) => [...prev, lineIdx]), delay));
     };
 
-    show(0, 300);
-    showLine(0, 700);
-    show(1, 950);
-    showLine(1, 1350);
+    show(0, 300);   showLine(0, 700);
+    show(1, 950);   showLine(1, 1350);
     show(2, 1600);
-
-    timings.push(setTimeout(() => {
-      setCursorVisible(true);
-      setCursorPos({ x: 52, y: 62 });
-    }, 2000));
-    timings.push(setTimeout(() => { setClicking(true); }, 2300));
-    timings.push(setTimeout(() => { setClicking(false); }, 2550));
-
+    timings.push(setTimeout(() => { setCursorVisible(true); setCursorPos({ x: 52, y: 62 }); }, 2000));
+    timings.push(setTimeout(() => setClicking(true), 2300));
+    timings.push(setTimeout(() => setClicking(false), 2550));
     showLine(2, 2700);
-    show(3, 2950);
-    showLine(3, 3350);
+    show(3, 2950);  showLine(3, 3350);
     show(4, 3600);
-
     timings.push(setTimeout(() => { setCursorPos({ x: 60, y: 82 }); }, 3800));
-    timings.push(setTimeout(() => { setClicking(true); }, 4050));
-    timings.push(setTimeout(() => { setClicking(false); }, 4300));
-    timings.push(setTimeout(() => { setCursorVisible(false); }, 4600));
-    timings.push(setTimeout(() => {
-      setDone(true);
-      animatingRef.current = false;
-    }, 5000));
-    timings.push(setTimeout(() => { runAnimation(); }, 8500));
+    timings.push(setTimeout(() => setClicking(true), 4050));
+    timings.push(setTimeout(() => setClicking(false), 4300));
+    timings.push(setTimeout(() => setCursorVisible(false), 4600));
+    timings.push(setTimeout(() => { setDone(true); animatingRef.current = false; }, 5000));
+    timings.push(setTimeout(() => runAnimation(), 8500));
 
     return () => timings.forEach(clearTimeout);
   }, []);
@@ -96,12 +74,7 @@ function WorkflowCard() {
               <motion.div
                 className={styles.cursor}
                 initial={{ opacity: 0 }}
-                animate={{
-                  opacity: 1,
-                  left: `${cursorPos.x}%`,
-                  top: `${cursorPos.y}%`,
-                  scale: clicking ? 0.85 : 1,
-                }}
+                animate={{ opacity: 1, left: `${cursorPos.x}%`, top: `${cursorPos.y}%`, scale: clicking ? 0.85 : 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ type: "spring", stiffness: 180, damping: 22 }}
               >
@@ -124,13 +97,12 @@ function WorkflowCard() {
                       transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
                     >
                       <span className={styles.stepLabel}>{step.label}</span>
-                      <span className={styles.stepValue}
-                        style={i === 4 ? { color: "#16a34a" } : undefined}
-                      >{step.value}</span>
+                      <span className={styles.stepValue} style={step.accent ? { color: "#16a34a" } : undefined}>
+                        {step.value}
+                      </span>
                     </motion.div>
                   )}
                 </AnimatePresence>
-
                 {i < STEPS.length - 1 && (
                   <div className={styles.connectorWrap}>
                     <AnimatePresence>
@@ -183,218 +155,107 @@ function WorkflowCard() {
   );
 }
 
-// ─── CARD TWO: Globe ─────────────────────────────────────────────────────────
+// ─── CARD TWO: Global Collections ────────────────────────────────────────────
 
-const LOCATIONS = [
-  { id: "london",    name: "London",    flag: "🇬🇧", rail: "Direct Debit", currency: "GBP", symbol: "£",  amount: 8420,  lat: 51.5,  lng: -0.1  },
-  { id: "amsterdam", name: "Amsterdam", flag: "🇳🇱", rail: "SEPA",         currency: "EUR", symbol: "€",  amount: 4860,  lat: 52.4,  lng: 4.9   },
-  { id: "new-york",  name: "New York",  flag: "🇺🇸", rail: "ACH",          currency: "USD", symbol: "$",  amount: 12300, lat: 40.7,  lng: -74.0 },
-  { id: "sydney",    name: "Sydney",    flag: "🇦🇺", rail: "BECS",         currency: "AUD", symbol: "A$", amount: 6210,  lat: -33.9, lng: 151.2 },
+const COLLECTIONS = [
+  { id: "new-york",     flag: "🇺🇸", city: "New York",      amount: "$42,860"   },
+  { id: "london",       flag: "🇬🇧", city: "London",        amount: "£26,840"   },
+  { id: "berlin",       flag: "🇩🇪", city: "Berlin",        amount: "€33,560"   },
+  { id: "san-fran",     flag: "🇺🇸", city: "San Francisco", amount: "$18,420"   },
+  { id: "paris",        flag: "🇫🇷", city: "Paris",         amount: "€22,780"   },
+  { id: "amsterdam",    flag: "🇳🇱", city: "Amsterdam",     amount: "€19,420"   },
+  { id: "zurich",       flag: "🇨🇭", city: "Zurich",        amount: "CHF 41,200"},
+  { id: "chicago",      flag: "🇺🇸", city: "Chicago",       amount: "$31,280"   },
+  { id: "stockholm",    flag: "🇸🇪", city: "Stockholm",     amount: "kr 284,000"},
+  { id: "madrid",       flag: "🇪🇸", city: "Madrid",        amount: "€17,960"   },
+  { id: "milan",        flag: "🇮🇹", city: "Milan",         amount: "€28,440"   },
+  { id: "dublin",       flag: "🇮🇪", city: "Dublin",        amount: "€14,720"   },
+  { id: "seattle",      flag: "🇺🇸", city: "Seattle",       amount: "$23,640"   },
+  { id: "munich",       flag: "🇩🇪", city: "Munich",        amount: "€38,900"   },
+  { id: "boston",       flag: "🇺🇸", city: "Boston",        amount: "$29,180"   },
+  { id: "austin",       flag: "🇺🇸", city: "Austin",        amount: "$21,450"   },
 ];
 
-const GLOBE_R = 1.0;
-const TILT_X = (20 * Math.PI) / 180;
+// Three fixed slot positions within the card
+const SLOTS = [
+  { top: "14%", left: "8%",  right: "auto" },
+  { top: "40%", left: "auto", right: "6%"  },
+  { top: "66%", left: "12%", right: "auto" },
+];
 
-const DOT_VERT = /* glsl */ `
-  uniform float uSize;
-  attribute float aScale;
-  varying float vDepth;
+function CollectionSlot({ slotIdx, startIdx }: { slotIdx: number; startIdx: number }) {
+  const STRIDE = 5; // each slot advances by this to keep items distinct
+  const [idx, setIdx] = useState(startIdx);
+  const slot = SLOTS[slotIdx];
 
-  void main() {
-    vec4 worldPos = modelMatrix * vec4(position, 1.0);
-    vDepth = normalize(worldPos.xyz).z;
-    vec4 mvPos = viewMatrix * worldPos;
-    gl_PointSize = uSize * aScale * (1.0 / -mvPos.z);
-    gl_Position = projectionMatrix * mvPos;
-  }
-`;
-
-const DOT_FRAG = /* glsl */ `
-  varying float vDepth;
-
-  void main() {
-    vec2 uv = gl_PointCoord - 0.5;
-    float d = length(uv);
-    if (d > 0.5) discard;
-    float circleAlpha = smoothstep(0.5, 0.18, d);
-    float depthAlpha = 0.07 + max(0.0, vDepth) * 0.60;
-    gl_FragColor = vec4(0.157, 0.118, 0.082, circleAlpha * depthAlpha);
-  }
-`;
-
-function buildGlobeGeo(count: number) {
-  const positions: number[] = [];
-  const scales: number[] = [];
-  const golden = Math.PI * (3 - Math.sqrt(5));
-  for (let i = 0; i < count; i++) {
-    const y = 1 - (i / (count - 1)) * 2;
-    const r = Math.sqrt(1 - y * y);
-    const theta = golden * i;
-    positions.push(r * Math.cos(theta) * GLOBE_R, y * GLOBE_R, r * Math.sin(theta) * GLOBE_R);
-    scales.push(0.7 + Math.random() * 0.6);
-  }
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
-  geo.setAttribute("aScale", new THREE.Float32BufferAttribute(scales, 1));
-  return geo;
-}
-
-interface LabelPos {
-  id: string;
-  x: number;
-  y: number;
-  depth: number;
-}
-
-interface GlobeSceneProps {
-  onLabels: (labels: LabelPos[]) => void;
-  paused: boolean;
-}
-
-function GlobeScene({ onLabels, paused }: GlobeSceneProps) {
-  const groupRef = useRef<THREE.Group>(null);
-  const { camera, size } = useThree();
-
-  const geometry = useMemo(() => buildGlobeGeo(2200), []);
-  const material = useMemo(
-    () =>
-      new THREE.ShaderMaterial({
-        vertexShader: DOT_VERT,
-        fragmentShader: DOT_FRAG,
-        uniforms: { uSize: { value: 150.0 } },
-        transparent: true,
-        depthWrite: false,
-      }),
-    []
-  );
-
-  // City surface positions (local space)
-  const cityLocal = useMemo(
-    () =>
-      LOCATIONS.map((loc) => {
-        const latR = (loc.lat * Math.PI) / 180;
-        const lngR = (loc.lng * Math.PI) / 180;
-        return new THREE.Vector3(
-          Math.cos(latR) * Math.sin(lngR) * GLOBE_R,
-          Math.sin(latR) * GLOBE_R,
-          Math.cos(latR) * Math.cos(lngR) * GLOBE_R
-        );
-      }),
-    []
-  );
-
-  const tmpV3 = useMemo(() => new THREE.Vector3(), []);
-
-  useFrame((_, delta) => {
-    const grp = groupRef.current;
-    if (!grp) return;
-    if (!paused) grp.rotation.y += delta * 0.18;
-
-    const labels: LabelPos[] = LOCATIONS.map((loc, i) => {
-      tmpV3.copy(cityLocal[i]).applyMatrix4(grp.matrixWorld);
-      const depth = tmpV3.clone().normalize().z;
-      const ndc = tmpV3.clone().project(camera);
-      return {
-        id: loc.id,
-        x: ((ndc.x + 1) / 2) * size.width,
-        y: ((-ndc.y + 1) / 2) * size.height,
-        depth,
-      };
-    });
-
-    onLabels(labels);
-  });
-
-  return (
-    <group ref={groupRef} rotation={[TILT_X, 0, 0]}>
-      <points geometry={geometry} material={material} />
-    </group>
-  );
-}
-
-function useCountUp(target: number, active: boolean, duration = 1.4) {
-  const [value, setValue] = useState(0);
-  const counted = useRef(false);
   useEffect(() => {
-    if (!active || counted.current) return;
-    counted.current = true;
-    const start = performance.now();
-    const tick = (now: number) => {
-      const p = Math.min((now - start) / (duration * 1000), 1);
-      setValue(Math.round((1 - Math.pow(1 - p, 3)) * target));
-      if (p < 1) requestAnimationFrame(tick);
-      else setValue(target);
-    };
-    requestAnimationFrame(tick);
-  }, [active, target, duration]);
-  return value;
-}
+    const delay = slotIdx * 1400;
+    const t = setTimeout(() => {
+      const interval = setInterval(() => {
+        setIdx((i) => (i + STRIDE) % COLLECTIONS.length);
+      }, 3200);
+      return () => clearInterval(interval);
+    }, delay);
+    return () => clearTimeout(t);
+  }, [slotIdx]);
 
-function GlobeLabel({ lp }: { lp: LabelPos }) {
-  const loc = LOCATIONS.find((l) => l.id === lp.id)!;
-  const opacity = lp.depth > 0.1 ? Math.min(1, (lp.depth - 0.1) / 0.3) : 0;
-  const counted = useCountUp(loc.amount, lp.depth > 0.45);
+  const item = COLLECTIONS[idx];
 
   return (
-    <div
-      className={styles.globeLabel}
-      style={{
-        left: lp.x,
-        top: lp.y,
-        opacity,
-        zIndex: Math.round((lp.depth + 1) * 10),
-        pointerEvents: opacity > 0.3 ? "auto" : "none",
-      }}
-    >
-      <div className={styles.globeLabelInner}>
-        <span className={styles.globeFlag}>{loc.flag}</span>
-        <div>
-          <div className={styles.globeCityRow}>
-            <span className={styles.globeCity}>{loc.name}</span>
-            <span className={styles.globeRail}>{loc.rail}</span>
+    <div className={styles.collectionSlot} style={{ top: slot.top, left: slot.left, right: slot.right }}>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={item.id}
+          className={styles.collectionCard}
+          initial={{ opacity: 0, y: 8, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -6, scale: 0.97 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <span className={styles.collectionFlag}>{item.flag}</span>
+          <div className={styles.collectionInfo}>
+            <span className={styles.collectionCity}>{item.city}</span>
+            <span className={styles.collectionAmount}>{item.amount} collected</span>
           </div>
-          <div className={styles.globeAmount}>
-            {loc.symbol}{counted.toLocaleString()} collected
-          </div>
-        </div>
-      </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
 
-function GlobeCard() {
-  const [labels, setLabels] = useState<LabelPos[]>([]);
-  const [paused, setPaused] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const handleLabels = useCallback((next: LabelPos[]) => {
-    setLabels(next);
-  }, []);
-
+function CollectionsCard() {
   return (
     <div className={styles.card}>
-      <div
-        className={styles.cardMedia}
-        ref={containerRef}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-      >
-        <Canvas
-          style={{ width: "100%", height: "100%" }}
-          camera={{ position: [0, 0, 2.8], fov: 48 }}
-          dpr={[1, 2]}
-          gl={{ antialias: true, alpha: true }}
-        >
-          <GlobeScene onLabels={handleLabels} paused={paused} />
-        </Canvas>
+      <div className={styles.cardMedia}>
+        {/* Subtle globe/map background */}
+        <div className={styles.collectionsGlobe} aria-hidden>
+          <svg viewBox="0 0 400 300" className={styles.collectionsGlobeSvg} fill="none">
+            {/* Ellipse representing globe */}
+            <ellipse cx="200" cy="150" rx="130" ry="130" stroke="currentColor" strokeWidth="0.8" />
+            {/* Latitude lines */}
+            {[-60, -30, 0, 30, 60].map((lat) => {
+              const y = 150 - (lat / 90) * 130;
+              const rx = Math.cos((lat * Math.PI) / 180) * 130;
+              return <ellipse key={lat} cx="200" cy={y} rx={rx} ry={rx * 0.22} stroke="currentColor" strokeWidth="0.5" />;
+            })}
+            {/* Longitude lines */}
+            {[-90, -60, -30, 0, 30, 60, 90].map((lng) => {
+              const x = 200 + (lng / 180) * 130;
+              return <line key={lng} x1={x} y1={20} x2={x} y2={280} stroke="currentColor" strokeWidth="0.5" />;
+            })}
+          </svg>
+        </div>
 
-        {/* Atmospheric glow overlay */}
-        <div className={styles.globeGlow} aria-hidden />
-
-        {/* DOM labels */}
-        {labels.map((lp) => (
-          <GlobeLabel key={lp.id} lp={lp} />
+        {/* Floating payment notification slots */}
+        {SLOTS.map((_, i) => (
+          <CollectionSlot key={i} slotIdx={i} startIdx={i * 5} />
         ))}
+
+        {/* Live indicator */}
+        <div className={styles.liveIndicator} aria-hidden>
+          <span className={styles.liveDot} />
+          <span className={styles.liveLabel}>Live</span>
+        </div>
       </div>
 
       <div className={styles.cardContent}>
@@ -476,7 +337,7 @@ export function PaymentOpsCards() {
 
         <div className={styles.grid}>
           <WorkflowCard />
-          <GlobeCard />
+          <CollectionsCard />
         </div>
 
         <motion.div
