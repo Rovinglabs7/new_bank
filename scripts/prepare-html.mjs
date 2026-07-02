@@ -85,7 +85,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
 
 const sourceHtml = join(root, "BOND.html");
-const outputHtml = join(root, "public", "bond.html");
 const sourceAssets = join(root, "BOND_files");
 const publicAssets = join(root, "public", "BOND_files");
 const customDir = join(root, "custom");
@@ -219,6 +218,5 @@ if (!html.includes("/custom/overrides.css")) {
   html = html.replace("</head>", `${CUSTOM_TAGS}</head>`);
 }
 
-writeFileSync(outputHtml, html, "utf-8");
-console.log(`Prepared ${outputHtml} (${html.length} bytes)`);
+console.log("Skipped public/bond.html — legacy Bond site is no longer served.");
 console.log("Note: public/index.html is NOT generated — / is served by the Next.js app.");
