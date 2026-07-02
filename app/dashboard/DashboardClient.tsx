@@ -328,7 +328,7 @@ function RelationshipManagerCard() {
       {/* Avatar — overlaps header */}
       <div className={styles.rmAvatarWrap}>
         <img
-          src="/pexels-rdne-7414009.jpg"
+          src="/pexels-alena-shekhovtcova-8067887.jpg"
           alt="Charlotte Evans"
           className={styles.rmAvatar}
         />
